@@ -8,7 +8,14 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "typecheck": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run typecheck"
+    ]
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -50,8 +57,10 @@
     "dompurify": "^3.3.1",
     "embla-carousel-react": "^8.6.0",
     "file-saver": "^2.0.5",
+    "husky": "^9.1.7",
     "idb-keyval": "^6.2.2",
     "input-otp": "^1.4.2",
+    "lint-staged": "^16.2.7",
     "lucide-react": "^0.462.0",
     "mermaid": "^11.12.2",
     "next-themes": "^0.3.0",

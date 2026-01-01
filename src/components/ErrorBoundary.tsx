@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ErrorInfo } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { Button } from "@/components/primitives/button";
 import { AlertCircle, RefreshCcw, Home } from "lucide-react";
@@ -59,7 +59,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-const logError = (error: Error, info: { componentStack: string }) => {
+const logError = (error: Error, info: ErrorInfo) => {
   // In production, send to Sentry/LogRocket here
   console.error("CRITICAL_UI_FAILURE:", error, info.componentStack);
 };

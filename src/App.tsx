@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/primitives/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import RootErrorBoundary from "@/components/ErrorBoundary";
 
 // Lazy load pages for code splitting
 const Index = React.lazy(() => import("@/pages/Index"));
@@ -26,7 +26,7 @@ const PageLoader = () => (
 );
 
 const App = () => (
-  <ErrorBoundary>
+  <RootErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Sonner />
@@ -41,7 +41,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
-  </ErrorBoundary>
+  </RootErrorBoundary>
 );
 
 export default App;

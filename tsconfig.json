@@ -17,9 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@legacy/*": ["src/old-structure/*"],
+      "@features/*": ["src/features/*"]
     }
   },
   "include": ["src"],

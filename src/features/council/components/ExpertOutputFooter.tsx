@@ -5,6 +5,11 @@ import { RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 interface ExpertOutputFooterProps {
   expertId: string;
+  expertName?: string;
+  output?: string;
+  model?: string;
+  onRetry?: () => void;
+  isRetrying?: boolean;
 }
 
 export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = ({ expertId }) => {
@@ -12,7 +17,8 @@ export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = ({ expertId
 
   // This is a placeholder for the retry logic
   const onRetry = () => {
-    executeCouncil();
+    // Casting for now as we transition the store interface
+    (executeCouncil as any)(expertId);
   };
 
   return (

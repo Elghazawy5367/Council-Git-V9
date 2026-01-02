@@ -1,6 +1,6 @@
 import React from 'react';
 import { CouncilSession } from '@/features/council/lib/types';
-import { getSessions, deleteSession, clearHistory, formatRelativeTime, formatSessionPreview } from '@/lib/session-history';
+import { getSessions, deleteSession, clearHistory, formatRelativeTime, formatSessionPreview } from '@/features/council/lib/session-history';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { ScrollArea } from '@/components/primitives/scroll-area';

@@ -16,6 +16,11 @@ interface SessionData {
   unlockTime: number;
 }
 
+export interface VaultStatus {
+  hasVault: boolean;
+  isLocked: boolean;
+}
+
 // Simple hash function for demo
 function simpleHash(str: string): string {
   let hash = 0;
@@ -28,7 +33,7 @@ function simpleHash(str: string): string {
 }
 
 // Initialize vault status
-export function initializeVault(): { hasVault: boolean; isLocked: boolean } {
+export function initializeVault(): VaultStatus {
   const vault = localStorage.getItem(VAULT_KEY);
   const session = sessionStorage.getItem(SESSION_KEY);
 
@@ -56,7 +61,7 @@ export function initializeVault(): { hasVault: boolean; isLocked: boolean } {
 }
 
 // Get vault status
-export function getVaultStatus(): { hasVault: boolean; isLocked: boolean } {
+export function getVaultStatus(): VaultStatus {
   return initializeVault();
 }
 
@@ -94,7 +99,7 @@ export async function createVault(data: {
 }
 
 // Unlock vault
-export async function unlockVault(password: string): Promise<{ success: boolean; error?: string }> {
+export async function unlockVault(password: string): Promise<{ success: boolean; error?: string; keys?: { openRouterKey: string; serperKey?: string } }> {
   try {
     const vaultStr = localStorage.getItem(VAULT_KEY);
     if (!vaultStr) {
@@ -116,7 +121,13 @@ export async function unlockVault(password: string): Promise<{ success: boolean;
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
 
-    return { success: true };
+    return { 
+      success: true, 
+      keys: { 
+        openRouterKey: keys.openRouterKey, 
+        serperKey: keys.serperKey 
+      } 
+    };
   } catch (error) {
     console.error('Failed to unlock vault:', error);
     return { success: false, error: 'Invalid password' };

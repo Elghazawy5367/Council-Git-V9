@@ -136,7 +136,7 @@ export const useExecutionStore = create<ExecutionState>((set) => ({
           onSuccess: (result) => {
             set({ synthesisResult: result, verdict: result.content });
             const newSynthesisCost = result.cost;
-            set(state => ({
+            set(() => ({
               cost: { experts: expertsCost, synthesis: newSynthesisCost, total: expertsCost + newSynthesisCost },
             }));
             saveSession({

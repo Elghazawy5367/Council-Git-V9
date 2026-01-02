@@ -4,12 +4,10 @@ import { get, set, del } from 'idb-keyval';
 import {
   MemoryEntry,
   CouncilMemory,
-  MemoryType,
 } from '@/features/council/lib/council-memory';
 
 const MAX_ENTRIES = 100;
 
-// Define the storage implementation for idb-keyval
 const storage = createJSONStorage(() => ({
   getItem: async (name: string) => {
     const value = await get(name);
@@ -23,23 +21,38 @@ const storage = createJSONStorage(() => ({
   },
 }));
 
-interface MemoryState extends CouncilMemory {
+interface MemoryState {
+  memory: CouncilMemory;
+  searchQuery: string;
+  filterType: string | null;
+  isLoading: boolean;
   addEntry: (entry: Omit<MemoryEntry, 'id' | 'timestamp'>) => MemoryEntry;
-  addEntries: (
-    entries: Omit<MemoryEntry, 'id' | 'timestamp'>[]
-  ) => MemoryEntry[];
   deleteEntry: (id: string) => void;
-  clearMemory: () => void;
+  clearAll: () => void;
   setEnabled: (enabled: boolean) => void;
+  toggleEnabled: () => void;
+  setSearchQuery: (query: string) => void;
+  setFilterType: (type: string | null) => void;
+  loadMemory: () => Promise<void>;
 }
 
 export const useMemoryStore = create<MemoryState>()(
   persist(
     (set, get) => ({
-      entries: [],
-      userPreferences: {},
-      domainKnowledge: {},
-      enabled: true,
+      memory: {
+        entries: [],
+        userPreferences: {},
+        domainKnowledge: {},
+        enabled: true,
+      },
+      searchQuery: '',
+      filterType: null,
+      isLoading: false,
+
+      loadMemory: async () => {
+        // Hydration happens automatically with persist
+      },
+
       addEntry: (entry) => {
         const newEntry: MemoryEntry = {
           ...entry,
@@ -47,55 +60,56 @@ export const useMemoryStore = create<MemoryState>()(
           timestamp: new Date(),
         };
 
-        set((state) => {
-          const entries = [newEntry, ...state.entries];
-          if (entries.length > MAX_ENTRIES) {
-            entries.sort((a, b) => {
-                const recencyA = Date.now() - new Date(a.timestamp).getTime();
-                const recencyB = Date.now() - new Date(b.timestamp).getTime();
-                const scoreA = a.relevanceScore - (recencyA / (1000 * 60 * 60 * 24 * 7)); // Decay over a week
-                const scoreB = b.relevanceScore - (recencyB / (1000 * 60 * 60 * 24 * 7));
-                return scoreB - scoreA;
-              })
-              .slice(0, MAX_ENTRIES);
-          }
-          return { entries };
-        });
+        const currentMemory = get().memory;
+        const entries = [newEntry, ...currentMemory.entries];
+        
+        let finalEntries = entries;
+        if (entries.length > MAX_ENTRIES) {
+          finalEntries = entries.sort((a, b) => {
+            const recencyA = Date.now() - new Date(a.timestamp).getTime();
+            const recencyB = Date.now() - new Date(b.timestamp).getTime();
+            const scoreA = a.relevanceScore - (recencyA / (1000 * 60 * 60 * 24 * 7));
+            const scoreB = b.relevanceScore - (recencyB / (1000 * 60 * 60 * 24 * 7));
+            return scoreB - scoreA;
+          }).slice(0, MAX_ENTRIES);
+        }
 
+        set({ memory: { ...currentMemory, entries: finalEntries } });
         return newEntry;
       },
-      addEntries: (entries) => {
-        const newEntries: MemoryEntry[] = entries.map((entry) => ({
-          ...entry,
-          id: `mem_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          timestamp: new Date(),
-        }));
 
-        set((state) => {
-          let allEntries = [...newEntries, ...state.entries];
-          if (allEntries.length > MAX_ENTRIES) {
-            allEntries = allEntries
-            .sort((a, b) => {
-                const recencyA = Date.now() - new Date(a.timestamp).getTime();
-                const recencyB = Date.now() - new Date(b.timestamp).getTime();
-                const scoreA = a.relevanceScore - (recencyA / (1000 * 60 * 60 * 24 * 7));
-                const scoreB = b.relevanceScore - (recencyB / (1000 * 60 * 60 * 24 * 7));
-                return scoreB - scoreA;
-              })
-              .slice(0, MAX_ENTRIES);
+      deleteEntry: (id) => {
+        const currentMemory = get().memory;
+        set({
+          memory: {
+            ...currentMemory,
+            entries: currentMemory.entries.filter((e) => e.id !== id),
           }
-          return { entries: allEntries };
         });
-
-        return newEntries;
       },
-      deleteEntry: (id) =>
-        set((state) => ({
-          entries: state.entries.filter((e) => e.id !== id),
-        })),
-      clearMemory: () =>
-        set({ entries: [], userPreferences: {}, domainKnowledge: {} }),
-      setEnabled: (enabled) => set({ enabled }),
+
+      clearAll: () => {
+        set({ 
+          memory: { 
+            entries: [], 
+            userPreferences: {}, 
+            domainKnowledge: {}, 
+            enabled: get().memory.enabled 
+          } 
+        });
+      },
+
+      setEnabled: (enabled) => {
+        set({ memory: { ...get().memory, enabled } });
+      },
+
+      toggleEnabled: () => {
+        const current = get().memory.enabled;
+        set({ memory: { ...get().memory, enabled: !current } });
+      },
+
+      setSearchQuery: (searchQuery) => set({ searchQuery }),
+      setFilterType: (filterType) => set({ filterType }),
     }),
     {
       name: 'council_memory_v18',

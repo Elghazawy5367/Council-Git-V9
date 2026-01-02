@@ -5,7 +5,7 @@ import { KnowledgeFile, Expert } from '@/features/council/lib/types';
 import { pluginManager } from '@/lib/plugin-manager';
 import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
 import { MAGNIFICENT_7_FLEET } from '@/lib/config';
-import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/lib/persona-library';
+import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/features/council/lib/persona-library';
 import { Card, CardContent, CardHeader } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Slider } from '@/components/primitives/slider';

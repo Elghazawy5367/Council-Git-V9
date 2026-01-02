@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useControlPanelStore } from '@/features/council/store/control-panel-store';
 import { useExpertStore } from '@/features/council/store/expert-store';
-import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/lib/persona-library';
-import { getPersonaSelectorOptions, getTeamSelectorOptions } from '@/lib/persona-library';
+import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/features/council/lib/persona-library';
+import { getPersonaSelectorOptions, getTeamSelectorOptions } from '@/features/council/lib/persona-library';
 import { Card, CardContent } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';

@@ -6,7 +6,7 @@ import { useExpertStore } from './expert-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { callExpertStreaming } from '@/features/council/api/ai-client';
 import { SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
-import { saveSession } from '@/lib/session-history';
+import { saveSession } from '@/features/council/lib/session-history';
 import { UseMutationResult } from '@tanstack/react-query';
 
 interface CostBreakdown {

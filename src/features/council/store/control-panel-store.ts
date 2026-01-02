@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { toast } from 'sonner';
 import { ExecutionMode } from '@/features/council/lib/types';
 import { DEFAULT_EXPERTS } from '@/lib/config';
-import { loadPersonaIntoExpert, loadTeam } from '@/lib/persona-library';
+import { loadPersonaIntoExpert, loadTeam } from '@/features/council/lib/persona-library';
 import { useExpertStore } from './expert-store';
 
 interface FileData {

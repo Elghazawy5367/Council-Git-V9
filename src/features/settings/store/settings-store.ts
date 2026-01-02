@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { toast } from 'sonner';
 import '@/lib/types';
 import { DEFAULT_SYNTHESIS_CONFIG } from '@/lib/synthesis-engine';
-import { initializeVault, getVaultStatus, createVault, unlockVault, lockVault } from '@/lib/vault';
+import { initializeVault, getVaultStatus, createVault, unlockVault, lockVault } from '@/features/council/lib/vault';
 import { SynthesisConfig } from "@/features/council/lib/types";
 
 interface VaultCreationResult {

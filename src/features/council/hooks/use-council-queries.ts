@@ -5,7 +5,7 @@ import {
   ExecutionMode,
   SynthesisConfig,
   SynthesisResult,
-} from "@/lib/types";
+} from "@/features/council/lib/types";
 import {
   SYNTHESIS_TIERS,
   getPromptBuilder,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
-import { SynthesisTier } from '@/lib/types';
+import { SynthesisTier } from '@/features/council/lib/types';
 import { SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
 import { Card, CardContent, CardHeader } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';

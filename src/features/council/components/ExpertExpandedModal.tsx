@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/primitives/dialog';
 import { Button } from '@/components/primitives/button';
 import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
-import { Expert } from '@/lib/types';
+import { Expert } from '@/features/council/lib/types';
 import { MAGNIFICENT_7_FLEET } from '@/lib/config';
 import { 
   Copy, 

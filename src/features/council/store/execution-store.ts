@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
-import { Expert, ExecutionMode, SynthesisResult, ExpertOutput, SynthesisConfig } from '@/lib/types';
+import { Expert, ExecutionMode, SynthesisResult, ExpertOutput, SynthesisConfig } from '@/features/council/lib/types';
 import { useControlPanelStore } from './control-panel-store';
 import { useExpertStore } from './expert-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';

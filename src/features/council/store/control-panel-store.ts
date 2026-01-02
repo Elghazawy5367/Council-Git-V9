@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
-import { ExecutionMode } from '@/lib/types';
+import { ExecutionMode } from '@/features/council/lib/types';
 import { DEFAULT_EXPERTS } from '@/lib/config';
 import { loadPersonaIntoExpert, loadTeam } from '@/lib/persona-library';
 import { useExpertStore } from './expert-store';

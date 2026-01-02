@@ -1,5 +1,5 @@
 // OpenRouter AI Client - Real API integration
-import { Expert, ExecutionMode } from '@/lib/types';
+import { Expert, ExecutionMode } from '@/features/council/lib/types';
 import { buildSystemPrompt, MAGNIFICENT_7_FLEET } from '@/lib/config';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';

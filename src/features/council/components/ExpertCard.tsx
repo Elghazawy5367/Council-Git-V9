@@ -1,7 +1,7 @@
 import React, { useState, useCallback, lazy, Suspense } from 'react';
 import { useExpertStore } from '@/features/council/store/expert-store';
 import { useControlPanelStore } from '@/features/council/store/control-panel-store';
-import { KnowledgeFile, Expert } from '@/lib/types';
+import { KnowledgeFile, Expert } from '@/features/council/lib/types';
 import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
 import { MAGNIFICENT_7_FLEET } from '@/lib/config';
 import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/lib/persona-library';

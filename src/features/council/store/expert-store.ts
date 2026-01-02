@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Expert, KnowledgeFile } from '@/lib/types';
+import { Expert, KnowledgeFile } from '@/features/council/lib/types';
 
 interface ExpertState {
   experts: Expert[];

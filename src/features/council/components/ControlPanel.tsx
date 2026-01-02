@@ -3,7 +3,7 @@ import { useControlPanelStore } from '@/features/council/store/control-panel-sto
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { MODE_DESCRIPTIONS } from '@/lib/config';
-import { ExecutionMode } from '@/lib/types';
+import { ExecutionMode } from '@/features/council/lib/types';
 import { Card, CardContent } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Textarea } from '@/components/primitives/textarea';

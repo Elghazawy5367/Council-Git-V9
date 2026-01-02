@@ -21,7 +21,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/primitives/collapsible';
 import { ChevronDown, ChevronRight, Users, User, RotateCcw, Check } from 'lucide-react';
-import { Expert } from '@/lib/types';
+import { Expert } from '@/features/council/lib/types';
 
 export const PersonaSelector: React.FC = () => {
   const {

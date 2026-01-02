@@ -1,5 +1,5 @@
 import React from 'react';
-import { CouncilSession } from '@/lib/types';
+import { CouncilSession } from '@/features/council/lib/types';
 import { getSessions, deleteSession, clearHistory, formatRelativeTime, formatSessionPreview } from '@/lib/session-history';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';

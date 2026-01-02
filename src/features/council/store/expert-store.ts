@@ -4,7 +4,7 @@ import { Expert, KnowledgeFile } from '@/features/council/lib/types';
 interface ExpertState {
   experts: Expert[];
   setExperts: (experts: Expert[]) => void;
-  updateExpert: (index: number, expert: Expert) => void;
+  updateExpert: (index: number, expert: Partial<Expert>) => void;
   addKnowledge: (expertIndex: number, files: KnowledgeFile[]) => void;
   removeKnowledge: (expertIndex: number, fileId: string) => void;
 }
@@ -12,9 +12,17 @@ interface ExpertState {
 export const useExpertStore = create<ExpertState>((set) => ({
   experts: [],
   setExperts: (experts) => set({ experts }),
-  updateExpert: (index, expert) =>
+  updateExpert: (index, expertUpdates) =>
     set((state) => ({
-      experts: state.experts.map((e, i) => (i === index ? expert : e)),
+      experts: state.experts.map((e, i) => {
+        if (i !== index) return e;
+        const updated = { ...e, ...expertUpdates };
+        // Sync pluginConfig with legacy config if core-ai-expert
+        if (updated.pluginId === 'core-ai-expert' && updated.pluginConfig) {
+          updated.config = { ...updated.config, ...updated.pluginConfig };
+        }
+        return updated;
+      }),
     })),
   addKnowledge: (expertIndex, files) =>
     set((state) => ({

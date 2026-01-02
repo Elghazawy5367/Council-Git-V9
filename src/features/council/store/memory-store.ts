@@ -1,83 +1,108 @@
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { get, set, del } from 'idb-keyval';
 import {
-  CouncilMemory,
   MemoryEntry,
+  CouncilMemory,
   MemoryType,
-  loadMemory as loadMemoryFromDb,
-  deleteMemoryEntry as deleteMemoryEntryFromDb,
-  clearMemory as clearMemoryFromDb,
-  setMemoryEnabled as setMemoryEnabledInDb,
-  addMemoryEntry as addMemoryEntryToDb,
 } from '@/features/council/lib/council-memory';
 
-interface MemoryState {
-  memory: CouncilMemory | null;
-  searchQuery: string;
-  filterType: MemoryType | null;
-  isLoading: boolean;
-  loadMemory: () => Promise<void>;
-  toggleEnabled: () => Promise<void>;
-  deleteEntry: (id: string) => Promise<void>;
-  clearAll: () => Promise<void>;
-  setSearchQuery: (query: string) => void;
-  setFilterType: (type: MemoryType | null) => void;
-  addEntry: (entry: Omit<MemoryEntry, 'id' | 'timestamp'>) => Promise<void>;
-}
+const MAX_ENTRIES = 100;
 
-export const useMemoryStore = create<MemoryState>((set, get) => ({
-  memory: null,
-  searchQuery: '',
-  filterType: null,
-  isLoading: true,
-  loadMemory: async () => {
-    set({ isLoading: true });
-    try {
-      const memory = await loadMemoryFromDb();
-      set({ memory, isLoading: false });
-    } catch (error) {
-      console.error('Failed to load memory:', error);
-      set({ isLoading: false });
-    }
+// Define the storage implementation for idb-keyval
+const storage = createJSONStorage(() => ({
+  getItem: async (name) => {
+    const value = await get(name);
+    return value ? JSON.stringify(value) : null;
   },
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setFilterType: (type) => set({ filterType: type }),
-  toggleEnabled: async () => {
-    const state = get();
-    if (state.memory) {
-      const newEnabledState = !state.memory.enabled;
-      await setMemoryEnabledInDb(newEnabledState);
-      set({ memory: { ...state.memory, enabled: newEnabledState } });
-    }
+  setItem: async (name, value) => {
+    await set(name, JSON.parse(value));
   },
-  deleteEntry: async (id) => {
-    const state = get();
-    if (state.memory) {
-      await deleteMemoryEntryFromDb(id);
-      const newEntries = state.memory.entries.filter((e) => e.id !== id);
-      set({ memory: { ...state.memory, entries: newEntries } });
-    }
-  },
-  clearAll: async () => {
-    await clearMemoryFromDb();
-    const state = get();
-    if (state.memory) {
-      set({
-        memory: {
-          ...state.memory,
-          entries: [],
-          userPreferences: {},
-          domainKnowledge: {},
-        },
-      });
-    }
-  },
-  addEntry: async (entry) => {
-    const newEntry = await addMemoryEntryToDb(entry);
-    const state = get();
-    if (state.memory) {
-      const newEntries = [newEntry, ...state.memory.entries];
-      set({ memory: { ...state.memory, entries: newEntries } });
-    }
+  removeItem: async (name) => {
+    await del(name);
   },
 }));
+
+interface MemoryState extends CouncilMemory {
+  addEntry: (entry: Omit<MemoryEntry, 'id' | 'timestamp'>) => MemoryEntry;
+  addEntries: (
+    entries: Omit<MemoryEntry, 'id' | 'timestamp'>[]
+  ) => MemoryEntry[];
+  deleteEntry: (id: string) => void;
+  clearMemory: () => void;
+  setEnabled: (enabled: boolean) => void;
+}
+
+const useMemoryStore = create<MemoryState>()(
+  persist(
+    (set, get) => ({
+      entries: [],
+      userPreferences: {},
+      domainKnowledge: {},
+      enabled: true,
+      addEntry: (entry) => {
+        const newEntry: MemoryEntry = {
+          ...entry,
+          id: `mem_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          timestamp: new Date(),
+        };
+
+        set((state) => {
+          const entries = [newEntry, ...state.entries];
+          if (entries.length > MAX_ENTRIES) {
+            entries.sort((a, b) => {
+                const recencyA = Date.now() - new Date(a.timestamp).getTime();
+                const recencyB = Date.now() - new Date(b.timestamp).getTime();
+                const scoreA = a.relevanceScore - (recencyA / (1000 * 60 * 60 * 24 * 7)); // Decay over a week
+                const scoreB = b.relevanceScore - (recencyB / (1000 * 60 * 60 * 24 * 7));
+                return scoreB - scoreA;
+              })
+              .slice(0, MAX_ENTRIES);
+          }
+          return { entries };
+        });
+
+        return newEntry;
+      },
+      addEntries: (entries) => {
+        const newEntries: MemoryEntry[] = entries.map((entry) => ({
+          ...entry,
+          id: `mem_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          timestamp: new Date(),
+        }));
+
+        set((state) => {
+          let allEntries = [...newEntries, ...state.entries];
+          if (allEntries.length > MAX_ENTRIES) {
+            allEntries = allEntries
+            .sort((a, b) => {
+                const recencyA = Date.now() - new Date(a.timestamp).getTime();
+                const recencyB = Date.now() - new Date(b.timestamp).getTime();
+                const scoreA = a.relevanceScore - (recencyA / (1000 * 60 * 60 * 24 * 7));
+                const scoreB = b.relevanceScore - (recencyB / (1000 * 60 * 60 * 24 * 7));
+                return scoreB - scoreA;
+              })
+              .slice(0, MAX_ENTRIES);
+          }
+          return { entries: allEntries };
+        });
+
+        return newEntries;
+      },
+      deleteEntry: (id) =>
+        set((state) => ({
+          entries: state.entries.filter((e) => e.id !== id),
+        })),
+      clearMemory: () =>
+        set({ entries: [], userPreferences: {}, domainKnowledge: {} }),
+      setEnabled: (enabled) => set({ enabled }),
+    }),
+    {
+      name: 'council_memory_v18', // name of the item in storage
+      storage: storage,
+    }
+  )
+);
+
+export default useMemoryStore;

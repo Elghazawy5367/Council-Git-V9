@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { get, set, del } from 'idb-keyval';
@@ -12,14 +11,14 @@ const MAX_ENTRIES = 100;
 
 // Define the storage implementation for idb-keyval
 const storage = createJSONStorage(() => ({
-  getItem: async (name) => {
+  getItem: async (name: string) => {
     const value = await get(name);
     return value ? JSON.stringify(value) : null;
   },
-  setItem: async (name, value) => {
+  setItem: async (name: string, value: string) => {
     await set(name, JSON.parse(value));
   },
-  removeItem: async (name) => {
+  removeItem: async (name: string) => {
     await del(name);
   },
 }));
@@ -34,7 +33,7 @@ interface MemoryState extends CouncilMemory {
   setEnabled: (enabled: boolean) => void;
 }
 
-const useMemoryStore = create<MemoryState>()(
+export const useMemoryStore = create<MemoryState>()(
   persist(
     (set, get) => ({
       entries: [],
@@ -99,10 +98,8 @@ const useMemoryStore = create<MemoryState>()(
       setEnabled: (enabled) => set({ enabled }),
     }),
     {
-      name: 'council_memory_v18', // name of the item in storage
+      name: 'council_memory_v18',
       storage: storage,
     }
   )
 );
-
-export default useMemoryStore;

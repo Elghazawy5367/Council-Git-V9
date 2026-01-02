@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
-import { Expert, ExecutionMode, SynthesisResult, ExpertOutput, SynthesisConfig } from '@/features/council/lib/types';
+import { SynthesisResult, SynthesisConfig } from '@/features/council/lib/types';
 import { useControlPanelStore } from './control-panel-store';
 import { useExpertStore } from './expert-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
@@ -8,6 +8,12 @@ import { callExpertStreaming } from '@/features/council/api/ai-client';
 import { SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
 import { saveSession } from '@/features/council/lib/session-history';
 import { UseMutationResult } from '@tanstack/react-query';
+
+interface ExpertOutput {
+  name: string;
+  model: string;
+  content: string;
+}
 
 interface CostBreakdown {
   experts: number;
@@ -27,7 +33,7 @@ interface ExecutionState {
   reset: () => void;
 }
 
-export const useExecutionStore = create<ExecutionState>((set, get) => ({
+export const useExecutionStore = create<ExecutionState>((set) => ({
   isLoading: false,
   isSynthesizing: false,
   statusMessage: '',

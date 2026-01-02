@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { toast } from 'sonner';
 import '@/lib/types';
 import { DEFAULT_SYNTHESIS_CONFIG } from '@/lib/synthesis-engine';
-import { initializeVault, getVaultStatus, createVault, unlockVault, lockVault } from '@/features/council/lib/vault';
+import { initializeVault, getVaultStatus, createVault, unlockVault, lockVault, VaultStatus } from '@/features/council/lib/vault';
 import { SynthesisConfig } from "@/features/council/lib/types";
 
 interface VaultCreationResult {
@@ -71,13 +71,15 @@ export const useSettingsStore = create<SettingsState>()(
       },
       handleUnlockVault: async (password) => {
         const result = await unlockVault(password);
-        if (result.success) {
-          set({ vaultStatus: getVaultStatus(), openRouterKey: result.keys.openRouterKey });
+        if (result.success && 'keys' in result) {
+          const unlockResult = result as VaultUnlockResult;
+          set({ vaultStatus: getVaultStatus(), openRouterKey: unlockResult.keys.openRouterKey });
           toast.success('Vault Unlocked');
+          return unlockResult;
         } else {
           toast.error('Unlock Failed');
+          return { success: false, error: 'Unlock Failed', keys: { openRouterKey: '' } } as VaultUnlockResult;
         }
-        return result;
       },
       handleLockVault: () => {
         lockVault();
@@ -86,7 +88,7 @@ export const useSettingsStore = create<SettingsState>()(
       },
     }),
     {
-      name: 'council-settings-storage', // unique name
+      name: 'council-settings-storage',
     }
   )
 );

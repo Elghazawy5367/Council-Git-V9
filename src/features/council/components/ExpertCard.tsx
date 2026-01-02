@@ -410,10 +410,6 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
           {expert.output && (
             <ExpertOutputFooter
               expertId={expert.id}
-              output={expert.output}
-              model={expert.model}
-              onRetry={handleRetry}
-              isRetrying={expert.isLoading}
             />
           )}
         </CardContent>

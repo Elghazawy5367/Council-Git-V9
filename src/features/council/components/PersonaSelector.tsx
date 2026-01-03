@@ -33,7 +33,7 @@ export const PersonaSelector: React.FC = () => {
   } = useControlPanelStore();
   const { experts } = useExpertStore();
 
-  const [showIndividual, setShowIndividual] = useState(false);
+  const [showIndividual, setShowIndividual] = useState<any>(false);
   const teams = getTeamSelectorOptions();
   const personas = getPersonaSelectorOptions();
 

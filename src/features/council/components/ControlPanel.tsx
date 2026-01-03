@@ -202,3 +202,5 @@ export const ControlPanel: React.FC = () => {
     </Card>
   );
 };
+
+export default                 IconComponent;

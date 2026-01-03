@@ -1,3 +1,4 @@
+import React from "react";
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { ChevronDown } from "lucide-react";
@@ -113,3 +114,5 @@ export {
   NavigationMenuIndicator,
   NavigationMenuViewport,
 };
+
+export default Component;

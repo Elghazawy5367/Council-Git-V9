@@ -1,9 +1,9 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { Copy, ChevronDown, ChevronUp, Code, Table, FileJson, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Button } from '@/components/primitives/button';
+import { Card, CardContent, CardHeader } from '@/components/primitives/card';
+import { Badge } from '@/components/primitives/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/primitives/collapsible';
 import { toast } from 'sonner';
 import { languageMapping } from '@/lib/language-mapping';
 
@@ -65,7 +65,7 @@ const getArtifactTitle = (artifact: Artifact): string => {
 };
 
 export const ArtifactCard: React.FC<ArtifactCardProps> = ({ artifact, defaultOpen = true }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isOpen, setIsOpen] = useState<any>(defaultOpen);
   const Icon = getArtifactIcon(artifact.type);
   const title = getArtifactTitle(artifact);
 

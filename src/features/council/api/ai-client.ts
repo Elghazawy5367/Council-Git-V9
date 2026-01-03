@@ -249,7 +249,7 @@ Structure your response as:
 
   let userPrompt = `ORIGINAL TASK: ${task}\n\nMODE: ${mode}\n\n--- EXPERT ANALYSES ---\n`;
   
-  for (const [expertId, data] of Object.entries(expertOutputs)) {
+  for (const [___expertId, data] of Object.entries(expertOutputs)) {
     userPrompt += `\n### ${data.expertName}\n${data.output}\n`;
   }
   

@@ -7,7 +7,7 @@ interface CoreAiExpertConfigProps {
     maxTokens: number;
     topP: number;
   };
-  onChange: (newConfig: any) => void;
+  onChange: (newConfig: unknown) => void;
 }
 
 export const CoreAiExpertConfig: React.FC<CoreAiExpertConfigProps> = ({ config, onChange }) => {

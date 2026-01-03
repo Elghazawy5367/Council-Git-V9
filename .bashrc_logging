@@ -1,0 +1,20 @@
+# Terminal logging functions
+log() {
+  local LOG_DIR="logs"
+  mkdir -p "$LOG_DIR"
+  local LOG_FILE="$LOG_DIR/$(date +%Y%m%d_%H%M%S).log"
+  
+  echo "Command: $BASH_COMMAND" >> "$LOG_FILE"
+  echo "Timestamp: $(date)" >> "$LOG_FILE"
+  echo "======================================" >> "$LOG_FILE"
+  
+  # Execute the command and log output
+  $BASH_COMMAND 2>&1 | tee -a "$LOG_FILE"
+  
+  echo "" >> "$LOG_FILE"
+  echo "Output saved to: $LOG_FILE" >> "$LOG_FILE"
+  return ${PIPESTATUS[0]}
+}
+
+# Alias for logging
+alias lg='log'

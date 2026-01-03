@@ -1,3 +1,4 @@
+import React from "react";
 import * as React from "react";
 import { type VariantProps } from "class-variance-authority";
 
@@ -27,3 +28,5 @@ const AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttrib
 AlertDescription.displayName = "AlertDescription";
 
 export { Alert, AlertTitle, AlertDescription };
+
+export default Component;

@@ -5,3 +5,5 @@ export const ExpertLegacy = ({ name }: { name: string }) => {
     </div>
   );
 };
+
+// Fixed: export default export ExpertLegacy = {};

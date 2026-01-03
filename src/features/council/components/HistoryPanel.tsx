@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitive
 import { Button } from '@/components/primitives/button';
 import { ScrollArea } from '@/components/primitives/scroll-area';
 import { Badge } from '@/components/primitives/badge';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/primitives/sheet';
+
 import { 
   History, 
   Trash2, 

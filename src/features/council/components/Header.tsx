@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
     setShowSettings,
     showHistory,
     setShowHistory,
-    showMemory,
+    __showMemory,
     setShowMemory,
   } = useSettingsStore();
   const { memory } = useMemoryStore();

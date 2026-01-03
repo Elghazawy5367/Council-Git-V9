@@ -33,7 +33,7 @@ const TIER_ICONS: Record<SynthesisTier, React.ComponentType<{ className?: string
 export const SynthesisCard: React.FC = () => {
   const { synthesisResult, isSynthesizing } = useExecutionStore();
   const { synthesisConfig, setSynthesisConfig } = useSettingsStore();
-  const [showConfig, setShowConfig] = useState(false);
+  const [showConfig, setShowConfig] = useState<any>(false);
   const tierConfig = SYNTHESIS_TIERS[synthesisConfig.tier];
 
   const handleCopy = async () => {

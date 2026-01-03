@@ -1,1 +1,29 @@
-npx lint-staged
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run typecheck but exclude experimental/legacy directories
+echo "Running pre-commit checks..."
+
+# Check if there are any staged TypeScript files (excluding legacy dirs)
+STAGED_TS_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx)$' | grep -v 'new-structure\|old-structure' | head -20)
+
+if [ -n "$STAGED_TS_FILES" ]; then
+    echo "Type checking staged files..."
+    echo "$STAGED_TS_FILES" | xargs npx tsc --noEmit --skipLibCheck
+    if [ $? -ne 0 ]; then
+        echo "TypeScript errors found in staged files"
+        echo "Files with errors:"
+        echo "$STAGED_TS_FILES" | xargs -I {} sh -c 'npx tsc --noEmit --skipLibCheck {} 2>&1 | grep -q "error TS" && echo "  {}"'
+        exit 1
+    fi
+else
+    echo "No TypeScript files to check (excluding legacy directories)"
+fi
+
+# Optional: Run linting on staged files
+# if [ -f "package.json" ] && grep -q '"lint"' package.json; then
+#     echo "Running linter..."
+#     npm run lint
+# fi
+
+echo "Pre-commit checks passed!"

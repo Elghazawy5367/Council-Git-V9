@@ -6,11 +6,11 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/primitives/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Lock, Unlock, Key, Shield, AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -33,13 +33,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onUnlockVault,
   onLockVault,
 }) => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [openRouterKey, setOpenRouterKey] = useState('');
-  const [serperKey, setSerperKey] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showApiKey, setShowApiKey] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState<any>('');
+  const [confirmPassword, setConfirmPassword] = useState<any>('');
+  const [openRouterKey, setOpenRouterKey] = useState<any>('');
+  const [serperKey, setSerperKey] = useState<any>('');
+  const [showPassword, setShowPassword] = useState<any>(false);
+  const [showApiKey, setShowApiKey] = useState<any>(false);
+  const [isLoading, setIsLoading] = useState<any>(false);
 
   const handleCreateVault = async () => {
     if (password.length < 8) {
@@ -99,12 +99,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     }
   };
 
-  const handleLock = () => {
+  const handleLock = (): JSX.Element => {
     onLockVault();
     toast.success('Vault locked');
   };
 
-  const resetForm = () => {
+  const resetForm = (): JSX.Element => {
     setPassword('');
     setConfirmPassword('');
     setOpenRouterKey('');

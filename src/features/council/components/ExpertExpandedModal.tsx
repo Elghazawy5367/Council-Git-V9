@@ -9,7 +9,7 @@ import {
   RefreshCw, 
   ThumbsUp, 
   ThumbsDown, 
-  X,
+  ___X,
   Brain,
   Cpu,
   Target,

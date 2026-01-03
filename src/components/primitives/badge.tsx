@@ -1,3 +1,4 @@
+import React from "react";
 import * as React from "react";
 import { type VariantProps } from "class-variance-authority";
 
@@ -11,3 +12,5 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { Badge };
+
+export default Component;

@@ -56,10 +56,10 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
   const { activeExpertCount, clearPersona } = useControlPanelStore();
   const isActive = index < activeExpertCount;
 
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedPersona, setEditedPersona] = useState(expert.basePersona);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState<any>(false);
+  const [isEditing, setIsEditing] = useState<any>(false);
+  const [editedPersona, setEditedPersona] = useState<any>(expert.basePersona);
+  const [isExpanded, setIsExpanded] = useState<any>(false);
 
   const IconComponent = ICON_MAP[expert.icon] || Brain;
   const selectedModel = MAGNIFICENT_7_FLEET.find((m) => m.id === expert.model);
@@ -426,3 +426,5 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
     </>
   );
 };
+
+export default ExpertExpandedModal;

@@ -1,3 +1,4 @@
+import React from "react";
 import * as React from "react";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
@@ -25,3 +26,5 @@ const HoverCardContent = React.forwardRef<
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName;
 
 export { HoverCard, HoverCardTrigger, HoverCardContent };
+
+export default Component;

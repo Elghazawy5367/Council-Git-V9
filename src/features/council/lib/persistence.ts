@@ -1,5 +1,5 @@
 import { get, set, del, clear } from 'idb-keyval';
-import type { Expert, SynthesisConfig, CouncilSession, ExecutionMode } from '../lib/types';
+import type { Expert, SynthesisConfig, CouncilSession, ExecutionMode } from './types';
 
 // IndexedDB keys
 const KEYS = {

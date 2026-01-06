@@ -3,7 +3,7 @@ import { useControlPanelStore } from '@/features/council/store/control-panel-sto
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { MODE_DESCRIPTIONS } from '@/lib/config';
-import { ExecutionMode } from '@/features/council/lib/types';
+import { ExecutionMode, SynthesisConfig } from '@/features/council/lib/types';
 import { Card, CardContent } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Textarea } from '@/components/primitives/textarea';
@@ -44,9 +44,20 @@ export const ControlPanel: React.FC = () => {
     setDebateRounds,
     fileData,
     setFileData,
-  } = useControlPanelStore();
-  
-  const { isLoading, statusMessage, executeCouncil } = useExecutionStore();
+  } = useControlPanelStore((state) => ({
+    task: state.task,
+    setTask: state.setTask,
+    mode: state.mode,
+    setMode: state.setMode,
+    activeExpertCount: state.activeExpertCount,
+    setActiveExpertCount: state.setActiveExpertCount,
+    debateRounds: state.debateRounds,
+    setDebateRounds: state.setDebateRounds,
+    fileData: state.fileData,
+    setFileData: state.setFileData,
+  }));
+
+  const { isLoading, statusMessage } = useExecutionStore((state) => ({ isLoading: state.isLoading, statusMessage: state.statusMessage }));
   const { vaultStatus, setShowSettings } = useSettingsStore();
   const synthesisMutation = useExecuteSynthesis();
 
@@ -86,7 +97,22 @@ export const ControlPanel: React.FC = () => {
       toast.error('Please enter a task');
       return;
     }
-    executeCouncil(synthesisMutation);
+
+    const defaultConfig: SynthesisConfig = {
+      tier: 'quick',
+      model: 'default-model',
+      fallbackModel: 'fallback-model',
+      temperature: 0.7,
+      maxTokens: 1000,
+      customInstructions: 'Default instructions', // Added missing property
+    };
+
+    synthesisMutation.mutate({
+      task,
+      config: synthesisMutation.variables?.config || defaultConfig,
+      apiKey: synthesisMutation.variables?.apiKey || '',
+      onProgress: synthesisMutation.variables?.onProgress || (() => {}),
+    });
   };
 
   return (
@@ -203,4 +229,4 @@ export const ControlPanel: React.FC = () => {
   );
 };
 
-export default                 IconComponent;
+export default ControlPanel;

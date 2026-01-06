@@ -5,13 +5,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog';
+} from '@/components/primitives/dialog';
 import { Button } from '@/components/primitives/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/primitives/input';
+import { Label } from '@/components/primitives/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/primitives/card';
-import { Lock, Unlock, Key, Shield, AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { Lock, Unlock, Key, Shield, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SettingsModalProps {
@@ -33,13 +32,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onUnlockVault,
   onLockVault,
 }) => {
-  const [password, setPassword] = useState<any>('');
-  const [confirmPassword, setConfirmPassword] = useState<any>('');
-  const [openRouterKey, setOpenRouterKey] = useState<any>('');
-  const [serperKey, setSerperKey] = useState<any>('');
-  const [showPassword, setShowPassword] = useState<any>(false);
-  const [showApiKey, setShowApiKey] = useState<any>(false);
-  const [isLoading, setIsLoading] = useState<any>(false);
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [openRouterKey, setOpenRouterKey] = useState<string>('');
+  const [serperKey, setSerperKey] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showApiKey, setShowApiKey] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCreateVault = async () => {
     if (password.length < 8) {
@@ -99,16 +98,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     }
   };
 
-  const handleLock = (): JSX.Element => {
+  const handleLock = (): void => {
     onLockVault();
     toast.success('Vault locked');
   };
 
-  const resetForm = (): JSX.Element => {
+  const resetForm = (): void => {
     setPassword('');
     setConfirmPassword('');
     setOpenRouterKey('');
     setSerperKey('');
+    setShowPassword(false);
+    setShowApiKey(false);
   };
 
   return (

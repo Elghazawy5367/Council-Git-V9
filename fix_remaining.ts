@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 
 const files = [
   'src/features/council/lib/export.ts',
@@ -7,7 +7,7 @@ const files = [
 ];
 
 files.forEach(filePath => {
-  if (!require('fs').existsSync(filePath)) return;
+  if (!existsSync(filePath)) return;
   
   let content = readFileSync(filePath, 'utf8');
   

@@ -52,14 +52,14 @@ interface ExpertCardProps {
 
 export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
   const expert = useExpertStore((state) => state.experts[index]);
-  const { updateExpert, addKnowledge, removeKnowledge } = useExpertStore();
-  const { activeExpertCount, clearPersona } = useControlPanelStore();
+  const { updateExpert, addKnowledge, removeKnowledge } = useExpertStore((state) => ({ updateExpert: state.updateExpert, addKnowledge: state.addKnowledge, removeKnowledge: state.removeKnowledge }));
+  const { activeExpertCount, clearPersona } = useControlPanelStore((state) => ({ activeExpertCount: state.activeExpertCount, clearPersona: state.clearPersona }));
   const isActive = index < activeExpertCount;
 
-  const [isConfigOpen, setIsConfigOpen] = useState<any>(false);
-  const [isEditing, setIsEditing] = useState<any>(false);
-  const [editedPersona, setEditedPersona] = useState<any>(expert.basePersona);
-  const [isExpanded, setIsExpanded] = useState<any>(false);
+  const [isConfigOpen, setIsConfigOpen] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedPersona, setEditedPersona] = useState<string | undefined>(expert.basePersona);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const IconComponent = ICON_MAP[expert.icon] || Brain;
   const selectedModel = MAGNIFICENT_7_FLEET.find((m) => m.id === expert.model);
@@ -409,7 +409,10 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
 
           {expert.output && (
             <ExpertOutputFooter
-              expertId={expert.id}
+              expert={{
+                ...expert,
+                content: expert.content || expert.output || 'No content available',
+              }}
             />
           )}
         </CardContent>

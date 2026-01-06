@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import { type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -13,4 +12,6 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 
 export { Badge };
 
-export default Component;
+// Replace undefined Component
+const PlaceholderBadge = () => <div>Badge Placeholder</div>;
+export default PlaceholderBadge;

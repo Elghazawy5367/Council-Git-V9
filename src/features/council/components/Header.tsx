@@ -8,16 +8,22 @@ import { Badge } from '@/components/primitives/badge';
 import { MemoryBadge } from './MemoryBadge';
 
 export const Header: React.FC = () => {
-  const { cost } = useExecutionStore();
+  const { cost } = useExecutionStore((state) => ({ cost: state.cost }));
   const {
     vaultStatus,
     setShowSettings,
     showHistory,
     setShowHistory,
-    __showMemory,
-    setShowMemory,
-  } = useSettingsStore();
-  const { memory } = useMemoryStore();
+    setShowMemory, // Removed unused __showMemory
+  } = useSettingsStore((state) => ({
+    vaultStatus: state.vaultStatus,
+    setShowSettings: state.setShowSettings,
+    showHistory: state.showHistory,
+    setShowHistory: state.setShowHistory,
+    setShowMemory: state.setShowMemory,
+  }));
+  const { memory } = useMemoryStore((state) => ({ memory: state.memory }));
+
   const memoryCount = memory?.entries.length || 0;
 
   return (
@@ -34,7 +40,9 @@ export const Header: React.FC = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-gradient">The Council</h1>
-              <p className="text-xs text-muted-foreground">V18 • Multi-Perspective Decision Engine</p>
+              <p className="text-xs text-muted-foreground">
+                V18 • Multi-Perspective Decision Engine
+              </p>
             </div>
           </div>
 

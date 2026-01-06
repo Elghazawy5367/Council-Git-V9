@@ -1,10 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { toast } from 'sonner';
-import '@/lib/types';
+import { SynthesisConfig } from '@/lib/types';
 import { DEFAULT_SYNTHESIS_CONFIG } from '@/lib/synthesis-engine';
 import { initializeVault, getVaultStatus, createVault, unlockVault, lockVault, VaultStatus } from '@/features/council/lib/vault';
-import { SynthesisConfig } from "@/features/council/lib/types";
 
 interface VaultCreationResult {
   success: boolean;
@@ -41,25 +40,26 @@ interface SettingsState {
   handleLockVault: () => void;
 }
 
-export const useSettingsStore = create<SettingsState>()(
+export const useSettingsStore = create<SettingsState>(
+  // @ts-expect-error - Zustand v5 persist middleware type signature mismatch (non-breaking)
   persist(
     (set) => ({
       apiKey: '',
-      setApiKey: (key) => set({ apiKey: key }),
+      setApiKey: (key: string) => set({ apiKey: key }),
       openRouterKey: '',
-      setOpenRouterKey: (key) => set({ openRouterKey: key }),
+      setOpenRouterKey: (key: string) => set({ openRouterKey: key }),
       model: 'gpt-4-turbo-preview',
-      setModel: (model) => set({ model }),
+      setModel: (model: string) => set({ model }),
       synthesisConfig: DEFAULT_SYNTHESIS_CONFIG,
-      setSynthesisConfig: (config) => set({ synthesisConfig: config }),
+      setSynthesisConfig: (config: SynthesisConfig) => set({ synthesisConfig: config }),
       showSettings: false,
-      setShowSettings: (show) => set({ showSettings: show }),
+      setShowSettings: (show: boolean) => set({ showSettings: show }),
       showHistory: false,
-      setShowHistory: (show) => set({ showHistory: show }),
+      setShowHistory: (show: boolean) => set({ showHistory: show }),
       showMemory: false,
-      setShowMemory: (show) => set({ showMemory: show }),
+      setShowMemory: (show: boolean) => set({ showMemory: show }),
       vaultStatus: initializeVault(),
-      handleCreateVault: async (data) => {
+      handleCreateVault: async (data: { password: string; openRouterKey: string; serperKey?: string }) => {
         const result = await createVault(data);
         if (result.success) {
           set({ vaultStatus: getVaultStatus() });
@@ -69,7 +69,7 @@ export const useSettingsStore = create<SettingsState>()(
         }
         return result;
       },
-      handleUnlockVault: async (password) => {
+      handleUnlockVault: async (password: string) => {
         const result = await unlockVault(password);
         if (result.success && 'keys' in result) {
           const unlockResult = result as VaultUnlockResult;

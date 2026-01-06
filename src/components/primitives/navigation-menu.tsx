@@ -1,7 +1,6 @@
-import React from "react";
-import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { ChevronDown } from "lucide-react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { navigationMenuTriggerStyle } from "@/lib/variants";
@@ -115,4 +114,6 @@ export {
   NavigationMenuViewport,
 };
 
-export default Component;
+// Replacing undefined Component with a placeholder
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

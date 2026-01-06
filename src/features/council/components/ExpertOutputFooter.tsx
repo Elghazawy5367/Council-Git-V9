@@ -2,9 +2,12 @@ import React from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { Button } from '@/components/primitives/button';
 import { RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { SynthesisConfig, SynthesisResult } from '@/features/council/lib/types';
+import { UseMutationResult } from '@tanstack/react-query';
+import { ExpertOutput } from '@/features/council/store/execution-store';
 
 interface ExpertOutputFooterProps {
-  expertId: string;
+  expert: ExpertOutput;
   expertName?: string;
   output?: string;
   model?: string;
@@ -12,13 +15,35 @@ interface ExpertOutputFooterProps {
   isRetrying?: boolean;
 }
 
-export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = ({ expertId }) => {
+export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
   const { executeCouncil, isLoading } = useExecutionStore();
 
-  // This is a placeholder for the retry logic
   const onRetry = () => {
-    // Casting for now as we transition the store interface
-    (executeCouncil as any)(expertId);
+    const mockMutationResult = {
+      mutate: ({
+        expertOutputs,
+        task,
+        config,
+        apiKey,
+        onProgress,
+      }: {
+        expertOutputs: ExpertOutput[];
+        task: string;
+        config: SynthesisConfig;
+        apiKey: string;
+        onProgress: (message: string) => void;
+      }) => {
+        console.log('Mock mutation executed', expertOutputs, task, config, apiKey);
+        onProgress('Mock progress message');
+      },
+    } as UseMutationResult<
+      SynthesisResult,
+      Error,
+      { expertOutputs: ExpertOutput[]; task: string; config: SynthesisConfig; apiKey: string; onProgress: (message: string) => void },
+      unknown
+    >;
+
+    executeCouncil(mockMutationResult);
   };
 
   return (

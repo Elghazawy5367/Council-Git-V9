@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
-import { Toaster as Sonner } from "sonner";
 import { TooltipProvider } from "@/components/primitives/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import RootErrorBoundary from "@/components/ErrorBoundary";
+import { Toaster } from "@/components/primitives/sonner";
 
 // Lazy load pages for code splitting
 const Index = React.lazy(() => import("@/pages/Index"));
@@ -29,7 +29,7 @@ const App = () => (
   <RootErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Sonner />
+        <Toaster />
         <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -43,5 +43,11 @@ const App = () => (
     </QueryClientProvider>
   </RootErrorBoundary>
 );
+
+// Add a test error boundary trigger for development
+if (process.env.NODE_ENV === 'development') {
+  console.error('Test ErrorBoundary: Throwing intentional error');
+  throw new Error('Intentional Error for Boundary Testing');
+}
 
 export default App;

@@ -212,35 +212,13 @@ export function formatMemoriesForContext(memories: MemoryEntry[]): string {
   
   if (insightMemories.length > 0) {
     context += 'Previous insights relevant to this query:\n';
-    insightMemories.forEach((m, i) => {
-      context += `${i + 1}. ${m.content}\n`;
+    insightMemories.forEach(m => {
+      context += `${m.content}\n`;
     });
     context += '\n';
   }
   
-  if (prefMemories.length > 0) {
-    context += 'User preferences:\n';
-    prefMemories.forEach((m, i) => {
-      context += `- ${m.content}\n`;
-    });
-    context += '\n';
-  }
-  
-  if (domainMemories.length > 0) {
-    context += 'Domain context:\n';
-    domainMemories.forEach((m, i) => {
-      context += `- ${m.content}\n`;
-    });
-    context += '\n';
-  }
-  
-  if (patternMemories.length > 0) {
-    context += 'Observed patterns:\n';
-    patternMemories.forEach((m, i) => {
-      context += `- ${m.content}\n`;
-    });
-    context += '\n';
-  }
+  context += buildContext(prefMemories, domainMemories, patternMemories);
   
   context += '--- END COUNCIL MEMORY ---\n';
   
@@ -370,4 +348,40 @@ export function getMemoryTypeLabel(type: MemoryType): string {
     domain_knowledge: '📚 Domain',
   };
   return labels[type];
+}
+
+/**
+ * Build context string from memory arrays
+ */
+export function buildContext(
+  prefMemories: MemoryEntry[],
+  domainMemories: MemoryEntry[],
+  patternMemories: MemoryEntry[]
+): string {
+  let context = '';
+
+  if (prefMemories.length > 0) {
+    context += 'User preferences:\n';
+    prefMemories.forEach(m => {
+      context += `- ${m.content}\n`;
+    });
+    context += '\n';
+  }
+
+  if (domainMemories.length > 0) {
+    context += 'Domain context:\n';
+    domainMemories.forEach(m => {
+      context += `- ${m.content}\n`;
+    });
+    context += '\n';
+  }
+
+  if (patternMemories.length > 0) {
+    context += 'Observed patterns:\n';
+    patternMemories.forEach(m => {
+      context += `- ${m.content}\n`;
+    });
+  }
+
+  return context;
 }

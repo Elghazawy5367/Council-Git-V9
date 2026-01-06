@@ -4,6 +4,7 @@ import { ExecutionMode } from '@/features/council/lib/types';
 import { DEFAULT_EXPERTS } from '@/lib/config';
 import { loadPersonaIntoExpert, loadTeam } from '@/features/council/lib/persona-library';
 import { useExpertStore } from './expert-store';
+import { Expert } from '@/features/council/lib/types'; // Direct import of Expert type
 
 interface FileData {
   name: string;
@@ -41,11 +42,24 @@ export const useControlPanelStore = create<ControlPanelState>((set) => ({
   setFileData: (fileData) => set({ fileData }),
 
   loadPersona: (expertIndex, personaId) => {
-    const { experts, setExperts } = useExpertStore.getState();
+    const { experts, setExperts }: { experts: Expert[]; setExperts: (experts: Expert[]) => void } = useExpertStore.getState();
     const personaExpert = loadPersonaIntoExpert(personaId, expertIndex);
     if (personaExpert) {
       const newExperts = [...experts];
-      newExperts[expertIndex - 1] = personaExpert;
+      newExperts[expertIndex - 1] = {
+        id: personaExpert.id,
+        name: personaExpert.name,
+        model: personaExpert.model,
+        role: personaExpert.role,
+        basePersona: personaExpert.basePersona,
+        knowledge: personaExpert.knowledge || [],
+        config: personaExpert.config,
+        modeBehavior: personaExpert.modeBehavior,
+        content: personaExpert.content || 'No content available',
+        color: personaExpert.color || '#000000',
+        icon: personaExpert.icon || 'default-icon',
+        isLoading: personaExpert.isLoading !== undefined ? personaExpert.isLoading : false, // Ensure isLoading is explicitly defined
+      };
       setExperts(newExperts);
       toast.success(`Loaded ${personaExpert.name} into Expert ${expertIndex}`);
     } else {
@@ -60,7 +74,25 @@ export const useControlPanelStore = create<ControlPanelState>((set) => ({
       set({ activeExpertCount: team.experts.length, mode: team.mode });
       const newExperts = [...DEFAULT_EXPERTS];
       team.experts.forEach((expert, index) => {
-        newExperts[index] = expert;
+        newExperts[index] = {
+          id: expert.id,
+          name: expert.name,
+          model: expert.model,
+          role: expert.role,
+          basePersona: expert.basePersona,
+          knowledge: expert.knowledge || [],
+          config: expert.config,
+          modeBehavior: {
+            ...expert.modeBehavior,
+            modeName: expert.modeBehavior.modeName ?? "defaultMode",
+            description: expert.modeBehavior.description ?? "No description provided",
+            isEnabled: expert.modeBehavior.isEnabled ?? true,
+          },
+          content: expert.content || 'No content available',
+          color: expert.color || '#000000',
+          icon: expert.icon || 'default-icon',
+          hasWebSearch: expert.hasWebSearch ?? false,
+        };
       });
       setExperts(newExperts);
       toast.success(`Loaded ${team.name} with ${team.experts.length} experts`);

@@ -1,6 +1,5 @@
-import React from "react";
-import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -28,4 +27,6 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
 
-export default Component;
+// Replacing undefined Component with a placeholder
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

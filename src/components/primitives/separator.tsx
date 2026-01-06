@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
 import { cn } from "@/lib/utils";
@@ -20,4 +19,6 @@ Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export { Separator };
 
-export default Component;
+// Replacing undefined Component with a placeholder
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { cn } from "@/lib/utils";
@@ -102,6 +101,10 @@ export {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
+};
+
+const Component = () => {
+  return null; // Placeholder implementation
 };
 
 export default Component;

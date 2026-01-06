@@ -9,7 +9,7 @@ import { SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
 import { saveSession } from '@/features/council/lib/session-history';
 import { UseMutationResult } from '@tanstack/react-query';
 
-interface ExpertOutput {
+export interface ExpertOutput {
   name: string;
   model: string;
   content: string;
@@ -29,6 +29,7 @@ interface ExecutionState {
   outputs: Record<string, string>;
   synthesisResult: SynthesisResult | null;
   verdict: string;
+  status: string; // Added to represent the execution status
   executeCouncil: (synthesisMutation: UseMutationResult<SynthesisResult, Error, { expertOutputs: ExpertOutput[]; task: string; config: SynthesisConfig; apiKey: string; onProgress: (message: string) => void; }, unknown>) => Promise<void>;
   reset: () => void;
 }
@@ -41,6 +42,7 @@ export const useExecutionStore = create<ExecutionState>((set) => ({
   outputs: {},
   synthesisResult: null,
   verdict: '',
+  status: '',
 
   executeCouncil: async (synthesisMutation) => {
     const { task, mode, activeExpertCount } = useControlPanelStore.getState();
@@ -173,6 +175,7 @@ export const useExecutionStore = create<ExecutionState>((set) => ({
       outputs: {},
       synthesisResult: null,
       verdict: '',
+      status: '',
     });
   },
 }));

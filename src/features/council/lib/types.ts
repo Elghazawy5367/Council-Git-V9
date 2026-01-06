@@ -13,6 +13,9 @@ export interface ModeBehavior {
   synthesis: string;
   debate: string;
   pipeline: string;
+  modeName: string; // Added to align with ai-client.ts
+  description: string; // Added to align with ai-client.ts
+  isEnabled: boolean; // Added to align with ai-client.ts
 }
 
 export interface KnowledgeFile {
@@ -29,7 +32,7 @@ export interface Expert {
   model: string;
   role: string;
   basePersona: string;
-  knowledge: KnowledgeFile[];
+  knowledge: KnowledgeFile[]; // Ensure this is properly typed
   config: ExpertConfig;
   modeBehavior: ModeBehavior;
   color: string;
@@ -41,7 +44,8 @@ export interface Expert {
   positionName?: string;
   positionSpecialty?: string;
   pluginId?: string;
-  pluginConfig?: any;
+  pluginConfig?: Record<string, unknown>;
+  content?: string; // Added to align with control-panel-store.ts
 }
 
 export type ExecutionMode = 'separated' | 'synthesis' | 'debate' | 'pipeline';
@@ -50,11 +54,12 @@ export type SynthesisTier = 'quick' | 'balanced' | 'deep';
 
 export interface SynthesisConfig {
   tier: SynthesisTier;
-  model: string;
-  fallbackModel: string;
-  temperature: number;
-  maxTokens: number;
-  customInstructions: string;
+  model?: string;
+  fallbackModel?: string;
+  temperature?: number;
+  maxTokens?: number;
+  customInstructions?: string;
+  options?: Record<string, unknown>;
 }
 
 export interface SynthesisResult {
@@ -117,4 +122,11 @@ export interface CouncilSession {
     synthesis: number;
     total: number;
   };
+}
+
+// Added missing 'ExpertOutput' type definition
+export interface ExpertOutput {
+  name: string;
+  model: string;
+  content: string;
 }

@@ -6,13 +6,13 @@ export interface PluginBase {
 }
 
 export interface ExpertPlugin extends PluginBase {
-  renderConfig: (config: any, onChange: (newConfig: any) => void) => React.ReactNode;
-  execute: (input: string, config: any) => Promise<string>;
-  validateConfig: (config: any) => boolean;
-  defaultConfig: any;
+  renderConfig: (config: Record<string, unknown>, onChange: (newConfig: Record<string, unknown>) => void) => React.ReactNode;
+  execute: (input: string, config: Record<string, unknown>) => Promise<string>;
+  validateConfig: (config: Record<string, unknown>) => boolean;
+  defaultConfig: Record<string, unknown>;
 }
 
 export interface ModePlugin extends PluginBase {
-  execute: (experts: any[], task: string, config: any) => Promise<any>;
-  defaultConfig: any;
+  execute: (experts: ExpertPlugin[], task: string, config: Record<string, unknown>) => Promise<Record<string, unknown>>;
+  defaultConfig: Record<string, unknown>;
 }

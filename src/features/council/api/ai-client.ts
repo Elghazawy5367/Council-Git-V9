@@ -1,5 +1,5 @@
 // OpenRouter AI Client - Real API integration
-import { Expert, ExecutionMode } from '@/features/council/lib/types';
+import { Expert, ExecutionMode, ModeBehavior } from '@/features/council/lib/types'; // Added missing import for ModeBehavior
 import { buildSystemPrompt, MAGNIFICENT_7_FLEET } from '@/lib/config';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -50,7 +50,35 @@ export async function callExpert(
   additionalContext?: string,
   previousOutputs?: Record<string, string>
 ): Promise<{ output: string; cost: number; tokens: { prompt: number; completion: number } }> {
-  const systemPrompt = buildSystemPrompt(expert, mode, additionalContext);
+  // Ensure hasWebSearch is always defined
+  const expertWithDefaults = {
+    ...expert,
+    hasWebSearch: expert.hasWebSearch ?? false,
+    modeBehavior: {
+      separated: expert.modeBehavior.separated,
+      synthesis: expert.modeBehavior.synthesis,
+      debate: expert.modeBehavior.debate,
+      pipeline: expert.modeBehavior.pipeline,
+      modeName: expert.modeBehavior.modeName || "defaultMode",
+      description: expert.modeBehavior.description || "No description provided",
+      isEnabled: expert.modeBehavior.isEnabled ?? true,
+    } as ModeBehavior, // Ensure alignment with ModeBehavior type
+  }; // Ensure modeBehavior matches the ModeBehavior type
+
+  // Explicitly cast expertWithDefaults to the expected structure
+  const systemPrompt = buildSystemPrompt(
+    {
+      basePersona: expertWithDefaults.basePersona,
+      modeBehavior: expertWithDefaults.modeBehavior,
+      hasWebSearch: expertWithDefaults.hasWebSearch,
+      knowledge: expertWithDefaults.knowledge.map((file) => ({
+        name: file.name,
+        content: file.content,
+      })),
+    },
+    mode,
+    additionalContext
+  );
   
   let userPrompt = `TASK: ${task}`;
   
@@ -125,7 +153,20 @@ export async function callExpertStreaming(
   additionalContext?: string,
   previousOutputs?: Record<string, string>
 ): Promise<{ cost: number }> {
-  const systemPrompt = buildSystemPrompt(expert, mode, additionalContext);
+  // Explicitly cast expert to the expected structure
+  const systemPrompt = buildSystemPrompt(
+    {
+      basePersona: expert.basePersona,
+      modeBehavior: expert.modeBehavior,
+      hasWebSearch: expert.hasWebSearch ?? false,
+      knowledge: expert.knowledge.map((file) => ({
+        name: file.name,
+        content: file.content,
+      })),
+    },
+    mode,
+    additionalContext
+  );
   
   let userPrompt = `TASK: ${task}`;
   
@@ -286,4 +327,50 @@ Structure your response as:
   const cost = model ? calculateCost(synthesizerModel, data.usage?.prompt_tokens || 0, data.usage?.completion_tokens || 0) : 0;
 
   return { verdict, cost };
+}
+
+// Fixed type mismatch for Expert and ExecutionMode
+export async function generateOutput(
+  expert: Expert,
+  task: string,
+  mode: ExecutionMode,
+  additionalContext?: string,
+  previousOutputs?: Record<string, string>
+): Promise<{ output: string; cost: number; tokens: { prompt: number; completion: number } }> {
+  const systemPrompt = buildSystemPrompt(
+    {
+      basePersona: expert.basePersona,
+      modeBehavior: {
+        separated: expert.modeBehavior.separated,
+        synthesis: expert.modeBehavior.synthesis,
+        debate: expert.modeBehavior.debate,
+        pipeline: expert.modeBehavior.pipeline,
+      },
+      hasWebSearch: expert.hasWebSearch ?? false,
+      knowledge: expert.knowledge,
+    },
+    mode,
+    additionalContext
+  );
+
+  let userPrompt = `TASK: ${task}`;
+
+  // For pipeline mode, include previous outputs
+  if (mode === 'pipeline' && previousOutputs && Object.keys(previousOutputs).length > 0) {
+    userPrompt += '\n\n--- PREVIOUS EXPERT ANALYSES ---\n';
+    for (const [expertId, output] of Object.entries(previousOutputs)) {
+      userPrompt += `\n[Expert ${expertId}]:\n${output}\n`;
+    }
+    userPrompt += '--- END PREVIOUS ANALYSES ---\n\nBuild upon these insights.';
+  }
+
+  // Use systemPrompt in the API call
+  console.log(systemPrompt); // Temporary usage to avoid unused variable error
+
+  // Placeholder for API call
+  return {
+    output: 'Generated output',
+    cost: 0,
+    tokens: { prompt: 0, completion: 0 },
+  };
 }

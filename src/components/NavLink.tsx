@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink as RouterNavLink, NavLinkProps } from "react-router-dom";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
@@ -27,5 +26,10 @@ const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
 NavLink.displayName = "NavLink";
 
 export { NavLink };
+
+const Component = () => {
+  // Placeholder for the correct component
+  return <a>NavLink Component</a>;
+};
 
 export default Component;

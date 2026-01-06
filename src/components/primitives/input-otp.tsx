@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import { OTPInput, OTPInputContext } from "input-otp";
 import { Dot } from "lucide-react";
 
@@ -61,4 +60,8 @@ InputOTPSeparator.displayName = "InputOTPSeparator";
 
 export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
 
-export default Component;
+const InputOtp = () => {
+  // Placeholder for the correct component
+  return <div>InputOtp Component</div>;
+};
+export default InputOtp;

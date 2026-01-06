@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { cn } from "@/lib/utils";
@@ -23,4 +22,5 @@ Slider.displayName = SliderPrimitive.Root.displayName;
 
 export { Slider };
 
-export default Component;
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

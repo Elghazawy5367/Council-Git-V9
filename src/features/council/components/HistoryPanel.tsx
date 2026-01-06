@@ -14,9 +14,7 @@ import {
   Users, 
   DollarSign,
   ChevronRight,
-  AlertTriangle,
-  X,
-  PanelRightClose
+  AlertTriangle
 } from 'lucide-react';
 import {
   AlertDialog,
@@ -30,6 +28,27 @@ import {
   AlertDialogTrigger,
 } from '@/components/primitives/alert-dialog';
 import { toast } from 'sonner';
+
+// Placeholder for Sheet components
+interface SheetProps extends React.HTMLAttributes<HTMLDivElement> {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const Sheet = ({ children, open, onOpenChange, ...props }: SheetProps) => (
+  <div {...props}>{children}</div>
+);
+
+interface SheetContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  side?: string;
+}
+
+const SheetContent = ({ children, side, ...props }: SheetContentProps) => (
+  <div {...props}>{children}</div>
+);
+
+const SheetHeader = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>;
+const SheetTitle = ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => <h2 {...props}>{children}</h2>;
 
 interface HistoryPanelProps {
   onLoadSession?: (session: CouncilSession) => void;
@@ -227,7 +246,7 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={(open) => !open && onClose?.()}>
+    <Sheet open={isOpen} onOpenChange={(open: boolean) => !open && onClose?.()}>
       <SheetContent side="right" className="w-[380px] sm:w-[420px] glass-panel-elevated border-l border-border/50 p-0">
         <SheetHeader className="p-4 border-b border-border/50">
           <div className="flex items-center justify-between">

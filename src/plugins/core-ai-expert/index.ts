@@ -21,15 +21,27 @@ export const coreAiExpertPlugin: ExpertPlugin = {
     frequencyPenalty: 0,
   },
 
-  validateConfig: (config: any) => {
-    return typeof config.temperature === "number" && config.maxTokens > 0;
+  validateConfig: (config: Record<string, unknown>) => {
+    const cfg = config as { temperature?: number; maxTokens?: number };
+    return typeof cfg.temperature === "number" && typeof cfg.maxTokens === "number" && cfg.maxTokens > 0;
   },
 
-  renderConfig: (config: any, onChange: (newConfig: any) => void) => {
-    return React.createElement(CoreAiExpertConfig, { config, onChange });
+  renderConfig: (
+    config: Record<string, unknown>,
+    onChange: (newConfig: Record<string, unknown>) => void
+  ) => {
+    // Wrapper to handle type conversion between plugin API and component props
+    const typedConfig = config as unknown as { temperature: number; maxTokens: number; topP: number };
+    const typedOnChange = (newConfig: unknown) => {
+      onChange(newConfig as Record<string, unknown>);
+    };
+    return React.createElement(CoreAiExpertConfig, { 
+      config: typedConfig, 
+      onChange: typedOnChange
+    });
   },
 
-  execute: async (_input: string, _config: any) => {
+  execute: async (_input: string, _config: Record<string, unknown>) => {
     // Execution logic would go here, calling the AI client
     return "Expert analysis completed.";
   }

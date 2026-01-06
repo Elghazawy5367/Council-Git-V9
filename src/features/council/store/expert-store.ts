@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { Expert, KnowledgeFile } from '@/features/council/lib/types';
+import { Expert } from '@/features/council/lib/types'; // Ensure consistent Expert type
+import { KnowledgeFile } from '@/features/council/lib/types';
 
 interface ExpertState {
   experts: Expert[];
@@ -17,6 +18,10 @@ export const useExpertStore = create<ExpertState>((set) => ({
       experts: state.experts.map((e, i) => {
         if (i !== index) return e;
         const updated = { ...e, ...expertUpdates };
+        // Ensure content is populated
+        if (!updated.content) {
+          updated.content = updated.output || 'No content available';
+        }
         // Sync pluginConfig with legacy config if core-ai-expert
         if (updated.pluginId === 'core-ai-expert' && updated.pluginConfig) {
           updated.config = { ...updated.config, ...updated.pluginConfig };

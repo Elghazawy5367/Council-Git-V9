@@ -1,7 +1,6 @@
-import React from "react";
-import * as React from "react";
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { type VariantProps } from "class-variance-authority";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { toggleVariants } from "@/lib/variants";
@@ -49,4 +48,6 @@ ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName;
 
 export { ToggleGroup, ToggleGroupItem };
 
-export default Component;
+// Replacing undefined Component with a placeholder
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

@@ -1,9 +1,10 @@
 import React from "react";
-import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
+// Fix incorrect import for buttonVariants
+import { buttonVariants } from "@/components/primitives/button";
+
 import { cn } from "@/lib/utils";
-import { ButtonProps, buttonVariants } from "@/components/primitives/button";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -27,12 +28,14 @@ const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li"
 ));
 PaginationItem.displayName = "PaginationItem";
 
-type PaginationLinkProps = {
+interface PaginationLinkProps {
+  size?: "default" | "sm" | "lg";
   isActive?: boolean;
-} & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">;
+  className?: string;
+  [key: string]: unknown;
+}
 
-const PaginationLink = ({ className, isActive, size = "icon", ...props }: PaginationLinkProps) => (
+const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkProps) => (
   <a
     aria-current={isActive ? "page" : undefined}
     className={cn(
@@ -80,5 +83,3 @@ export {
   PaginationNext,
   PaginationPrevious,
 };
-
-export default Component;

@@ -1,6 +1,4 @@
 import React from "react";
-import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
@@ -21,4 +19,5 @@ Textarea.displayName = "Textarea";
 
 export { Textarea };
 
-export default Component;
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

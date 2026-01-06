@@ -7,7 +7,6 @@ import { SynthesisCard } from "@/features/council/components/SynthesisCard";
 import { useControlPanelStore } from "@/features/council/store/control-panel-store";
 import { useExpertStore } from "@/features/council/store/expert-store";
 import { useSettingsStore } from "@/features/settings/store/settings-store";
-import { Loader2 } from "lucide-react";
 
 const SettingsModal = lazy(() => import("@/features/settings/components/SettingsModal"));
 const HistorySidebar = lazy(() => import("@/features/council/components/HistoryPanel"));

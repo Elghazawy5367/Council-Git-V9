@@ -1,4 +1,3 @@
-import React from "react";
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
@@ -300,6 +299,10 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 
   return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
 }
+
+const Component = () => {
+  return <div>Chart Component</div>;
+};
 
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle };
 

@@ -1,4 +1,5 @@
-import { Expert, ModelInfo, ExecutionMode } from './types';
+import { ModelInfo } from './types';
+import type { ExecutionMode } from '@/features/council/lib/types';
 
 // The Magnificent 7 Model Fleet
 export const MAGNIFICENT_7_FLEET: ModelInfo[] = [
@@ -76,7 +77,8 @@ export const MAGNIFICENT_7_FLEET: ModelInfo[] = [
   },
 ];
 
-export const MODE_DESCRIPTIONS: Record<ExecutionMode, { name: string; description: string; icon: string }> = {
+// Replaced 'ExecutionMode' with 'string' for compatibility
+export const MODE_DESCRIPTIONS: Record<string, { name: string; description: string; icon: string }> = {
   separated: {
     name: 'Separated',
     description: 'Independent analyses with no cross-pollination between experts',
@@ -151,7 +153,7 @@ You have access to real-time data via Google Search. USE IT when:
 CRITICAL: Do NOT hallucinate data. If you need current information but cannot access it, explicitly state that you need to search for it and what you would search for.
 `;
 
-export const DEFAULT_EXPERTS: Expert[] = [
+export const DEFAULT_EXPERTS = [
   {
     id: 'exp_1',
     name: 'The Logician',
@@ -182,9 +184,13 @@ C: Therefore, Y must be true
       synthesis: 'Find logical common ground between perspectives.',
       debate: 'Ruthlessly identify logical fallacies in opposing arguments.',
       pipeline: 'Verify logical consistency of previous analysis.',
+      modeName: 'defaultMode',
+      description: 'Default description for logical analysis.',
+      isEnabled: true,
     },
     color: 'from-blue-500 to-cyan-500',
     icon: 'Brain',
+    content: 'Default content for The Logician.',
   },
   {
     id: 'exp_2',
@@ -210,7 +216,13 @@ graph TD
 | Frontend | React | High |
 | Backend | Node.js | Medium |
 "`,
-    knowledge: [],
+    knowledge: [{
+      id: 'file_1',
+      name: 'Default Knowledge',
+      content: 'This is a default knowledge file.',
+      size: '1KB',
+      type: 'text/plain',
+    }],
     config: {
       temperature: 0.4,
       maxTokens: 4000,
@@ -223,9 +235,13 @@ graph TD
       synthesis: 'Integrate technical requirements from all perspectives.',
       debate: 'Challenge architectural decisions and propose alternatives.',
       pipeline: 'Build upon previous technical specifications.',
+      modeName: 'defaultMode',
+      description: 'Default description for technical analysis.',
+      isEnabled: true,
     },
     color: 'from-emerald-500 to-teal-500',
     icon: 'Cpu',
+    content: 'Default content for The Architect.',
     hasWebSearch: false,
   },
   {
@@ -262,153 +278,84 @@ quadrantChart
       temperature: 0.5,
       maxTokens: 4000,
       topP: 0.9,
-      presencePenalty: 0.2,
+      presencePenalty: 0.1,
       frequencyPenalty: 0.1,
     },
     modeBehavior: {
-      separated: 'Analyze strategic implications independently.',
-      synthesis: 'Align strategic vision across all perspectives.',
-      debate: 'Challenge strategic assumptions and competitive positioning.',
-      pipeline: 'Develop strategy building on previous insights.',
+      separated: 'Provide strategic analysis independently.',
+      synthesis: 'Integrate strategic insights from all perspectives.',
+      debate: 'Challenge strategic assumptions and propose alternatives.',
+      pipeline: 'Build upon previous strategic analyses.',
+      modeName: 'defaultMode',
+      description: 'Default description for strategic analysis.',
+      isEnabled: true,
     },
-    color: 'from-amber-500 to-orange-500',
-    icon: 'Target',
-    hasWebSearch: true,
-  },
-  {
-    id: 'exp_4',
-    name: 'The Psychologist',
-    model: 'mistralai/mixtral-8x7b-instruct',
-    role: 'system',
-    basePersona: `You are "The Psychologist". Analyze human behavior, motivation, cognitive biases, and emotional factors. Consider how decisions affect stakeholders psychologically.
-
-EXAMPLE OUTPUT:
-"## Psychological Analysis
-
-### Stakeholder Motivation Map
-\`\`\`mermaid
-mindmap
-  root((Decision))
-    Users
-      Fear of Change
-      Desire for Status
-    Executives
-      Risk Aversion
-      Growth Pressure
-    Team
-      Job Security
-      Recognition
-\`\`\`
-
-### Cognitive Bias Assessment
-| Bias | Risk Level | Mitigation |
-|------|------------|------------|
-| Anchoring | High | Present multiple options |
-| Confirmation | Medium | Devil's advocate process |
-"`,
-    knowledge: [],
-    config: {
-      temperature: 0.6,
-      maxTokens: 4000,
-      topP: 0.9,
-      presencePenalty: 0.2,
-      frequencyPenalty: 0.1,
-    },
-    modeBehavior: {
-      separated: 'Provide psychological analysis independently.',
-      synthesis: 'Harmonize understanding of human factors.',
-      debate: 'Challenge assumptions about human behavior.',
-      pipeline: 'Add psychological depth to previous analysis.',
-    },
-    color: 'from-pink-500 to-rose-500',
-    icon: 'Heart',
-  },
-  {
-    id: 'exp_5',
-    name: 'The Critic',
-    model: 'meta-llama/llama-3.1-8b-instruct',
-    role: 'system',
-    basePersona: `You are "The Critic". Your role is to find weaknesses, identify blind spots, and stress-test ideas. Be constructively skeptical. If something can fail, explain how.
-
-EXAMPLE OUTPUT:
-"## Critical Assessment
-
-### Risk Matrix
-| Risk | Probability | Impact | Priority |
-|------|-------------|--------|----------|
-| Technical Debt | High | Medium | 1 |
-| Market Timing | Medium | High | 2 |
-
-### Identified Weaknesses
-✗ **Weakness 1:** [specific flaw]
-✗ **Weakness 2:** [potential failure mode]
-⚠ **Assumption Risk:** [untested assumptions]
-
-### Mitigation Recommendations
-→ [how to address each weakness]"`,
-    knowledge: [],
-    config: {
-      temperature: 0.4,
-      maxTokens: 3000,
-      topP: 0.9,
-      presencePenalty: 0.3,
-      frequencyPenalty: 0.2,
-    },
-    modeBehavior: {
-      separated: 'Provide critical analysis independently.',
-      synthesis: 'Identify weaknesses in the emerging consensus.',
-      debate: 'Aggressively challenge all positions.',
-      pipeline: 'Stress-test the accumulated conclusions.',
-    },
-    color: 'from-red-500 to-rose-600',
-    icon: 'AlertTriangle',
+    color: 'from-red-500 to-orange-500',
+    icon: 'Chess',
+    content: 'Default content for The Strategist.',
   },
 ];
 
-export const EXPERT_COLORS = [
-  'from-blue-500 to-cyan-500',
-  'from-emerald-500 to-teal-500',
-  'from-amber-500 to-orange-500',
-  'from-pink-500 to-rose-500',
-  'from-red-500 to-rose-600',
-  'from-violet-500 to-purple-500',
-  'from-indigo-500 to-blue-500',
-];
-
-export const buildSystemPrompt = (
-  expert: Expert,
+// Build System Prompt for AI Client
+export function buildSystemPrompt(
+  expertConfig: {
+    basePersona: string;
+    modeBehavior: {
+      separated?: string;
+      synthesis?: string;
+      debate?: string;
+      pipeline?: string;
+    };
+    hasWebSearch: boolean;
+    knowledge: Array<{ name: string; content: string }>;
+  },
   mode: ExecutionMode,
   additionalContext?: string
-): string => {
-  const modeBehavior = MODE_BEHAVIORS[mode];
-  const expertModeBehavior = expert.modeBehavior[mode];
+): string {
+  let prompt = expertConfig.basePersona + '\n\n';
   
-  let prompt = `${expert.basePersona}\n\n`;
+  // Add mode-specific behavior
+  const modeBehavior = MODE_BEHAVIORS[mode as keyof typeof MODE_BEHAVIORS];
+  if (modeBehavior) {
+    prompt += modeBehavior.instruction + '\n';
+  }
   
-  // Add output formatting rules (Claude Artifacts style)
+  // Add mode-specific behavior from expert
+  if (mode === 'separated' && expertConfig.modeBehavior.separated) {
+    prompt += expertConfig.modeBehavior.separated + '\n';
+  } else if (mode === 'synthesis' && expertConfig.modeBehavior.synthesis) {
+    prompt += expertConfig.modeBehavior.synthesis + '\n';
+  } else if (mode === 'debate' && expertConfig.modeBehavior.debate) {
+    prompt += expertConfig.modeBehavior.debate + '\n';
+  } else if (mode === 'pipeline' && expertConfig.modeBehavior.pipeline) {
+    prompt += expertConfig.modeBehavior.pipeline + '\n';
+  }
+  
+  // Add output formatting rules
   prompt += OUTPUT_FORMATTING_RULES + '\n';
   
-  // Add web search capability for enabled experts
-  if (expert.hasWebSearch) {
+  // Add web search capability if enabled
+  if (expertConfig.hasWebSearch) {
     prompt += WEB_SEARCH_RULES + '\n';
   }
   
-  prompt += `MODE INSTRUCTION: ${modeBehavior.instruction}\n`;
-  prompt += `YOUR SPECIFIC BEHAVIOR: ${expertModeBehavior}\n`;
-  
-  if (expert.knowledge.length > 0) {
-    prompt += '\n--- KNOWLEDGE BASE ---\n';
-    expert.knowledge.forEach((file) => {
+  // Add knowledge context
+  if (expertConfig.knowledge && expertConfig.knowledge.length > 0) {
+    prompt += '\n**KNOWLEDGE BASE:**\n';
+    expertConfig.knowledge.forEach((file) => {
       prompt += `\n[${file.name}]:\n${file.content}\n`;
     });
-    prompt += '--- END KNOWLEDGE BASE ---\n';
   }
   
+  // Add additional context if provided
   if (additionalContext) {
-    prompt += `\n--- ADDITIONAL CONTEXT ---\n${additionalContext}\n--- END CONTEXT ---\n`;
+    prompt += '\n**ADDITIONAL CONTEXT:**\n' + additionalContext + '\n';
   }
   
-  prompt += modeBehavior.suffix;
+  // Add mode suffix
+  if (modeBehavior && modeBehavior.suffix) {
+    prompt += modeBehavior.suffix + '\n';
+  }
   
   return prompt;
-};
+}

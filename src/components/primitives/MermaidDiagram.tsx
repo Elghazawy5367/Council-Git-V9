@@ -32,7 +32,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, className
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<any>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const renderDiagram = async () => {

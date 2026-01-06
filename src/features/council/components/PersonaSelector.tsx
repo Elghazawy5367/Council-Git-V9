@@ -30,10 +30,16 @@ export const PersonaSelector: React.FC = () => {
     loadTeam,
     clearPersona,
     resetToDefault,
-  } = useControlPanelStore();
-  const { experts } = useExpertStore();
+  } = useControlPanelStore((state) => ({
+    activeExpertCount: state.activeExpertCount,
+    loadPersona: state.loadPersona,
+    loadTeam: state.loadTeam,
+    clearPersona: state.clearPersona,
+    resetToDefault: state.resetToDefault,
+  }));
+  const { experts } = useExpertStore((state) => ({ experts: state.experts }));
 
-  const [showIndividual, setShowIndividual] = useState<any>(false);
+  const [showIndividual, setShowIndividual] = useState<boolean>(false);
   const teams = getTeamSelectorOptions();
   const personas = getPersonaSelectorOptions();
 

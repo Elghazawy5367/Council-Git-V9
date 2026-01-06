@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -72,4 +71,5 @@ TableCaption.displayName = "TableCaption";
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
 
-export default Component;
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

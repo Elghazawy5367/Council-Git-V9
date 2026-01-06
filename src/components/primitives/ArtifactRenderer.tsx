@@ -65,7 +65,7 @@ const getArtifactTitle = (artifact: Artifact): string => {
 };
 
 export const ArtifactCard: React.FC<ArtifactCardProps> = ({ artifact, defaultOpen = true }) => {
-  const [isOpen, setIsOpen] = useState<any>(defaultOpen);
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
   const Icon = getArtifactIcon(artifact.type);
   const title = getArtifactTitle(artifact);
 

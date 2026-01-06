@@ -1,5 +1,4 @@
 import React from "react";
-import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 import { cn } from "@/lib/utils";
@@ -53,4 +52,5 @@ TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
 
-export default Component;
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

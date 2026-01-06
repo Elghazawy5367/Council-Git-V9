@@ -1,4 +1,3 @@
-
 import { SynthesisTier, SynthesisConfig } from "./types";
 
 // All of the tier configurations and prompt-building logic remain the same.
@@ -28,18 +27,18 @@ export const SYNTHESIS_TIERS: Record<SynthesisTier, {
     icon: "🎯",
     description: "Smart deduplication + Chain-of-Thought",
     estimatedTime: "~25s",
-    estimatedCost: "$0.0008",
-    temperature: 0.4,
-    maxTokens: 4000,
+    estimatedCost: "$0.0005",
+    temperature: 0.5,
+    maxTokens: 3000,
   },
   deep: {
     name: "Deep Synthesis",
-    icon: "🧠",
-    description: "Comprehensive Tree-of-Thought analysis",
-    estimatedTime: "~40s",
-    estimatedCost: "$0.0015",
-    temperature: 0.5,
-    maxTokens: 6000,
+    icon: "🔍",
+    description: "Exhaustive analysis with multi-pass refinement",
+    estimatedTime: "~45s",
+    estimatedCost: "$0.001",
+    temperature: 0.7,
+    maxTokens: 4000,
   },
 };
 

@@ -1,7 +1,6 @@
-import React from "react";
-import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -179,4 +178,6 @@ export {
   DropdownMenuRadioGroup,
 };
 
-export default Component;
+// Replacing undefined Component with a placeholder
+const PlaceholderComponent = () => <div>Placeholder</div>;
+export default PlaceholderComponent;

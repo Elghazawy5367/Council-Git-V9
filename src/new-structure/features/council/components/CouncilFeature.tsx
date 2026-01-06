@@ -14,7 +14,3 @@ export const CouncilFeature = () => {
     </div>
   );
 };
-
-export const CouncilFeature = () => {
-  return <div>Temporary fix for Council Feature</div>;
-};

@@ -1,4 +1,4 @@
-import { Expert, ExecutionMode, ExportData } from './types';
+import { ExportData } from './types';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
 import { saveAs } from 'file-saver';
 
@@ -76,9 +76,6 @@ function markdownToDocxParagraphs(text: string): Paragraph[] {
     } else if (trimmed) {
       // Parse inline formatting
       const children: TextRun[] = [];
-      const remaining = trimmed;
-      
-      // Simple bold parsing
       const boldRegex = /\*\*(.+?)\*\*/g;
       let lastIndex = 0;
       let match;

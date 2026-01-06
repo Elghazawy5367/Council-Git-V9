@@ -1,7 +1,6 @@
-import React from "react";
-import * as React from "react";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { type VariantProps } from "class-variance-authority";
+import React from "react"; // Add missing React import
 
 import { cn } from "@/lib/utils";
 import { toggleVariants } from "@/lib/variants";
@@ -16,5 +15,3 @@ const Toggle = React.forwardRef<
 Toggle.displayName = TogglePrimitive.Root.displayName;
 
 export { Toggle };
-
-export default Component;

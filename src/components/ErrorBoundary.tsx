@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { Button } from "@/components/primitives/button";
-import { AlertCircle, RefreshCcw, Home } from "lucide-react";
+import { AlertCircle, RefreshCw, Home } from "lucide-react";
 
 /**
  * Mobile-friendly, production-ready Error Fallback UI.
@@ -40,7 +40,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
           className="flex-1 gap-2 min-h-[56px] text-lg sm:min-h-[44px] sm:text-base active:scale-95 transition-transform"
           data-testid="button-error-retry"
         >
-          <RefreshCcw className="h-5 w-5" />
+          <RefreshCw className="h-5 w-5" />
           Retry System
         </Button>
         

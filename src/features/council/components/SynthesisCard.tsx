@@ -8,15 +8,13 @@ import { Button } from '@/components/primitives/button';
 import { Slider } from '@/components/primitives/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/primitives/select';
 import { Textarea } from '@/components/primitives/textarea';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/primitives/collapsible';
+import { Collapsible, CollapsibleContent } from '@/components/primitives/collapsible';
 import { ScrollArea } from '@/components/primitives/scroll-area';
 import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
 import {
   Brain,
   Copy,
   Settings2,
-  ChevronDown,
-  ChevronUp,
   Loader2,
   Zap,
   Target,
@@ -31,9 +29,9 @@ const TIER_ICONS: Record<SynthesisTier, React.ComponentType<{ className?: string
 };
 
 export const SynthesisCard: React.FC = () => {
-  const { synthesisResult, isSynthesizing } = useExecutionStore();
+  const { synthesisResult, isSynthesizing } = useExecutionStore((state) => ({ synthesisResult: state.synthesisResult, isSynthesizing: state.isSynthesizing }));
   const { synthesisConfig, setSynthesisConfig } = useSettingsStore();
-  const [showConfig, setShowConfig] = useState<any>(false);
+  const [showConfig, setShowConfig] = useState<boolean>(false); // Fixed type of showConfig
   const tierConfig = SYNTHESIS_TIERS[synthesisConfig.tier];
 
   const handleCopy = async () => {
@@ -57,7 +55,7 @@ export const SynthesisCard: React.FC = () => {
                 <span>{tierConfig.icon}</span>
                 <span>{tierConfig.name}</span>
                 <span className="text-muted-foreground/60">•</span>
-                <span className="truncate">{synthesisConfig.model.split('/')[1]}</span>
+                <span className="truncate">{synthesisConfig.model?.split('/')[1] || 'Default Model'}</span>
               </p>
             </div>
           </div>
@@ -136,10 +134,10 @@ export const SynthesisCard: React.FC = () => {
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
                 <span className="text-muted-foreground">Temperature</span>
-                <span className="font-mono">{synthesisConfig.temperature.toFixed(2)}</span>
+                <span className="font-mono">{(synthesisConfig.temperature ?? 0.4).toFixed(2)}</span>
               </div>
               <Slider
-                value={[synthesisConfig.temperature]}
+                value={[synthesisConfig.temperature ?? 0.4]}
                 onValueChange={([value]) => setSynthesisConfig({ ...synthesisConfig, temperature: value })}
                 min={0}
                 max={1}

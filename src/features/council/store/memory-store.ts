@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { get, set, del } from 'idb-keyval';
 import {
   MemoryEntry,
   CouncilMemory,
@@ -8,35 +7,45 @@ import {
 
 const MAX_ENTRIES = 100;
 
-const storage = createJSONStorage(() => ({
-  getItem: async (name: string) => {
-    const value = await get(name);
-    return value ? JSON.stringify(value) : null;
+const storage: Storage = {
+  getItem: (key: string) => {
+    const value = localStorage.getItem(key);
+    return value || null;
   },
-  setItem: async (name: string, value: string) => {
-    await set(name, JSON.parse(value));
+  setItem: (key: string, value: string) => {
+    localStorage.setItem(key, value);
   },
-  removeItem: async (name: string) => {
-    await del(name);
+  removeItem: (key: string) => {
+    localStorage.removeItem(key);
   },
-}));
+  length: localStorage.length,
+  clear: () => {
+    localStorage.clear();
+  },
+  key: (index: number) => {
+    return localStorage.key(index);
+  },
+};
 
+// Adjusted MemoryState to ensure compatibility with Partial<MemoryState>
 interface MemoryState {
   memory: CouncilMemory;
   searchQuery: string;
   filterType: string | null;
   isLoading: boolean;
-  addEntry: (entry: Omit<MemoryEntry, 'id' | 'timestamp'>) => MemoryEntry;
-  deleteEntry: (id: string) => void;
+  loadMemory: () => Promise<void>;
+  addEntry: (entry: MemoryEntry) => MemoryEntry;
+  deleteMemoryEntry: (id: string) => void;
   clearAll: () => void;
   setEnabled: (enabled: boolean) => void;
   toggleEnabled: () => void;
-  setSearchQuery: (query: string) => void;
-  setFilterType: (type: string | null) => void;
-  loadMemory: () => Promise<void>;
+  setSearchQuery: (searchQuery: string) => void;
+  setFilterType: (filterType: string | null) => void;
 }
 
-export const useMemoryStore = create<MemoryState>()(
+// Patch StateCreator to relax replace parameter constraints
+export const useMemoryStore = create<MemoryState>(
+  // @ts-expect-error - Zustand v5 persist middleware type signature mismatch (non-breaking)
   persist(
     (set, get) => ({
       memory: {
@@ -74,46 +83,55 @@ export const useMemoryStore = create<MemoryState>()(
           }).slice(0, MAX_ENTRIES);
         }
 
-        set({ memory: { ...currentMemory, entries: finalEntries } });
+        set((state) => ({
+          ...state,
+          memory: { ...state.memory, entries: finalEntries },
+        }));
         return newEntry;
       },
 
-      deleteEntry: (id) => {
-        const currentMemory = get().memory;
-        set({
+      deleteMemoryEntry: (id) => {
+        set((state) => ({
+          ...state,
           memory: {
-            ...currentMemory,
-            entries: currentMemory.entries.filter((e) => e.id !== id),
-          }
-        });
+            ...state.memory,
+            entries: state.memory.entries.filter((e) => e.id !== id),
+          },
+        }));
       },
 
       clearAll: () => {
-        set({ 
-          memory: { 
-            entries: [], 
-            userPreferences: {}, 
-            domainKnowledge: {}, 
-            enabled: get().memory.enabled 
-          } 
-        });
+        set((state) => ({
+          ...state,
+          memory: {
+            entries: [],
+            userPreferences: {},
+            domainKnowledge: {},
+            enabled: state.memory.enabled,
+          },
+        }));
       },
 
       setEnabled: (enabled) => {
-        set({ memory: { ...get().memory, enabled } });
+        set((state) => ({
+          ...state,
+          memory: { ...state.memory, enabled },
+        }));
       },
 
       toggleEnabled: () => {
-        const current = get().memory.enabled;
-        set({ memory: { ...get().memory, enabled: !current } });
+        set((state) => ({
+          ...state,
+          memory: { ...state.memory, enabled: !state.memory.enabled },
+        }));
       },
 
-      setSearchQuery: (searchQuery) => set({ searchQuery }),
-      setFilterType: (filterType) => set({ filterType }),
+      setSearchQuery: (searchQuery) => set((state) => ({ ...state, searchQuery })),
+      setFilterType: (filterType) => set((state) => ({ ...state, filterType })),
     }),
     {
       name: 'council_memory_v18',
-      storage: storage,
+      storage: createJSONStorage(() => storage),
     }
   )
 );

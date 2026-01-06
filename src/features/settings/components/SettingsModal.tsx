@@ -26,9 +26,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     openRouterKey, 
     setOpenRouterKey 
   } = useSettingsStore();
-  const [password, setPassword] = useState<any>('');
-  const [newPassword, setNewPassword] = useState<any>('');
-  const [confirmPassword, setConfirmPassword] = useState<any>('');
+  const [password, setPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const handleCreate = async () => {
     if (newPassword !== confirmPassword) {

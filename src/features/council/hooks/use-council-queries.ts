@@ -75,31 +75,33 @@ export const useCallExpert = (
   });
 };
 
-// The new, powerful synthesis hook that replaces executeSynthesis
+// Refined 'useExecuteSynthesis' to ensure alignment with 'executeCouncil'
 export const useExecuteSynthesis = () => {
   return useMutation<
     SynthesisResult,
     Error,
     {
-      expertOutputs: { name: string; model: string; content: string }[];
       task: string;
       config: SynthesisConfig;
       apiKey: string;
       onProgress?: (message: string) => void;
     }
   >({
-    mutationFn: async ({ expertOutputs, task, config, apiKey, onProgress }) => {
+    mutationFn: async ({ task, config, apiKey, onProgress }) => {
       const tierConfig = SYNTHESIS_TIERS[config.tier];
       const promptBuilder = getPromptBuilder(config.tier);
-      const prompt = promptBuilder(expertOutputs, task, config.customInstructions);
+      const prompt = promptBuilder([], task, config.customInstructions || '');
 
       onProgress?.(`Running ${tierConfig.name}...`);
+
+      const primaryModel = config.model || 'google/gemini-2.0-flash-001';
+      const fallbackModel = config.fallbackModel || 'deepseek/deepseek-chat';
 
       try {
         // Attempt to call the primary model
         const result = await callSynthesisAPI(
           prompt,
-          config.model,
+          primaryModel,
           config.temperature || tierConfig.temperature,
           config.maxTokens || tierConfig.maxTokens,
           apiKey
@@ -107,18 +109,18 @@ export const useExecuteSynthesis = () => {
         return {
           content: result.content,
           tier: config.tier,
-          model: config.model,
+          model: primaryModel,
           tokens: result.tokens,
           cost: result.cost,
         };
       } catch (error) {
-        console.warn(`Primary model ${config.model} failed, trying fallback...`, error);
+        console.warn(`Primary model ${primaryModel} failed, trying fallback...`, error);
         onProgress?.(`Retrying with fallback model...`);
 
         // If the primary model fails, the mutation function automatically tries the fallback.
         const result = await callSynthesisAPI(
           prompt,
-          config.fallbackModel,
+          fallbackModel,
           config.temperature || tierConfig.temperature,
           config.maxTokens || tierConfig.maxTokens,
           apiKey
@@ -126,7 +128,7 @@ export const useExecuteSynthesis = () => {
         return {
           content: result.content,
           tier: config.tier,
-          model: config.fallbackModel, // Report that the fallback model was used
+          model: fallbackModel, // Report that the fallback model was used
           tokens: result.tokens,
           cost: result.cost,
         };

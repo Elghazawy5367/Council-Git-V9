@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:types": "tsc --emitDeclarationOnly --declaration"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -87,7 +88,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^22.16.5",
+    "@types/node": "^22.19.3",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react-swc": "^3.11.0",

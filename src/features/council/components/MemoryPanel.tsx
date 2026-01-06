@@ -50,11 +50,20 @@ export const MemoryPanel: React.FC<MemoryPanelProps> = ({ isOpen, onClose }) => 
     isLoading,
     loadMemory,
     toggleEnabled,
-    deleteEntry,
     clearAll,
     setSearchQuery,
     setFilterType,
-  } = useMemoryStore();
+  } = useMemoryStore((state) => ({
+    memory: state.memory,
+    searchQuery: state.searchQuery,
+    filterType: state.filterType,
+    isLoading: state.isLoading,
+    loadMemory: state.loadMemory,
+    toggleEnabled: state.toggleEnabled,
+    clearAll: state.clearAll,
+    setSearchQuery: state.setSearchQuery,
+    setFilterType: state.setFilterType,
+  }));
 
   useEffect(() => {
     if (isOpen) {
@@ -196,14 +205,21 @@ interface MemoryEntryCardProps {
 }
 
 const MemoryEntryCard: React.FC<MemoryEntryCardProps> = ({ entry }) => {
-  const { deleteEntry } = useMemoryStore();
   return (
     <div className="group relative rounded-lg border border-border/50 bg-muted/30 p-3 hover:bg-muted/50 transition-colors">
       <div className="flex items-start justify-between gap-2 mb-2">
         <Badge variant="outline" className="text-[10px]">{getMemoryTypeLabel(entry.type)}</Badge>
         <div className="flex items-center gap-1">
           <span className="text-[10px] text-muted-foreground">{formatMemoryTime(entry.timestamp)}</span>
-          <Button variant="ghost" size="icon" className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10 hover:text-destructive" onClick={() => deleteEntry(entry.id)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/10 hover:text-destructive"
+            onClick={() => {
+              const { deleteMemoryEntry } = useMemoryStore.getState();
+              deleteMemoryEntry(entry.id);
+            }}
+          >
             <X className="h-3 w-3" />
           </Button>
         </div>

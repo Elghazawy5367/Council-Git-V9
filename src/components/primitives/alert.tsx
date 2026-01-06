@@ -1,5 +1,5 @@
 import React from "react";
-import * as React from "react";
+
 import { type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -29,4 +29,6 @@ AlertDescription.displayName = "AlertDescription";
 
 export { Alert, AlertTitle, AlertDescription };
 
+// Placeholder for undefined Component
+const Component = () => null;
 export default Component;

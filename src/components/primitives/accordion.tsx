@@ -1,7 +1,6 @@
-import React from "react";
-import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -52,4 +51,6 @@ AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
 
-export default Component;
+// Replace undefined Component
+const PlaceholderAccordion = () => <div>Accordion Placeholder</div>;
+export default PlaceholderAccordion;

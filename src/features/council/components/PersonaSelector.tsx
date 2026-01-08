@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useControlPanelStore } from '@/features/council/store/control-panel-store';
 import { useExpertStore } from '@/features/council/store/expert-store';
+import { useShallow } from 'zustand/react/shallow';
 import { EXPERT_POSITIONS, PERSONA_LIBRARY } from '@/features/council/lib/persona-library';
 import { getPersonaSelectorOptions, getTeamSelectorOptions } from '@/features/council/lib/persona-library';
 import { Card, CardContent } from '@/components/primitives/card';
@@ -30,14 +31,14 @@ export const PersonaSelector: React.FC = () => {
     loadTeam,
     clearPersona,
     resetToDefault,
-  } = useControlPanelStore((state) => ({
+  } = useControlPanelStore(useShallow((state) => ({
     activeExpertCount: state.activeExpertCount,
     loadPersona: state.loadPersona,
     loadTeam: state.loadTeam,
     clearPersona: state.clearPersona,
     resetToDefault: state.resetToDefault,
-  }));
-  const { experts } = useExpertStore((state) => ({ experts: state.experts }));
+  })));
+  const { experts } = useExpertStore(useShallow((state) => ({ experts: state.experts })));
 
   const [showIndividual, setShowIndividual] = useState<boolean>(false);
   const teams = getTeamSelectorOptions();

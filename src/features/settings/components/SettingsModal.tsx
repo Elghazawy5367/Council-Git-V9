@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
+import { useShallow } from 'zustand/react/shallow';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +26,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     handleLockVault, 
     openRouterKey, 
     setOpenRouterKey 
-  } = useSettingsStore();
+  } = useSettingsStore(useShallow((state) => ({
+    vaultStatus: state.vaultStatus,
+    handleCreateVault: state.handleCreateVault,
+    handleUnlockVault: state.handleUnlockVault,
+    handleLockVault: state.handleLockVault,
+    openRouterKey: state.openRouterKey,
+    setOpenRouterKey: state.setOpenRouterKey,
+  })));
   const [password, setPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');

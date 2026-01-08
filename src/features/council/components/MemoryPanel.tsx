@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useMemoryStore } from '@/features/council/store/memory-store';
+import { useShallow } from 'zustand/react/shallow';
 import {
   Sheet,
   SheetContent,
@@ -53,7 +54,7 @@ export const MemoryPanel: React.FC<MemoryPanelProps> = ({ isOpen, onClose }) => 
     clearAll,
     setSearchQuery,
     setFilterType,
-  } = useMemoryStore((state) => ({
+  } = useMemoryStore(useShallow((state) => ({
     memory: state.memory,
     searchQuery: state.searchQuery,
     filterType: state.filterType,
@@ -63,7 +64,7 @@ export const MemoryPanel: React.FC<MemoryPanelProps> = ({ isOpen, onClose }) => 
     clearAll: state.clearAll,
     setSearchQuery: state.setSearchQuery,
     setFilterType: state.setFilterType,
-  }));
+  })));
 
   useEffect(() => {
     if (isOpen) {

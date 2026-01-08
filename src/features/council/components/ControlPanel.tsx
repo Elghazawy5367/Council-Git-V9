@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useControlPanelStore } from '@/features/council/store/control-panel-store';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
+import { useShallow } from 'zustand/react/shallow';
 import { MODE_DESCRIPTIONS } from '@/lib/config';
 import { ExecutionMode, SynthesisConfig } from '@/features/council/lib/types';
 import { Card, CardContent } from '@/components/primitives/card';
@@ -44,7 +45,7 @@ export const ControlPanel: React.FC = () => {
     setDebateRounds,
     fileData,
     setFileData,
-  } = useControlPanelStore((state) => ({
+  } = useControlPanelStore(useShallow((state) => ({
     task: state.task,
     setTask: state.setTask,
     mode: state.mode,
@@ -55,10 +56,10 @@ export const ControlPanel: React.FC = () => {
     setDebateRounds: state.setDebateRounds,
     fileData: state.fileData,
     setFileData: state.setFileData,
-  }));
+  })));
 
-  const { isLoading, statusMessage } = useExecutionStore((state) => ({ isLoading: state.isLoading, statusMessage: state.statusMessage }));
-  const { vaultStatus, setShowSettings } = useSettingsStore();
+  const { isLoading, statusMessage } = useExecutionStore(useShallow((state) => ({ isLoading: state.isLoading, statusMessage: state.statusMessage })));
+  const { vaultStatus, setShowSettings } = useSettingsStore(useShallow((state) => ({ vaultStatus: state.vaultStatus, setShowSettings: state.setShowSettings })));
   const synthesisMutation = useExecuteSynthesis();
 
   const fileInputRef = useRef<HTMLInputElement>(null);

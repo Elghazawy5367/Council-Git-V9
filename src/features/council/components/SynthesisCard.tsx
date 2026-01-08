@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
+import { useShallow } from 'zustand/react/shallow';
 import { SynthesisTier } from '@/features/council/lib/types';
 import { SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
 import { Card, CardContent, CardHeader } from '@/components/primitives/card';
@@ -29,8 +30,8 @@ const TIER_ICONS: Record<SynthesisTier, React.ComponentType<{ className?: string
 };
 
 export const SynthesisCard: React.FC = () => {
-  const { synthesisResult, isSynthesizing } = useExecutionStore((state) => ({ synthesisResult: state.synthesisResult, isSynthesizing: state.isSynthesizing }));
-  const { synthesisConfig, setSynthesisConfig } = useSettingsStore();
+  const { synthesisResult, isSynthesizing } = useExecutionStore(useShallow((state) => ({ synthesisResult: state.synthesisResult, isSynthesizing: state.isSynthesizing })));
+  const { synthesisConfig, setSynthesisConfig } = useSettingsStore(useShallow((state) => ({ synthesisConfig: state.synthesisConfig, setSynthesisConfig: state.setSynthesisConfig })));
   const [showConfig, setShowConfig] = useState<boolean>(false); // Fixed type of showConfig
   const tierConfig = SYNTHESIS_TIERS[synthesisConfig.tier];
 

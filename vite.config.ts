@@ -5,24 +5,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Detect GitHub Codespaces environment
-  const isCodespaces = process.env.CODESPACES === 'true';
-  const codespaceName = process.env.CODESPACE_NAME;
-  
-  // Build the HMR configuration for Codespaces
-  const hmrConfig = isCodespaces && codespaceName
-    ? {
-        protocol: 'wss', // Use secure WebSocket in Codespaces
-        host: `${codespaceName}-8000.app.github.dev`,
-        clientPort: 443, // Use standard HTTPS port
-        overlay: true,
-        timeout: 30000,
-      }
-    : {
-        overlay: true,
-        timeout: 30000,
-        protocol: 'ws',
-      };
+  // Detect if running in GitHub Codespaces or similar HTTPS environment
+  const isCodespaces = process.env.CODESPACES === 'true' || process.env.GITHUB_CODESPACE_TOKEN;
+  const isHttps = process.env.VITE_HMR_PROTOCOL === 'wss' || isCodespaces;
 
   return {
     server: {
@@ -32,30 +17,37 @@ export default defineConfig(({ mode }) => {
       allowedHosts: true,
       cors: true,
       middlewareMode: false,
-      hmr: hmrConfig,
+      hmr: {
+        overlay: true, // Show errors as overlay instead of crashing
+        timeout: 30000, // Increase timeout for slower connections
+        protocol: isHttps ? 'wss' : 'ws', // Auto-detect secure WebSocket
+        host: process.env.CODESPACE_NAME 
+          ? `${process.env.CODESPACE_NAME}-8000.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`
+          : undefined,
+      },
       watch: {
         // Reduce file watching overhead
         ignored: ['**/node_modules/**', '**/dist/**', '**/.git/**'],
       },
     },
-    plugins: [react(), tsconfigPaths()].filter(Boolean),
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
+  plugins: [react(), tsconfigPaths()].filter(Boolean),
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    // Better error reporting
+    sourcemap: mode === 'development',
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress certain warnings
+        if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
+        warn(warning);
       },
     },
-    build: {
-      // Better error reporting
-      sourcemap: mode === 'development',
-      rollupOptions: {
-        onwarn(warning, warn) {
-          // Suppress certain warnings
-          if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
-          warn(warning);
-        },
-      },
-    },
-    // Optimize dependency pre-bundling
+  },
+  // Optimize dependency pre-bundling
     optimizeDeps: {
       include: ['react', 'react-dom', 'zustand', 'react-error-boundary'],
       exclude: ['@vite/client', '@vite/env'],

@@ -160,6 +160,216 @@ const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTML
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
+const ProjectFeaturesDropdown = () => {
+  // Static feature list - no dynamic imports needed
+  const features = [
+    { 
+      name: "Phantom Scout", 
+      description: "24/7 automated GitHub intelligence gathering",
+      icon: "👻",
+      enabled: true,
+      category: "intelligence"
+    },
+    { 
+      name: "Code Mirror", 
+      description: "Elite code quality analysis and standards",
+      icon: "🪞",
+      enabled: true,
+      category: "quality"
+    },
+    { 
+      name: "Quality Pipeline", 
+      description: "Automated linting and type checking",
+      icon: "⚡",
+      enabled: true,
+      category: "quality"
+    },
+    { 
+      name: "Self-Improving Loop", 
+      description: "Learn from successful GitHub repositories",
+      icon: "🧠",
+      enabled: true,
+      category: "intelligence"
+    },
+    { 
+      name: "Stargazer Analysis", 
+      description: "Detect institutional backing & quality signals",
+      icon: "⭐",
+      enabled: true,
+      category: "intelligence"
+    },
+    { 
+      name: "Data Fetching & Cache", 
+      description: "React Query with intelligent caching",
+      icon: "📊",
+      enabled: true,
+      category: "foundation"
+    },
+    { 
+      name: "Type-Safe Forms", 
+      description: "Zod validation for bulletproof forms",
+      icon: "📝",
+      enabled: true,
+      category: "foundation"
+    },
+    { 
+      name: "Error Handling", 
+      description: "Retry logic & circuit breakers",
+      icon: "🛡️",
+      enabled: true,
+      category: "foundation"
+    },
+    { 
+      name: "Auth & Security", 
+      description: "Encrypted vault & session management",
+      icon: "🔐",
+      enabled: true,
+      category: "foundation"
+    },
+    { 
+      name: "Agent Orchestration", 
+      description: "Multi-expert AI coordination system",
+      icon: "🤖",
+      enabled: true,
+      category: "ai"
+    },
+  ];
+
+  const intelligenceFeatures = features.filter(f => f.category === "intelligence");
+  const qualityFeatures = features.filter(f => f.category === "quality");
+  const foundationFeatures = features.filter(f => f.category === "foundation");
+  const aiFeatures = features.filter(f => f.category === "ai");
+
+  const activeCount = features.filter(f => f.enabled).length;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
+        <span>🚀</span>
+        <span>Features</span>
+        <span className="ml-1 text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary">
+          {activeCount}/10
+        </span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-80">
+        <DropdownMenuLabel className="text-base font-semibold flex items-center justify-between">
+          <span>🎯 Active Features</span>
+          <span className="text-xs text-muted-foreground font-normal">
+            {activeCount} Active
+          </span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        
+        {/* Intelligence Layer */}
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+          🧠 Intelligence Layer
+        </DropdownMenuLabel>
+        {intelligenceFeatures.map((feature) => (
+          <DropdownMenuItem 
+            key={feature.name} 
+            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          >
+            <div className="flex items-center gap-2 w-full">
+              <span className="text-lg">{feature.icon}</span>
+              <span className="font-medium text-sm">{feature.name}</span>
+              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
+                feature.enabled 
+                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
+                  : 'bg-muted text-muted-foreground'
+              }`}>
+                {feature.enabled ? '✓ ON' : '○ OFF'}
+              </span>
+            </div>
+            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
+          </DropdownMenuItem>
+        ))}
+        
+        <DropdownMenuSeparator />
+        
+        {/* Quality Layer */}
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+          ⚡ Quality Layer
+        </DropdownMenuLabel>
+        {qualityFeatures.map((feature) => (
+          <DropdownMenuItem 
+            key={feature.name} 
+            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          >
+            <div className="flex items-center gap-2 w-full">
+              <span className="text-lg">{feature.icon}</span>
+              <span className="font-medium text-sm">{feature.name}</span>
+              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
+                feature.enabled 
+                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
+                  : 'bg-muted text-muted-foreground'
+              }`}>
+                {feature.enabled ? '✓ ON' : '○ OFF'}
+              </span>
+            </div>
+            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
+          </DropdownMenuItem>
+        ))}
+        
+        <DropdownMenuSeparator />
+        
+        {/* Foundation Layer */}
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+          🏗️ Foundation Layer
+        </DropdownMenuLabel>
+        {foundationFeatures.map((feature) => (
+          <DropdownMenuItem 
+            key={feature.name} 
+            className="flex flex-col items-start gap-1 p-2.5 cursor-pointer"
+          >
+            <div className="flex items-center gap-2 w-full">
+              <span className="text-base">{feature.icon}</span>
+              <span className="font-medium text-sm">{feature.name}</span>
+              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
+                feature.enabled 
+                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
+                  : 'bg-muted text-muted-foreground'
+              }`}>
+                {feature.enabled ? '✓ ON' : '○ OFF'}
+              </span>
+            </div>
+          </DropdownMenuItem>
+        ))}
+        
+        <DropdownMenuSeparator />
+        
+        {/* AI Layer */}
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+          🤖 AI Layer
+        </DropdownMenuLabel>
+        {aiFeatures.map((feature) => (
+          <DropdownMenuItem 
+            key={feature.name} 
+            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          >
+            <div className="flex items-center gap-2 w-full">
+              <span className="text-lg">{feature.icon}</span>
+              <span className="font-medium text-sm">{feature.name}</span>
+              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
+                feature.enabled 
+                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
+                  : 'bg-muted text-muted-foreground'
+              }`}>
+                {feature.enabled ? '✓ ON' : '○ OFF'}
+              </span>
+            </div>
+            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
+          </DropdownMenuItem>
+        ))}
+        
+        <DropdownMenuSeparator />
+        <div className="p-2 text-xs text-center text-muted-foreground">
+          Configure features in Settings → Feature Config
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -176,6 +386,7 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
+  ProjectFeaturesDropdown,
 };
 
 // Replacing undefined Component with a placeholder

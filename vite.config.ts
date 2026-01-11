@@ -2,6 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tsconfigPaths from "vite-tsconfig-paths";
+import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -26,7 +27,20 @@ export default defineConfig(({ mode }) => {
         ignored: ['**/node_modules/**', '**/dist/**', '**/.git/**'],
       },
     },
-  plugins: [react(), tsconfigPaths()].filter(Boolean),
+  plugins: [
+    react(), 
+    tsconfigPaths(),
+    // Check TypeScript and ESLint errors in real-time during dev
+    checker({
+      typescript: true,
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+      },
+      overlay: {
+        initialIsOpen: false,
+      },
+    }),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

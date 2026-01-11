@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { initDatabase } from "@/lib/db";
 import { initializeProtection } from "@/lib/hmr-protection";
+import CustomErrorBoundary from "@/components/ErrorBoundary";
 
 // Load protection tests in development
 if (import.meta.env.DEV) {
@@ -21,13 +22,17 @@ initDatabase().catch((error) => {
   // Don't crash the app on database init failure
 });
 
-// Render app immediately
+// Render app immediately with ErrorBoundary
 console.log("[MAIN] Rendering React app...");
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   console.error("[MAIN] Root element not found!");
   document.body.innerHTML = '<div style="padding:20px;font-family:sans-serif;"><h1>⚠️ Council Error</h1><p>Root element not found. Please refresh the page.</p></div>';
 } else {
-  createRoot(rootElement).render(<App />);
+  createRoot(rootElement).render(
+    <CustomErrorBoundary>
+      <App />
+    </CustomErrorBoundary>
+  );
   console.log("[MAIN] React app rendered successfully");
 }

@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "build:dev": "vite build --mode development",
+    "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "build:types": "tsc --emitDeclarationOnly --declaration",
+    "clean": "rm -rf dist node_modules/.vite",
     "mirror": "tsx scripts/run-mirror.ts",
     "improve": "tsx scripts/quality-pipeline.ts",
     "learn": "tsx scripts/run-self-improve.ts",
@@ -119,6 +121,7 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
     "vite": "^6.4.1",
+    "vite-plugin-checker": "^0.12.0",
     "vite-tsconfig-paths": "^6.0.3"
   }
 }

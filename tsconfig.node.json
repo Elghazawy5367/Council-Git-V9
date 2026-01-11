@@ -6,7 +6,14 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": false
+    "noEmit": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@legacy/*": ["./src/old-structure/*"],
+      "@features/*": ["./src/features/*"]
+    },
+    "types": ["node"]
   },
   "include": ["vite.config.ts"]
 }

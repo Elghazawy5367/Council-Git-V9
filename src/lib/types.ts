@@ -45,3 +45,46 @@ export interface SynthesisConfig {
   customInstructions?: string;
   options?: Record<string, unknown>;
 }
+
+// Structured synthesis output schemas
+import { z } from 'zod';
+
+export const ConflictSchema = z.object({
+  topic: z.string().describe('The topic where experts disagree'),
+  positions: z.array(z.string()).describe('Different expert positions on this topic'),
+  severity: z.enum(['minor', 'moderate', 'critical']).describe('How critical the disagreement is'),
+});
+
+export const InsightSchema = z.object({
+  category: z.string().describe('Category of insight (e.g., "opportunity", "risk", "pattern")'),
+  content: z.string().describe('The insight itself'),
+  confidence: z.enum(['low', 'medium', 'high']).describe('Confidence level based on expert consensus'),
+  supportingExperts: z.array(z.string()).optional().describe('Which experts support this insight'),
+});
+
+export const ExpertWeightInfoSchema = z.object({
+  expertName: z.string(),
+  weight: z.number().describe('Overall weight score (0-1)'),
+  normalizedWeight: z.number().describe('Weight as percentage of total'),
+  factors: z.object({
+    modelQuality: z.number(),
+    outputQuality: z.number(),
+    confidence: z.number(),
+    domainMatch: z.number(),
+  }).optional(),
+});
+
+export const SynthesisOutputSchema = z.object({
+  consensus: z.string().describe('Main synthesized conclusion from all expert inputs'),
+  keyInsights: z.array(InsightSchema).describe('Structured insights extracted from the synthesis'),
+  conflicts: z.array(ConflictSchema).optional().describe('Areas where experts disagree'),
+  confidence: z.enum(['low', 'medium', 'high']).describe('Overall confidence in the synthesis'),
+  reasoning: z.string().optional().describe('Explanation of how the synthesis was constructed'),
+  actionItems: z.array(z.string()).optional().describe('Concrete next steps or recommendations'),
+  expertWeights: z.array(ExpertWeightInfoSchema).optional().describe('Weight analysis for each expert'),
+});
+
+export type SynthesisOutput = z.infer<typeof SynthesisOutputSchema>;
+export type Insight = z.infer<typeof InsightSchema>;
+export type Conflict = z.infer<typeof ConflictSchema>;
+export type ExpertWeightInfo = z.infer<typeof ExpertWeightInfoSchema>;

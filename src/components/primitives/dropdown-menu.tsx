@@ -160,119 +160,206 @@ const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTML
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
+import { useFeatureConfigStore } from "@/features/council/store/feature-config-store";
+import FeatureConfigModal from "@/features/council/components/FeatureConfigModal";
+
 const ProjectFeaturesDropdown = () => {
-  // Static feature list - no dynamic imports needed
-  const features = [
+  const [showConfigDialog, setShowConfigDialog] = React.useState(false);
+  
+  const {
+    scout,
+    mirror,
+    quality,
+    selfImprove,
+    stargazerAnalysis,
+    dataFetching,
+    typeSafeForms,
+    errorHandling,
+    authSecurity,
+    mobileDrawers,
+    virtualizedLists,
+    streamingAI,
+    agentOrchestration,
+    localDatabase,
+    updateScoutConfig,
+    updateMirrorConfig,
+    updateQualityConfig,
+    updateSelfImproveConfig,
+    updateStargazerAnalysisConfig,
+    updateDataFetchingConfig,
+    updateTypeSafeFormsConfig,
+    updateErrorHandlingConfig,
+    updateAuthSecurityConfig,
+    updateMobileDrawersConfig,
+    updateVirtualizedListsConfig,
+    updateStreamingAIConfig,
+    updateAgentOrchestrationConfig,
+    updateLocalDatabaseConfig,
+  } = useFeatureConfigStore();
+
+  interface Feature {
+    name: string;
+    description: string;
+    icon: string;
+    enabled: boolean;
+    category: string;
+    configKey: string;
+    toggleAction: () => void;
+  }
+
+  interface Feature {
+    name: string;
+    description: string;
+    icon: string;
+    enabled: boolean;
+    category: string;
+    configKey: string;
+    toggleAction: () => void;
+  }
+
+  // Static feature list mapped to actual store configs
+  const features: Feature[] = [
+    // Intelligence Layer
     { 
       name: "Phantom Scout", 
-      description: "24/7 automated GitHub intelligence gathering",
+      description: "GitHub intelligence gathering & Blue Ocean discovery",
       icon: "👻",
-      enabled: true,
-      category: "intelligence"
-    },
-    { 
-      name: "Code Mirror", 
-      description: "Elite code quality analysis and standards",
-      icon: "🪞",
-      enabled: true,
-      category: "quality"
-    },
-    { 
-      name: "Quality Pipeline", 
-      description: "Automated linting and type checking",
-      icon: "⚡",
-      enabled: true,
-      category: "quality"
+      enabled: scout.enabled,
+      category: "intelligence",
+      configKey: "scout",
+      toggleAction: () => updateScoutConfig({ enabled: !scout.enabled })
     },
     { 
       name: "Self-Improving Loop", 
-      description: "Learn from successful GitHub repositories",
+      description: "Learn patterns from successful repositories",
       icon: "🧠",
-      enabled: true,
-      category: "intelligence"
+      enabled: selfImprove.enabled,
+      category: "intelligence",
+      configKey: "selfImprove",
+      toggleAction: () => updateSelfImproveConfig({ enabled: !selfImprove.enabled })
     },
     { 
       name: "Stargazer Analysis", 
       description: "Detect institutional backing & quality signals",
       icon: "⭐",
-      enabled: true,
-      category: "intelligence"
+      enabled: stargazerAnalysis.enabled,
+      category: "intelligence",
+      configKey: "stargazerAnalysis",
+      toggleAction: () => updateStargazerAnalysisConfig({ enabled: !stargazerAnalysis.enabled })
+    },
+    
+    // Quality Layer
+    { 
+      name: "Code Mirror", 
+      description: "Elite code quality analysis against standards",
+      icon: "🪞",
+      enabled: mirror.enabled,
+      category: "quality",
+      configKey: "mirror",
+      toggleAction: () => updateMirrorConfig({ enabled: !mirror.enabled })
     },
     { 
-      name: "The Sniper", 
-      description: "Reddit lead generation with buying intent scoring",
-      icon: "🎯",
-      enabled: true,
-      category: "intelligence"
+      name: "Quality Pipeline", 
+      description: "Automated linting, type checking & fixing",
+      icon: "⚡",
+      enabled: quality.enabled,
+      category: "quality",
+      configKey: "quality",
+      toggleAction: () => updateQualityConfig({ enabled: !quality.enabled })
     },
-    { 
-      name: "Fork Evolution", 
-      description: "Discover user-wanted features from repository forks",
-      icon: "🍴",
-      enabled: true,
-      category: "intelligence"
-    },
-    { 
-      name: "Viral Radar", 
-      description: "Scan X, Instagram & trends for viral content",
-      icon: "📡",
-      enabled: true,
-      category: "intelligence"
-    },
-    { 
-      name: "Twin Mimicry", 
-      description: "Extract mental models from elite developers",
-      icon: "👥",
-      enabled: true,
-      category: "intelligence"
-    },
-    { 
-      name: "Google Studio Hack", 
-      description: "Bypass IDE limits with unlimited AI tokens",
-      icon: "🚀",
-      enabled: true,
-      category: "foundation"
-    },
+    
+    // Foundation Layer
     { 
       name: "Data Fetching & Cache", 
       description: "React Query with intelligent caching",
       icon: "📊",
-      enabled: true,
-      category: "foundation"
+      enabled: dataFetching.enabled,
+      category: "foundation",
+      configKey: "dataFetching",
+      toggleAction: () => updateDataFetchingConfig({ enabled: !dataFetching.enabled })
     },
     { 
       name: "Type-Safe Forms", 
       description: "Zod validation for bulletproof forms",
       icon: "📝",
-      enabled: true,
-      category: "foundation"
+      enabled: typeSafeForms.enabled,
+      category: "foundation",
+      configKey: "typeSafeForms",
+      toggleAction: () => updateTypeSafeFormsConfig({ enabled: !typeSafeForms.enabled })
     },
     { 
       name: "Error Handling", 
       description: "Retry logic & circuit breakers",
       icon: "🛡️",
-      enabled: true,
-      category: "foundation"
+      enabled: errorHandling.enabled,
+      category: "foundation",
+      configKey: "errorHandling",
+      toggleAction: () => updateErrorHandlingConfig({ enabled: !errorHandling.enabled })
     },
     { 
       name: "Auth & Security", 
       description: "Encrypted vault & session management",
       icon: "🔐",
-      enabled: true,
-      category: "foundation"
+      enabled: authSecurity.enabled,
+      category: "foundation",
+      configKey: "authSecurity",
+      toggleAction: () => updateAuthSecurityConfig({ enabled: !authSecurity.enabled })
     },
+    { 
+      name: "Local Database", 
+      description: "IndexedDB with Dexie for offline-first storage",
+      icon: "💾",
+      enabled: localDatabase.enabled,
+      category: "foundation",
+      configKey: "localDatabase",
+      toggleAction: () => updateLocalDatabaseConfig({ enabled: !localDatabase.enabled })
+    },
+    
+    // UI/UX Layer
+    { 
+      name: "Mobile Drawers", 
+      description: "Touch-optimized slide-out panels with gestures",
+      icon: "📱",
+      enabled: mobileDrawers.enabled,
+      category: "ux",
+      configKey: "mobileDrawers",
+      toggleAction: () => updateMobileDrawersConfig({ enabled: !mobileDrawers.enabled })
+    },
+    { 
+      name: "Virtualized Lists", 
+      description: "Render only visible items for performance",
+      icon: "📜",
+      enabled: virtualizedLists.enabled,
+      category: "ux",
+      configKey: "virtualizedLists",
+      toggleAction: () => updateVirtualizedListsConfig({ enabled: !virtualizedLists.enabled })
+    },
+    { 
+      name: "Streaming AI", 
+      description: "Real-time typewriter effect for AI responses",
+      icon: "✨",
+      enabled: streamingAI.enabled,
+      category: "ux",
+      configKey: "streamingAI",
+      toggleAction: () => updateStreamingAIConfig({ enabled: !streamingAI.enabled })
+    },
+    
+    // AI Layer
     { 
       name: "Agent Orchestration", 
       description: "Multi-expert AI coordination system",
       icon: "🤖",
-      enabled: true,
-      category: "ai"
+      enabled: agentOrchestration.enabled,
+      category: "ai",
+      configKey: "agentOrchestration",
+      toggleAction: () => updateAgentOrchestrationConfig({ enabled: !agentOrchestration.enabled })
     },
   ];
 
   const intelligenceFeatures = features.filter(f => f.category === "intelligence");
   const qualityFeatures = features.filter(f => f.category === "quality");
   const foundationFeatures = features.filter(f => f.category === "foundation");
+  const uxFeatures = features.filter(f => f.category === "ux");
   const aiFeatures = features.filter(f => f.category === "ai");
 
   const activeCount = features.filter(f => f.enabled).length;
@@ -280,127 +367,236 @@ const ProjectFeaturesDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">
-        <span>🚀</span>
+        <span>⚙️</span>
         <span>Features</span>
-        <span className="ml-1 text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary">
-          {activeCount}/15
+        <span className="ml-1 text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+          {activeCount}/{features.length}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
-        <DropdownMenuLabel className="text-base font-semibold flex items-center justify-between">
-          <span>🎯 Active Features</span>
-          <span className="text-xs text-muted-foreground font-normal">
-            {activeCount} Active
-          </span>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent align="end" className="w-[420px] max-h-[600px] overflow-y-auto">
+        <div className="sticky top-0 bg-popover z-10 border-b pb-2">
+          <DropdownMenuLabel className="text-base font-semibold flex items-center justify-between py-3">
+            <span>🎯 Feature Control Panel</span>
+            <span className="text-xs text-muted-foreground font-normal">
+              {activeCount} Active
+            </span>
+          </DropdownMenuLabel>
+        </div>
+        
         
         {/* Intelligence Layer */}
-        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground px-3 pt-3">
           🧠 Intelligence Layer
         </DropdownMenuLabel>
         {intelligenceFeatures.map((feature) => (
-          <DropdownMenuItem 
-            key={feature.name} 
-            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          <div
+            key={feature.name}
+            className="flex items-start gap-3 px-3 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border/50 last:border-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              feature.toggleAction();
+            }}
           >
-            <div className="flex items-center gap-2 w-full">
-              <span className="text-lg">{feature.icon}</span>
-              <span className="font-medium text-sm">{feature.name}</span>
-              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
-                feature.enabled 
-                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {feature.enabled ? '✓ ON' : '○ OFF'}
-              </span>
+            <span className="text-xl mt-0.5">{feature.icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-medium text-sm">{feature.name}</span>
+                <div 
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    feature.enabled ? 'bg-primary' : 'bg-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    feature.toggleAction();
+                  }}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform ${
+                      feature.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
-            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
-          </DropdownMenuItem>
+          </div>
         ))}
         
         <DropdownMenuSeparator />
         
         {/* Quality Layer */}
-        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground px-3 pt-3">
           ⚡ Quality Layer
         </DropdownMenuLabel>
         {qualityFeatures.map((feature) => (
-          <DropdownMenuItem 
-            key={feature.name} 
-            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          <div
+            key={feature.name}
+            className="flex items-start gap-3 px-3 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border/50 last:border-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              feature.toggleAction();
+            }}
           >
-            <div className="flex items-center gap-2 w-full">
-              <span className="text-lg">{feature.icon}</span>
-              <span className="font-medium text-sm">{feature.name}</span>
-              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
-                feature.enabled 
-                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {feature.enabled ? '✓ ON' : '○ OFF'}
-              </span>
+            <span className="text-xl mt-0.5">{feature.icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-medium text-sm">{feature.name}</span>
+                <div 
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    feature.enabled ? 'bg-primary' : 'bg-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    feature.toggleAction();
+                  }}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform ${
+                      feature.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
-            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
-          </DropdownMenuItem>
+          </div>
         ))}
         
         <DropdownMenuSeparator />
         
         {/* Foundation Layer */}
-        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground px-3 pt-3">
           🏗️ Foundation Layer
         </DropdownMenuLabel>
         {foundationFeatures.map((feature) => (
-          <DropdownMenuItem 
-            key={feature.name} 
-            className="flex flex-col items-start gap-1 p-2.5 cursor-pointer"
+          <div
+            key={feature.name}
+            className="flex items-start gap-3 px-3 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border/50 last:border-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              feature.toggleAction();
+            }}
           >
-            <div className="flex items-center gap-2 w-full">
-              <span className="text-base">{feature.icon}</span>
-              <span className="font-medium text-sm">{feature.name}</span>
-              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
-                feature.enabled 
-                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {feature.enabled ? '✓ ON' : '○ OFF'}
-              </span>
+            <span className="text-xl mt-0.5">{feature.icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-medium text-sm">{feature.name}</span>
+                <div 
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    feature.enabled ? 'bg-primary' : 'bg-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    feature.toggleAction();
+                  }}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform ${
+                      feature.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
-          </DropdownMenuItem>
+          </div>
         ))}
         
         <DropdownMenuSeparator />
         
+        {/* UX Layer */}
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground px-3 pt-3">
+          🎨 UI/UX Layer
+        </DropdownMenuLabel>
+        {uxFeatures.map((feature) => (
+          <div
+            key={feature.name}
+            className="flex items-start gap-3 px-3 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border/50 last:border-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              feature.toggleAction();
+            }}
+          >
+            <span className="text-xl mt-0.5">{feature.icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-medium text-sm">{feature.name}</span>
+                <div 
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    feature.enabled ? 'bg-primary' : 'bg-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    feature.toggleAction();
+                  }}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform ${
+                      feature.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+        
         {/* AI Layer */}
-        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+        <DropdownMenuLabel className="text-xs font-medium text-muted-foreground px-3 pt-3">
           🤖 AI Layer
         </DropdownMenuLabel>
         {aiFeatures.map((feature) => (
-          <DropdownMenuItem 
-            key={feature.name} 
-            className="flex flex-col items-start gap-1 p-3 cursor-pointer"
+          <div
+            key={feature.name}
+            className="flex items-start gap-3 px-3 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border/50 last:border-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              feature.toggleAction();
+            }}
           >
-            <div className="flex items-center gap-2 w-full">
-              <span className="text-lg">{feature.icon}</span>
-              <span className="font-medium text-sm">{feature.name}</span>
-              <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
-                feature.enabled 
-                  ? 'bg-green-500/10 text-green-600 dark:text-green-400' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {feature.enabled ? '✓ ON' : '○ OFF'}
-              </span>
+            <span className="text-xl mt-0.5">{feature.icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-medium text-sm">{feature.name}</span>
+                <div 
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                    feature.enabled ? 'bg-primary' : 'bg-muted'
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    feature.toggleAction();
+                  }}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-background shadow-lg transition-transform ${
+                      feature.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                    }`}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
-            <span className="text-xs text-muted-foreground pl-7">{feature.description}</span>
-          </DropdownMenuItem>
+          </div>
         ))}
         
-        <DropdownMenuSeparator />
-        <div className="p-2 text-xs text-center text-muted-foreground">
-          Configure features in Settings → Feature Config
+        <div className="sticky bottom-0 bg-popover border-t mt-2 p-3 space-y-2">
+          <div className="text-xs text-center text-muted-foreground">
+            💡 Toggle features on/off · Changes saved instantly
+          </div>
+          <button
+            onClick={() => setShowConfigDialog(true)}
+            className="w-full text-xs py-2 px-3 rounded-md bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors"
+          >
+            ⚙️ Advanced Configuration
+          </button>
         </div>
       </DropdownMenuContent>
+      
+      <FeatureConfigModal 
+        isOpen={showConfigDialog} 
+        onClose={() => setShowConfigDialog(false)} 
+      />
     </DropdownMenu>
   );
 };

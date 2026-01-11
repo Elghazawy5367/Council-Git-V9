@@ -9,6 +9,7 @@ import { useExpertStore } from "@/features/council/store/expert-store";
 import { useSettingsStore } from "@/features/settings/store/settings-store";
 import { ErrorBoundary } from "react-error-boundary";
 import { AlertCircle } from "lucide-react";
+import { NoExpertsEmptyState } from "@/components/EmptyState";
 
 const SettingsModal = lazy(() => import("@/features/settings/components/SettingsModal"));
 const HistorySidebar = lazy(() => import("@/features/council/components/HistoryPanel"));
@@ -86,26 +87,30 @@ const Index: React.FC = () => {
               FallbackComponent={ComponentErrorFallback}
               onReset={() => console.log('[ExpertGrid] Error boundary reset')}
             >
-              <div className={`grid ${getGridCols()} gap-4 auto-rows-fr stagger-fade-in`}>
-                {experts.slice(0, activeExpertCount).map((expert, index) => <ExpertCard key={expert.id} index={index} />)}
-                
-                {/* Synthesis Card - Protected */}
-                <ErrorBoundary
-                  FallbackComponent={ComponentErrorFallback}
-                  onReset={() => console.log('[SynthesisCard] Error boundary reset')}
-                >
-                  <SynthesisCard />
-                </ErrorBoundary>
-              </div>
+              {experts.length === 0 ? (
+                <NoExpertsEmptyState onAddExpert={() => setShowSettings(true)} />
+              ) : (
+                <div className={`grid ${getGridCols()} gap-4 auto-rows-fr stagger-fade-in`}>
+                  {experts.slice(0, activeExpertCount).map((expert, index) => <ExpertCard key={expert.id} index={index} />)}
+                  
+                  {/* Synthesis Card - Protected */}
+                  <ErrorBoundary
+                    FallbackComponent={ComponentErrorFallback}
+                    onReset={() => console.log('[SynthesisCard] Error boundary reset')}
+                  >
+                    <SynthesisCard />
+                  </ErrorBoundary>
+                </div>
+              )}
             </ErrorBoundary>
           </div>
         </div>
       </main>
 
       <Suspense fallback={<div className="h-12 w-12 animate-spin text-primary" />}>
-        <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
-        <HistorySidebar isOpen={showHistory} onClose={() => setShowHistory(false)} />
-        <MemoryPanel isOpen={showMemory} onClose={() => setShowMemory(false)} />
+        {showSettings && <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />}
+        {showHistory && <HistorySidebar isOpen={showHistory} onClose={() => setShowHistory(false)} />}
+        {showMemory && <MemoryPanel isOpen={showMemory} onClose={() => setShowMemory(false)} />}
       </Suspense>
     </div>
   );

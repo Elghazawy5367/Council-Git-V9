@@ -32,7 +32,10 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+        <BrowserRouter 
+          basename="/Council-Git-V7-RRR"
+          future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
+        >
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Index />} />

@@ -33,7 +33,7 @@ interface ControlPanelState {
 export const useControlPanelStore = create<ControlPanelState>((set) => ({
   task: '',
   setTask: (task) => set({ task }),
-  mode: 'synthesis',
+  mode: 'parallel',
   setMode: (mode) => set({ mode }),
   activeExpertCount: 5,
   setActiveExpertCount: (count) => set({ activeExpertCount: count }),

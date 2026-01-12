@@ -51,7 +51,7 @@ export const SynthesisCard: React.FC = () => {
               <Sparkles className="w-5 h-5 text-primary-foreground" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-foreground">Synthesizer</h3>
+              <h3 className="font-semibold text-foreground">⚖️ The Ruthless Judge</h3>
               <p className="text-xs text-muted-foreground flex items-center gap-1">
                 <span>{tierConfig.icon}</span>
                 <span>{tierConfig.name}</span>

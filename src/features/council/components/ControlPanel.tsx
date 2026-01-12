@@ -27,10 +27,10 @@ import { toast } from 'sonner';
 import { PersonaSelector } from './PersonaSelector';
 
 const MODE_ICONS: Record<ExecutionMode, React.ComponentType<{ className?: string }>> = {
-  separated: Layers,
-  synthesis: GitMerge,
-  debate: Swords,
-  pipeline: Workflow,
+  parallel: Layers,
+  consensus: GitMerge,
+  adversarial: Swords,
+  sequential: Workflow,
 };
 
 export const ControlPanel: React.FC = () => {
@@ -170,7 +170,7 @@ export const ControlPanel: React.FC = () => {
             <div className="flex justify-between text-xs text-muted-foreground"><span>1</span><span>5</span></div>
           </div>
 
-          {mode === 'debate' && (
+          {mode === 'adversarial' && (
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-foreground">Debate Rounds</label>

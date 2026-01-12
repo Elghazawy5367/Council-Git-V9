@@ -87,8 +87,8 @@ export async function callExpert(
   
   let userPrompt = `TASK: ${task}`;
   
-  // For pipeline mode, include previous outputs
-  if (mode === 'pipeline' && previousOutputs && Object.keys(previousOutputs).length > 0) {
+  // For sequential mode, include previous outputs
+  if (mode === 'sequential' && previousOutputs && Object.keys(previousOutputs).length > 0) {
     userPrompt += '\n\n--- PREVIOUS EXPERT ANALYSES ---\n';
     for (const [expertId, output] of Object.entries(previousOutputs)) {
       userPrompt += `\n[Expert ${expertId}]:\n${output}\n`;
@@ -96,8 +96,8 @@ export async function callExpert(
     userPrompt += '--- END PREVIOUS ANALYSES ---\n\nBuild upon these insights with your unique perspective.';
   }
   
-  // For debate mode, you might want to include opposing arguments
-  if (mode === 'debate' && previousOutputs && Object.keys(previousOutputs).length > 0) {
+  // For adversarial mode, you might want to include opposing arguments
+  if (mode === 'adversarial' && previousOutputs && Object.keys(previousOutputs).length > 0) {
     userPrompt += '\n\n--- OTHER EXPERT POSITIONS ---\n';
     for (const [expertId, output] of Object.entries(previousOutputs)) {
       userPrompt += `\n[${expertId}]:\n${output}\n`;
@@ -175,7 +175,7 @@ export async function callExpertStreaming(
   
   let userPrompt = `TASK: ${task}`;
   
-  if (mode === 'pipeline' && previousOutputs && Object.keys(previousOutputs).length > 0) {
+  if (mode === 'sequential' && previousOutputs && Object.keys(previousOutputs).length > 0) {
     userPrompt += '\n\n--- PREVIOUS EXPERT ANALYSES ---\n';
     for (const [expertId, output] of Object.entries(previousOutputs)) {
       userPrompt += `\n[Expert ${expertId}]:\n${output}\n`;
@@ -792,8 +792,8 @@ export async function generateOutput(
 
   let userPrompt = `TASK: ${task}`;
 
-  // For pipeline mode, include previous outputs
-  if (mode === 'pipeline' && previousOutputs && Object.keys(previousOutputs).length > 0) {
+  // For sequential mode, include previous outputs
+  if (mode === 'sequential' && previousOutputs && Object.keys(previousOutputs).length > 0) {
     userPrompt += '\n\n--- PREVIOUS EXPERT ANALYSES ---\n';
     for (const [expertId, output] of Object.entries(previousOutputs)) {
       userPrompt += `\n[Expert ${expertId}]:\n${output}\n`;

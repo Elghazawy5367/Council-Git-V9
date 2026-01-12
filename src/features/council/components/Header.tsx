@@ -2,12 +2,13 @@ import React from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useMemoryStore } from '@/features/council/store/memory-store';
-import { Brain, Settings, Lock, Unlock, DollarSign, History } from 'lucide-react';
+import { Brain, Settings, Lock, Unlock, DollarSign, History, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { MemoryBadge } from './MemoryBadge';
 import { ProjectFeaturesDropdown } from '@/components/primitives/dropdown-menu';
 import { MobileMenu } from '@/components/MobileMenu';
+import { Link } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   const cost = useExecutionStore(state => state.cost);
@@ -78,6 +79,18 @@ export const Header: React.FC = () => {
             >
               <History className="h-5 w-5" />
             </Button>
+
+            {/* Dashboard link (hidden on mobile) */}
+            <Link to="/dashboard">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden md:flex h-10 w-10"
+                aria-label="View analytics dashboard"
+              >
+                <BarChart3 className="h-5 w-5" />
+              </Button>
+            </Link>
 
             {/* Vault status (hidden on mobile) */}
             <Badge

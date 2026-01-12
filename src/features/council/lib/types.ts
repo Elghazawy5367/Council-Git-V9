@@ -9,10 +9,10 @@ export interface ExpertConfig {
 }
 
 export interface ModeBehavior {
-  separated: string;
-  synthesis: string;
-  debate: string;
-  pipeline: string;
+  parallel: string;
+  consensus: string;
+  adversarial: string;
+  sequential: string;
   modeName: string; // Added to align with ai-client.ts
   description: string; // Added to align with ai-client.ts
   isEnabled: boolean; // Added to align with ai-client.ts
@@ -48,7 +48,7 @@ export interface Expert {
   content?: string; // Added to align with control-panel-store.ts
 }
 
-export type ExecutionMode = 'separated' | 'synthesis' | 'debate' | 'pipeline';
+export type ExecutionMode = 'parallel' | 'consensus' | 'adversarial' | 'sequential';
 
 export type SynthesisTier = 'quick' | 'balanced' | 'deep';
 

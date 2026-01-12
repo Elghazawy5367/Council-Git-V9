@@ -85,9 +85,10 @@ export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefr
 
   const getModeColor = (mode: string) => {
     switch (mode) {
-      case 'synthesis': return 'bg-primary/20 text-primary';
-      case 'debate': return 'bg-destructive/20 text-destructive';
-      case 'pipeline': return 'bg-secondary/20 text-secondary';
+      case 'consensus': return 'bg-primary/20 text-primary';
+      case 'adversarial': return 'bg-destructive/20 text-destructive';
+      case 'sequential': return 'bg-secondary/20 text-secondary';
+      case 'parallel': return 'bg-accent/20 text-accent-foreground';
       default: return 'bg-muted text-muted-foreground';
     }
   };
@@ -241,9 +242,10 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
 
   const getModeColor = (mode: string) => {
     switch (mode) {
-      case 'synthesis': return 'bg-primary/20 text-primary';
-      case 'debate': return 'bg-destructive/20 text-destructive';
-      case 'pipeline': return 'bg-secondary/20 text-secondary';
+      case 'consensus': return 'bg-primary/20 text-primary';
+      case 'adversarial': return 'bg-destructive/20 text-destructive';
+      case 'sequential': return 'bg-secondary/20 text-secondary';
+      case 'parallel': return 'bg-accent/20 text-accent-foreground';
       default: return 'bg-muted text-muted-foreground';
     }
   };

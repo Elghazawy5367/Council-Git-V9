@@ -87,7 +87,7 @@ export interface StreamingAIConfig {
 export interface AgentOrchestrationConfig {
   enabled: boolean;
   maxAgents: number;
-  executionMode: 'separated' | 'synthesis' | 'debate' | 'pipeline';
+  executionMode: 'parallel' | 'consensus' | 'adversarial' | 'sequential';
 }
 
 export interface LocalDatabaseConfig {
@@ -216,7 +216,7 @@ const DEFAULT_STREAMING_AI_CONFIG: StreamingAIConfig = {
 const DEFAULT_AGENT_ORCHESTRATION_CONFIG: AgentOrchestrationConfig = {
   enabled: true,
   maxAgents: 7,
-  executionMode: 'synthesis',
+  executionMode: 'consensus',
 };
 
 const DEFAULT_LOCAL_DATABASE_CONFIG: LocalDatabaseConfig = {

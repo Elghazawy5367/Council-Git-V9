@@ -18,10 +18,10 @@ export interface Persona {
   basePersona: string;
   knowledge: string;
   modeBehavior: {
-    separated: string;
-    synthesis: string;
-    debate: string;
-    pipeline: string;
+    parallel: string;
+    consensus: string;
+    adversarial: string;
+    sequential: string;
   };
   color: string;
   expertIcon: string;
@@ -111,10 +111,10 @@ Warning Signs of Fake Blue Oceans:
 - No clear non-customer targeting
 - Technology-first, not buyer-utility-first`,
     modeBehavior: {
-      separated: 'Conduct independent Blue Ocean analysis using ERRC framework.',
-      synthesis: 'Identify Blue Ocean opportunities that align with other expert insights.',
-      debate: 'Challenge Red Ocean assumptions and defend untapped market opportunities.',
-      pipeline: 'Build Blue Ocean strategy on validated insights from previous experts.',
+      parallel: 'Conduct independent Blue Ocean analysis using ERRC framework.',
+      consensus: 'Identify Blue Ocean opportunities that align with other expert insights.',
+      adversarial: 'Challenge Red Ocean assumptions and defend untapped market opportunities.',
+      sequential: 'Build Blue Ocean strategy on validated insights from previous experts.',
     },
     color: 'from-blue-500 to-cyan-500',
     expertIcon: 'Waves',
@@ -195,10 +195,10 @@ Validation Tactics:
 3. Wizard of Oz: Fake the tech, validate the need
 4. Pre-sales: Take money before building`,
     modeBehavior: {
-      separated: 'Ruthlessly validate assumptions without external influence.',
-      synthesis: 'Challenge consensus with validation-focused skepticism.',
-      debate: 'Attack weak assumptions and demand evidence of validated learning.',
-      pipeline: 'Stress-test previous conclusions with validation frameworks.',
+      parallel: 'Ruthlessly validate assumptions without external influence.',
+      consensus: 'Challenge consensus with validation-focused skepticism.',
+      adversarial: 'Attack weak assumptions and demand evidence of validated learning.',
+      sequential: 'Stress-test previous conclusions with validation frameworks.',
     },
     color: 'from-red-500 to-orange-500',
     expertIcon: 'Search',
@@ -288,10 +288,10 @@ Platforms by Friction Level:
 - Medium: Teachable, Podia, ConvertKit
 - Highest: Self-hosted, Stripe direct`,
     modeBehavior: {
-      separated: 'Analyze passive income potential independently.',
-      synthesis: 'Align passive income strategy with market opportunities.',
-      debate: 'Challenge active income traps disguised as passive.',
-      pipeline: 'Design passive income model building on validated opportunities.',
+      parallel: 'Analyze passive income potential independently.',
+      consensus: 'Align passive income strategy with market opportunities.',
+      adversarial: 'Challenge active income traps disguised as passive.',
+      sequential: 'Design passive income model building on validated opportunities.',
     },
     color: 'from-emerald-500 to-teal-500',
     expertIcon: 'TrendingUp',
@@ -395,10 +395,10 @@ Warning: Tactics That Look Free But Aren't:
 - Influencer partnerships (expect to pay eventually)
 - Referral programs (need existing users first)`,
     modeBehavior: {
-      separated: 'Generate guerrilla growth tactics independently.',
-      synthesis: 'Align growth channels with validated market opportunities.',
-      debate: 'Challenge paid acquisition assumptions and defend organic tactics.',
-      pipeline: 'Build growth plan on validated product and market fit.',
+      parallel: 'Generate guerrilla growth tactics independently.',
+      consensus: 'Align growth channels with validated market opportunities.',
+      adversarial: 'Challenge paid acquisition assumptions and defend organic tactics.',
+      sequential: 'Build growth plan on validated product and market fit.',
     },
     color: 'from-orange-500 to-red-500',
     expertIcon: 'Rocket',
@@ -506,10 +506,10 @@ Must-Have for Any MVP:
 ✓ Basic analytics (Plausible, Mixpanel)
 ✓ Error tracking (Sentry free tier)`,
     modeBehavior: {
-      separated: 'Design technical architecture independently.',
-      synthesis: 'Align tech stack with business and market requirements.',
-      debate: 'Challenge over-engineering and defend speed-first approach.',
-      pipeline: 'Build technical plan on validated business model.',
+      parallel: 'Design technical architecture independently.',
+      consensus: 'Align tech stack with business and market requirements.',
+      adversarial: 'Challenge over-engineering and defend speed-first approach.',
+      sequential: 'Build technical plan on validated business model.',
     },
     color: 'from-yellow-500 to-amber-500',
     expertIcon: 'Zap',
@@ -606,10 +606,10 @@ Common Failures:
 - Infinite scroll (ADHD doom-scrolling trap)
 - Pop-ups interrupting flow`,
     modeBehavior: {
-      separated: 'Analyze accessibility and cognitive load independently.',
-      synthesis: 'Integrate inclusive design requirements across solutions.',
-      debate: 'Challenge exclusionary patterns and advocate for accessibility.',
-      pipeline: 'Add inclusive design layer to existing solutions.',
+      parallel: 'Analyze accessibility and cognitive load independently.',
+      consensus: 'Integrate inclusive design requirements across solutions.',
+      adversarial: 'Challenge exclusionary patterns and advocate for accessibility.',
+      sequential: 'Add inclusive design layer to existing solutions.',
     },
     color: 'from-purple-500 to-pink-500',
     expertIcon: 'Brain',
@@ -624,7 +624,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Opportunity Discovery Team',
     description: 'Find Blue Ocean opportunities and validate quickly',
     icon: '🔭',
-    recommendedMode: 'synthesis',
+    recommendedMode: 'consensus',
     personaIds: ['blue_ocean_strategist', 'ruthless_validator', 'growth_guerrilla', 'nocode_cto', 'passive_income_architect'],
   },
   passive_income_builder: {
@@ -632,7 +632,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Passive Income Builder',
     description: 'Design and launch passive income streams',
     icon: '💸',
-    recommendedMode: 'pipeline',
+    recommendedMode: 'sequential',
     personaIds: ['passive_income_architect', 'nocode_cto', 'growth_guerrilla', 'blue_ocean_strategist', 'ruthless_validator'],
   },
   idea_validation: {
@@ -640,7 +640,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Idea Validation Squad',
     description: 'Ruthlessly validate before building',
     icon: '🎯',
-    recommendedMode: 'debate',
+    recommendedMode: 'adversarial',
     personaIds: ['ruthless_validator', 'blue_ocean_strategist', 'nocode_cto', 'growth_guerrilla', 'neuro_inclusive_designer'],
   },
   neurodiversity_edtech: {
@@ -648,7 +648,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Neurodiversity EdTech Team',
     description: 'Build inclusive education products',
     icon: '🌈',
-    recommendedMode: 'synthesis',
+    recommendedMode: 'consensus',
     personaIds: ['neuro_inclusive_designer', 'nocode_cto', 'passive_income_architect', 'growth_guerrilla', 'ruthless_validator'],
   },
   decision_validation: {
@@ -656,7 +656,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Decision Validation Council',
     description: 'Validate big decisions from multiple angles',
     icon: '⚖️',
-    recommendedMode: 'debate',
+    recommendedMode: 'adversarial',
     personaIds: ['ruthless_validator', 'blue_ocean_strategist', 'passive_income_architect', 'nocode_cto', 'neuro_inclusive_designer'],
   },
   product_launch: {
@@ -664,7 +664,7 @@ export const PERSONA_TEAMS: Record<string, PersonaTeam> = {
     name: 'Product Launch Council',
     description: 'Go-to-market strategy and launch planning',
     icon: '🚀',
-    recommendedMode: 'pipeline',
+    recommendedMode: 'sequential',
     personaIds: ['growth_guerrilla', 'nocode_cto', 'blue_ocean_strategist', 'passive_income_architect', 'neuro_inclusive_designer'],
   },
 };

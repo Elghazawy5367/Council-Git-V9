@@ -79,23 +79,23 @@ export const MAGNIFICENT_7_FLEET: ModelInfo[] = [
 
 // Replaced 'ExecutionMode' with 'string' for compatibility
 export const MODE_DESCRIPTIONS: Record<string, { name: string; description: string; icon: string }> = {
-  separated: {
-    name: 'Separated',
+  parallel: {
+    name: 'Parallel',
     description: 'Independent analyses with no cross-pollination between experts',
     icon: 'Layers',
   },
-  synthesis: {
-    name: 'Synthesis',
+  consensus: {
+    name: 'Consensus',
     description: 'Collaborative consensus-building with multi-stage integration',
     icon: 'GitMerge',
   },
-  debate: {
-    name: 'Debate',
+  adversarial: {
+    name: 'Adversarial',
     description: 'Adversarial multi-round argumentation with scoring',
     icon: 'Swords',
   },
-  pipeline: {
-    name: 'Pipeline',
+  sequential: {
+    name: 'Sequential',
     description: 'Sequential refinement where each expert builds on the previous',
     icon: 'Workflow',
   },
@@ -321,14 +321,14 @@ export function buildSystemPrompt(
   }
   
   // Add mode-specific behavior from expert
-  if (mode === 'separated' && expertConfig.modeBehavior.separated) {
-    prompt += expertConfig.modeBehavior.separated + '\n';
-  } else if (mode === 'synthesis' && expertConfig.modeBehavior.synthesis) {
-    prompt += expertConfig.modeBehavior.synthesis + '\n';
-  } else if (mode === 'debate' && expertConfig.modeBehavior.debate) {
-    prompt += expertConfig.modeBehavior.debate + '\n';
-  } else if (mode === 'pipeline' && expertConfig.modeBehavior.pipeline) {
-    prompt += expertConfig.modeBehavior.pipeline + '\n';
+  if (mode === 'parallel' && expertConfig.modeBehavior.parallel) {
+    prompt += expertConfig.modeBehavior.parallel + '\n';
+  } else if (mode === 'consensus' && expertConfig.modeBehavior.consensus) {
+    prompt += expertConfig.modeBehavior.consensus + '\n';
+  } else if (mode === 'adversarial' && expertConfig.modeBehavior.adversarial) {
+    prompt += expertConfig.modeBehavior.adversarial + '\n';
+  } else if (mode === 'sequential' && expertConfig.modeBehavior.sequential) {
+    prompt += expertConfig.modeBehavior.sequential + '\n';
   }
   
   // Add output formatting rules

@@ -1,8 +1,8 @@
 import { SynthesisTier, SynthesisConfig } from "./types";
 
-// All of the tier configurations and prompt-building logic remain the same.
-// The executeSynthesis and callSynthesisAPI functions have been removed,
-// as their logic is now handled by the useExecuteSynthesis hook.
+// ⚖️ THE RUTHLESS JUDGE - Synthesis Engine
+// This engine analyzes expert outputs with uncompromising precision,
+// cutting through noise to deliver clear, actionable verdicts.
 
 export const SYNTHESIS_TIERS: Record<SynthesisTier, {
   name: string;
@@ -14,27 +14,27 @@ export const SYNTHESIS_TIERS: Record<SynthesisTier, {
   maxTokens: number;
 }> = {
   quick: {
-    name: "Quick Synthesis",
+    name: "Swift Verdict",
     icon: "⚡",
-    description: "Fast consensus extraction (single-pass)",
+    description: "Fast consensus extraction with ruthless efficiency",
     estimatedTime: "~15s",
     estimatedCost: "$0.0003",
     temperature: 0.3,
     maxTokens: 2000,
   },
   balanced: {
-    name: "Balanced Synthesis",
-    icon: "🎯",
-    description: "Smart deduplication + Chain-of-Thought",
+    name: "Balanced Judgment",
+    icon: "⚖️",
+    description: "Thorough analysis with strategic deduplication",
     estimatedTime: "~25s",
     estimatedCost: "$0.0005",
     temperature: 0.5,
     maxTokens: 3000,
   },
   deep: {
-    name: "Deep Synthesis",
+    name: "Exhaustive Verdict",
     icon: "🔍",
-    description: "Exhaustive analysis with multi-pass refinement",
+    description: "Multi-pass refinement with uncompromising scrutiny",
     estimatedTime: "~45s",
     estimatedCost: "$0.001",
     temperature: 0.7,
@@ -63,9 +63,9 @@ function buildQuickPrompt(
   task: string,
   customInstructions: string
 ): string {
-  let prompt = `You are a fast synthesis engine analyzing ${expertOutputs.length} expert perspectives.\n\n`;
+  let prompt = `You are THE RUTHLESS JUDGE - a synthesis engine that delivers swift, uncompromising verdicts on ${expertOutputs.length} expert perspectives.\n\n`;
   prompt += `TASK: "${task}"\n\n`;
-  prompt += `EXPERT OUTPUTS:\n${"─".repeat(40)}\n`;
+  prompt += `EXPERT TESTIMONIES:\n${"─".repeat(40)}\n`;
 
   expertOutputs.forEach((expert, i) => {
     prompt += `Expert ${i + 1}: ${expert.name} (Model: ${expert.model})\n`;
@@ -73,27 +73,27 @@ function buildQuickPrompt(
   });
 
   if (customInstructions) {
-    prompt += `CUSTOM FOCUS: ${customInstructions}\n\n`;
+    prompt += `SPECIAL FOCUS: ${customInstructions}\n\n`;
   }
 
-  prompt += `SYNTHESIZE DIRECTLY (no intermediate reasoning):
+  prompt += `DELIVER YOUR VERDICT DIRECTLY (no intermediate reasoning):
 1. What do all/most experts agree on? → CONSENSUS
 2. What unique insights did individual experts provide? → UNIQUE
 3. Where do experts contradict each other? → CONFLICTS
 
-FORMAT YOUR RESPONSE:
+FORMAT YOUR VERDICT:
 
-## CONSENSUS
+## ⚖️ CONSENSUS
 • [Point agreed by multiple experts]
 
-## UNIQUE INSIGHTS
+## 💎 UNIQUE INSIGHTS
 • [Expert Name]: [unique insight]
 
-## CONTRADICTIONS
+## ⚔️ CONTRADICTIONS
 • [Expert A] vs [Expert B]: [brief conflict description]
 
-## RECOMMENDATION
-[Single paragraph: synthesized actionable advice]`;
+## 🎯 FINAL VERDICT
+[Single paragraph: synthesized actionable judgment]`;
 
   return prompt;
 }
@@ -103,9 +103,9 @@ function buildBalancedPrompt(
   task: string,
   customInstructions: string
 ): string {
-  let prompt = `You are an intelligent synthesis engine with Chain-of-Thought reasoning.\n\n`;
+  let prompt = `You are THE RUTHLESS JUDGE - a synthesis engine with Chain-of-Thought reasoning that delivers balanced, uncompromising verdicts.\n\n`;
   prompt += `TASK: "${task}"\n\n`;
-  prompt += `EXPERT OUTPUTS:\n${"─".repeat(40)}\n`;
+  prompt += `EXPERT TESTIMONIES:\n${"─".repeat(40)}\n`;
 
   expertOutputs.forEach((expert, i) => {
     prompt += `Expert ${i + 1}: ${expert.name} (${expert.model})\n`;
@@ -113,18 +113,18 @@ function buildBalancedPrompt(
   });
 
   if (customInstructions) {
-    prompt += `FOCUS: ${customInstructions}\n\n`;
+    prompt += `SPECIAL FOCUS: ${customInstructions}\n\n`;
   }
 
-  prompt += `USE CHAIN-OF-THOUGHT REASONING (show your work):
+  prompt += `USE CHAIN-OF-THOUGHT REASONING (show your judicial process):
 
-**Step 1: Extraction**
+**Step 1: Evidence Extraction**
 First, extract the core claims from each expert:
 ${expertOutputs
     .map((e, i) => `- Expert ${i + 1} (${e.name}) claims: [extract 3-5 key points]`)
     .join("\n")}
 
-**Step 2: Clustering**
+**Step 2: Clustering Evidence**
 Now, group similar claims across experts:
 - Cluster A (topic): Mentioned by [which experts] saying [what]
 - Cluster B (topic): Mentioned by [which experts] saying [what]
@@ -133,18 +133,18 @@ Now, group similar claims across experts:
 **Step 3: Conflict Detection**
 Identify where experts contradict each other:
 - Conflict 1: [Expert X says A, Expert Y says opposite/different B]
-- Reasoning: [Why is this a genuine conflict vs just different framing?]
+- Analysis: [Why is this a genuine conflict vs just different framing?]
 
-**Step 4: Resolution**
+**Step 4: Resolution & Judgment**
 For each conflict:
 - Evaluate evidence: [Which side has stronger support?]
 - Context matters: [Can both be true in different scenarios?]
-- Synthesized view: [What's the integrated position?]
+- Synthesized verdict: [What's the integrated position?]
 
-**Step 5: Final Synthesis**
+**Step 5: Final Verdict**
 Based on the reasoning above:
 
-## AREAS OF AGREEMENT
+## ⚖️ AREAS OF AGREEMENT
 • [Consensus point] - supported by {Expert names}
   Evidence: [why they agree]
 
@@ -171,9 +171,9 @@ function buildDeepPrompt(
   task: string,
   customInstructions: string
 ): string {
-  let prompt = `You are a comprehensive synthesis engine using Tree-of-Thought exploration.\n\n`;
+  let prompt = `You are THE RUTHLESS JUDGE - using Tree-of-Thought exploration to deliver exhaustive, uncompromising verdicts.\n\n`;
   prompt += `TASK: "${task}"\n\n`;
-  prompt += `EXPERT OUTPUTS:\n${"─".repeat(40)}\n`;
+  prompt += `EXPERT TESTIMONIES:\n${"─".repeat(40)}\n`;
 
   expertOutputs.forEach((expert, i) => {
     prompt += `Expert ${i + 1}: ${expert.name} (${expert.model})\n`;
@@ -181,7 +181,7 @@ function buildDeepPrompt(
   });
 
   if (customInstructions) {
-    prompt += `FOCUS: ${customInstructions}\n\n`;
+    prompt += `SPECIAL FOCUS: ${customInstructions}\n\n`;
   }
 
   prompt += `USE TREE-OF-THOUGHT REASONING (explore multiple interpretive paths):

@@ -90,7 +90,7 @@ export const useExecutionStore = create<ExecutionState>((set) => ({
           updateExpert(i, { ...expert, isLoading: true, output: '' });
         });
 
-        const previousOutputs = mode === 'pipeline' || mode === 'debate' ? Object.fromEntries(Object.entries(collectedOutputs).map(([id, data]) => [id, data.output])) : undefined;
+        const previousOutputs = mode === 'sequential' || mode === 'adversarial' ? Object.fromEntries(Object.entries(collectedOutputs).map(([id, data]) => [id, data.output])) : undefined;
 
         try {
           // Capture the content from streaming callbacks

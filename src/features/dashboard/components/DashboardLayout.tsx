@@ -89,39 +89,55 @@ export const DashboardLayout: React.FC = () => {
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard
-          title="Total Decisions"
-          value={metrics.totalDecisions}
-          subtitle="All time"
-          icon={Brain}
-          colorClass="from-violet-500 to-purple-600"
-        />
-        <MetricCard
-          title="Avg. Decision Time"
-          value={`${Math.round(metrics.averageTime)}s`}
-          subtitle="Per decision"
-          icon={Clock}
-          colorClass="from-blue-500 to-cyan-500"
-        />
-        <MetricCard
-          title="Avg. Cost"
-          value={`$${metrics.averageCost.toFixed(4)}`}
-          subtitle="Per decision"
-          icon={DollarSign}
-          colorClass="from-green-500 to-emerald-600"
-        />
-        <MetricCard
-          title="Success Rate"
-          value={`${Math.round(metrics.successRate)}%`}
-          subtitle="Completed successfully"
-          icon={TrendingUp}
-          colorClass="from-orange-500 to-red-500"
-        />
-      </div>
+      {hasData ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricCard
+            title="Total Decisions"
+            value={metrics.totalDecisions}
+            subtitle="All time"
+            icon={Brain}
+            colorClass="from-violet-500 to-purple-600"
+          />
+          <MetricCard
+            title="Avg. Decision Time"
+            value={`${Math.round(metrics.averageTime)}s`}
+            subtitle="Per decision"
+            icon={Clock}
+            colorClass="from-blue-500 to-cyan-500"
+          />
+          <MetricCard
+            title="Avg. Cost"
+            value={`$${metrics.averageCost.toFixed(4)}`}
+            subtitle="Per decision"
+            icon={DollarSign}
+            colorClass="from-green-500 to-emerald-600"
+          />
+          <MetricCard
+            title="Success Rate"
+            value={`${Math.round(metrics.successRate)}%`}
+            subtitle="Completed successfully"
+            icon={TrendingUp}
+            colorClass="from-orange-500 to-red-500"
+          />
+        </div>
+      ) : (
+        <Card className="glass-panel border-2 border-dashed">
+          <CardContent className="flex flex-col items-center justify-center py-16">
+            <Brain className="h-16 w-16 text-muted-foreground/50 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">No Analytics Data Yet</h3>
+            <p className="text-muted-foreground text-center max-w-md mb-6">
+              Execute your first Council analysis to start tracking metrics, costs, and performance insights.
+            </p>
+            <Button onClick={() => window.location.href = '/'}>
+              Go to Council
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="overview" className="space-y-4">
+      {hasData && (
+        <Tabs defaultValue="overview" className="space-y-4">
         <TabsList className="grid w-full grid-cols-4 lg:w-auto">
           <TabsTrigger value="overview">
             <BarChart3 className="h-4 w-4 mr-2" />
@@ -189,6 +205,7 @@ export const DashboardLayout: React.FC = () => {
           <HistoricalView />
         </TabsContent>
       </Tabs>
+      )}
     </div>
   );
 };

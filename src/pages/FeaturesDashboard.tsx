@@ -218,13 +218,24 @@ const FeaturesDashboard: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
+                    {feature.id === 'scout' || feature.id === 'sonar' ? (
+                      <Button
+                        onClick={() => navigate('/features/scout')}
+                        size="sm"
+                        variant="default"
+                        className="gap-2"
+                      >
+                        <Settings className="h-4 w-4" />
+                        Configure
+                      </Button>
+                    ) : null}
                     <Button
                       onClick={() => window.open(getTriggerUrl(feature.workflow), '_blank')}
                       size="sm"
                       className="gap-2 flex-1"
                     >
                       <Play className="h-4 w-4" />
-                      Trigger Workflow
+                      Trigger
                     </Button>
                     <Button
                       onClick={() => window.open(getWorkflowUrl(feature.workflow), '_blank')}
@@ -233,7 +244,7 @@ const FeaturesDashboard: React.FC = () => {
                       className="gap-2"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      View Runs
+                      Runs
                     </Button>
                   </div>
                   

@@ -11,6 +11,7 @@ const Index = React.lazy(() => import("@/pages/Index"));
 const Dashboard = React.lazy(() => import("@/pages/Dashboard"));
 const QualityDashboard = React.lazy(() => import("@/pages/QualityDashboard"));
 const FeaturesDashboard = React.lazy(() => import("@/pages/FeaturesDashboard"));
+const ScoutConfig = React.lazy(() => import("@/pages/features/ScoutConfig"));
 const NotFound = React.lazy(() => import("@/pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/quality" element={<QualityDashboard />} />
               <Route path="/features" element={<FeaturesDashboard />} />
+              <Route path="/features/scout" element={<ScoutConfig />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

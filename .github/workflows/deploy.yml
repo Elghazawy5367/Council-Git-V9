@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - worktree-2026-01-07T11-32-41
   workflow_dispatch:
 
 permissions:
@@ -35,6 +36,14 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          CI: false
+
+      - name: Verify build output
+        run: |
+          echo "Build completed, checking dist directory..."
+          ls -la dist/
+          echo "Checking for index.html..."
+          test -f dist/index.html && echo "✓ index.html found" || exit 1
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

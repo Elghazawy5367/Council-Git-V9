@@ -35,6 +35,18 @@
         "type": "shell",
         "command": "npm",
         "args": ["run", "preview"]
+      },
+      {
+        "label": "typecheck",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "typecheck"]
+      },
+      {
+        "label": "deploy",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "deploy"]
       }
     ],
     "ports": [

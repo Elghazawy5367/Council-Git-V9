@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   
   return {
     // Base path for GitHub Pages deployment
-    base: mode === 'production' ? '/Council-Git-V7-RRR/' : '/',
+    base: mode === 'production' ? '/Council-Git-V9/' : '/',
     server: {
       host: "0.0.0.0",
       port: 5173,

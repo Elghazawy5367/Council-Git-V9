@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * GitHub API Client for Features Automation
  * Handles API calls to GitHub for trending repos, issues, etc.

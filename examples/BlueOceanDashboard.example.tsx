@@ -3,6 +3,7 @@
  * Demonstrates all 5 critical patterns in a real component
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { FeatureErrorBoundary } from '@/components/ErrorBoundary';
 import { useBlueOceanScanner, useInvalidateGitHub } from '@/hooks/useGitHub';

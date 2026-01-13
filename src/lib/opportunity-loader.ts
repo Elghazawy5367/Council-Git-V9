@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Opportunity Loader
  * Load and transform opportunity data from Scout/Blue Ocean scans

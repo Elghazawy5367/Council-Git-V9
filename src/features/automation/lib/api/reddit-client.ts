@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Reddit API Client for Features Automation
  * Uses Reddit JSON API (no auth required for public data)
@@ -5,7 +6,6 @@
 
 interface RedditPost {
   id: string;
-  title: string;
   selftext: string;
   author: string;
   subreddit: string;

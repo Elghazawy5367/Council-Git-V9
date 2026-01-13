@@ -1,8 +1,8 @@
-import type { FeatureReport, ExecutionResult } from '../types/feature.types';
+import type { FeatureReport, ExecutionResult, FeatureConfiguration } from '../types/feature.types';
 import { useFeaturesStore } from '../store/features-store';
 import { useReportsStore } from '../store/reports-store';
 
-type FeatureExecutor = (executionId: string, config: any) => Promise<FeatureReport>;
+type FeatureExecutor = (executionId: string, config: FeatureConfiguration) => Promise<FeatureReport>;
 
 // Map of feature executors - will be populated as features are implemented
 const FEATURE_EXECUTORS: Record<string, FeatureExecutor> = {};
@@ -124,7 +124,7 @@ export class ExecutionEngine {
    */
   private async routeToRuthlessJudge(
     report: FeatureReport,
-    config: any
+    config: FeatureConfiguration
   ): Promise<void> {
     const reportsStore = useReportsStore.getState();
     
@@ -142,7 +142,7 @@ export class ExecutionEngine {
    */
   private async routeToCouncil(
     report: FeatureReport,
-    config: any
+    config: FeatureConfiguration
   ): Promise<void> {
     const reportsStore = useReportsStore.getState();
     

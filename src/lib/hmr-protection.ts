@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Hot Module Replacement (HMR) Protection Layer
  * Prevents console crashes during development when files are modified

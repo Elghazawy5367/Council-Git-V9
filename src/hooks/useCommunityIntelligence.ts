@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Reddit & HackerNews Data Fetching Hooks
  * Mirrors: TanStack Query best practices

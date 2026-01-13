@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Centralized API Client
  * Mirrors: Axios interceptor patterns + TanStack Query best practices

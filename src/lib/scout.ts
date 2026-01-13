@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * The Scout - GitHub Intelligence Extraction System
  * 

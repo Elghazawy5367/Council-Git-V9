@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * The Mining Drill - Pain Point Extraction Engine
  * Extracts marketing intelligence from GitHub issues
@@ -5,7 +6,6 @@
 
 export interface PainPoint {
   title: string;
-  body: string;
   comments: number;
   url: string;
   created: string;

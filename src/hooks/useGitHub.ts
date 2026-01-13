@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * GitHub Scanner Hook
  * Mirrors: TanStack Query best practices

@@ -684,7 +684,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       <Label className="text-sm">Execution Mode</Label>
                       <Select
                         value={agentOrchestration.executionMode}
-                        onValueChange={(value: any) => updateAgentOrchestrationConfig({ executionMode: value })}
+                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value })}
                       >
                         <SelectTrigger>
                           <SelectValue />

@@ -23,12 +23,7 @@ export const ProtectionTests = {
   testUncaughtError() {
     console.log('[TEST] Triggering uncaught error...');
     setTimeout(() => {
-      try {
-        throw new Error('Test uncaught error - should be caught by global handler');
-      } catch (e) {
-        // Deliberately re-throw to test global handler
-        throw e;
-      }
+      throw new Error('Test uncaught error - should be caught by global handler');
     }, 100);
   },
 
@@ -138,8 +133,14 @@ export const ProtectionTests = {
   }
 };
 
+declare global {
+  interface Window {
+    ProtectionTests?: typeof ProtectionTests;
+  }
+}
+
 // Make available in browser console
 if (typeof window !== 'undefined') {
-  (window as any).ProtectionTests = ProtectionTests;
+  window.ProtectionTests = ProtectionTests;
   console.log('🧪 Protection Tests loaded. Run: ProtectionTests.checkStatus()');
 }

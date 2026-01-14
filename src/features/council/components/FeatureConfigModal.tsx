@@ -20,9 +20,14 @@ import { toast } from 'sonner';
 interface FeatureConfigModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialTab?: string | null;
 }
 
-export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose }) => {
+export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more'].includes(initialTab) 
+    ? initialTab 
+    : "scout";
+
   const {
     scout,
     mirror,
@@ -77,7 +82,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="scout" className="w-full">
+        <Tabs defaultValue={defaultTab} className="w-full">
           <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 gap-1 bg-muted/30 p-1 h-auto">
             <TabsTrigger value="scout" className="text-xs px-2 py-2">
               <span className="mr-1">👻</span> Scout
@@ -684,7 +689,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       <Label className="text-sm">Execution Mode</Label>
                       <Select
                         value={agentOrchestration.executionMode}
-                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value })}
+                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value as any })}
                       >
                         <SelectTrigger>
                           <SelectValue />

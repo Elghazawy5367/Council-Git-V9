@@ -13,6 +13,7 @@ import { Badge } from '@/components/primitives/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/primitives/tabs';
 import { useExecuteSynthesis } from '@/features/council/hooks/use-council-queries';
 import {
+  Settings,
   Upload,
   FileText,
   X,
@@ -33,7 +34,17 @@ const MODE_ICONS: Record<ExecutionMode, React.ComponentType<{ className?: string
   sequential: Workflow,
 };
 
+import { FeatureConfigModal } from './FeatureConfigModal';
+
 export const ControlPanel: React.FC = () => {
+  const [isConfigOpen, setIsConfigOpen] = React.useState(false);
+  const [selectedFeatureTab, setSelectedFeatureTab] = React.useState<string | null>(null);
+
+  const handleOpenConfig = (tab?: string) => {
+    setSelectedFeatureTab(tab || null);
+    setIsConfigOpen(true);
+  };
+
   const {
     task,
     setTask,
@@ -132,7 +143,17 @@ export const ControlPanel: React.FC = () => {
         </div>
 
         <div className="space-y-3">
-          <label className="text-sm font-medium text-foreground">Execution Mode</label>
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium text-foreground">Execution Mode</label>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 hover:bg-primary/10 hover:text-primary"
+              onClick={() => handleOpenConfig()}
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
           <Tabs value={mode} onValueChange={(v) => setMode(v as ExecutionMode)}>
             <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-1">
               {(Object.keys(MODE_DESCRIPTIONS) as ExecutionMode[]).map((modeKey) => {
@@ -218,6 +239,12 @@ export const ControlPanel: React.FC = () => {
             <><Play className="h-5 w-5 mr-2" />Execute Council</>
           )}
         </Button>
+
+        <FeatureConfigModal 
+          isOpen={isConfigOpen} 
+          onClose={() => setIsConfigOpen(false)} 
+          initialTab={selectedFeatureTab}
+        />
 
         {isLoading && statusMessage && (
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">

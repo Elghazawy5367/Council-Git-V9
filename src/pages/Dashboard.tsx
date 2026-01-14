@@ -1,30 +1,352 @@
-import React from 'react';
-import { DashboardLayout } from '@/features/dashboard/components/DashboardLayout';
-import { ErrorBoundary } from 'react-error-boundary';
-import { AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/primitives/card';
+import { Button } from '@/components/primitives/button';
+import { Badge } from '@/components/primitives/badge';
+import { Play, CheckCircle2, Clock, ExternalLink, ArrowLeft, Github, Calendar, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useFeatureConfigStore } from '@/features/council/store/feature-config-store';
+import { parseCronSchedule } from '@/lib/workflow-dispatcher';
+import { MiningDrillPanel } from '@/features/council/components/MiningDrillPanel';
+import { GoldmineDetector } from '@/features/council/components/GoldmineDetector';
+import { loadAllOpportunities } from '@/lib/opportunity-loader';
+import { Opportunity } from '@/lib/goldmine-detector';
+import { getSessionKeys } from '@/features/council/lib/vault';
 
-const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => (
-  <div className="flex flex-col items-center justify-center min-h-screen p-6">
-    <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-    <h2 className="text-xl font-semibold mb-2">Dashboard Error</h2>
-    <p className="text-sm text-muted-foreground mb-4">{error.message}</p>
-    <button
-      onClick={resetErrorBoundary}
-      className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-    >
-      Retry
-    </button>
-  </div>
-);
+const FeatureConfigModal = lazy(() => import('@/features/council/components/FeatureConfigModal'));
+
+interface Feature {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  workflow: string;
+  schedule: string;
+  lastRun?: string;
+  status: 'idle' | 'scheduled' | 'active';
+}
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const repoOwner = 'Elghazawy5367';
+  const repoName = 'Council-Git-V7-RRR';
+  
+  const [showConfigModal, setShowConfigModal] = useState(false);
+  const [selectedFeatureId, setSelectedFeatureId] = useState<string | null>(null);
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [loadingOpportunities, setLoadingOpportunities] = useState(false);
+  
+  const { scout, mirror, quality, selfImprove } = useFeatureConfigStore();
+  
+  useEffect(() => {
+    const loadData = async (): Promise<void> => {
+      setLoadingOpportunities(true);
+      try {
+        const keys = getSessionKeys();
+        const opps = await loadAllOpportunities(keys?.githubApiKey);
+        setOpportunities(opps);
+      } catch (error) {
+        console.error('Failed to load opportunities:', error);
+      } finally {
+        setLoadingOpportunities(false);
+      }
+    };
+    
+    void loadData();
+  }, []);
+  
+  const [features] = useState<Feature[]>([
+    {
+      id: 'mirror',
+      name: 'Code Mirror System',
+      description: 'Analyze codebase against elite repository standards',
+      icon: '🔄',
+      workflow: 'code-mirror.yml',
+      schedule: mirror.schedule,
+      status: mirror.enabled ? 'active' : 'idle',
+    },
+    {
+      id: 'quality',
+      name: 'QUALITY Amplification Pipeline',
+      description: 'Run full quality analysis and improvement pipeline',
+      icon: '⚡',
+      workflow: 'quality-pipeline.yml',
+      schedule: quality.schedule,
+      status: quality.enabled ? 'active' : 'idle',
+    },
+    {
+      id: 'learn',
+      name: 'Self-Improving Loop',
+      description: 'Learn patterns from successful repositories',
+      icon: '🧠',
+      workflow: 'self-improve.yml',
+      schedule: selfImprove.schedule,
+      status: selfImprove.enabled ? 'active' : 'idle',
+    },
+    {
+      id: 'scout',
+      name: 'Phantom Scout',
+      description: '24/7 automated GitHub intelligence gathering',
+      icon: '👻',
+      workflow: 'daily-scout.yml',
+      schedule: scout.schedule,
+      status: scout.enabled ? 'active' : 'idle',
+    },
+    {
+      id: 'sonar',
+      name: 'Sonar (Blue Ocean Scanner)',
+      description: 'Detect abandoned high-value repositories',
+      icon: '📡',
+      workflow: 'daily-scout.yml',
+      schedule: scout.schedule,
+      status: scout.enabled ? 'active' : 'idle',
+    },
+  ]);
+
+  const getWorkflowUrl = (workflow: string): string => {
+    return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
+  };
+
+  const getTriggerUrl = (workflow: string): string => {
+    return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
+  };
+
+  const getStatusBadge = (status: Feature['status']): JSX.Element => {
+    const variants: Record<Feature['status'], { className: string; label: string; icon: JSX.Element }> = {
+      idle: { 
+        className: 'bg-gray-500/10 text-gray-600 dark:text-gray-400', 
+        label: 'Disabled',
+        icon: <Clock className="h-3 w-3" />
+      },
+      scheduled: { 
+        className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400', 
+        label: 'Scheduled',
+        icon: <Clock className="h-3 w-3" />
+      },
+      active: { 
+        className: 'bg-green-500/10 text-green-600 dark:text-green-400', 
+        label: 'Active',
+        icon: <CheckCircle2 className="h-3 w-3" />
+      },
+    };
+
+    const { className, label, icon } = variants[status];
+    return (
+      <Badge className={`${className} flex items-center gap-1`}>
+        {icon}
+        {label}
+      </Badge>
+    );
+  };
+
+  const getFeatureConfig = (featureId: string): string => {
+    switch (featureId) {
+      case 'scout':
+      case 'sonar':
+        return `Niche: ${scout.targetNiche} | Min Stars: ${scout.minStars} | Depth: ${scout.depth}`;
+      case 'mirror':
+        return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
+      case 'quality':
+        return `Auto-fix: ${quality.autoFix ? 'Yes' : 'No'} | Lint: ${quality.runLinter ? 'Yes' : 'No'}`;
+      case 'learn':
+        return `Niche: ${selfImprove.niche} | Min Stars: ${selfImprove.minStars}`;
+      default:
+        return '';
+    }
+  };
+
+  const handleOpenConfig = (id?: string) => {
+    setSelectedFeatureId(id || null);
+    setShowConfigModal(true);
+  };
+
   return (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={() => console.log('[Dashboard] Error boundary reset')}
-    >
-      <DashboardLayout />
-    </ErrorBoundary>
+    <div className="min-h-screen bg-background">
+      <header className="glass-panel border-b border-border/50 sticky top-0 z-50 backdrop-blur-xl">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="hover:bg-violet-500/10">
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+                  Council Command Center
+                </h1>
+                <p className="text-xs text-muted-foreground">Manage your Mixture of Experts (MoE) agents • {features.filter(f => f.status === 'active').length} active</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/automation')} 
+                className="gap-2 glass-panel border-green-500/20 hover:bg-green-500/10"
+              >
+                <span className="text-lg">🤖</span>
+                Intelligence Automation
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => handleOpenConfig()} 
+                className="gap-2 glass-panel border-violet-500/20 hover:bg-violet-500/10"
+              >
+                <Settings className="h-4 w-4" />
+                System Config
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <FeatureConfigModal 
+          isOpen={showConfigModal} 
+          onClose={() => setShowConfigModal(false)} 
+          initialTab={selectedFeatureId}
+        />
+      </Suspense>
+
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                Core Experts
+              </h2>
+              <Badge variant="outline" className="gap-2 glass-panel">
+                <Github className="h-4 w-4" />
+                Powered by GitHub Actions
+              </Badge>
+            </div>
+            
+            {features.map((feature) => (
+              <Card key={feature.id} className="hover:shadow-xl hover:scale-[1.02] transition-all glass-panel border-2 border-violet-500/10">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{feature.icon}</span>
+                      <div>
+                        <CardTitle className="text-lg">{feature.name}</CardTitle>
+                        <CardDescription className="mt-1">{feature.description}</CardDescription>
+                      </div>
+                    </div>
+                    {getStatusBadge(feature.status)}
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>{parseCronSchedule(feature.schedule)}</span>
+                  </div>
+                  
+                  <div className="text-xs text-muted-foreground bg-muted/20 p-2 rounded">
+                    {getFeatureConfig(feature.id)}
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={() => handleOpenConfig(feature.id)}
+                      size="sm"
+                      variant="default"
+                      className="gap-2"
+                    >
+                      <Settings className="h-4 w-4" />
+                      Configure
+                    </Button>
+                    <Button
+                      onClick={() => window.open(getTriggerUrl(feature.workflow), '_blank')}
+                      size="sm"
+                      className="gap-2 flex-1"
+                    >
+                      <Play className="h-4 w-4" />
+                      Trigger
+                    </Button>
+                    <Button
+                      onClick={() => window.open(getWorkflowUrl(feature.workflow), '_blank')}
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Runs
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="space-y-4">
+            <Card className="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border-2 border-violet-500/20 glass-panel">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <Github className="h-6 w-6 text-violet-500" />
+                  System Integrity
+                </CardTitle>
+                <CardDescription className="text-base">Operational status and quick links</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-2 text-emerald-400">
+                  <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-mono text-sm">System Operational</span>
+                </div>
+                
+                <div className="p-3 bg-background/50 rounded-lg border border-violet-500/20">
+                  <h4 className="font-semibold text-sm mb-2">Quick Actions</h4>
+                  <div className="space-y-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="w-full justify-start hover:bg-violet-500/10"
+                      onClick={() => window.open(`https://github.com/${repoOwner}/${repoName}/actions`, '_blank')}
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      View All Workflows
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="w-full justify-start hover:bg-violet-500/10"
+                      onClick={() => navigate('/quality')}
+                    >
+                      📊 Quality Dashboard
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-panel border-2 border-violet-500/10">
+              <CardHeader>
+                <CardTitle className="text-lg">Intelligence Feed</CardTitle>
+                <CardDescription>Access generated data and reports</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button variant="outline" size="sm" className="w-full justify-start glass-panel hover:bg-violet-500/10">
+                  📄 Latest Scout Report
+                </Button>
+                <Button variant="outline" size="sm" className="w-full justify-start glass-panel hover:bg-violet-500/10">
+                  🎯 Blue Ocean Ops
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <MiningDrillPanel />
+        </div>
+
+        <div className="mt-8">
+          {loadingOpportunities ? (
+            <Card><CardContent className="py-8 text-center text-muted-foreground">Loading...</CardContent></Card>
+          ) : (
+            <GoldmineDetector opportunities={opportunities} />
+          )}
+        </div>
+      </main>
+    </div>
   );
 };
 

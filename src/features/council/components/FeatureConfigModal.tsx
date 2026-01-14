@@ -689,16 +689,16 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       <Label className="text-sm">Execution Mode</Label>
                       <Select
                         value={agentOrchestration.executionMode}
-                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value as any })}
+                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value as "parallel" | "consensus" | "adversarial" | "sequential" })}
                       >
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="separated">Separated</SelectItem>
-                          <SelectItem value="synthesis">Synthesis</SelectItem>
-                          <SelectItem value="debate">Debate</SelectItem>
-                          <SelectItem value="pipeline">Pipeline</SelectItem>
+                          <SelectItem value="parallel">Separated (Parallel)</SelectItem>
+                          <SelectItem value="consensus">Synthesis (Consensus)</SelectItem>
+                          <SelectItem value="adversarial">Debate (Adversarial)</SelectItem>
+                          <SelectItem value="sequential">Pipeline (Sequential)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

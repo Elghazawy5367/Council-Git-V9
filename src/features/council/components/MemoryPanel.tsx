@@ -70,7 +70,7 @@ export const MemoryPanel: React.FC<MemoryPanelProps> = ({ isOpen, onClose }) => 
     if (isOpen) {
       loadMemory();
     }
-  }, [isOpen]); // loadMemory removed from deps - it's stable and does nothing (persist middleware handles hydration)
+  }, [isOpen, loadMemory]);
 
   const handleExport = () => {
     if (!memory) return;

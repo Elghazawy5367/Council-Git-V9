@@ -69,7 +69,7 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
     if (expert?.basePersona !== editedPersona) {
       setEditedPersona(expert?.basePersona);
     }
-  }, [expert?.basePersona]); // Only depend on basePersona, not editedPersona to avoid loops
+  }, [expert?.basePersona, editedPersona]); // Added editedPersona to dependencies
 
   // Define all hooks BEFORE any early returns
   const handleRetry = useCallback(() => {

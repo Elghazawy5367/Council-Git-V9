@@ -14,15 +14,14 @@ export default defineConfig(({ mode }) => {
     base: mode === 'production' ? '/Council-Git-V9/' : '/',
     server: {
       host: "0.0.0.0",
-      port: 5173,
-      strictPort: false,
+      port: 5000,
+      strictPort: true,
       allowedHosts: true,
       cors: true,
       middlewareMode: false,
       hmr: {
-        overlay: true, // Show errors as overlay instead of crashing
-        timeout: 30000, // Increase timeout for slower connections
-        clientPort: isCodespaces ? 443 : 5173,
+        overlay: true,
+        timeout: 30000,
       },
       watch: {
         // Reduce file watching overhead

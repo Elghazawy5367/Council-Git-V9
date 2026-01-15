@@ -24,7 +24,7 @@ interface FeatureConfigModalProps {
 }
 
 export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
-  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more'].includes(initialTab) 
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points'].includes(initialTab) 
     ? initialTab 
     : "scout";
 
@@ -110,6 +110,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="auth" className="text-xs px-2 py-2">
               <span className="mr-1">🔐</span> Auth
+            </TabsTrigger>
+            <TabsTrigger value="reddit-sniper" className="text-xs px-2 py-2">
+              <span className="mr-1">🎯</span> Sniper
+            </TabsTrigger>
+            <TabsTrigger value="reddit-pain-points" className="text-xs px-2 py-2">
+              <span className="mr-1">💬</span> Pain
             </TabsTrigger>
             <TabsTrigger value="more" className="text-xs px-2 py-2">
               <span className="mr-1">➕</span> More
@@ -443,6 +449,74 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <p className="text-xs text-muted-foreground">
                     {stargazerAnalysis.targetCompanies.join(', ')}
                   </p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Reddit Sniper Configuration */}
+          <TabsContent value="reddit-sniper" className="space-y-4">
+            <Card className="border-2 border-red-500/20 bg-gradient-to-br from-red-500/5 to-orange-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🎯</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Reddit Sniper Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Real-time buying intent detection and lead generation
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🎯 Minimum Intent Score (0-10)</Label>
+                    <Input type="number" defaultValue={7} className="glass-panel" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>📡 Target Subreddits</Label>
+                    <Input defaultValue="SaaS, Entrepreneur, startups" className="glass-panel" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-red-500/10 rounded border border-red-500/20">
+                  <span className="text-sm">Instant Notifications</span>
+                  <Switch defaultChecked />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Reddit Pain Points Configuration */}
+          <TabsContent value="reddit-pain-points" className="space-y-4">
+            <Card className="border-2 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-cyan-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">💬</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Pain Point Extractor Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      AI-powered market gap analysis and frustration mapping
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>🤖 Analysis Model</Label>
+                  <Select defaultValue="gemini-2.0">
+                    <SelectTrigger className="glass-panel">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="gemini-2.0">Gemini 2.0 Flash Thinking</SelectItem>
+                      <SelectItem value="gpt-4o">GPT-4o</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-blue-500/10 rounded border border-blue-500/20">
+                  <span className="text-sm">Deep AI Analysis</span>
+                  <Switch defaultChecked />
                 </div>
               </CardContent>
             </Card>

@@ -83,6 +83,24 @@ const Dashboard: React.FC = () => {
       status: selfImprove.enabled ? 'active' : 'idle',
     },
     {
+      id: 'reddit-sniper',
+      name: 'Reddit Sniper',
+      description: 'Detect high-intent buying signals on Reddit in real-time',
+      icon: '🎯',
+      workflow: 'reddit-sniper.yml',
+      schedule: '0 10 * * *',
+      status: 'idle',
+    },
+    {
+      id: 'reddit-pain-points',
+      name: 'Reddit Pain Points',
+      description: 'Extract market gaps and user frustrations from subreddits',
+      icon: '💬',
+      workflow: 'reddit-pain-points.yml',
+      schedule: '0 11 * * *',
+      status: 'idle',
+    },
+    {
       id: 'scout',
       name: 'Phantom Scout',
       description: '24/7 automated GitHub intelligence gathering',
@@ -143,6 +161,10 @@ const Dashboard: React.FC = () => {
       case 'scout':
       case 'sonar':
         return `Niche: ${scout.targetNiche} | Min Stars: ${scout.minStars} | Depth: ${scout.depth}`;
+      case 'reddit-sniper':
+        return `Buying Intent: >7/10 | Subreddits: SaaS, Entrepreneur`;
+      case 'reddit-pain-points':
+        return `Analysis: Sentiment & AI | Model: Gemini 2.0`;
       case 'mirror':
         return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
       case 'quality':

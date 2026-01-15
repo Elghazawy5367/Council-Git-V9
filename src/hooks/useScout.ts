@@ -63,7 +63,14 @@ export const useScout = (): UseScoutReturn => {
         },  
       ];
 
-      setRepositories(mockRepos);  
+      setRepositories(mockRepos);
+      
+      // Simulate real-time polling
+      const pollInterval = setInterval(() => {
+        console.log('Polling for new GitHub events...');
+      }, 30000);
+      
+      return () => clearInterval(pollInterval);  
     } catch (err) {  
       setError(err as Error);  
       console.error('Scout scan failed:', err);  

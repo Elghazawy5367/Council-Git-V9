@@ -35,7 +35,17 @@ const Dashboard: React.FC = () => {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loadingOpportunities, setLoadingOpportunities] = useState(false);
   
-  const { scout, mirror, quality, selfImprove } = useFeatureConfigStore();
+  const { 
+    scout, 
+    mirror, 
+    quality, 
+    selfImprove, 
+    redditSniper, 
+    redditPainPoints, 
+    githubTrending, 
+    marketGap,
+    stargazerAnalysis 
+  } = useFeatureConfigStore();
   
   useEffect(() => {
     const loadData = async (): Promise<void> => {
@@ -61,8 +71,8 @@ const Dashboard: React.FC = () => {
       description: 'Scans trending repositories for market opportunities',
       icon: '📈',
       workflow: 'github-trending.yml',
-      schedule: '0 0 * * *',
-      status: 'idle',
+      schedule: githubTrending.schedule,
+      status: githubTrending.enabled ? 'active' : 'idle',
     },
     {
       id: 'market-gap',
@@ -70,8 +80,8 @@ const Dashboard: React.FC = () => {
       description: 'Identifies underserved market gaps using GitHub & Reddit',
       icon: '🎯',
       workflow: 'market-gap.yml',
-      schedule: '0 12 * * 0',
-      status: 'idle',
+      schedule: marketGap.schedule,
+      status: marketGap.enabled ? 'active' : 'idle',
     },
     {
       id: 'stargazer',
@@ -80,7 +90,7 @@ const Dashboard: React.FC = () => {
       icon: '⭐',
       workflow: 'stargazer-analysis.yml',
       schedule: '0 0 * * *',
-      status: 'idle',
+      status: stargazerAnalysis.enabled ? 'active' : 'idle',
     },
     {
       id: 'mirror',
@@ -115,8 +125,8 @@ const Dashboard: React.FC = () => {
       description: 'Detect high-intent buying signals on Reddit in real-time',
       icon: '🎯',
       workflow: 'reddit-sniper.yml',
-      schedule: '0 10 * * *',
-      status: 'idle',
+      schedule: redditSniper.schedule,
+      status: redditSniper.enabled ? 'active' : 'idle',
     },
     {
       id: 'reddit-pain-points',
@@ -124,8 +134,8 @@ const Dashboard: React.FC = () => {
       description: 'Extract market gaps and user frustrations from subreddits',
       icon: '💬',
       workflow: 'reddit-pain-points.yml',
-      schedule: '0 11 * * *',
-      status: 'idle',
+      schedule: redditPainPoints.schedule,
+      status: redditPainPoints.enabled ? 'active' : 'idle',
     },
     {
       id: 'scout',
@@ -189,15 +199,15 @@ const Dashboard: React.FC = () => {
       case 'sonar':
         return `Niche: ${scout.targetNiche} | Min Stars: ${scout.minStars} | Depth: ${scout.depth}`;
       case 'reddit-sniper':
-        return `Buying Intent: >7/10 | Subreddits: SaaS, Entrepreneur`;
+        return `Intent: >${redditSniper.minIntentScore}/10 | Subs: ${redditSniper.subreddits.join(', ')}`;
       case 'reddit-pain-points':
-        return `Analysis: Sentiment & AI | Model: Gemini 2.0`;
+        return `Model: ${redditPainPoints.analysisModel} | Subs: ${redditPainPoints.targetSubreddits.join(', ')}`;
       case 'github-trending':
-        return `Topics: AI, SaaS | Languages: TS, Python`;
+        return `Topics: ${githubTrending.topics.join(', ')} | Langs: ${githubTrending.languages.join(', ')}`;
       case 'market-gap':
-        return `Quality Score: >0.8 | Hybrid Analysis`;
+        return `Quality: >${marketGap.minQualityScore} | AI: ${marketGap.deepAnalysis ? 'Deep' : 'Fast'}`;
       case 'stargazer':
-        return `Min Followers: 1000 | Co: Google, Meta`;
+        return `Min Followers: ${stargazerAnalysis.minFollowers} | Co: ${stargazerAnalysis.targetCompanies.slice(0, 3).join(', ')}...`;
       case 'mirror':
         return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
       case 'quality':

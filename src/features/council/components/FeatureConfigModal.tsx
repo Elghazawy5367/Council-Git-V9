@@ -36,6 +36,8 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     stargazerAnalysis,
     githubTrending,
     marketGap,
+    redditSniper,
+    redditPainPoints,
     dataFetching,
     typeSafeForms,
     errorHandling,
@@ -52,6 +54,8 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     updateStargazerAnalysisConfig,
     updateGitHubTrendingConfig,
     updateMarketGapConfig,
+    updateRedditSniperConfig,
+    updateRedditPainPointsConfig,
     updateDataFetchingConfig,
     updateTypeSafeFormsConfig,
     updateErrorHandlingConfig,
@@ -198,24 +202,34 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       className="glass-panel"
                       min="0"
                     />
-                    <p className="text-xs text-muted-foreground">Filter out low-quality repos</p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="scout-max-repos" className="flex items-center gap-2">
-                      📊 Maximum Repositories
+                    <Label htmlFor="scout-min-upvotes" className="flex items-center gap-2">
+                      👍 Minimum Upvotes
                     </Label>
                     <Input
-                      id="scout-max-repos"
+                      id="scout-min-upvotes"
                       type="number"
-                      value={scout.maxRepos}
-                      onChange={(e) => updateScoutConfig({ maxRepos: parseInt(e.target.value) })}
+                      value={scout.minUpvotes}
+                      onChange={(e) => updateScoutConfig({ minUpvotes: parseInt(e.target.value) })}
                       className="glass-panel"
-                      min="1"
-                      max="200"
+                      min="0"
                     />
-                    <p className="text-xs text-muted-foreground">Cap analysis to avoid rate limits</p>
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="scout-exclude" className="flex items-center gap-2">
+                    🚫 Exclude Keywords
+                  </Label>
+                  <Input
+                    id="scout-exclude"
+                    value={scout.excludeKeywords.join(', ')}
+                    onChange={(e) => updateScoutConfig({ excludeKeywords: e.target.value.split(',').map(s => s.trim()) })}
+                    placeholder="e.g., crypto, nft, gambling"
+                    className="glass-panel"
+                  />
                 </div>
 
                 <div className="space-y-2 pt-2 border-t border-border/50">
@@ -275,6 +289,16 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="mirror-exclude">Exclude Directories</Label>
+                  <Input
+                    id="mirror-exclude"
+                    value={mirror.excludeDirectories.join(', ')}
+                    onChange={(e) => updateMirrorConfig({ excludeDirectories: e.target.value.split(',').map(s => s.trim()) })}
+                    className="glass-panel"
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="mirror-schedule">Cron Schedule</Label>
                   <Input
                     id="mirror-schedule"
@@ -329,6 +353,24 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     id="quality-typecheck"
                     checked={quality.runTypeCheck}
                     onCheckedChange={(checked) => updateQualityConfig({ runTypeCheck: checked })}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="quality-security">Check Security</Label>
+                  <Switch
+                    id="quality-security"
+                    checked={quality.checkSecurity}
+                    onCheckedChange={(checked) => updateQualityConfig({ checkSecurity: checked })}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="quality-style">Check Code Style</Label>
+                  <Switch
+                    id="quality-style"
+                    checked={quality.checkStyle}
+                    onCheckedChange={(checked) => updateQualityConfig({ checkStyle: checked })}
                   />
                 </div>
 
@@ -476,22 +518,38 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       Real-time buying intent detection and lead generation
                     </CardDescription>
                   </div>
+                  <Switch
+                    checked={redditSniper.enabled}
+                    onCheckedChange={(checked) => updateRedditSniperConfig({ enabled: checked })}
+                  />
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>🎯 Minimum Intent Score (0-10)</Label>
-                    <Input type="number" defaultValue={7} className="glass-panel" />
+                    <Input 
+                      type="number" 
+                      value={redditSniper.minIntentScore} 
+                      onChange={(e) => updateRedditSniperConfig({ minIntentScore: parseInt(e.target.value) })}
+                      className="glass-panel" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label>📡 Target Subreddits</Label>
-                    <Input defaultValue="SaaS, Entrepreneur, startups" className="glass-panel" />
+                    <Input 
+                      value={redditSniper.subreddits.join(', ')} 
+                      onChange={(e) => updateRedditSniperConfig({ subreddits: e.target.value.split(',').map(s => s.trim()) })}
+                      className="glass-panel" 
+                    />
                   </div>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-red-500/10 rounded border border-red-500/20">
                   <span className="text-sm">Instant Notifications</span>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={redditSniper.instantNotifications}
+                    onCheckedChange={(checked) => updateRedditSniperConfig({ instantNotifications: checked })}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -509,12 +567,27 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       AI-powered market gap analysis and frustration mapping
                     </CardDescription>
                   </div>
+                  <Switch
+                    checked={redditPainPoints.enabled}
+                    onCheckedChange={(checked) => updateRedditPainPointsConfig({ enabled: checked })}
+                  />
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
+                  <Label>📡 Target Subreddits</Label>
+                  <Input 
+                    value={redditPainPoints.targetSubreddits.join(', ')} 
+                    onChange={(e) => updateRedditPainPointsConfig({ targetSubreddits: e.target.value.split(',').map(s => s.trim()) })}
+                    className="glass-panel" 
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label>🤖 Analysis Model</Label>
-                  <Select defaultValue="gemini-2.0">
+                  <Select 
+                    value={redditPainPoints.analysisModel} 
+                    onValueChange={(value) => updateRedditPainPointsConfig({ analysisModel: value })}
+                  >
                     <SelectTrigger className="glass-panel">
                       <SelectValue />
                     </SelectTrigger>
@@ -526,7 +599,10 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 </div>
                 <div className="flex items-center justify-between p-3 bg-blue-500/10 rounded border border-blue-500/20">
                   <span className="text-sm">Deep AI Analysis</span>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={redditPainPoints.deepAIAnalysis}
+                    onCheckedChange={(checked) => updateRedditPainPointsConfig({ deepAIAnalysis: checked })}
+                  />
                 </div>
               </CardContent>
             </Card>

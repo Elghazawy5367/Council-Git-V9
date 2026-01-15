@@ -8,6 +8,8 @@ export interface ScoutConfig {
   maxRepos: number;
   depth: 'shallow' | 'normal' | 'deep';
   schedule: string;
+  excludeKeywords: string[];
+  minUpvotes: number;
 }
 
 export interface MirrorConfig {
@@ -15,6 +17,7 @@ export interface MirrorConfig {
   generateReport: boolean;
   standards: string[];
   schedule: string;
+  excludeDirectories: string[];
 }
 
 export interface QualityConfig {
@@ -22,6 +25,8 @@ export interface QualityConfig {
   autoFix: boolean;
   runLinter: boolean;
   runTypeCheck: boolean;
+  checkSecurity: boolean;
+  checkStyle: boolean;
   schedule: string;
 }
 
@@ -111,6 +116,22 @@ export interface MarketGapConfig {
   schedule: string;
 }
 
+export interface RedditSniperConfig {
+  enabled: boolean;
+  minIntentScore: number;
+  subreddits: string[];
+  instantNotifications: boolean;
+  schedule: string;
+}
+
+export interface RedditPainPointsConfig {
+  enabled: boolean;
+  analysisModel: string;
+  deepAIAnalysis: boolean;
+  targetSubreddits: string[];
+  schedule: string;
+}
+
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
@@ -119,6 +140,8 @@ export interface FeatureConfigState {
   stargazerAnalysis: StargazerAnalysisConfig;
   githubTrending: GitHubTrendingConfig;
   marketGap: MarketGapConfig;
+  redditSniper: RedditSniperConfig;
+  redditPainPoints: RedditPainPointsConfig;
   dataFetching: DataFetchingConfig;
   typeSafeForms: TypeSafeFormsConfig;
   errorHandling: ErrorHandlingConfig;
@@ -136,6 +159,8 @@ export interface FeatureConfigState {
   updateStargazerAnalysisConfig: (config: Partial<StargazerAnalysisConfig>) => void;
   updateGitHubTrendingConfig: (config: Partial<GitHubTrendingConfig>) => void;
   updateMarketGapConfig: (config: Partial<MarketGapConfig>) => void;
+  updateRedditSniperConfig: (config: Partial<RedditSniperConfig>) => void;
+  updateRedditPainPointsConfig: (config: Partial<RedditPainPointsConfig>) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
   updateErrorHandlingConfig: (config: Partial<ErrorHandlingConfig>) => void;
@@ -156,6 +181,8 @@ const DEFAULT_SCOUT_CONFIG: ScoutConfig = {
   maxRepos: 50,
   depth: 'normal',
   schedule: '0 6 * * *', // Daily at 6 AM UTC
+  excludeKeywords: ['crypto', 'nft', 'gambling'],
+  minUpvotes: 10,
 };
 
 const DEFAULT_MIRROR_CONFIG: MirrorConfig = {
@@ -163,6 +190,7 @@ const DEFAULT_MIRROR_CONFIG: MirrorConfig = {
   generateReport: true,
   standards: ['elite', 'production', 'security'],
   schedule: '0 8 * * 0', // Weekly on Sundays at 8 AM UTC
+  excludeDirectories: ['node_modules', 'dist', '.git', 'attached_assets'],
 };
 
 const DEFAULT_QUALITY_CONFIG: QualityConfig = {
@@ -170,6 +198,8 @@ const DEFAULT_QUALITY_CONFIG: QualityConfig = {
   autoFix: false,
   runLinter: true,
   runTypeCheck: true,
+  checkSecurity: true,
+  checkStyle: true,
   schedule: '0 10 * * 2,5', // Twice weekly - Tuesday and Friday
 };
 
@@ -202,6 +232,22 @@ const DEFAULT_MARKET_GAP_CONFIG: MarketGapConfig = {
   minQualityScore: 0.8,
   deepAnalysis: true,
   schedule: '0 12 * * 0',
+};
+
+const DEFAULT_REDDIT_SNIPER_CONFIG: RedditSniperConfig = {
+  enabled: false,
+  minIntentScore: 7,
+  subreddits: ['SaaS', 'Entrepreneur', 'startups'],
+  instantNotifications: true,
+  schedule: '0 10 * * *',
+};
+
+const DEFAULT_REDDIT_PAIN_POINTS_CONFIG: RedditPainPointsConfig = {
+  enabled: false,
+  analysisModel: 'gemini-2.0',
+  deepAIAnalysis: true,
+  targetSubreddits: ['entrepreneur', 'startups', 'SaaS'],
+  schedule: '0 11 * * *',
 };
 
 const DEFAULT_DATA_FETCHING_CONFIG: DataFetchingConfig = {
@@ -270,6 +316,8 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       stargazerAnalysis: DEFAULT_STARGAZER_ANALYSIS_CONFIG,
       githubTrending: DEFAULT_GITHUB_TRENDING_CONFIG,
       marketGap: DEFAULT_MARKET_GAP_CONFIG,
+      redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
+      redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
       typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
       errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -300,6 +348,12 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateMarketGapConfig: (config: Partial<MarketGapConfig>) =>
         set((state) => ({ marketGap: { ...state.marketGap, ...config } })),
+      
+      updateRedditSniperConfig: (config: Partial<RedditSniperConfig>) =>
+        set((state) => ({ redditSniper: { ...state.redditSniper, ...config } })),
+      
+      updateRedditPainPointsConfig: (config: Partial<RedditPainPointsConfig>) =>
+        set((state) => ({ redditPainPoints: { ...state.redditPainPoints, ...config } })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),
@@ -337,6 +391,8 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           stargazerAnalysis: DEFAULT_STARGAZER_ANALYSIS_CONFIG,
           githubTrending: DEFAULT_GITHUB_TRENDING_CONFIG,
           marketGap: DEFAULT_MARKET_GAP_CONFIG,
+          redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
+          redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
           typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
           errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,

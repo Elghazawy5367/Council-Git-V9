@@ -96,12 +96,29 @@ export interface LocalDatabaseConfig {
   autoSync: boolean;
 }
 
+export interface GitHubTrendingConfig {
+  enabled: boolean;
+  topics: string[];
+  languages: string[];
+  minStars: number;
+  schedule: string;
+}
+
+export interface MarketGapConfig {
+  enabled: boolean;
+  minQualityScore: number;
+  deepAnalysis: boolean;
+  schedule: string;
+}
+
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
   quality: QualityConfig;
   selfImprove: SelfImproveConfig;
   stargazerAnalysis: StargazerAnalysisConfig;
+  githubTrending: GitHubTrendingConfig;
+  marketGap: MarketGapConfig;
   dataFetching: DataFetchingConfig;
   typeSafeForms: TypeSafeFormsConfig;
   errorHandling: ErrorHandlingConfig;
@@ -117,6 +134,8 @@ export interface FeatureConfigState {
   updateQualityConfig: (config: Partial<QualityConfig>) => void;
   updateSelfImproveConfig: (config: Partial<SelfImproveConfig>) => void;
   updateStargazerAnalysisConfig: (config: Partial<StargazerAnalysisConfig>) => void;
+  updateGitHubTrendingConfig: (config: Partial<GitHubTrendingConfig>) => void;
+  updateMarketGapConfig: (config: Partial<MarketGapConfig>) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
   updateErrorHandlingConfig: (config: Partial<ErrorHandlingConfig>) => void;
@@ -168,6 +187,21 @@ const DEFAULT_STARGAZER_ANALYSIS_CONFIG: StargazerAnalysisConfig = {
   checkCompanies: true,
   targetCompanies: ['google', 'meta', 'stripe', 'vercel', 'shopify', 'amazon', 'microsoft', 'netflix'],
   maxStargazers: 100,
+};
+
+const DEFAULT_GITHUB_TRENDING_CONFIG: GitHubTrendingConfig = {
+  enabled: false,
+  topics: ['ai', 'saas', 'productivity'],
+  languages: ['TypeScript', 'Python'],
+  minStars: 100,
+  schedule: '0 0 * * *',
+};
+
+const DEFAULT_MARKET_GAP_CONFIG: MarketGapConfig = {
+  enabled: false,
+  minQualityScore: 0.8,
+  deepAnalysis: true,
+  schedule: '0 12 * * 0',
 };
 
 const DEFAULT_DATA_FETCHING_CONFIG: DataFetchingConfig = {
@@ -234,6 +268,8 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       quality: DEFAULT_QUALITY_CONFIG,
       selfImprove: DEFAULT_SELF_IMPROVE_CONFIG,
       stargazerAnalysis: DEFAULT_STARGAZER_ANALYSIS_CONFIG,
+      githubTrending: DEFAULT_GITHUB_TRENDING_CONFIG,
+      marketGap: DEFAULT_MARKET_GAP_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
       typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
       errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -258,6 +294,12 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateStargazerAnalysisConfig: (config: Partial<StargazerAnalysisConfig>) =>
         set((state) => ({ stargazerAnalysis: { ...state.stargazerAnalysis, ...config } })),
+      
+      updateGitHubTrendingConfig: (config: Partial<GitHubTrendingConfig>) =>
+        set((state) => ({ githubTrending: { ...state.githubTrending, ...config } })),
+      
+      updateMarketGapConfig: (config: Partial<MarketGapConfig>) =>
+        set((state) => ({ marketGap: { ...state.marketGap, ...config } })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),
@@ -293,6 +335,8 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           quality: DEFAULT_QUALITY_CONFIG,
           selfImprove: DEFAULT_SELF_IMPROVE_CONFIG,
           stargazerAnalysis: DEFAULT_STARGAZER_ANALYSIS_CONFIG,
+          githubTrending: DEFAULT_GITHUB_TRENDING_CONFIG,
+          marketGap: DEFAULT_MARKET_GAP_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
           typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
           errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,

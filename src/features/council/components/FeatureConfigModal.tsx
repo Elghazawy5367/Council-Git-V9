@@ -24,7 +24,7 @@ interface FeatureConfigModalProps {
 }
 
 export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
-  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points'].includes(initialTab) 
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap'].includes(initialTab) 
     ? initialTab 
     : "scout";
 
@@ -34,6 +34,8 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     quality,
     selfImprove,
     stargazerAnalysis,
+    githubTrending,
+    marketGap,
     dataFetching,
     typeSafeForms,
     errorHandling,
@@ -48,6 +50,8 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     updateQualityConfig,
     updateSelfImproveConfig,
     updateStargazerAnalysisConfig,
+    updateGitHubTrendingConfig,
+    updateMarketGapConfig,
     updateDataFetchingConfig,
     updateTypeSafeFormsConfig,
     updateErrorHandlingConfig,
@@ -116,6 +120,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="reddit-pain-points" className="text-xs px-2 py-2">
               <span className="mr-1">💬</span> Pain
+            </TabsTrigger>
+            <TabsTrigger value="github-trending" className="text-xs px-2 py-2">
+              <span className="mr-1">📈</span> Trending
+            </TabsTrigger>
+            <TabsTrigger value="market-gap" className="text-xs px-2 py-2">
+              <span className="mr-1">🎯</span> Gaps
             </TabsTrigger>
             <TabsTrigger value="more" className="text-xs px-2 py-2">
               <span className="mr-1">➕</span> More
@@ -517,6 +527,87 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 <div className="flex items-center justify-between p-3 bg-blue-500/10 rounded border border-blue-500/20">
                   <span className="text-sm">Deep AI Analysis</span>
                   <Switch defaultChecked />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* GitHub Trending Configuration */}
+          <TabsContent value="github-trending" className="space-y-4">
+            <Card className="border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-green-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">📈</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">GitHub Trending Scanner</CardTitle>
+                    <CardDescription className="mt-1">
+                      Identify emerging technologies and market opportunities
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={githubTrending.enabled}
+                    onCheckedChange={(checked) => updateGitHubTrendingConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🎯 Topics</Label>
+                    <Input 
+                      value={githubTrending.topics.join(', ')} 
+                      onChange={(e) => updateGitHubTrendingConfig({ topics: e.target.value.split(',').map(s => s.trim()) })}
+                      className="glass-panel" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>💻 Languages</Label>
+                    <Input 
+                      value={githubTrending.languages.join(', ')} 
+                      onChange={(e) => updateGitHubTrendingConfig({ languages: e.target.value.split(',').map(s => s.trim()) })}
+                      className="glass-panel" 
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Market Gap Identifier Configuration */}
+          <TabsContent value="market-gap" className="space-y-4">
+            <Card className="border-2 border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-yellow-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🎯</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Market Gap Identifier</CardTitle>
+                    <CardDescription className="mt-1">
+                      Hybrid analysis of GitHub and Reddit data
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={marketGap.enabled}
+                    onCheckedChange={(checked) => updateMarketGapConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between p-3 bg-amber-500/10 rounded border border-amber-500/20">
+                  <span className="text-sm">Deep AI Analysis</span>
+                  <Switch 
+                    checked={marketGap.deepAnalysis}
+                    onCheckedChange={(checked) => updateMarketGapConfig({ deepAnalysis: checked })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>✨ Minimum Quality Score</Label>
+                  <Input 
+                    type="number" 
+                    step="0.1" 
+                    value={marketGap.minQualityScore} 
+                    onChange={(e) => updateMarketGapConfig({ minQualityScore: parseFloat(e.target.value) })}
+                    className="glass-panel" 
+                  />
                 </div>
               </CardContent>
             </Card>

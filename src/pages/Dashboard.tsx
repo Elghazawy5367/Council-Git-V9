@@ -56,6 +56,33 @@ const Dashboard: React.FC = () => {
   
   const [features] = useState<Feature[]>([
     {
+      id: 'github-trending',
+      name: 'GitHub Trending',
+      description: 'Scans trending repositories for market opportunities',
+      icon: '📈',
+      workflow: 'github-trending.yml',
+      schedule: '0 0 * * *',
+      status: 'idle',
+    },
+    {
+      id: 'market-gap',
+      name: 'Market Gap Identifier',
+      description: 'Identifies underserved market gaps using GitHub & Reddit',
+      icon: '🎯',
+      workflow: 'market-gap.yml',
+      schedule: '0 12 * * 0',
+      status: 'idle',
+    },
+    {
+      id: 'stargazer',
+      name: 'Stargazer Analysis',
+      description: 'Analyze repository stars for institutional backing',
+      icon: '⭐',
+      workflow: 'stargazer-analysis.yml',
+      schedule: '0 0 * * *',
+      status: 'idle',
+    },
+    {
       id: 'mirror',
       name: 'Code Mirror System',
       description: 'Analyze codebase against elite repository standards',
@@ -165,6 +192,12 @@ const Dashboard: React.FC = () => {
         return `Buying Intent: >7/10 | Subreddits: SaaS, Entrepreneur`;
       case 'reddit-pain-points':
         return `Analysis: Sentiment & AI | Model: Gemini 2.0`;
+      case 'github-trending':
+        return `Topics: AI, SaaS | Languages: TS, Python`;
+      case 'market-gap':
+        return `Quality Score: >0.8 | Hybrid Analysis`;
+      case 'stargazer':
+        return `Min Followers: 1000 | Co: Google, Meta`;
       case 'mirror':
         return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
       case 'quality':

@@ -159,9 +159,10 @@ export const getNextRunTime = (schedule: CronSchedule): Date => {
 };
 
 export const executeAutomation = async (rule: AutomationRule): Promise<void> => {  
-  console.log(`Executing automation: ${rule.name}`);  
+  console.log(`Executing automation: ${rule.name}`, rule.schedule);  
   try {  
     const conditionsMet = rule.conditions.every(condition => {  
+      console.log('Checking condition:', condition.field);
       return true;  
     });
 

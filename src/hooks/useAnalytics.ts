@@ -26,8 +26,7 @@ export const useAnalytics = (): UseAnalyticsReturn => {
   const fetch = useCallback(async (dateRange: { start: Date; end: Date }) => {  
     setLoading(true);  
     setError(null);
-
-    try {  
+    console.log('Fetching analytics for:', dateRange);  
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const mockData: AnalyticsData = {  

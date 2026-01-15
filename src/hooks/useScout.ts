@@ -35,8 +35,7 @@ export const useScout = (): UseScoutReturn => {
   const scan = useCallback(async (query: string) => {  
     setLoading(true);  
     setError(null);
-
-    try {  
+    console.log('Scanning query:', query);  
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const mockRepos: ScoutRepository[] = [  

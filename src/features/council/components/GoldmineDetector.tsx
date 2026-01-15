@@ -40,31 +40,6 @@ export const GoldmineDetector: React.FC<GoldmineDetectorProps> = ({ opportunitie
     toast.success('Goldmine report copied to clipboard');
   };
 
-  const handleExportCSV = (): void => {
-    if (goldmines.length === 0) return;
-    const headers = ['Owner', 'Name', 'Stars', 'Issues', 'Score', 'Revenue Low', 'Revenue High'];
-    const rows = goldmines.map(repo => {
-      const metrics = calculateGoldmineMetrics(repo);
-      return [
-        repo.owner,
-        repo.name,
-        repo.stars,
-        repo.openIssues,
-        repo.blueOceanScore,
-        metrics.estimatedRevenueLow,
-        metrics.estimatedRevenueHigh
-      ].join(',');
-    });
-    const csvContent = [headers.join(','), ...rows].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `goldmines-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    toast.success('Exporting goldmines as CSV');
-  };
-
   const handleCopyActionPlan = (repo: Opportunity): void => {
     const actions = generateActionPlan(repo);
     const text = `# Action Plan: ${repo.owner}/${repo.name}\n\n` + 
@@ -144,16 +119,10 @@ export const GoldmineDetector: React.FC<GoldmineDetectorProps> = ({ opportunitie
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <Button onClick={handleCopyReport} className="flex-1 gap-2">
-              <Copy className="h-4 w-4" />
-              Copy Report
-            </Button>
-            <Button onClick={handleExportCSV} variant="outline" className="flex-1 gap-2">
-              <ExternalLink className="h-4 w-4" />
-              Export CSV
-            </Button>
-          </div>
+          <Button onClick={handleCopyReport} className="w-full gap-2">
+            <Copy className="h-4 w-4" />
+            Copy Full Goldmine Report
+          </Button>
         </CardContent>
       </Card>
 

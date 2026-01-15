@@ -28,7 +28,8 @@ export const useGoldmine = (): UseGoldmineReturn => {
   const detect = useCallback(async (keywords?: string[]) => {  
     setLoading(true);  
     setError(null);
-    if (keywords) console.log('Detecting with keywords:', keywords);  
+
+    try {  
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       const mockOpportunities: GoldmineOpportunity[] = [  

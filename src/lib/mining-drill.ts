@@ -35,9 +35,7 @@ const PAIN_KEYWORDS = [
   'willing to pay', 'hire', 'urgent', 'recommendation',
   'frustrated', 'terrible', 'awful', 'horrible', 'useless',
   'doesnt work', 'not working', 'bug', 'error', 'issue',
-  'problem', 'please fix', 'please add', 'feature request',
-  'overpriced', 'security vulnerability', 'slow performance', 'memory leak',
-  'data loss', 'difficult to setup', 'missing documentation', 'unreliable'
+  'problem', 'please fix', 'please add', 'feature request'
 ];
 
 const HIGH_INTENT_PHRASES = [
@@ -55,11 +53,7 @@ const HIGH_INTENT_PHRASES = [
   'subscription',
   'enterprise',
   'commercial',
-  'business use',
-  'procurement',
-  'license',
-  'quote',
-  'demo'
+  'business use'
 ];
 
 /**

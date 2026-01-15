@@ -35,7 +35,8 @@ export const useScout = (): UseScoutReturn => {
   const scan = useCallback(async (query: string) => {  
     setLoading(true);  
     setError(null);
-    console.log('Scanning query:', query);  
+
+    try {  
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const mockRepos: ScoutRepository[] = [  
@@ -63,14 +64,7 @@ export const useScout = (): UseScoutReturn => {
         },  
       ];
 
-      setRepositories(mockRepos);
-      
-      // Simulate real-time polling
-      const pollInterval = setInterval(() => {
-        console.log('Polling for new GitHub events...');
-      }, 30000);
-      
-      return () => clearInterval(pollInterval);  
+      setRepositories(mockRepos);  
     } catch (err) {  
       setError(err as Error);  
       console.error('Scout scan failed:', err);  

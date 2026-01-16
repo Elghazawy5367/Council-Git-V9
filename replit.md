@@ -25,6 +25,18 @@ The codebase follows a hybrid feature-first architecture:
 - `src/components/primitives/` - Reusable UI components (Shadcn/UI)
 - `src/lib/` - Shared utilities, types, and configuration
 
+### Intelligence & AI Tooling
+The application now includes an advanced intelligence layer:
+- **Phantom Scout**: GitHub intelligence and Blue Ocean discovery.
+- **Reddit Sniper**: High-intent buying signal detection on subreddits.
+- **Reddit Pain Points**: Market gap analysis via user frustration mapping.
+- **Viral Radar**: Cross-platform trend tracking (Twitter, Reddit, HN).
+- **Twin Mimicry**: Structural pattern matching from elite repositories.
+- **Fork Evolution**: Tracking innovative changes in repository forks.
+- **Stargazer Analysis**: Institutional backing detection.
+- **GitHub Trending**: Real-time topic and language trend analysis.
+- **Market Gap**: Deep AI-powered opportunity identification.
+
 ### Key Architectural Patterns
 1. **Expert System**: Configurable AI experts with unique personas, models, and behavior modes
 2. **Execution Modes**: Multiple council operation modes (separated, synthesis, debate, pipeline)

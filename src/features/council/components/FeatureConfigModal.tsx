@@ -620,6 +620,153 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </Card>
           </TabsContent>
 
+          {/* Viral Radar Configuration */}
+          <TabsContent value="viral-radar" className="space-y-4">
+            <Card className="border-2 border-cyan-500/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">📡</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Viral Radar Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Track viral trends across Twitter, Reddit, and HN
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={viralRadar.enabled}
+                    onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
+                    className="ml-auto"
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="viral-min-score" className="flex items-center gap-2">
+                      🔥 Min Viral Score (0-10)
+                    </Label>
+                    <Input
+                      id="viral-min-score"
+                      type="number"
+                      value={viralRadar.minViralScore}
+                      onChange={(e) => updateViralRadarConfig({ minViralScore: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="viral-interval" className="flex items-center gap-2">
+                      ⏰ Check Interval (min)
+                    </Label>
+                    <Input
+                      id="viral-interval"
+                      type="number"
+                      value={viralRadar.checkInterval}
+                      onChange={(e) => updateViralRadarConfig({ checkInterval: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Twin Mimicry Configuration */}
+          <TabsContent value="twin-mimicry" className="space-y-4">
+            <Card className="border-2 border-pink-500/20 bg-gradient-to-br from-pink-500/5 to-purple-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">👯</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Twin Mimicry Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Mimic high-performing repository styles and patterns
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={twinMimicry.enabled}
+                    onCheckedChange={(checked) => updateTwinMimicryConfig({ enabled: checked })}
+                    className="ml-auto"
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="twin-target" className="flex items-center gap-2">
+                    🎯 Target Repository
+                  </Label>
+                  <Input
+                    id="twin-target"
+                    value={twinMimicry.targetRepo}
+                    onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
+                    placeholder="e.g., shadcn/ui"
+                    className="glass-panel"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="twin-style" className="flex items-center gap-2">
+                    🎨 Mimicry Style
+                  </Label>
+                  <Select value={twinMimicry.mimicStyle} onValueChange={(value: 'exact' | 'balanced' | 'creative') => updateTwinMimicryConfig({ mimicStyle: value })}>
+                    <SelectTrigger id="twin-style" className="glass-panel">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="exact">🎯 Exact (High Fidelity)</SelectItem>
+                      <SelectItem value="balanced">⚖️ Balanced (Hybrid)</SelectItem>
+                      <SelectItem value="creative">✨ Creative (Inspired)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Fork Evolution Configuration */}
+          <TabsContent value="fork-evolution" className="space-y-4">
+            <Card className="border-2 border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-red-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🍴</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Fork Evolution Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Track high-value forks and their innovative changes
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={forkEvolution.enabled}
+                    onCheckedChange={(checked) => updateForkEvolutionConfig({ enabled: checked })}
+                    className="ml-auto"
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="fork-min-forks" className="flex items-center gap-2">
+                      🍴 Minimum Forks
+                    </Label>
+                    <Input
+                      id="fork-min-forks"
+                      type="number"
+                      value={forkEvolution.minForks}
+                      onChange={(e) => updateForkEvolutionConfig({ minForks: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-orange-500/10 rounded border border-orange-500/20 h-full mt-auto">
+                    <Label htmlFor="fork-track" className="cursor-pointer">📡 Track Changes</Label>
+                    <Switch
+                      id="fork-track"
+                      checked={forkEvolution.trackChanges}
+                      onCheckedChange={(checked) => updateForkEvolutionConfig({ trackChanges: checked })}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* GitHub Trending Configuration */}
           <TabsContent value="github-trending" className="space-y-4">
             <Card className="border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-green-500/5">

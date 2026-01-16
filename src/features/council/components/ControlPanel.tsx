@@ -23,6 +23,8 @@ import {
   Workflow,
   Loader2,
   Play,
+  Target,
+  MessageSquare,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { PersonaSelector } from './PersonaSelector';
@@ -230,6 +232,27 @@ export const ControlPanel: React.FC = () => {
               Upload context file
             </Button>
           )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full gap-2 border-red-500/20 hover:bg-red-500/10 text-xs"
+            onClick={() => handleOpenConfig('reddit-sniper')}
+          >
+            <Target className="h-3.5 w-3.5 text-red-500" />
+            Reddit Sniper
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full gap-2 border-orange-500/20 hover:bg-orange-500/10 text-xs"
+            onClick={() => handleOpenConfig('reddit-pain-points')}
+          >
+            <MessageSquare className="h-3.5 w-3.5 text-orange-500" />
+            Reddit Pain
+          </Button>
         </div>
 
         <Button className="w-full h-14 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30" onClick={handleExecuteClick} disabled={isLoading || !task.trim()}>

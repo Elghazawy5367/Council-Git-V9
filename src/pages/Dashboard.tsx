@@ -42,6 +42,9 @@ const Dashboard: React.FC = () => {
     selfImprove, 
     redditSniper, 
     redditPainPoints, 
+    viralRadar,
+    twinMimicry,
+    forkEvolution,
     githubTrending, 
     marketGap,
     stargazerAnalysis 
@@ -141,6 +144,33 @@ const Dashboard: React.FC = () => {
         status: redditPainPoints.enabled ? 'active' : 'idle',
       },
       {
+        id: 'viral-radar',
+        name: 'Viral Radar',
+        description: 'Track viral trends across Twitter, Reddit, and HN',
+        icon: '📡',
+        workflow: 'viral-radar.yml',
+        schedule: viralRadar.schedule,
+        status: viralRadar.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'twin-mimicry',
+        name: 'Twin Mimicry',
+        description: 'Mimic high-performing repository styles and patterns',
+        icon: '👯',
+        workflow: 'twin-mimicry.yml',
+        schedule: twinMimicry.schedule,
+        status: twinMimicry.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'fork-evolution',
+        name: 'Fork Evolution',
+        description: 'Track high-value forks and their innovative changes',
+        icon: '🍴',
+        workflow: 'fork-evolution.yml',
+        schedule: forkEvolution.schedule,
+        status: forkEvolution.enabled ? 'active' : 'idle',
+      },
+      {
         id: 'scout',
         name: 'Phantom Scout',
         description: '24/7 automated GitHub intelligence gathering',
@@ -159,7 +189,7 @@ const Dashboard: React.FC = () => {
         status: scout.enabled ? 'active' : 'idle',
       },
     ]);
-  }, [githubTrending, marketGap, stargazerAnalysis, mirror, quality, selfImprove, redditSniper, redditPainPoints, scout]);
+  }, [githubTrending, marketGap, stargazerAnalysis, mirror, quality, selfImprove, redditSniper, redditPainPoints, viralRadar, twinMimicry, forkEvolution, scout]);
 
   const getWorkflowUrl = (workflow: string): string => {
     return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
@@ -206,6 +236,12 @@ const Dashboard: React.FC = () => {
         return `Intent: >${redditSniper.minIntentScore}/10 | Subs: ${redditSniper.subreddits.join(', ')}`;
       case 'reddit-pain-points':
         return `Model: ${redditPainPoints.analysisModel} | Subs: ${redditPainPoints.targetSubreddits.join(', ')}`;
+      case 'viral-radar':
+        return `Score: >${viralRadar.minViralScore} | Platforms: ${viralRadar.platforms.join(', ')}`;
+      case 'twin-mimicry':
+        return `Target: ${twinMimicry.targetRepo || 'None'} | Style: ${twinMimicry.mimicStyle}`;
+      case 'fork-evolution':
+        return `Min Forks: ${forkEvolution.minForks} | Tracking: ${forkEvolution.trackChanges ? 'Yes' : 'No'}`;
       case 'github-trending':
         return `Topics: ${githubTrending.topics.join(', ')} | Langs: ${githubTrending.languages.join(', ')}`;
       case 'market-gap':

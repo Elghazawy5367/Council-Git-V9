@@ -132,6 +132,28 @@ export interface RedditPainPointsConfig {
   schedule: string;
 }
 
+export interface ViralRadarConfig {
+  enabled: boolean;
+  minViralScore: number;
+  platforms: string[];
+  checkInterval: number;
+  schedule: string;
+}
+
+export interface TwinMimicryConfig {
+  enabled: boolean;
+  targetRepo: string;
+  mimicStyle: 'exact' | 'balanced' | 'creative';
+  schedule: string;
+}
+
+export interface ForkEvolutionConfig {
+  enabled: boolean;
+  minForks: number;
+  trackChanges: boolean;
+  schedule: string;
+}
+
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
@@ -142,6 +164,9 @@ export interface FeatureConfigState {
   marketGap: MarketGapConfig;
   redditSniper: RedditSniperConfig;
   redditPainPoints: RedditPainPointsConfig;
+  viralRadar: ViralRadarConfig;
+  twinMimicry: TwinMimicryConfig;
+  forkEvolution: ForkEvolutionConfig;
   dataFetching: DataFetchingConfig;
   typeSafeForms: TypeSafeFormsConfig;
   errorHandling: ErrorHandlingConfig;
@@ -161,6 +186,9 @@ export interface FeatureConfigState {
   updateMarketGapConfig: (config: Partial<MarketGapConfig>) => void;
   updateRedditSniperConfig: (config: Partial<RedditSniperConfig>) => void;
   updateRedditPainPointsConfig: (config: Partial<RedditPainPointsConfig>) => void;
+  updateViralRadarConfig: (config: Partial<ViralRadarConfig>) => void;
+  updateTwinMimicryConfig: (config: Partial<TwinMimicryConfig>) => void;
+  updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
   updateErrorHandlingConfig: (config: Partial<ErrorHandlingConfig>) => void;
@@ -250,6 +278,28 @@ const DEFAULT_REDDIT_PAIN_POINTS_CONFIG: RedditPainPointsConfig = {
   schedule: '0 11 * * *',
 };
 
+const DEFAULT_VIRAL_RADAR_CONFIG: ViralRadarConfig = {
+  enabled: false,
+  minViralScore: 7,
+  platforms: ['twitter', 'reddit', 'hackernews'],
+  checkInterval: 60,
+  schedule: '0 */4 * * *',
+};
+
+const DEFAULT_TWIN_MIMICRY_CONFIG: TwinMimicryConfig = {
+  enabled: false,
+  targetRepo: '',
+  mimicStyle: 'balanced',
+  schedule: '0 0 * * 0',
+};
+
+const DEFAULT_FORK_EVOLUTION_CONFIG: ForkEvolutionConfig = {
+  enabled: false,
+  minForks: 50,
+  trackChanges: true,
+  schedule: '0 12 * * *',
+};
+
 const DEFAULT_DATA_FETCHING_CONFIG: DataFetchingConfig = {
   enabled: true,
   useCaching: true,
@@ -318,6 +368,9 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       marketGap: DEFAULT_MARKET_GAP_CONFIG,
       redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
       redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
+      viralRadar: DEFAULT_VIRAL_RADAR_CONFIG,
+      twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
+      forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
       typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
       errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -354,6 +407,15 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateRedditPainPointsConfig: (config: Partial<RedditPainPointsConfig>) =>
         set((state) => ({ redditPainPoints: { ...state.redditPainPoints, ...config } })),
+      
+      updateViralRadarConfig: (config: Partial<ViralRadarConfig>) =>
+        set((state) => ({ viralRadar: { ...state.viralRadar, ...config } })),
+      
+      updateTwinMimicryConfig: (config: Partial<TwinMimicryConfig>) =>
+        set((state) => ({ twinMimicry: { ...state.twinMimicry, ...config } })),
+      
+      updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) =>
+        set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),
@@ -393,6 +455,9 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           marketGap: DEFAULT_MARKET_GAP_CONFIG,
           redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
           redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
+          viralRadar: DEFAULT_VIRAL_RADAR_CONFIG,
+          twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
+          forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
           typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
           errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,

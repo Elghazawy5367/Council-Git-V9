@@ -38,6 +38,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     marketGap,
     redditSniper,
     redditPainPoints,
+    viralRadar,
+    twinMimicry,
+    forkEvolution,
     dataFetching,
     typeSafeForms,
     errorHandling,
@@ -56,6 +59,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     updateMarketGapConfig,
     updateRedditSniperConfig,
     updateRedditPainPointsConfig,
+    updateViralRadarConfig,
+    updateTwinMimicryConfig,
+    updateForkEvolutionConfig,
     updateDataFetchingConfig,
     updateTypeSafeFormsConfig,
     updateErrorHandlingConfig,
@@ -112,6 +118,15 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="reddit-pain-points" className="text-xs px-2 py-2">
               <span className="mr-1">💬</span> Pain
+            </TabsTrigger>
+            <TabsTrigger value="viral-radar" className="text-xs px-2 py-2">
+              <span className="mr-1">📡</span> Viral
+            </TabsTrigger>
+            <TabsTrigger value="twin-mimicry" className="text-xs px-2 py-2">
+              <span className="mr-1">👯</span> Mimic
+            </TabsTrigger>
+            <TabsTrigger value="fork-evolution" className="text-xs px-2 py-2">
+              <span className="mr-1">🍴</span> Fork
             </TabsTrigger>
             <TabsTrigger value="data" className="text-xs px-2 py-2">
               <span className="mr-1">📊</span> Data

@@ -225,7 +225,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   </Label>
                   <Input
                     id="scout-exclude"
-                    value={scout.excludeKeywords.join(', ')}
+                    value={scout.excludeKeywords?.join(', ') || ''}
                     onChange={(e) => updateScoutConfig({ excludeKeywords: e.target.value.split(',').map(s => s.trim()) })}
                     placeholder="e.g., crypto, nft, gambling"
                     className="glass-panel"
@@ -292,7 +292,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <Label htmlFor="mirror-exclude">Exclude Directories</Label>
                   <Input
                     id="mirror-exclude"
-                    value={mirror.excludeDirectories.join(', ')}
+                    value={mirror.excludeDirectories?.join(', ') || ''}
                     onChange={(e) => updateMirrorConfig({ excludeDirectories: e.target.value.split(',').map(s => s.trim()) })}
                     className="glass-panel"
                   />
@@ -499,7 +499,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 <div className="p-3 bg-muted/50 rounded-lg text-sm">
                   <p className="font-medium mb-1">Target Companies:</p>
                   <p className="text-xs text-muted-foreground">
-                    {stargazerAnalysis.targetCompanies.join(', ')}
+                    {stargazerAnalysis.targetCompanies?.join(', ') || 'None'}
                   </p>
                 </div>
               </CardContent>

@@ -24,7 +24,7 @@ interface FeatureConfigModalProps {
 }
 
 export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
-  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap'].includes(initialTab) 
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap', 'viral-radar', 'twin-mimicry', 'fork-evolution'].includes(initialTab) 
     ? initialTab 
     : "scout";
 
@@ -148,7 +148,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
           </TabsList>
 
-          {/* Scout Configuration */}
           <TabsContent value="scout" className="space-y-4">
             <Card className="border-2 border-violet-500/20 bg-gradient-to-br from-violet-500/5 to-purple-500/5">
               <CardHeader>
@@ -170,9 +169,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardContent className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="scout-niche" className="flex items-center gap-2">
-                      🎯 Target Niche
-                    </Label>
+                    <Label htmlFor="scout-niche" className="flex items-center gap-2">🎯 Target Niche</Label>
                     <Input
                       id="scout-niche"
                       value={scout.targetNiche}
@@ -180,13 +177,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       placeholder="e.g., developer-tools, react-native"
                       className="glass-panel"
                     />
-                    <p className="text-xs text-muted-foreground">The market segment to analyze</p>
                   </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="scout-depth" className="flex items-center gap-2">
-                      🔍 Scan Depth
-                    </Label>
+                    <Label htmlFor="scout-depth" className="flex items-center gap-2">🔍 Scan Depth</Label>
                     <Select value={scout.depth} onValueChange={(value: 'shallow' | 'normal' | 'deep') => updateScoutConfig({ depth: value })}>
                       <SelectTrigger id="scout-depth" className="glass-panel">
                         <SelectValue />
@@ -197,84 +190,34 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                         <SelectItem value="deep">🔬 Deep (Thorough - 5min)</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-xs text-muted-foreground">Analysis depth vs speed trade-off</p>
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="scout-min-stars" className="flex items-center gap-2">
-                      ⭐ Minimum Stars
-                    </Label>
+                    <Label htmlFor="scout-min-stars">⭐ Minimum Stars</Label>
                     <Input
                       id="scout-min-stars"
                       type="number"
                       value={scout.minStars}
                       onChange={(e) => updateScoutConfig({ minStars: parseInt(e.target.value) })}
                       className="glass-panel"
-                      min="0"
                     />
                   </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="scout-min-upvotes" className="flex items-center gap-2">
-                      👍 Minimum Upvotes
-                    </Label>
+                    <Label htmlFor="scout-min-upvotes">👍 Minimum Upvotes</Label>
                     <Input
                       id="scout-min-upvotes"
                       type="number"
                       value={scout.minUpvotes}
                       onChange={(e) => updateScoutConfig({ minUpvotes: parseInt(e.target.value) })}
                       className="glass-panel"
-                      min="0"
                     />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="scout-exclude" className="flex items-center gap-2">
-                    🚫 Exclude Keywords
-                  </Label>
-                  <Input
-                    id="scout-exclude"
-                    value={scout.excludeKeywords?.join(', ') || ''}
-                    onChange={(e) => updateScoutConfig({ excludeKeywords: e.target.value.split(',').map(s => s.trim()) })}
-                    placeholder="e.g., crypto, nft, gambling"
-                    className="glass-panel"
-                  />
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-border/50">
-                  <Label htmlFor="scout-schedule" className="flex items-center gap-2">
-                    ⏰ Automation Schedule (Cron)
-                  </Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="scout-schedule"
-                      value={scout.schedule}
-                      onChange={(e) => updateScoutConfig({ schedule: e.target.value })}
-                      placeholder="0 6 * * *"
-                      className="glass-panel flex-1"
-                    />
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="glass-panel"
-                      onClick={() => updateScoutConfig({ schedule: '0 6 * * *' })}
-                    >
-                      Reset
-                    </Button>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
-                    <span>Daily at 6 AM UTC • Next run in ~12 hours</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Mirror Configuration */}
           <TabsContent value="mirror" className="space-y-4">
             <Card>
               <CardHeader>
@@ -290,7 +233,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateMirrorConfig({ enabled: checked })}
                   />
                 </div>
-
                 <div className="flex items-center justify-between">
                   <Label htmlFor="mirror-report">Generate Detailed Report</Label>
                   <Switch
@@ -299,32 +241,10 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateMirrorConfig({ generateReport: checked })}
                   />
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="mirror-exclude">Exclude Directories</Label>
-                  <Input
-                    id="mirror-exclude"
-                    value={mirror.excludeDirectories?.join(', ') || ''}
-                    onChange={(e) => updateMirrorConfig({ excludeDirectories: e.target.value.split(',').map(s => s.trim()) })}
-                    className="glass-panel"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="mirror-schedule">Cron Schedule</Label>
-                  <Input
-                    id="mirror-schedule"
-                    value={mirror.schedule}
-                    onChange={(e) => updateMirrorConfig({ schedule: e.target.value })}
-                    placeholder="0 8 * * 0"
-                  />
-                  <p className="text-xs text-muted-foreground">Weekly on Sundays at 8 AM UTC</p>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Quality Configuration */}
           <TabsContent value="quality" className="space-y-4">
             <Card>
               <CardHeader>
@@ -340,7 +260,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateQualityConfig({ enabled: checked })}
                   />
                 </div>
-
                 <div className="flex items-center justify-between">
                   <Label htmlFor="quality-autofix">Auto-Fix Issues</Label>
                   <Switch
@@ -349,58 +268,10 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateQualityConfig({ autoFix: checked })}
                   />
                 </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="quality-linter">Run Linter</Label>
-                  <Switch
-                    id="quality-linter"
-                    checked={quality.runLinter}
-                    onCheckedChange={(checked) => updateQualityConfig({ runLinter: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="quality-typecheck">Run TypeScript Check</Label>
-                  <Switch
-                    id="quality-typecheck"
-                    checked={quality.runTypeCheck}
-                    onCheckedChange={(checked) => updateQualityConfig({ runTypeCheck: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="quality-security">Check Security</Label>
-                  <Switch
-                    id="quality-security"
-                    checked={quality.checkSecurity}
-                    onCheckedChange={(checked) => updateQualityConfig({ checkSecurity: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="quality-style">Check Code Style</Label>
-                  <Switch
-                    id="quality-style"
-                    checked={quality.checkStyle}
-                    onCheckedChange={(checked) => updateQualityConfig({ checkStyle: checked })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="quality-schedule">Cron Schedule</Label>
-                  <Input
-                    id="quality-schedule"
-                    value={quality.schedule}
-                    onChange={(e) => updateQualityConfig({ schedule: e.target.value })}
-                    placeholder="0 10 * * 2,5"
-                  />
-                  <p className="text-xs text-muted-foreground">Twice weekly - Tuesday and Friday at 10 AM UTC</p>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Self-Improve Configuration */}
           <TabsContent value="self-improve" className="space-y-4">
             <Card>
               <CardHeader>
@@ -416,57 +287,15 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateSelfImproveConfig({ enabled: checked })}
                   />
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="improve-niche">Target Niche</Label>
-                  <Input
-                    id="improve-niche"
-                    value={selfImprove.niche}
-                    onChange={(e) => updateSelfImproveConfig({ niche: e.target.value })}
-                    placeholder="e.g., AI tools, React libraries"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="improve-min-stars">Minimum Stars</Label>
-                  <Input
-                    id="improve-min-stars"
-                    type="number"
-                    value={selfImprove.minStars}
-                    onChange={(e) => updateSelfImproveConfig({ minStars: parseInt(e.target.value) })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="improve-max-repos">Maximum Repositories</Label>
-                  <Input
-                    id="improve-max-repos"
-                    type="number"
-                    value={selfImprove.maxRepos}
-                    onChange={(e) => updateSelfImproveConfig({ maxRepos: parseInt(e.target.value) })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="improve-schedule">Cron Schedule</Label>
-                  <Input
-                    id="improve-schedule"
-                    value={selfImprove.schedule}
-                    onChange={(e) => updateSelfImproveConfig({ schedule: e.target.value })}
-                    placeholder="0 9 * * 1"
-                  />
-                  <p className="text-xs text-muted-foreground">Weekly on Mondays at 9 AM UTC</p>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Stargazer Analysis Configuration */}
           <TabsContent value="stargazer" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>⭐ Stargazer Quality Analysis</CardTitle>
-                <CardDescription>Analyze WHO starred repos for institutional backing</CardDescription>
+                <CardDescription>Analyze star quality</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -477,48 +306,10 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                     onCheckedChange={(checked) => updateStargazerAnalysisConfig({ enabled: checked })}
                   />
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="stargazer-min-followers">Minimum Followers (Influencer)</Label>
-                  <Input
-                    id="stargazer-min-followers"
-                    type="number"
-                    value={stargazerAnalysis.minFollowers}
-                    onChange={(e) => updateStargazerAnalysisConfig({ minFollowers: parseInt(e.target.value) })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="stargazer-check-companies">Check Company Affiliations</Label>
-                  <Switch
-                    id="stargazer-check-companies"
-                    checked={stargazerAnalysis.checkCompanies}
-                    onCheckedChange={(checked) => updateStargazerAnalysisConfig({ checkCompanies: checked })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="stargazer-max">Max Stargazers to Analyze</Label>
-                  <Input
-                    id="stargazer-max"
-                    type="number"
-                    value={stargazerAnalysis.maxStargazers}
-                    onChange={(e) => updateStargazerAnalysisConfig({ maxStargazers: parseInt(e.target.value) })}
-                  />
-                  <p className="text-xs text-muted-foreground">Higher values = better accuracy but slower</p>
-                </div>
-
-                <div className="p-3 bg-muted/50 rounded-lg text-sm">
-                  <p className="font-medium mb-1">Target Companies:</p>
-                  <p className="text-xs text-muted-foreground">
-                    {stargazerAnalysis.targetCompanies?.join(', ') || 'None'}
-                  </p>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Reddit Sniper Configuration */}
           <TabsContent value="reddit-sniper" className="space-y-4">
             <Card className="border-2 border-red-500/20 bg-gradient-to-br from-red-500/5 to-orange-500/5">
               <CardHeader>
@@ -526,9 +317,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <div className="text-3xl">🎯</div>
                   <div className="flex-1">
                     <CardTitle className="text-xl">Reddit Sniper Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Real-time buying intent detection and lead generation
-                    </CardDescription>
                   </div>
                   <Switch
                     checked={redditSniper.enabled}
@@ -539,46 +327,24 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>🎯 Minimum Intent Score (0-10)</Label>
+                    <Label>🎯 Min Intent Score</Label>
                     <Input 
                       type="number" 
                       value={redditSniper.minIntentScore} 
                       onChange={(e) => updateRedditSniperConfig({ minIntentScore: parseInt(e.target.value) })}
-                      className="glass-panel" 
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label>📡 Target Subreddits</Label>
-                    <Input 
-                      value={redditSniper.subreddits.join(', ')} 
-                      onChange={(e) => updateRedditSniperConfig({ subreddits: e.target.value.split(',').map(s => s.trim()) })}
-                      className="glass-panel" 
-                    />
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-red-500/10 rounded border border-red-500/20">
-                  <span className="text-sm">Instant Notifications</span>
-                  <Switch 
-                    checked={redditSniper.instantNotifications}
-                    onCheckedChange={(checked) => updateRedditSniperConfig({ instantNotifications: checked })}
-                  />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Reddit Pain Points Configuration */}
           <TabsContent value="reddit-pain-points" className="space-y-4">
             <Card className="border-2 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-cyan-500/5">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">💬</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Pain Point Extractor Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      AI-powered market gap analysis and frustration mapping
-                    </CardDescription>
-                  </div>
+                  <CardTitle className="text-xl">Pain Point Extractor</CardTitle>
                   <Switch
                     checked={redditPainPoints.enabled}
                     onCheckedChange={(checked) => updateRedditPainPointsConfig({ enabled: checked })}
@@ -591,47 +357,18 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <Input 
                     value={redditPainPoints.targetSubreddits.join(', ')} 
                     onChange={(e) => updateRedditPainPointsConfig({ targetSubreddits: e.target.value.split(',').map(s => s.trim()) })}
-                    className="glass-panel" 
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>🤖 Analysis Model</Label>
-                  <Select 
-                    value={redditPainPoints.analysisModel} 
-                    onValueChange={(value) => updateRedditPainPointsConfig({ analysisModel: value })}
-                  >
-                    <SelectTrigger className="glass-panel">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="gemini-2.0">Gemini 2.0 Flash Thinking</SelectItem>
-                      <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-blue-500/10 rounded border border-blue-500/20">
-                  <span className="text-sm">Deep AI Analysis</span>
-                  <Switch 
-                    checked={redditPainPoints.deepAIAnalysis}
-                    onCheckedChange={(checked) => updateRedditPainPointsConfig({ deepAIAnalysis: checked })}
                   />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Viral Radar Configuration */}
           <TabsContent value="viral-radar" className="space-y-4">
             <Card className="border-2 border-cyan-500/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">📡</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Viral Radar Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Track viral trends across Twitter, Reddit, and HN
-                    </CardDescription>
-                  </div>
+                  <CardTitle className="text-xl">Viral Radar</CardTitle>
                   <Switch
                     checked={viralRadar.enabled}
                     onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
@@ -641,48 +378,24 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>🔥 Min Viral Score (0-10)</Label>
+                    <Label>🔥 Min Viral Score</Label>
                     <Input 
                       type="number" 
                       value={viralRadar.minViralScore} 
                       onChange={(e) => updateViralRadarConfig({ minViralScore: parseInt(e.target.value) })}
-                      className="glass-panel" 
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label>⏰ Check Interval (min)</Label>
-                    <Input 
-                      type="number" 
-                      value={viralRadar.checkInterval} 
-                      onChange={(e) => updateViralRadarConfig({ checkInterval: parseInt(e.target.value) })}
-                      className="glass-panel" 
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>🌐 Platforms</Label>
-                  <Input 
-                    value={viralRadar.platforms.join(', ')} 
-                    onChange={(e) => updateViralRadarConfig({ platforms: e.target.value.split(',').map(s => s.trim()) })}
-                    className="glass-panel" 
-                  />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Twin Mimicry Configuration */}
           <TabsContent value="twin-mimicry" className="space-y-4">
             <Card className="border-2 border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">👯</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Twin Mimicry Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Mimic high-performing repository styles and patterns
-                    </CardDescription>
-                  </div>
+                  <CardTitle className="text-xl">Twin Mimicry</CardTitle>
                   <Switch
                     checked={twinMimicry.enabled}
                     onCheckedChange={(checked) => updateTwinMimicryConfig({ enabled: checked })}
@@ -695,42 +408,18 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <Input 
                     value={twinMimicry.targetRepo} 
                     onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
-                    placeholder="owner/repo"
-                    className="glass-panel" 
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label>🎨 Mimicry Style</Label>
-                  <Select 
-                    value={twinMimicry.mimicStyle} 
-                    onValueChange={(value: any) => updateTwinMimicryConfig({ mimicStyle: value })}
-                  >
-                    <SelectTrigger className="glass-panel">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="exact">Exact</SelectItem>
-                      <SelectItem value="balanced">Balanced</SelectItem>
-                      <SelectItem value="creative">Creative</SelectItem>
-                    </SelectContent>
-                  </Select>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Fork Evolution Configuration */}
           <TabsContent value="fork-evolution" className="space-y-4">
             <Card className="border-2 border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-yellow-500/5">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">🍴</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Fork Evolution Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Track high-value forks and their innovative changes
-                    </CardDescription>
-                  </div>
+                  <CardTitle className="text-xl">Fork Evolution</CardTitle>
                   <Switch
                     checked={forkEvolution.enabled}
                     onCheckedChange={(checked) => updateForkEvolutionConfig({ enabled: checked })}
@@ -738,554 +427,100 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>🍴 Minimum Forks</Label>
-                    <Input 
-                      type="number" 
-                      value={forkEvolution.minForks} 
-                      onChange={(e) => updateForkEvolutionConfig({ minForks: parseInt(e.target.value) })}
-                      className="glass-panel" 
-                    />
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-orange-500/10 rounded border border-orange-500/20 h-full mt-auto">
-                    <span className="text-sm">Track Changes</span>
-                    <Switch 
-                      checked={forkEvolution.trackChanges}
-                      onCheckedChange={(checked) => updateForkEvolutionConfig({ trackChanges: checked })}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-            <Card className="border-2 border-cyan-500/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">📡</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Viral Radar Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Track viral trends across Twitter, Reddit, and HN
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={viralRadar.enabled}
-                    onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
-                    className="ml-auto"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="viral-min-score" className="flex items-center gap-2">
-                      🔥 Min Viral Score (0-10)
-                    </Label>
-                    <Input
-                      id="viral-min-score"
-                      type="number"
-                      value={viralRadar.minViralScore}
-                      onChange={(e) => updateViralRadarConfig({ minViralScore: parseInt(e.target.value) })}
-                      className="glass-panel"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="viral-interval" className="flex items-center gap-2">
-                      ⏰ Check Interval (min)
-                    </Label>
-                    <Input
-                      id="viral-interval"
-                      type="number"
-                      value={viralRadar.checkInterval}
-                      onChange={(e) => updateViralRadarConfig({ checkInterval: parseInt(e.target.value) })}
-                      className="glass-panel"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Twin Mimicry Configuration */}
-          <TabsContent value="twin-mimicry" className="space-y-4">
-            <Card className="border-2 border-pink-500/20 bg-gradient-to-br from-pink-500/5 to-purple-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">👯</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Twin Mimicry Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Mimic high-performing repository styles and patterns
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={twinMimicry.enabled}
-                    onCheckedChange={(checked) => updateTwinMimicryConfig({ enabled: checked })}
-                    className="ml-auto"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="twin-target" className="flex items-center gap-2">
-                    🎯 Target Repository
-                  </Label>
-                  <Input
-                    id="twin-target"
-                    value={twinMimicry.targetRepo}
-                    onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
-                    placeholder="e.g., shadcn/ui"
-                    className="glass-panel"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="twin-style" className="flex items-center gap-2">
-                    🎨 Mimicry Style
-                  </Label>
-                  <Select value={twinMimicry.mimicStyle} onValueChange={(value: 'exact' | 'balanced' | 'creative') => updateTwinMimicryConfig({ mimicStyle: value })}>
-                    <SelectTrigger id="twin-style" className="glass-panel">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="exact">🎯 Exact (High Fidelity)</SelectItem>
-                      <SelectItem value="balanced">⚖️ Balanced (Hybrid)</SelectItem>
-                      <SelectItem value="creative">✨ Creative (Inspired)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Fork Evolution Configuration */}
-          <TabsContent value="fork-evolution" className="space-y-4">
-            <Card className="border-2 border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-red-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">🍴</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Fork Evolution Configuration</CardTitle>
-                    <CardDescription className="mt-1">
-                      Track high-value forks and their innovative changes
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={forkEvolution.enabled}
-                    onCheckedChange={(checked) => updateForkEvolutionConfig({ enabled: checked })}
-                    className="ml-auto"
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="fork-min-forks" className="flex items-center gap-2">
-                      🍴 Minimum Forks
-                    </Label>
-                    <Input
-                      id="fork-min-forks"
-                      type="number"
-                      value={forkEvolution.minForks}
-                      onChange={(e) => updateForkEvolutionConfig({ minForks: parseInt(e.target.value) })}
-                      className="glass-panel"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-orange-500/10 rounded border border-orange-500/20 h-full mt-auto">
-                    <Label htmlFor="fork-track" className="cursor-pointer">📡 Track Changes</Label>
-                    <Switch
-                      id="fork-track"
-                      checked={forkEvolution.trackChanges}
-                      onCheckedChange={(checked) => updateForkEvolutionConfig({ trackChanges: checked })}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* GitHub Trending Configuration */}
-          <TabsContent value="github-trending" className="space-y-4">
-            <Card className="border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-green-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">📈</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">GitHub Trending Scanner</CardTitle>
-                    <CardDescription className="mt-1">
-                      Identify emerging technologies and market opportunities
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={githubTrending.enabled}
-                    onCheckedChange={(checked) => updateGitHubTrendingConfig({ enabled: checked })}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>🎯 Topics</Label>
-                    <Input 
-                      value={githubTrending.topics.join(', ')} 
-                      onChange={(e) => updateGitHubTrendingConfig({ topics: e.target.value.split(',').map(s => s.trim()) })}
-                      className="glass-panel" 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>💻 Languages</Label>
-                    <Input 
-                      value={githubTrending.languages.join(', ')} 
-                      onChange={(e) => updateGitHubTrendingConfig({ languages: e.target.value.split(',').map(s => s.trim()) })}
-                      className="glass-panel" 
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Market Gap Identifier Configuration */}
-          <TabsContent value="market-gap" className="space-y-4">
-            <Card className="border-2 border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-yellow-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">🎯</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">Market Gap Identifier</CardTitle>
-                    <CardDescription className="mt-1">
-                      Hybrid analysis of GitHub and Reddit data
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={marketGap.enabled}
-                    onCheckedChange={(checked) => updateMarketGapConfig({ enabled: checked })}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-amber-500/10 rounded border border-amber-500/20">
-                  <span className="text-sm">Deep AI Analysis</span>
-                  <Switch 
-                    checked={marketGap.deepAnalysis}
-                    onCheckedChange={(checked) => updateMarketGapConfig({ deepAnalysis: checked })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>✨ Minimum Quality Score</Label>
+                  <Label>🍴 Minimum Forks</Label>
                   <Input 
                     type="number" 
-                    step="0.1" 
-                    value={marketGap.minQualityScore} 
-                    onChange={(e) => updateMarketGapConfig({ minQualityScore: parseFloat(e.target.value) })}
-                    className="glass-panel" 
+                    value={forkEvolution.minForks} 
+                    onChange={(e) => updateForkEvolutionConfig({ minForks: parseInt(e.target.value) })}
                   />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Data Fetching Configuration */}
           <TabsContent value="data" className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>📊 Data Fetching & Caching</CardTitle>
-                <CardDescription>React Query configuration</CardDescription>
-              </CardHeader>
+              <CardHeader><CardTitle>📊 Data & Caching</CardTitle></CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="data-enabled">Enable Advanced Fetching</Label>
-                  <Switch
-                    id="data-enabled"
-                    checked={dataFetching.enabled}
-                    onCheckedChange={(checked) => updateDataFetchingConfig({ enabled: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="data-caching">Enable Caching</Label>
-                  <Switch
-                    id="data-caching"
-                    checked={dataFetching.useCaching}
-                    onCheckedChange={(checked) => updateDataFetchingConfig({ useCaching: checked })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="data-expiry">Cache Expiry (hours)</Label>
-                  <Input
-                    id="data-expiry"
-                    type="number"
-                    value={dataFetching.cacheExpiry}
-                    onChange={(e) => updateDataFetchingConfig({ cacheExpiry: parseInt(e.target.value) })}
-                  />
+                  <Label>Enable Caching</Label>
+                  <Switch checked={dataFetching.useCaching} onCheckedChange={(checked) => updateDataFetchingConfig({ useCaching: checked })} />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Type-Safe Forms Configuration */}
           <TabsContent value="forms" className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>📝 Type-Safe Forms</CardTitle>
-                <CardDescription>Zod validation settings</CardDescription>
-              </CardHeader>
+              <CardHeader><CardTitle>📝 Type-Safe Forms</CardTitle></CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="forms-enabled">Enable Type-Safe Forms</Label>
-                  <Switch
-                    id="forms-enabled"
-                    checked={typeSafeForms.enabled}
-                    onCheckedChange={(checked) => updateTypeSafeFormsConfig({ enabled: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="forms-zod">Use Zod Validation</Label>
-                  <Switch
-                    id="forms-zod"
-                    checked={typeSafeForms.useZod}
-                    onCheckedChange={(checked) => updateTypeSafeFormsConfig({ useZod: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="forms-validate-change">Validate on Change</Label>
-                  <Switch
-                    id="forms-validate-change"
-                    checked={typeSafeForms.validateOnChange}
-                    onCheckedChange={(checked) => updateTypeSafeFormsConfig({ validateOnChange: checked })}
-                  />
+                  <Label>Use Zod</Label>
+                  <Switch checked={typeSafeForms.useZod} onCheckedChange={(checked) => updateTypeSafeFormsConfig({ useZod: checked })} />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Error Handling Configuration */}
           <TabsContent value="errors" className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>🛡️ Error Handling</CardTitle>
-                <CardDescription>Retry and circuit breaker settings</CardDescription>
-              </CardHeader>
+              <CardHeader><CardTitle>🛡️ Error Handling</CardTitle></CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="errors-enabled">Enable Advanced Error Handling</Label>
-                  <Switch
-                    id="errors-enabled"
-                    checked={errorHandling.enabled}
-                    onCheckedChange={(checked) => updateErrorHandlingConfig({ enabled: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="errors-retry">Enable Automatic Retry</Label>
-                  <Switch
-                    id="errors-retry"
-                    checked={errorHandling.useRetry}
-                    onCheckedChange={(checked) => updateErrorHandlingConfig({ useRetry: checked })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="errors-max-retries">Max Retry Attempts</Label>
-                  <Input
-                    id="errors-max-retries"
-                    type="number"
-                    value={errorHandling.maxRetries}
-                    onChange={(e) => updateErrorHandlingConfig({ maxRetries: parseInt(e.target.value) })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="errors-circuit-breaker">Circuit Breaker</Label>
-                  <Switch
-                    id="errors-circuit-breaker"
-                    checked={errorHandling.circuitBreaker}
-                    onCheckedChange={(checked) => updateErrorHandlingConfig({ circuitBreaker: checked })}
-                  />
+                  <Label>Enable Retry</Label>
+                  <Switch checked={errorHandling.useRetry} onCheckedChange={(checked) => updateErrorHandlingConfig({ useRetry: checked })} />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Auth & Security Configuration */}
-          <TabsContent value="auth" className="space-y-4">
+          <TabsContent value="github-trending" className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>🔐 Authentication & Security</CardTitle>
-                <CardDescription>Vault and session settings</CardDescription>
-              </CardHeader>
+              <CardHeader><CardTitle>📈 GitHub Trending</CardTitle></CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="auth-enabled">Enable Security Features</Label>
-                  <Switch
-                    id="auth-enabled"
-                    checked={authSecurity.enabled}
-                    onCheckedChange={(checked) => updateAuthSecurityConfig({ enabled: checked })}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="auth-vault">Use Encrypted Vault</Label>
-                  <Switch
-                    id="auth-vault"
-                    checked={authSecurity.useVault}
-                    onCheckedChange={(checked) => updateAuthSecurityConfig({ useVault: checked })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="auth-timeout">Session Timeout (minutes)</Label>
-                  <Input
-                    id="auth-timeout"
-                    type="number"
-                    value={authSecurity.sessionTimeout}
-                    onChange={(e) => updateAuthSecurityConfig({ sessionTimeout: parseInt(e.target.value) })}
-                  />
+                  <Label>Enable Scans</Label>
+                  <Switch checked={githubTrending.enabled} onCheckedChange={(checked) => updateGitHubTrendingConfig({ enabled: checked })} />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* More Features (Remaining 5) */}
+          <TabsContent value="market-gap" className="space-y-4">
+            <Card>
+              <CardHeader><CardTitle>🎯 Market Gaps</CardTitle></CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>Enable Analysis</Label>
+                  <Switch checked={marketGap.enabled} onCheckedChange={(checked) => updateMarketGapConfig({ enabled: checked })} />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="more" className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>📱 Mobile & UI Features</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Mobile Drawers */}
-                <div className="space-y-3 pb-4 border-b">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Touch Gestures & Drawers</Label>
-                      <p className="text-xs text-muted-foreground">Mobile-first UI patterns</p>
-                    </div>
-                    <Switch
-                      checked={mobileDrawers.enabled}
-                      onCheckedChange={(checked) => updateMobileDrawersConfig({ enabled: checked })}
-                    />
-                  </div>
-                  {mobileDrawers.enabled && (
-                    <div className="pl-4 space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span>Enable Swipe Gestures</span>
-                        <Switch
-                          checked={mobileDrawers.gesturesEnabled}
-                          onCheckedChange={(checked) => updateMobileDrawersConfig({ gesturesEnabled: checked })}
-                        />
-                      </div>
-                    </div>
-                  )}
+              <CardHeader><CardTitle>📱 UI/UX & Storage</CardTitle></CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>Mobile Drawers</Label>
+                  <Switch checked={mobileDrawers.enabled} onCheckedChange={(checked) => updateMobileDrawersConfig({ enabled: checked })} />
                 </div>
-
-                {/* Virtualized Lists */}
-                <div className="space-y-3 pb-4 border-b">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Virtualized Lists</Label>
-                      <p className="text-xs text-muted-foreground">Handle 1000+ items smoothly</p>
-                    </div>
-                    <Switch
-                      checked={virtualizedLists.enabled}
-                      onCheckedChange={(checked) => updateVirtualizedListsConfig({ enabled: checked })}
-                    />
-                  </div>
-                </div>
-
-                {/* Streaming AI */}
-                <div className="space-y-3 pb-4 border-b">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Streaming AI Responses</Label>
-                      <p className="text-xs text-muted-foreground">Typewriter effect for agents</p>
-                    </div>
-                    <Switch
-                      checked={streamingAI.enabled}
-                      onCheckedChange={(checked) => updateStreamingAIConfig({ enabled: checked })}
-                    />
-                  </div>
-                </div>
-
-                {/* Agent Orchestration */}
-                <div className="space-y-3 pb-4 border-b">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Agent Orchestration</Label>
-                      <p className="text-xs text-muted-foreground">Multi-expert coordination</p>
-                    </div>
-                    <Switch
-                      checked={agentOrchestration.enabled}
-                      onCheckedChange={(checked) => updateAgentOrchestrationConfig({ enabled: checked })}
-                    />
-                  </div>
-                  {agentOrchestration.enabled && (
-                    <div className="pl-4 space-y-2">
-                      <Label className="text-sm">Execution Mode</Label>
-                      <Select
-                        value={agentOrchestration.executionMode}
-                        onValueChange={(value) => updateAgentOrchestrationConfig({ executionMode: value as "parallel" | "consensus" | "adversarial" | "sequential" })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="parallel">Separated (Parallel)</SelectItem>
-                          <SelectItem value="consensus">Synthesis (Consensus)</SelectItem>
-                          <SelectItem value="adversarial">Debate (Adversarial)</SelectItem>
-                          <SelectItem value="sequential">Pipeline (Sequential)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
-                </div>
-
-                {/* Local Database */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Label>Local-First Database</Label>
-                      <p className="text-xs text-muted-foreground">Offline-capable with Dexie</p>
-                    </div>
-                    <Switch
-                      checked={localDatabase.enabled}
-                      onCheckedChange={(checked) => updateLocalDatabaseConfig({ enabled: checked })}
-                    />
-                  </div>
-                  {localDatabase.enabled && (
-                    <div className="pl-4 space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span>Auto-Sync</span>
-                        <Switch
-                          checked={localDatabase.autoSync}
-                          onCheckedChange={(checked) => updateLocalDatabaseConfig({ autoSync: checked })}
-                        />
-                      </div>
-                    </div>
-                  )}
+                <div className="flex items-center justify-between">
+                  <Label>Local Database</Label>
+                  <Switch checked={localDatabase.enabled} onCheckedChange={(checked) => updateLocalDatabaseConfig({ enabled: checked })} />
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
 
-        <DialogFooter className="flex flex-col sm:flex-row justify-between gap-3 pt-4 border-t">
-          <Button 
-            variant="outline" 
-            onClick={handleReset}
-            className="glass-panel border-destructive/20 text-destructive hover:bg-destructive/10"
-          >
-            🔄 Reset to Defaults
-          </Button>
+        <DialogFooter className="pt-4 border-t flex justify-between">
+          <Button variant="outline" onClick={handleReset}>🔄 Reset</Button>
           <div className="flex gap-2">
-            <Button variant="ghost" onClick={onClose} className="glass-panel">
-              Cancel
-            </Button>
-            <Button onClick={handleSave} className="bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600">
-              💾 Save Configuration
-            </Button>
+            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button onClick={handleSave}>💾 Save</Button>
           </div>
         </DialogFooter>
       </DialogContent>

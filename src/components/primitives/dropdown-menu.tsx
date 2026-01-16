@@ -183,6 +183,8 @@ const ProjectFeaturesDropdown = () => {
     streamingAI,
     agentOrchestration,
     localDatabase,
+    redditSniper,
+    redditPainPoints,
     updateScoutConfig,
     updateMirrorConfig,
     updateQualityConfig,
@@ -197,6 +199,8 @@ const ProjectFeaturesDropdown = () => {
     updateStreamingAIConfig,
     updateAgentOrchestrationConfig,
     updateLocalDatabaseConfig,
+    updateRedditSniperConfig,
+    updateRedditPainPointsConfig,
   } = useFeatureConfigStore();
 
   interface Feature {
@@ -248,6 +252,24 @@ const ProjectFeaturesDropdown = () => {
       category: "intelligence",
       configKey: "stargazerAnalysis",
       toggleAction: () => updateStargazerAnalysisConfig({ enabled: !stargazerAnalysis.enabled })
+    },
+    { 
+      name: "Reddit Sniper", 
+      description: "Detect high-intent buying signals on Reddit in real-time",
+      icon: "🎯",
+      enabled: redditSniper.enabled,
+      category: "intelligence",
+      configKey: "redditSniper",
+      toggleAction: () => updateRedditSniperConfig({ enabled: !redditSniper.enabled })
+    },
+    { 
+      name: "Reddit Pain Points", 
+      description: "Extract market gaps and frustrations from subreddits",
+      icon: "💬",
+      enabled: redditPainPoints.enabled,
+      category: "intelligence",
+      configKey: "redditPainPoints",
+      toggleAction: () => updateRedditPainPointsConfig({ enabled: !redditPainPoints.enabled })
     },
     
     // Quality Layer

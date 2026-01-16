@@ -122,9 +122,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             <TabsTrigger value="errors" className="text-xs px-2 py-2">
               <span className="mr-1">🛡️</span> Errors
             </TabsTrigger>
-            <TabsTrigger value="auth" className="text-xs px-2 py-2">
-              <span className="mr-1">🔐</span> Auth
-            </TabsTrigger>
             <TabsTrigger value="github-trending" className="text-xs px-2 py-2">
               <span className="mr-1">📈</span> Trending
             </TabsTrigger>

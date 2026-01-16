@@ -635,6 +635,143 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <Switch
                     checked={viralRadar.enabled}
                     onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🔥 Min Viral Score (0-10)</Label>
+                    <Input 
+                      type="number" 
+                      value={viralRadar.minViralScore} 
+                      onChange={(e) => updateViralRadarConfig({ minViralScore: parseInt(e.target.value) })}
+                      className="glass-panel" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>⏰ Check Interval (min)</Label>
+                    <Input 
+                      type="number" 
+                      value={viralRadar.checkInterval} 
+                      onChange={(e) => updateViralRadarConfig({ checkInterval: parseInt(e.target.value) })}
+                      className="glass-panel" 
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>🌐 Platforms</Label>
+                  <Input 
+                    value={viralRadar.platforms.join(', ')} 
+                    onChange={(e) => updateViralRadarConfig({ platforms: e.target.value.split(',').map(s => s.trim()) })}
+                    className="glass-panel" 
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Twin Mimicry Configuration */}
+          <TabsContent value="twin-mimicry" className="space-y-4">
+            <Card className="border-2 border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">👯</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Twin Mimicry Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Mimic high-performing repository styles and patterns
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={twinMimicry.enabled}
+                    onCheckedChange={(checked) => updateTwinMimicryConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>🎯 Target Repository</Label>
+                  <Input 
+                    value={twinMimicry.targetRepo} 
+                    onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
+                    placeholder="owner/repo"
+                    className="glass-panel" 
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>🎨 Mimicry Style</Label>
+                  <Select 
+                    value={twinMimicry.mimicStyle} 
+                    onValueChange={(value: any) => updateTwinMimicryConfig({ mimicStyle: value })}
+                  >
+                    <SelectTrigger className="glass-panel">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="exact">Exact</SelectItem>
+                      <SelectItem value="balanced">Balanced</SelectItem>
+                      <SelectItem value="creative">Creative</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Fork Evolution Configuration */}
+          <TabsContent value="fork-evolution" className="space-y-4">
+            <Card className="border-2 border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-yellow-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🍴</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Fork Evolution Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Track high-value forks and their innovative changes
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={forkEvolution.enabled}
+                    onCheckedChange={(checked) => updateForkEvolutionConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🍴 Minimum Forks</Label>
+                    <Input 
+                      type="number" 
+                      value={forkEvolution.minForks} 
+                      onChange={(e) => updateForkEvolutionConfig({ minForks: parseInt(e.target.value) })}
+                      className="glass-panel" 
+                    />
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-orange-500/10 rounded border border-orange-500/20 h-full mt-auto">
+                    <span className="text-sm">Track Changes</span>
+                    <Switch 
+                      checked={forkEvolution.trackChanges}
+                      onCheckedChange={(checked) => updateForkEvolutionConfig({ trackChanges: checked })}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+            <Card className="border-2 border-cyan-500/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">📡</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Viral Radar Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Track viral trends across Twitter, Reddit, and HN
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={viralRadar.enabled}
+                    onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
                     className="ml-auto"
                   />
                 </div>

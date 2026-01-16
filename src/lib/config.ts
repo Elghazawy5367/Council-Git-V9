@@ -184,6 +184,10 @@ C: Therefore, Y must be true
       synthesis: 'Find logical common ground between perspectives.',
       debate: 'Ruthlessly identify logical fallacies in opposing arguments.',
       pipeline: 'Verify logical consistency of previous analysis.',
+      parallel: 'Apply pure logical analysis without external influence.',
+      consensus: 'Find logical common ground between perspectives.',
+      adversarial: 'Ruthlessly identify logical fallacies in opposing arguments.',
+      sequential: 'Verify logical consistency of previous analysis.',
       modeName: 'defaultMode',
       description: 'Default description for logical analysis.',
       isEnabled: true,
@@ -235,6 +239,10 @@ graph TD
       synthesis: 'Integrate technical requirements from all perspectives.',
       debate: 'Challenge architectural decisions and propose alternatives.',
       pipeline: 'Build upon previous technical specifications.',
+      parallel: 'Provide technical architecture analysis independently.',
+      consensus: 'Integrate technical requirements from all perspectives.',
+      adversarial: 'Challenge architectural decisions and propose alternatives.',
+      sequential: 'Build upon previous technical specifications.',
       modeName: 'defaultMode',
       description: 'Default description for technical analysis.',
       isEnabled: true,
@@ -286,6 +294,10 @@ quadrantChart
       synthesis: 'Integrate strategic insights from all perspectives.',
       debate: 'Challenge strategic assumptions and propose alternatives.',
       pipeline: 'Build upon previous strategic analyses.',
+      parallel: 'Provide strategic analysis independently.',
+      consensus: 'Integrate strategic insights from all perspectives.',
+      adversarial: 'Challenge strategic assumptions and propose alternatives.',
+      sequential: 'Build upon previous strategic analyses.',
       modeName: 'defaultMode',
       description: 'Default description for strategic analysis.',
       isEnabled: true,
@@ -305,6 +317,10 @@ export function buildSystemPrompt(
       synthesis?: string;
       debate?: string;
       pipeline?: string;
+      parallel?: string;
+      consensus?: string;
+      adversarial?: string;
+      sequential?: string;
     };
     hasWebSearch: boolean;
     knowledge: Array<{ name: string; content: string }>;

@@ -107,6 +107,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             <TabsTrigger value="stargazer" className="text-xs px-2 py-2">
               <span className="mr-1">⭐</span> Stargazer
             </TabsTrigger>
+            <TabsTrigger value="reddit-sniper" className="text-xs px-2 py-2">
+              <span className="mr-1">🎯</span> Sniper
+            </TabsTrigger>
+            <TabsTrigger value="reddit-pain-points" className="text-xs px-2 py-2">
+              <span className="mr-1">💬</span> Pain
+            </TabsTrigger>
             <TabsTrigger value="data" className="text-xs px-2 py-2">
               <span className="mr-1">📊</span> Data
             </TabsTrigger>
@@ -118,12 +124,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="auth" className="text-xs px-2 py-2">
               <span className="mr-1">🔐</span> Auth
-            </TabsTrigger>
-            <TabsTrigger value="reddit-sniper" className="text-xs px-2 py-2">
-              <span className="mr-1">🎯</span> Sniper
-            </TabsTrigger>
-            <TabsTrigger value="reddit-pain-points" className="text-xs px-2 py-2">
-              <span className="mr-1">💬</span> Pain
             </TabsTrigger>
             <TabsTrigger value="github-trending" className="text-xs px-2 py-2">
               <span className="mr-1">📈</span> Trending

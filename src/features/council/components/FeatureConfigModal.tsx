@@ -309,6 +309,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <div className="text-3xl">🎯</div>
                   <div className="flex-1">
                     <CardTitle className="text-xl">Reddit Sniper Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Detect high-intent buying signals on Reddit in real-time
+                    </CardDescription>
                   </div>
                   <Switch
                     checked={redditSniper.enabled}
@@ -319,11 +322,21 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>🎯 Min Intent Score</Label>
+                    <Label>🎯 Min Intent Score (0-10)</Label>
                     <Input 
                       type="number" 
                       value={redditSniper.minIntentScore} 
                       onChange={(e) => updateRedditSniperConfig({ minIntentScore: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>📡 Target Subreddits</Label>
+                    <Input 
+                      value={redditSniper.subreddits.join(', ')} 
+                      onChange={(e) => updateRedditSniperConfig({ subreddits: e.target.value.split(',').map(s => s.trim()) })}
+                      placeholder="e.g. saas, entrepreneur"
+                      className="glass-panel"
                     />
                   </div>
                 </div>
@@ -360,7 +373,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">📡</div>
-                  <CardTitle className="text-xl">Viral Radar</CardTitle>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Viral Radar Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Track viral trends across Twitter, Reddit, and HN
+                    </CardDescription>
+                  </div>
                   <Switch
                     checked={viralRadar.enabled}
                     onCheckedChange={(checked) => updateViralRadarConfig({ enabled: checked })}
@@ -370,11 +388,21 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>🔥 Min Viral Score</Label>
+                    <Label>🔥 Min Viral Score (0-10)</Label>
                     <Input 
                       type="number" 
                       value={viralRadar.minViralScore} 
                       onChange={(e) => updateViralRadarConfig({ minViralScore: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>🌐 Active Platforms</Label>
+                    <Input 
+                      value={viralRadar.platforms.join(', ')} 
+                      onChange={(e) => updateViralRadarConfig({ platforms: e.target.value.split(',').map(s => s.trim()) })}
+                      placeholder="twitter, reddit, hackernews"
+                      className="glass-panel"
                     />
                   </div>
                 </div>
@@ -387,7 +415,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">👯</div>
-                  <CardTitle className="text-xl">Twin Mimicry</CardTitle>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Twin Mimicry Configuration</CardTitle>
+                    <CardDescription className="mt-1">
+                      Mimic high-performing repository styles and patterns
+                    </CardDescription>
+                  </div>
                   <Switch
                     checked={twinMimicry.enabled}
                     onCheckedChange={(checked) => updateTwinMimicryConfig({ enabled: checked })}
@@ -395,12 +428,29 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>🎯 Target Repository</Label>
-                  <Input 
-                    value={twinMimicry.targetRepo} 
-                    onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🎯 Target Repository</Label>
+                    <Input 
+                      value={twinMimicry.targetRepo} 
+                      onChange={(e) => updateTwinMimicryConfig({ targetRepo: e.target.value })}
+                      placeholder="owner/repo"
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>🎨 Mimic Style</Label>
+                    <Select value={twinMimicry.mimicStyle} onValueChange={(value: 'structural' | 'logic' | 'full') => updateTwinMimicryConfig({ mimicStyle: value })}>
+                      <SelectTrigger className="glass-panel">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="structural">🏗️ Structural</SelectItem>
+                        <SelectItem value="logic">🧠 Logic</SelectItem>
+                        <SelectItem value="full">🚀 Full</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>

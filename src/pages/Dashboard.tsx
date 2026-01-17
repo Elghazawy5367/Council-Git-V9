@@ -338,6 +338,12 @@ const Dashboard: React.FC = () => {
                     </div>
                     {getStatusBadge(feature.status)}
                   </div>
+                  {feature.status === 'active' && (
+                    <div className="flex items-center gap-1 mt-1 text-[10px] text-green-400 font-mono">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      LIVE SIGNAL DETECTED
+                    </div>
+                  )}
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">

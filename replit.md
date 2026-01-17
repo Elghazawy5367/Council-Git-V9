@@ -50,8 +50,7 @@ The application now includes an advanced intelligence layer:
 
 ### Deployment
 - **GitHub Pages**: Primary hosting via `gh-pages` (Base path: `./`)
-- **Vercel**: Secondary hosting with auto-deployment (Base path: `/`)
-- **Environment**: Configuration handles environment-specific base paths via `process.env.VERCEL`
+- **Status**: Vercel deployment has been disabled due to persistent build configuration conflicts. GitHub Pages remains the active and verified deployment platform.
 
 ### Security
 - **Content Sanitization**: DOMPurify for XSS protection on AI-generated content

@@ -360,7 +360,7 @@ const Dashboard: React.FC = () => {
                       onClick={() => handleOpenConfig(feature.id)}
                       size="sm"
                       variant="default"
-                      className="gap-2"
+                      className="gap-2 bg-violet-600/20 hover:bg-violet-600/40 text-violet-100 border border-violet-500/30"
                     >
                       <Settings className="h-4 w-4" />
                       Configure
@@ -368,7 +368,7 @@ const Dashboard: React.FC = () => {
                     <Button
                       onClick={() => window.open(getTriggerUrl(feature.workflow), '_blank')}
                       size="sm"
-                      className="gap-2 flex-1"
+                      className="gap-2 flex-1 bg-fuchsia-600/20 hover:bg-fuchsia-600/40 text-fuchsia-100 border border-fuchsia-500/30"
                     >
                       <Play className="h-4 w-4" />
                       Trigger
@@ -377,7 +377,7 @@ const Dashboard: React.FC = () => {
                       onClick={() => window.open(getWorkflowUrl(feature.workflow), '_blank')}
                       size="sm"
                       variant="outline"
-                      className="gap-2"
+                      className="gap-2 glass-panel border-white/10 hover:bg-white/5"
                     >
                       <ExternalLink className="h-4 w-4" />
                       Runs

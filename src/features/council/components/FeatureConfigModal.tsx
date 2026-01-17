@@ -349,7 +349,12 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">💬</div>
-                  <CardTitle className="text-xl">Pain Point Extractor</CardTitle>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">Pain Point Extractor</CardTitle>
+                    <CardDescription className="mt-1">
+                      Extract market gaps and user frustrations from targeted subreddits
+                    </CardDescription>
+                  </div>
                   <Switch
                     checked={redditPainPoints.enabled}
                     onCheckedChange={(checked) => updateRedditPainPointsConfig({ enabled: checked })}
@@ -357,12 +362,29 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>📡 Target Subreddits</Label>
-                  <Input 
-                    value={redditPainPoints.targetSubreddits.join(', ')} 
-                    onChange={(e) => updateRedditPainPointsConfig({ targetSubreddits: e.target.value.split(',').map(s => s.trim()) })}
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>📡 Target Subreddits</Label>
+                    <Input 
+                      value={redditPainPoints.targetSubreddits.join(', ')} 
+                      onChange={(e) => updateRedditPainPointsConfig({ targetSubreddits: e.target.value.split(',').map(s => s.trim()) })}
+                      placeholder="e.g. startup, programming"
+                      className="glass-panel"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>🧠 Analysis Model</Label>
+                    <Select value={redditPainPoints.analysisModel} onValueChange={(value) => updateRedditPainPointsConfig({ analysisModel: value })}>
+                      <SelectTrigger className="glass-panel">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="gpt-4o">GPT-4o (Deep Analysis)</SelectItem>
+                        <SelectItem value="gpt-4o-mini">GPT-4o Mini (Fast/Efficient)</SelectItem>
+                        <SelectItem value="claude-3-5-sonnet">Claude 3.5 Sonnet (Nuanced)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>

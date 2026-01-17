@@ -284,7 +284,7 @@ const Dashboard: React.FC = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={() => navigate('/automation')} 
+                onClick={() => navigate('/features')} 
                 className="gap-2 glass-panel border-green-500/20 hover:bg-green-500/10"
               >
                 <span className="text-lg">🤖</span>

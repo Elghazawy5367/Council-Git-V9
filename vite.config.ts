@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => {
   const isCodespaces = process.env.CODESPACES === 'true' || process.env.GITHUB_CODESPACE_TOKEN;
   
   return {
-    // Standard base for root-level deployment (Vercel/GitHub Pages with custom domain)
-    base: '/',
+    // Base path for deployment
+    base: './',
     server: {
       host: "0.0.0.0",
       port: 5000,

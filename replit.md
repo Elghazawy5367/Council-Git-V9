@@ -48,6 +48,11 @@ The application now includes an advanced intelligence layer:
 - **localStorage**: Fallback storage and session history
 - **Session Storage**: Temporary session data with timeout management
 
+### Deployment
+- **GitHub Pages**: Primary hosting via `gh-pages` (Base path: `./`)
+- **Vercel**: Secondary hosting with auto-deployment (Base path: `/`)
+- **Environment**: Configuration handles environment-specific base paths via `process.env.VERCEL`
+
 ### Security
 - **Content Sanitization**: DOMPurify for XSS protection on AI-generated content
 - **Vault System**: Encrypted API key storage with session-based unlocking

@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   
   return {
     // Base path for GitHub Pages deployment
-    base: './',
+    base: process.env.VERCEL === '1' ? '/' : './',
     server: {
       host: "0.0.0.0",
       port: 5000,

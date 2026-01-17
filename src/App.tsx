@@ -35,8 +35,6 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <BrowserRouter
-          // Use Vite-provided base for GitHub Pages compatibility
-          basename={import.meta.env.BASE_URL}
           future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
         >
           <Suspense fallback={<PageLoader />}>

@@ -440,14 +440,14 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   </div>
                   <div className="space-y-2">
                     <Label>🎨 Mimic Style</Label>
-                    <Select value={twinMimicry.mimicStyle} onValueChange={(value: 'structural' | 'logic' | 'full') => updateTwinMimicryConfig({ mimicStyle: value })}>
+                    <Select value={twinMimicry.mimicStyle} onValueChange={(value: 'exact' | 'balanced' | 'creative') => updateTwinMimicryConfig({ mimicStyle: value })}>
                       <SelectTrigger className="glass-panel">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="structural">🏗️ Structural</SelectItem>
-                        <SelectItem value="logic">🧠 Logic</SelectItem>
-                        <SelectItem value="full">🚀 Full</SelectItem>
+                        <SelectItem value="exact">🏗️ Exact (Structural)</SelectItem>
+                        <SelectItem value="balanced">🧠 Balanced (Logic)</SelectItem>
+                        <SelectItem value="creative">🚀 Creative (Full)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

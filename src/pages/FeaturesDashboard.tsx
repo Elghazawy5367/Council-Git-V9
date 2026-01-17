@@ -175,11 +175,11 @@ const FeaturesDashboard: React.FC = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={() => navigate('/automation')} 
+                onClick={() => navigate('/dashboard')} 
                 className="gap-2 glass-panel border-green-500/20 hover:bg-green-500/10"
               >
-                <span className="text-lg">🤖</span>
-                Intelligence Automation
+                <ArrowLeft className="h-4 w-4" />
+                Back to Dashboard
               </Button>
               <Button 
                 variant="outline" 

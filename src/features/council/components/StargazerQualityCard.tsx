@@ -4,10 +4,10 @@
  */
 
 import { Star, Building2, Users, TrendingUp, CheckCircle2, AlertCircle, XCircle } from 'lucide-react';
-import { StargazerQuality } from '@/lib/validation';
+import { StargazerAnalysis } from '@/lib/stargazer-intelligence';
 
 interface StargazerQualityCardProps {
-  data: StargazerQuality;
+  data: StargazerAnalysis;
   isLoading?: boolean;
   error?: Error | null;
 }

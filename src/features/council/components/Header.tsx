@@ -2,15 +2,27 @@ import React from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useMemoryStore } from '@/features/council/store/memory-store';
-import { Brain, Settings, Lock, Unlock, DollarSign, History, BarChart3 } from 'lucide-react';
+import { 
+  Brain, 
+  Settings, 
+  Lock, 
+  Unlock, 
+  DollarSign, 
+  History, 
+  Home, 
+  LayoutGrid, 
+  Shield 
+} from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { MemoryBadge } from './MemoryBadge';
 import { ProjectFeaturesDropdown } from '@/components/primitives/dropdown-menu';
 import { MobileMenu } from '@/components/MobileMenu';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 export const Header: React.FC = () => {
+  const location = useLocation();
   const cost = useExecutionStore(state => state.cost);
   const vaultStatus = useSettingsStore(state => state.vaultStatus);
   const setShowSettings = useSettingsStore(state => state.setShowSettings);
@@ -21,24 +33,58 @@ export const Header: React.FC = () => {
 
   const memoryCount = memory?.entries.length || 0;
 
+  const isActive = (path: string) => location.pathname === path;
+
+  const navItems = [
+    { to: '/', label: 'Council', icon: Home },
+    { to: '/dashboard', label: 'Automation', icon: Brain },
+    { to: '/features', label: 'Features', icon: LayoutGrid },
+    { to: '/quality', label: 'Quality', icon: Shield },
+  ];
+
   return (
     <header className="glass-panel border-b border-border/50 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-secondary blur-md opacity-60" />
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
-                <Brain className="h-6 w-6 text-primary-foreground" />
+          {/* Logo & Navigation */}
+          <div className="flex items-center gap-8">
+            <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary to-secondary blur-md opacity-60" />
+                <div className="relative w-10 h-10 rounded-xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                  <Brain className="h-6 w-6 text-primary-foreground" />
+                </div>
               </div>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gradient">The Council</h1>
-              <p className="text-xs text-muted-foreground">
-                V18 • Multi-Perspective Decision Engine
-              </p>
-            </div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-gradient">The Council</h1>
+                <p className="text-xs text-muted-foreground">
+                  V18 • Multi-Perspective Engine
+                </p>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1 p-1 rounded-xl bg-muted/30 border border-border/50">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.to);
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                      active 
+                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
 
           {/* Right side */}
@@ -64,71 +110,66 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Cost tracker (hidden on mobile) */}
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50">
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
               <DollarSign className="h-4 w-4 text-council-success" />
               <span className="font-mono text-sm text-foreground">${cost.total.toFixed(4)}</span>
             </div>
 
-            {/* History button (hidden on mobile) */}
-            <Button
-              variant={showHistory ? 'default' : 'ghost'}
-              size="icon"
-              className="hidden md:flex h-10 w-10"
-              onClick={() => setShowHistory(!showHistory)}
-              aria-label="Toggle history"
-            >
-              <History className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center gap-1">
+              {/* History button (hidden on mobile) */}
+              <Button
+                variant={showHistory ? 'default' : 'ghost'}
+                size="icon"
+                className="hidden md:flex h-10 w-10"
+                onClick={() => setShowHistory(!showHistory)}
+                aria-label="Toggle history"
+              >
+                <History className="h-5 w-5" />
+              </Button>
 
-            {/* Dashboard link (hidden on mobile) */}
-            <Link to="/dashboard">
+              {/* Vault status (hidden on mobile) */}
+              <div className="hidden md:block px-2">
+                <Badge
+                  variant={vaultStatus.isLocked ? 'destructive' : 'default'}
+                  className={cn(
+                    "flex items-center gap-1.5 transition-all duration-300",
+                    vaultStatus.isLocked
+                      ? "bg-destructive/20 text-destructive border-destructive/30"
+                      : "bg-council-success/20 text-council-success border-council-success/30"
+                  )}
+                >
+                  {vaultStatus.isLocked ? (
+                    <>
+                      <Lock className="h-3 w-3" />
+                      Locked
+                    </>
+                  ) : (
+                    <>
+                      <Unlock className="h-3 w-3" />
+                      Unlocked
+                    </>
+                  )}
+                </Badge>
+              </div>
+
+              {/* Settings button (hidden on mobile) */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden md:flex h-10 w-10"
-                aria-label="View analytics dashboard"
+                className="hidden md:flex h-10 w-10 hover:bg-primary/10"
+                onClick={() => setShowSettings(true)}
+                aria-label="Open settings"
               >
-                <BarChart3 className="h-5 w-5" />
+                <Settings className="h-5 w-5" />
               </Button>
-            </Link>
-
-            {/* Vault status (hidden on mobile) */}
-            <Badge
-              variant={vaultStatus.isLocked ? 'destructive' : 'default'}
-              className={`hidden md:flex items-center gap-1.5 ${
-                vaultStatus.isLocked
-                  ? 'bg-destructive/20 text-destructive border-destructive/30'
-                  : 'bg-council-success/20 text-council-success border-council-success/30'
-              }`}
-            >
-              {vaultStatus.isLocked ? (
-                <>
-                  <Lock className="h-3 w-3" />
-                  Locked
-                </>
-              ) : (
-                <>
-                  <Unlock className="h-3 w-3" />
-                  Unlocked
-                </>
-              )}
-            </Badge>
-
-            {/* Settings button (hidden on mobile, in menu) */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden md:flex h-10 w-10 hover:bg-primary/10"
-              onClick={() => setShowSettings(true)}
-              aria-label="Open settings"
-            >
-              <Settings className="h-5 w-5" />
-            </Button>
+            </div>
           </div>
         </div>
       </div>
     </header>
   );
 };
+
+export default Header;
 
 export default Header;

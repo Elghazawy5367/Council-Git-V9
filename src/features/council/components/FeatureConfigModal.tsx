@@ -39,6 +39,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     redditSniper,
     redditPainPoints,
     viralRadar,
+    hackerNews,
     twinMimicry,
     forkEvolution,
     dataFetching,
@@ -56,6 +57,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     updateRedditSniperConfig,
     updateRedditPainPointsConfig,
     updateViralRadarConfig,
+    updateHackerNewsConfig,
     updateTwinMimicryConfig,
     updateForkEvolutionConfig,
     updateDataFetchingConfig,
@@ -113,6 +115,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="viral-radar" className="text-xs px-2 py-2">
               <span className="mr-1">📡</span> Viral
+            </TabsTrigger>
+            <TabsTrigger value="hackernews" className="text-xs px-2 py-2">
+              <span className="mr-1">🗞️</span> HN/PH
             </TabsTrigger>
             <TabsTrigger value="twin-mimicry" className="text-xs px-2 py-2">
               <span className="mr-1">👯</span> Mimic
@@ -427,6 +432,38 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                       className="glass-panel"
                     />
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="hackernews" className="space-y-4">
+            <Card className="border-2 border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-yellow-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🗞️</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">HackerNews & ProductHunt Intelligence</CardTitle>
+                    <CardDescription className="mt-1">
+                      Extract buying intent signals and tech trends from the tech community
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={hackerNews.enabled}
+                    onCheckedChange={(checked) => updateHackerNewsConfig({ enabled: checked, schedule: hackerNews.schedule })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>⏰ Run Schedule (Cron)</Label>
+                  <Input 
+                    value={hackerNews.schedule} 
+                    onChange={(e) => updateHackerNewsConfig({ enabled: hackerNews.enabled, schedule: e.target.value })}
+                    placeholder="0 12 * * *"
+                    className="glass-panel"
+                  />
+                  <p className="text-xs text-muted-foreground italic">Current: {hackerNews.schedule === '0 12 * * *' ? 'Every day at 12 PM UTC' : hackerNews.schedule}</p>
                 </div>
               </CardContent>
             </Card>

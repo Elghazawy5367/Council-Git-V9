@@ -154,6 +154,11 @@ export interface ForkEvolutionConfig {
   schedule: string;
 }
 
+export interface HackerNewsConfig {
+  enabled: boolean;
+  schedule: string;
+}
+
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
@@ -165,6 +170,7 @@ export interface FeatureConfigState {
   redditSniper: RedditSniperConfig;
   redditPainPoints: RedditPainPointsConfig;
   viralRadar: ViralRadarConfig;
+  hackerNews: HackerNewsConfig;
   twinMimicry: TwinMimicryConfig;
   forkEvolution: ForkEvolutionConfig;
   dataFetching: DataFetchingConfig;
@@ -356,6 +362,11 @@ const DEFAULT_LOCAL_DATABASE_CONFIG: LocalDatabaseConfig = {
   autoSync: true,
 };
 
+const DEFAULT_HACKER_NEWS_CONFIG: HackerNewsConfig = {
+  enabled: true,
+  schedule: '0 12 * * *',
+};
+
 export const useFeatureConfigStore = create<FeatureConfigState>(
   // @ts-expect-error - Zustand v5 persist middleware type signature mismatch (non-breaking)
   persist(
@@ -370,6 +381,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
       redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
       viralRadar: DEFAULT_VIRAL_RADAR_CONFIG,
+      hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
       twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
       forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
@@ -418,14 +430,8 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) =>
         set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
       
-      updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) =>
-        set((state) => ({ 
-          viralRadar: { 
-            ...state.viralRadar, 
-            enabled: config.enabled, 
-            schedule: config.schedule 
-          } 
-        })),
+      updateHackerNewsConfig: (config: Partial<HackerNewsConfig>) =>
+        set((state) => ({ hackerNews: { ...state.hackerNews, ...config } })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),
@@ -466,6 +472,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           redditSniper: DEFAULT_REDDIT_SNIPER_CONFIG,
           redditPainPoints: DEFAULT_REDDIT_PAIN_POINTS_CONFIG,
           viralRadar: DEFAULT_VIRAL_RADAR_CONFIG,
+          hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
           twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
           forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,

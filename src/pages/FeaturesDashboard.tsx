@@ -45,6 +45,7 @@ const FeaturesDashboard: React.FC = () => {
     redditSniper,
     redditPainPoints,
     viralRadar,
+    hackerNews,
     twinMimicry,
     forkEvolution,
     stargazerAnalysis
@@ -154,6 +155,15 @@ const FeaturesDashboard: React.FC = () => {
         status: viralRadar.enabled ? 'active' : 'idle',
       },
       {
+        id: 'hackernews',
+        name: 'HackerNews Intelligence',
+        description: 'Extract buying intent signals and tech trends from HN',
+        icon: '🗞️',
+        workflow: 'hackernews-producthunt.yml',
+        schedule: hackerNews.schedule,
+        status: hackerNews.enabled ? 'active' : 'idle',
+      },
+      {
         id: 'twin-mimicry',
         name: 'Twin Mimicry',
         description: 'Mimic high-performing repository styles and patterns',
@@ -239,6 +249,8 @@ const FeaturesDashboard: React.FC = () => {
         return `Model: ${redditPainPoints.analysisModel} | Subs: ${redditPainPoints.targetSubreddits.join(', ')}`;
       case 'viral-radar':
         return `Score: >${viralRadar.minViralScore} | Platforms: ${viralRadar.platforms.join(', ')}`;
+      case 'hackernews':
+        return `Schedule: ${hackerNews.schedule}`;
       case 'twin-mimicry':
         return `Target: ${twinMimicry.targetRepo || 'None'} | Style: ${twinMimicry.mimicStyle}`;
       case 'fork-evolution':
@@ -272,6 +284,7 @@ const FeaturesDashboard: React.FC = () => {
       'reddit-sniper': 'reddit-sniper',
       'reddit-pain-points': 'reddit-pain-points',
       'viral-radar': 'viral-radar',
+      'hackernews': 'hackernews',
       'twin-mimicry': 'twin-mimicry',
       'fork-evolution': 'fork-evolution',
       'scout': 'scout',

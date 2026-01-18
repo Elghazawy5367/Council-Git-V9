@@ -1,4 +1,5 @@
 // Persona Library - Pre-configured Expert Personas for Council V18
+import { consultKnowledgeBase } from '@/lib/knowledge-loader';
 import { Expert, ExecutionMode } from './types';
 
 export interface Persona {

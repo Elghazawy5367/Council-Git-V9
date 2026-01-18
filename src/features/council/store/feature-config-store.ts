@@ -419,7 +419,13 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
         set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
       
       updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) =>
-        set((state) => ({ ...state })),
+        set((state) => ({ 
+          viralRadar: { 
+            ...state.viralRadar, 
+            enabled: config.enabled, 
+            schedule: config.schedule 
+          } 
+        })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),

@@ -31,10 +31,24 @@ const FeaturesDashboard: React.FC = () => {
   const repoName = 'Council-Git-V7-RRR';
   
   const [showConfigModal, setShowConfigModal] = useState(false);
+  const [selectedFeatureId, setSelectedFeatureId] = useState<string | null>(null);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loadingOpportunities, setLoadingOpportunities] = useState(false);
   
-  const { scout, mirror, quality, selfImprove } = useFeatureConfigStore();
+  const { 
+    scout, 
+    mirror, 
+    quality, 
+    selfImprove,
+    githubTrending,
+    marketGap,
+    redditSniper,
+    redditPainPoints,
+    viralRadar,
+    twinMimicry,
+    forkEvolution,
+    stargazerAnalysis
+  } = useFeatureConfigStore();
   
   // Load opportunities on mount
   useEffect(() => {
@@ -54,53 +68,129 @@ const FeaturesDashboard: React.FC = () => {
     void loadData();
   }, []);
   
-  const [features] = useState<Feature[]>([
-    {
-      id: 'mirror',
-      name: 'Code Mirror System',
-      description: 'Analyze codebase against elite repository standards',
-      icon: '🔄',
-      workflow: 'code-mirror.yml',
-      schedule: mirror.schedule,
-      status: mirror.enabled ? 'active' : 'idle',
-    },
-    {
-      id: 'quality',
-      name: 'QUALITY Amplification Pipeline',
-      description: 'Run full quality analysis and improvement pipeline',
-      icon: '⚡',
-      workflow: 'quality-pipeline.yml',
-      schedule: quality.schedule,
-      status: quality.enabled ? 'active' : 'idle',
-    },
-    {
-      id: 'learn',
-      name: 'Self-Improving Loop',
-      description: 'Learn patterns from successful repositories',
-      icon: '🧠',
-      workflow: 'self-improve.yml',
-      schedule: selfImprove.schedule,
-      status: selfImprove.enabled ? 'active' : 'idle',
-    },
-    {
-      id: 'scout',
-      name: 'Phantom Scout',
-      description: '24/7 automated GitHub intelligence gathering',
-      icon: '👻',
-      workflow: 'daily-scout.yml',
-      schedule: scout.schedule,
-      status: scout.enabled ? 'active' : 'idle',
-    },
-    {
-      id: 'sonar',
-      name: 'Sonar (Blue Ocean Scanner)',
-      description: 'Detect abandoned high-value repositories',
-      icon: '📡',
-      workflow: 'daily-scout.yml',
-      schedule: scout.schedule,
-      status: scout.enabled ? 'active' : 'idle',
-    },
-  ]);
+  const [features, setFeatures] = useState<Feature[]>([]);
+
+  useEffect(() => {
+    setFeatures([
+      {
+        id: 'github-trending',
+        name: 'GitHub Trending',
+        description: 'Scans trending repositories for market opportunities',
+        icon: '📈',
+        workflow: 'github-trending.yml',
+        schedule: githubTrending.schedule,
+        status: githubTrending.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'market-gap',
+        name: 'Market Gap Identifier',
+        description: 'Identifies underserved market gaps using GitHub & Reddit',
+        icon: '🎯',
+        workflow: 'market-gap.yml',
+        schedule: marketGap.schedule,
+        status: marketGap.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'stargazer',
+        name: 'Stargazer Analysis',
+        description: 'Analyze repository stars for institutional backing',
+        icon: '⭐',
+        workflow: 'stargazer-analysis.yml',
+        schedule: '0 0 * * *',
+        status: stargazerAnalysis.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'mirror',
+        name: 'Code Mirror System',
+        description: 'Analyze codebase against elite repository standards',
+        icon: '🔄',
+        workflow: 'code-mirror.yml',
+        schedule: mirror.schedule,
+        status: mirror.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'quality',
+        name: 'QUALITY Amplification Pipeline',
+        description: 'Run full quality analysis and improvement pipeline',
+        icon: '⚡',
+        workflow: 'quality-pipeline.yml',
+        schedule: quality.schedule,
+        status: quality.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'learn',
+        name: 'Self-Improving Loop',
+        description: 'Learn patterns from successful repositories',
+        icon: '🧠',
+        workflow: 'self-improve.yml',
+        schedule: selfImprove.schedule,
+        status: selfImprove.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'reddit-sniper',
+        name: 'Reddit Sniper',
+        description: 'Detect high-intent buying signals on Reddit in real-time',
+        icon: '🎯',
+        workflow: 'reddit-sniper.yml',
+        schedule: redditSniper.schedule,
+        status: redditSniper.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'reddit-pain-points',
+        name: 'Reddit Pain Points',
+        description: 'Extract market gaps and user frustrations from subreddits',
+        icon: '💬',
+        workflow: 'reddit-pain-points.yml',
+        schedule: redditPainPoints.schedule,
+        status: redditPainPoints.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'viral-radar',
+        name: 'Viral Radar',
+        description: 'Track viral trends across Twitter, Reddit, and HN',
+        icon: '📡',
+        workflow: 'viral-radar.yml',
+        schedule: viralRadar.schedule,
+        status: viralRadar.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'twin-mimicry',
+        name: 'Twin Mimicry',
+        description: 'Mimic high-performing repository styles and patterns',
+        icon: '👯',
+        workflow: 'twin-mimicry.yml',
+        schedule: twinMimicry.schedule,
+        status: twinMimicry.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'fork-evolution',
+        name: 'Fork Evolution',
+        description: 'Track high-value forks and their innovative changes',
+        icon: '🍴',
+        workflow: 'fork-evolution.yml',
+        schedule: forkEvolution.schedule,
+        status: forkEvolution.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'scout',
+        name: 'Phantom Scout',
+        description: '24/7 automated GitHub intelligence gathering',
+        icon: '👻',
+        workflow: 'daily-scout.yml',
+        schedule: scout.schedule,
+        status: scout.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'sonar',
+        name: 'Sonar (Blue Ocean Scanner)',
+        description: 'Detect abandoned high-value repositories',
+        icon: '📡',
+        workflow: 'daily-scout.yml',
+        schedule: scout.schedule,
+        status: scout.enabled ? 'active' : 'idle',
+      },
+    ]);
+  }, [scout, mirror, quality, selfImprove, githubTrending, marketGap, redditSniper, redditPainPoints, viralRadar, twinMimicry, forkEvolution, stargazerAnalysis]);
 
   const getWorkflowUrl = (workflow: string): string => {
     return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
@@ -143,6 +233,22 @@ const FeaturesDashboard: React.FC = () => {
       case 'scout':
       case 'sonar':
         return `Niche: ${scout.targetNiche} | Min Stars: ${scout.minStars} | Depth: ${scout.depth}`;
+      case 'reddit-sniper':
+        return `Intent: >${redditSniper.minIntentScore}/10 | Subs: ${redditSniper.subreddits.join(', ')}`;
+      case 'reddit-pain-points':
+        return `Model: ${redditPainPoints.analysisModel} | Subs: ${redditPainPoints.targetSubreddits.join(', ')}`;
+      case 'viral-radar':
+        return `Score: >${viralRadar.minViralScore} | Platforms: ${viralRadar.platforms.join(', ')}`;
+      case 'twin-mimicry':
+        return `Target: ${twinMimicry.targetRepo || 'None'} | Style: ${twinMimicry.mimicStyle}`;
+      case 'fork-evolution':
+        return `Min Forks: ${forkEvolution.minForks} | Tracking: ${forkEvolution.trackChanges ? 'Yes' : 'No'}`;
+      case 'github-trending':
+        return `Topics: ${githubTrending.topics.join(', ')} | Langs: ${githubTrending.languages.join(', ')}`;
+      case 'market-gap':
+        return `Quality: >${marketGap.minQualityScore} | AI: ${marketGap.deepAnalysis ? 'Deep' : 'Fast'}`;
+      case 'stargazer':
+        return `Min Followers: ${stargazerAnalysis.minFollowers} | Co: ${stargazerAnalysis.targetCompanies.slice(0, 3).join(', ')}...`;
       case 'mirror':
         return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
       case 'quality':
@@ -152,6 +258,28 @@ const FeaturesDashboard: React.FC = () => {
       default:
         return '';
     }
+  };
+
+  const handleOpenConfig = (id?: string) => {
+    // Map feature IDs to modal tab IDs if necessary
+    const tabMap: Record<string, string> = {
+      'github-trending': 'github-trending',
+      'market-gap': 'market-gap',
+      'stargazer': 'stargazer',
+      'mirror': 'mirror',
+      'quality': 'quality',
+      'learn': 'self-improve',
+      'reddit-sniper': 'reddit-sniper',
+      'reddit-pain-points': 'reddit-pain-points',
+      'viral-radar': 'viral-radar',
+      'twin-mimicry': 'twin-mimicry',
+      'fork-evolution': 'fork-evolution',
+      'scout': 'scout',
+      'sonar': 'scout'
+    };
+    
+    setSelectedFeatureId(id ? (tabMap[id] || id) : null);
+    setShowConfigModal(true);
   };
 
   return (
@@ -184,7 +312,7 @@ const FeaturesDashboard: React.FC = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={() => setShowConfigModal(true)} 
+                onClick={() => handleOpenConfig()} 
                 className="gap-2 glass-panel border-violet-500/20 hover:bg-violet-500/10"
               >
                 <Settings className="h-4 w-4" />
@@ -196,7 +324,11 @@ const FeaturesDashboard: React.FC = () => {
       </header>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <FeatureConfigModal isOpen={showConfigModal} onClose={() => setShowConfigModal(false)} />
+        <FeatureConfigModal 
+          isOpen={showConfigModal} 
+          onClose={() => setShowConfigModal(false)} 
+          initialTab={selectedFeatureId}
+        />
       </Suspense>
 
       <main className="container mx-auto px-4 py-8">
@@ -235,17 +367,15 @@ const FeaturesDashboard: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    {feature.id === 'scout' || feature.id === 'sonar' ? (
-                      <Button
-                        onClick={() => navigate('/features/scout')}
-                        size="sm"
-                        variant="default"
-                        className="gap-2"
-                      >
-                        <Settings className="h-4 w-4" />
-                        Configure
-                      </Button>
-                    ) : null}
+                    <Button
+                      onClick={() => handleOpenConfig(feature.id)}
+                      size="sm"
+                      variant="default"
+                      className="gap-2 bg-violet-600/20 hover:bg-violet-600/40 text-violet-100 border border-violet-500/30"
+                    >
+                      <Settings className="h-4 w-4" />
+                      Configure
+                    </Button>
                     <Button
                       onClick={() => window.open(getTriggerUrl(feature.workflow), '_blank')}
                       size="sm"

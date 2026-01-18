@@ -189,6 +189,7 @@ export interface FeatureConfigState {
   updateViralRadarConfig: (config: Partial<ViralRadarConfig>) => void;
   updateTwinMimicryConfig: (config: Partial<TwinMimicryConfig>) => void;
   updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) => void;
+  updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
   updateErrorHandlingConfig: (config: Partial<ErrorHandlingConfig>) => void;
@@ -416,6 +417,9 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) =>
         set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
+      
+      updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) =>
+        set((state) => ({ ...state })),
       
       updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) =>
         set((state) => ({ dataFetching: { ...state.dataFetching, ...config } })),

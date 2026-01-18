@@ -260,7 +260,24 @@ const Dashboard: React.FC = () => {
   };
 
   const handleOpenConfig = (id?: string) => {
-    setSelectedFeatureId(id || null);
+    // Map feature IDs to modal tab IDs if necessary
+    const tabMap: Record<string, string> = {
+      'github-trending': 'github-trending',
+      'market-gap': 'market-gap',
+      'stargazer': 'stargazer',
+      'mirror': 'mirror',
+      'quality': 'quality',
+      'learn': 'self-improve',
+      'reddit-sniper': 'reddit-sniper',
+      'reddit-pain-points': 'reddit-pain-points',
+      'viral-radar': 'viral-radar',
+      'twin-mimicry': 'twin-mimicry',
+      'fork-evolution': 'fork-evolution',
+      'scout': 'scout',
+      'sonar': 'scout'
+    };
+    
+    setSelectedFeatureId(id ? (tabMap[id] || id) : null);
     setShowConfigModal(true);
   };
 

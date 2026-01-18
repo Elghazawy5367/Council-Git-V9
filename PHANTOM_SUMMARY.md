@@ -190,12 +190,11 @@ The foundation is built. Now you can:
 
 ## ✅ System Status
 
-- ✅ GitHub Actions workflow deployed
+- 🟡 Implementation in progress
+- 🟡 Workflows need to be created (see [PHANTOM_GUIDE.md](PHANTOM_GUIDE.md))
 - ✅ Scout system operational
 - ✅ Report generator working
 - ✅ Data directories created
-- ✅ Live test successful
-- ✅ Documentation complete
 
 **The Phantom is ready to hunt.**
 

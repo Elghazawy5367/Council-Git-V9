@@ -20,6 +20,7 @@ import {
   StargazerQuality,
   validateData
 } from '@/lib/validation';
+import { useFeatureConfigStore } from '@/features/council/store/feature-config-store';
 
 const OWNER = GITHUB_OWNER;
 const REPO = GITHUB_REPO;

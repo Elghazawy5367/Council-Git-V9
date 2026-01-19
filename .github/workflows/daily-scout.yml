@@ -23,10 +23,10 @@ jobs:
         run: npm install
         
       - name: Run Phantom Scout
-        run: npx tsx src/lib/scout.ts
+        run: npx tsx src/lib/scout.ts > data/intelligence/blue-ocean-$(date +%Y-%m-%d).md
         
       - name: Commit results
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: daily phantom scout update [skip ci]"
+          commit_message: "🔍 Daily Scout Report"
           file_pattern: 'data/intelligence/*.md'

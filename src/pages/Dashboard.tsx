@@ -456,6 +456,22 @@ const Dashboard: React.FC = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => navigate('/features/scout')}
+                >
+                  👻 Phantom Scout (Active)
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => navigate('/features/scout')}
+                >
+                  📡 Sonar Scanner
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
                   onClick={() => window.open(`${GITHUB_REPO_URL}/blob/main/data/intelligence/latest.md`, '_blank')}
                 >
                   📄 Latest Scout Report

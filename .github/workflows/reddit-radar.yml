@@ -1,0 +1,32 @@
+name: Reddit Intelligence Radar
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reddit-sniper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Run Reddit Sniper
+        run: npx tsx src/lib/reddit-sniper.ts > data/sniper-leads.json
+        
+      - name: Commit results
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🎯 Reddit Intelligence Update"
+          file_pattern: 'data/*.json'

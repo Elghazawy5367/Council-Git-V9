@@ -13,6 +13,50 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { GITHUB_OWNER, GITHUB_REPO } from './config';
+
+/**
+ * Consult the Living Knowledge Base (Angle 1)
+ * Fetches content from the /knowledge folder in the project repository
+ */
+export async function consultKnowledgeBase(filename: string) {
+  const user = GITHUB_OWNER;
+  const repo = GITHUB_REPO;
+  const branch = "main";
+  
+  const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/knowledge/${filename}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Knowledge file not found: ${filename}`);
+    
+    return await response.text();
+  } catch (error) {
+    console.error("Knowledge retrieval failed:", error);
+    return "I could not find that information in the archives.";
+  }
+}
+
+/**
+ * Fetch an Engineered Prompt from the /prompts folder (Angle 2)
+ */
+export async function getEngineeredPrompt(path: string) {
+  const user = GITHUB_OWNER;
+  const repo = GITHUB_REPO;
+  const branch = "main";
+  
+  const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/prompts/${path}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Prompt file not found: ${path}`);
+    
+    return await response.text();
+  } catch (error) {
+    console.error("Prompt retrieval failed:", error);
+    return null;
+  }
+}
 
 interface ScoutConfig {
   targetNiche: string;

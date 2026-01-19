@@ -2,6 +2,10 @@ import { ModelInfo } from './types';
 import type { ExecutionMode } from '@/features/council/lib/types';
 
 // The Magnificent 7 Model Fleet
+export const GITHUB_OWNER = "Elghazawy5367";
+export const GITHUB_REPO = "Council-Git-V9"; // <--- The correct repo
+export const GITHUB_REPO_URL = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`;
+
 export const MAGNIFICENT_7_FLEET: ModelInfo[] = [
   {
     id: 'deepseek/deepseek-chat',

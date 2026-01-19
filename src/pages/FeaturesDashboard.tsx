@@ -4,6 +4,7 @@ import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { Play, CheckCircle2, Clock, ExternalLink, ArrowLeft, Github, Calendar, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { GITHUB_OWNER, GITHUB_REPO, GITHUB_REPO_URL } from '@/lib/config';
 import { useFeatureConfigStore } from '@/features/council/store/feature-config-store';
 import { parseCronSchedule } from '@/lib/workflow-dispatcher';
 import { MiningDrillPanel } from '@/features/council/components/MiningDrillPanel';
@@ -27,8 +28,8 @@ interface Feature {
 
 const FeaturesDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const repoOwner = 'Elghazawy5367';
-  const repoName = 'Council-Git-V7-RRR';
+  const repoOwner = GITHUB_OWNER;
+  const repoName = GITHUB_REPO;
   
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [selectedFeatureId, setSelectedFeatureId] = useState<string | null>(null);
@@ -456,7 +457,7 @@ const FeaturesDashboard: React.FC = () => {
                       variant="ghost" 
                       size="sm" 
                       className="w-full justify-start hover:bg-violet-500/10"
-                      onClick={() => window.open(`https://github.com/${repoOwner}/${repoName}/actions`, '_blank')}
+                      onClick={() => window.open(`${GITHUB_REPO_URL}/actions`, '_blank')}
                     >
                       <Github className="h-4 w-4 mr-2" />
                       View All Workflows

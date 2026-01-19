@@ -1,4 +1,5 @@
 import { get, set } from 'idb-keyval';
+import { GITHUB_OWNER, GITHUB_REPO } from '@/lib/config';
 
 const CACHE_PREFIX = 'knowledge_base_';
 const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
@@ -19,8 +20,8 @@ export async function consultKnowledgeBase(filename: string): Promise<string> {
       return cached.content;
     }
 
-    const user = "Elghazawy5367";
-    const repo = "Council-Git-V7-RRR";
+    const user = GITHUB_OWNER;
+    const repo = GITHUB_REPO;
     const branch = "main";
     const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/src/lib/knowledge-base/${filename}`;
     

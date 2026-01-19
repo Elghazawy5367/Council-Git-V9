@@ -452,11 +452,37 @@ const Dashboard: React.FC = () => {
                 <CardDescription>Access generated data and reports</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button variant="outline" size="sm" className="w-full justify-start glass-panel hover:bg-violet-500/10">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => window.open(`${GITHUB_REPO_URL}/blob/main/data/intelligence/latest.md`, '_blank')}
+                >
                   📄 Latest Scout Report
                 </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start glass-panel hover:bg-violet-500/10">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => window.open(`${GITHUB_REPO_URL}/blob/main/data/opportunities/latest.json`, '_blank')}
+                >
                   🎯 Blue Ocean Ops
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => navigate('/features')}
+                >
+                  🪞 Mirror Reports
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
+                  onClick={() => navigate('/quality')}
+                >
+                  🧠 Learned Patterns
                 </Button>
               </CardContent>
             </Card>

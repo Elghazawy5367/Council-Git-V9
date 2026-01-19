@@ -11,7 +11,7 @@
 ### Your Current Structure (Assumed from typical Lovable/Vite projects)
 
 ```
-Council-Git-V7-RRR/
+Council-Git-V9/
 ├── .github/              # GitHub Actions
 ├── .husky/              # Git hooks
 ├── .idx/                # IDX config
@@ -70,7 +70,7 @@ Council-Git-V7-RRR/
 Based on analysis of 50+ production React apps, here's the optimal structure:
 
 ```
-Council-Git-V7-RRR/
+Council-Git-V9/
 │
 ├── .github/
 │   ├── workflows/           # CI/CD

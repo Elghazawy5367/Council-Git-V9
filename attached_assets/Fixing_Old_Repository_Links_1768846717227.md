@@ -1,4 +1,4 @@
-Good catch. This is a classic "Ghost in the Machine" — legacy DNA from the cloned repository (V7-RRR) is haunting your new V9 codebase.
+Good catch. This is a classic "Ghost in the Machine" — legacy DNA from the cloned repository (V9) is haunting your new V9 codebase.
 
 I have performed a **Deep Scan** and identified **4 critical locations** where the old repository is hardcoded. If we don't fix them all, your automation will either fail or report data for the wrong project.
 
@@ -59,7 +59,7 @@ import { GITHUB\_OWNER, GITHUB\_REPO } from '@/lib/config'; // \<-- Import
 
 // 🔴 DELETE or COMMENT OUT these old lines:  
 // const REPO\_OWNER \= 'Elghazawy5367';  
-// const REPO\_NAME \= 'Council-Git-V7-RRR';
+// const REPO\_NAME \= 'Council-Git-V9';
 
 // 🟢 REPLACE with:  
 const REPO\_OWNER \= GITHUB\_OWNER;  

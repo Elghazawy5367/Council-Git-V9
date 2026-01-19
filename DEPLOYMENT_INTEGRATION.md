@@ -9,13 +9,13 @@ This guide covers deployment configurations for GitHub Pages, Vercel, IDX, and F
 
 **Configuration**:
 - File: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-- Base path: `/Council-Git-V7-RRR/`
+- Base path: `/Council-Git-V9/`
 - Branch: `gh-pages`
 - Trigger: Push to `main` or `worktree-*` branches
 
 **Access**:
 ```
-https://Elghazawy5367.github.io/Council-Git-V7-RRR/
+https://Elghazawy5367.github.io/Council-Git-V9/
 ```
 
 **Setup**:
@@ -173,7 +173,7 @@ npm run build
 # Preview production build locally
 npm run preview
 
-# Then visit http://localhost:4173/Council-Git-V7-RRR/
+# Then visit http://localhost:4173/Council-Git-V9/
 ```
 
 ---
@@ -182,7 +182,7 @@ npm run preview
 
 | Platform | Status | URL | Auto-Deploy |
 |----------|--------|-----|------------|
-| GitHub Pages | ✅ Ready | [Link](https://Elghazawy5367.github.io/Council-Git-V7-RRR/) | Yes |
+| GitHub Pages | ✅ Ready | [Link](https://Elghazawy5367.github.io/Council-Git-V9/) | Yes |
 | Vercel | ⚙️ Setup Required | [Docs](https://vercel.com/docs) | Requires Config |
 | Firebase | ⚙️ Setup Required | [Docs](https://firebase.google.com/docs/hosting) | Requires Config |
 | IDX | ✅ Ready | [IDX.dev](https://idx.dev) | N/A |
@@ -234,4 +234,4 @@ All platforms configured with:
 
 **Last Updated**: January 13, 2026  
 **Maintained By**: Council AI  
-**Repository**: [Elghazawy5367/Council-Git-V7-RRR](https://github.com/Elghazawy5367/Council-Git-V7-RRR)
+**Repository**: [Elghazawy5367/Council-Git-V9](https://github.com/Elghazawy5367/Council-Git-V9)

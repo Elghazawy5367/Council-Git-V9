@@ -10,7 +10,7 @@ This guide covers deploying The Council to GitHub Pages and Vercel.
 
 1. Push to main branch
 2. GitHub Actions automatically builds and deploys
-3. Visit: https://Elghazawy5367.github.io/Council-Git-V7-RRR/
+3. Visit: https://Elghazawy5367.github.io/Council-Git-V9/
 
 **Manual deployment:**
 
@@ -23,7 +23,7 @@ npm run deploy
 1. **Connect Repository:**
    - Visit https://vercel.com
    - Click "Import Project"
-   - Select `Elghazawy5367/Council-Git-V7-RRR`
+   - Select `Elghazawy5367/Council-Git-V9`
 
 2. **Configure Build Settings:**
    - Framework Preset: Vite
@@ -78,7 +78,7 @@ Before deploying, ensure:
 
 ### GitHub Pages
 
-- **Base URL:** `/Council-Git-V7-RRR/`
+- **Base URL:** `/Council-Git-V9/`
 - **Build:** Production mode automatically uses base path
 - **Output:** `dist/` directory
 
@@ -97,7 +97,7 @@ Before deploying, ensure:
 
 **Solution:** Check that `vite.config.ts` has correct base path:
 ```typescript
-base: mode === 'production' ? '/Council-Git-V7-RRR/' : '/',
+base: mode === 'production' ? '/Council-Git-V9/' : '/',
 ```
 
 ### Vercel Build Fails

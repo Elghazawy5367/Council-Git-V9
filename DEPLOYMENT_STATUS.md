@@ -10,7 +10,7 @@
 
 | Platform | Status | Configuration | Auto-Deploy | Access |
 |----------|--------|---|---|---|
-| **GitHub Pages** | ✅ Ready | `.github/workflows/deploy.yml` | ✅ Yes | [https://Elghazawy5367.github.io/Council-Git-V7-RRR/](https://Elghazawy5367.github.io/Council-Git-V7-RRR/) |
+| **GitHub Pages** | ✅ Ready | `.github/workflows/deploy.yml` | ✅ Yes | [https://Elghazawy5367.github.io/Council-Git-V9/](https://Elghazawy5367.github.io/Council-Git-V9/) |
 | **Vercel** | ✅ Configured | `vercel.json` + `vercel-deploy.yml` | ⚙️ Setup Required | Requires secrets |
 | **Firebase** | ✅ Configured | `firebase.json` + `firebase-deploy.yml` | ⚙️ Setup Required | Requires token |
 | **IDX** | ✅ Ready | `.idxrc` | ✅ Built-in | [https://idx.dev](https://idx.dev) |
@@ -21,7 +21,7 @@
 
 ### 1. **GitHub Pages** ✅
 - ✅ [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) - Deployment workflow
-- ✅ `vite.config.ts` - Base path configured: `/Council-Git-V7-RRR/`
+- ✅ `vite.config.ts` - Base path configured: `/Council-Git-V9/`
 - ✅ Rewrites configured for SPA routing
 - **Action**: Already working! Push to `main` triggers automatic deployment
 
@@ -181,7 +181,7 @@ Optional for features:
 After setup:
 
 ```
-GitHub Pages:  https://Elghazawy5367.github.io/Council-Git-V7-RRR/
+GitHub Pages:  https://Elghazawy5367.github.io/Council-Git-V9/
 Vercel:        https://council-git-v7-rrr.vercel.app
 Firebase:      https://council-git-v7-rrr.web.app
 IDX:           https://idx.dev (after import)
@@ -193,7 +193,7 @@ IDX:           https://idx.dev (after import)
 
 1. **GitHub Pages** - Already working! Deployed at:
    ```
-   https://Elghazawy5367.github.io/Council-Git-V7-RRR/
+   https://Elghazawy5367.github.io/Council-Git-V9/
    ```
 
 2. **Vercel** - Optional, for serverless + edge functions:
@@ -229,7 +229,7 @@ IDX:           https://idx.dev (after import)
 ## 📞 Support & Troubleshooting
 
 **GitHub Pages not working?**
-- Check: https://github.com/Elghazawy5367/Council-Git-V7-RRR/actions
+- Check: https://github.com/Elghazawy5367/Council-Git-V9/actions
 - Verify: Settings → Pages enabled
 - Clear: Browser cache and try again
 

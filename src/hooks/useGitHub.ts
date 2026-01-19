@@ -10,6 +10,7 @@
 
 import { useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
 import { githubAPI } from '@/lib/api-client';
+import { GITHUB_OWNER, GITHUB_REPO } from '@/lib/config';
 import {
   GitHubSearchResponse,
   GitHubRepo,
@@ -19,7 +20,9 @@ import {
   StargazerQuality,
   validateData
 } from '@/lib/validation';
-import { useFeatureConfigStore } from '@/features/council/store/feature-config-store';
+
+const OWNER = GITHUB_OWNER;
+const REPO = GITHUB_REPO;
 
 /**
  * Query keys for GitHub data

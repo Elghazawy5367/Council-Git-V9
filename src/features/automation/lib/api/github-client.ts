@@ -4,6 +4,8 @@
  * Handles API calls to GitHub for trending repos, issues, etc.
  */
 
+import { GITHUB_OWNER, GITHUB_REPO } from '@/lib/config';
+
 interface GitHubRepo {
   id: number;
   name: string;
@@ -45,9 +47,9 @@ export class GitHubAPIClient {
     options: RequestInit = {},
     retries = 3
   ): Promise<Response> {
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Accept': 'application/vnd.github.v3+json',
-      ...options.headers,
+      ...((options.headers as Record<string, string>) || {}),
     };
 
     if (this.apiKey) {
@@ -290,6 +292,9 @@ export class GitHubAPIClient {
 
 // Singleton instance
 let githubClientInstance: GitHubAPIClient | null = null;
+
+export const REPO_OWNER = GITHUB_OWNER;
+export const REPO_NAME = GITHUB_REPO;
 
 export function getGitHubClient(apiKey?: string): GitHubAPIClient {
   if (!githubClientInstance || (apiKey && githubClientInstance['apiKey'] !== apiKey)) {

@@ -109,11 +109,11 @@ Automatically deployed on every push to `main`:
 npm run deploy
 ```
 
-**Live URL:** https://Elghazawy5367.github.io/Council-Git-V7-RRR/
+**Live URL:** https://Elghazawy5367.github.io/Council-Git-V9/
 
 #### Vercel (Recommended)
 1. Visit [vercel.com](https://vercel.com)
-2. Import repository: `Elghazawy5367/Council-Git-V7-RRR`
+2. Import repository: `Elghazawy5367/Council-Git-V9`
 3. Deploy automatically
 
 **Configuration:**

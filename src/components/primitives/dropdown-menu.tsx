@@ -185,6 +185,12 @@ const ProjectFeaturesDropdown = () => {
     localDatabase,
     redditSniper,
     redditPainPoints,
+    githubTrending,
+    marketGap,
+    viralRadar,
+    hackerNews,
+    twinMimicry,
+    forkEvolution,
     updateScoutConfig,
     updateMirrorConfig,
     updateQualityConfig,
@@ -201,6 +207,12 @@ const ProjectFeaturesDropdown = () => {
     updateLocalDatabaseConfig,
     updateRedditSniperConfig,
     updateRedditPainPointsConfig,
+    updateGitHubTrendingConfig,
+    updateMarketGapConfig,
+    updateViralRadarConfig,
+    updateHackerNewsConfig,
+    updateTwinMimicryConfig,
+    updateForkEvolutionConfig,
   } = useFeatureConfigStore();
 
   interface Feature {
@@ -270,6 +282,60 @@ const ProjectFeaturesDropdown = () => {
       category: "intelligence",
       configKey: "redditPainPoints",
       toggleAction: () => updateRedditPainPointsConfig({ enabled: !redditPainPoints.enabled })
+    },
+    { 
+      name: "GitHub Trending", 
+      description: "Scan trending repos for market opportunities",
+      icon: "📈",
+      enabled: githubTrending.enabled,
+      category: "intelligence",
+      configKey: "githubTrending",
+      toggleAction: () => updateGitHubTrendingConfig({ enabled: !githubTrending.enabled })
+    },
+    { 
+      name: "Market Gap Identifier", 
+      description: "Identify underserved market gaps",
+      icon: "🎯",
+      enabled: marketGap.enabled,
+      category: "intelligence",
+      configKey: "marketGap",
+      toggleAction: () => updateMarketGapConfig({ enabled: !marketGap.enabled })
+    },
+    { 
+      name: "Viral Radar", 
+      description: "Track viral trends across platforms",
+      icon: "📡",
+      enabled: viralRadar.enabled,
+      category: "intelligence",
+      configKey: "viralRadar",
+      toggleAction: () => updateViralRadarConfig({ enabled: !viralRadar.enabled })
+    },
+    { 
+      name: "HackerNews Intelligence", 
+      description: "Extract tech trends and buying signals",
+      icon: "🗞️",
+      enabled: hackerNews.enabled,
+      category: "intelligence",
+      configKey: "hackerNews",
+      toggleAction: () => updateHackerNewsConfig({ enabled: !hackerNews.enabled })
+    },
+    { 
+      name: "Twin Mimicry", 
+      description: "Mimic high-performing repository styles",
+      icon: "👯",
+      enabled: twinMimicry.enabled,
+      category: "intelligence",
+      configKey: "twinMimicry",
+      toggleAction: () => updateTwinMimicryConfig({ enabled: !twinMimicry.enabled })
+    },
+    { 
+      name: "Fork Evolution", 
+      description: "Track high-value forks and changes",
+      icon: "🍴",
+      enabled: forkEvolution.enabled,
+      category: "intelligence",
+      configKey: "forkEvolution",
+      toggleAction: () => updateForkEvolutionConfig({ enabled: !forkEvolution.enabled })
     },
     
     // Quality Layer

@@ -310,7 +310,7 @@ const FeaturesDashboard: React.FC = () => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
                   Feature Control Center
                 </h1>
-                <p className="text-xs text-muted-foreground">Run and manage core features • {features.filter(f => f.status === 'active').length} active</p>
+                <p className="text-xs text-muted-foreground">Run and manage core features • {features.filter(f => f.status === 'active' || f.status === 'scheduled').length} active</p>
               </div>
             </div>
             <div className="flex gap-2">

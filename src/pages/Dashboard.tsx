@@ -295,7 +295,7 @@ const Dashboard: React.FC = () => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
                   Council Command Center
                 </h1>
-                <p className="text-xs text-muted-foreground">Manage your Mixture of Experts (MoE) agents • {features.filter(f => f.status === 'active').length} active</p>
+                <p className="text-xs text-muted-foreground">Manage your Mixture of Experts (MoE) agents • {features.filter(f => f.status === 'active' || f.status === 'scheduled').length} active</p>
               </div>
             </div>
             <div className="flex gap-2">

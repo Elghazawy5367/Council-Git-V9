@@ -24,7 +24,7 @@ interface FeatureConfigModalProps {
 }
 
 export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
-  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap', 'viral-radar', 'twin-mimicry', 'fork-evolution'].includes(initialTab) 
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap', 'viral-radar', 'twin-mimicry', 'fork-evolution', 'hackernews'].includes(initialTab) 
     ? initialTab 
     : "scout";
 

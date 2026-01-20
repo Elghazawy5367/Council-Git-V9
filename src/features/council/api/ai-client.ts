@@ -1,5 +1,5 @@
 // OpenRouter AI Client - Real API integration with Unified Synthesis
-import { Expert, ExecutionMode, ModeBehavior } from '@/features/council/lib/types';
+import { Expert, ExecutionMode } from '@/features/council/lib/types';
 import { buildSystemPrompt, MAGNIFICENT_7_FLEET } from '@/lib/config';
 import { getPromptBuilder, SYNTHESIS_TIERS } from '@/lib/synthesis-engine';
 import type { SynthesisTier } from '@/lib/types';
@@ -72,7 +72,7 @@ export async function callExpert(
     {
       basePersona: expertWithDefaults.basePersona,
       modeBehavior: expertWithDefaults.modeBehavior,
-      hasWebSearch: expertWithDefaults.expertHasWebSearch ?? expertWithDefaults.hasWebSearch,
+      hasWebSearch: expertWithDefaults.hasWebSearch,
       knowledge: expertWithDefaults.knowledge.map((file) => ({
         name: file.name,
         content: file.content,

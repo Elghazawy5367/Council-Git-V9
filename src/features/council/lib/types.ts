@@ -13,9 +13,13 @@ export interface ModeBehavior {
   consensus: string;
   adversarial: string;
   sequential: string;
-  modeName: string; // Added to align with ai-client.ts
-  description: string; // Added to align with ai-client.ts
-  isEnabled: boolean; // Added to align with ai-client.ts
+  separated: string;
+  synthesis: string;
+  debate: string;
+  pipeline: string;
+  modeName: string;
+  description: string;
+  isEnabled: boolean;
 }
 
 export interface KnowledgeFile {

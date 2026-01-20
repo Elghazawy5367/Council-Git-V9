@@ -159,6 +159,13 @@ export interface HackerNewsConfig {
   schedule: string;
 }
 
+export interface HIESTConfig {
+  enabled: boolean;
+  orchestrationMode: 'aggressive' | 'balanced' | 'conservative';
+  correlationDepth: number;
+  autoExtract: boolean;
+}
+
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
@@ -173,6 +180,7 @@ export interface FeatureConfigState {
   hackerNews: HackerNewsConfig;
   twinMimicry: TwinMimicryConfig;
   forkEvolution: ForkEvolutionConfig;
+  hiest: HIESTConfig;
   dataFetching: DataFetchingConfig;
   typeSafeForms: TypeSafeFormsConfig;
   errorHandling: ErrorHandlingConfig;
@@ -195,6 +203,7 @@ export interface FeatureConfigState {
   updateViralRadarConfig: (config: Partial<ViralRadarConfig>) => void;
   updateTwinMimicryConfig: (config: Partial<TwinMimicryConfig>) => void;
   updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) => void;
+  updateHIESTConfig: (config: Partial<HIESTConfig>) => void;
   updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
@@ -367,6 +376,13 @@ const DEFAULT_HACKER_NEWS_CONFIG: HackerNewsConfig = {
   schedule: '0 12 * * *',
 };
 
+const DEFAULT_HIEST_CONFIG: HIESTConfig = {
+  enabled: true,
+  orchestrationMode: 'balanced',
+  correlationDepth: 5,
+  autoExtract: true,
+};
+
 export const useFeatureConfigStore = create<FeatureConfigState>(
   // @ts-expect-error - Zustand v5 persist middleware type signature mismatch (non-breaking)
   persist(
@@ -384,6 +400,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
       twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
       forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
+      hiest: DEFAULT_HIEST_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
       typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
       errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -429,6 +446,9 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) =>
         set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
+
+      updateHIESTConfig: (config: Partial<HIESTConfig>) =>
+        set((state) => ({ hiest: { ...state.hiest, ...config } })),
       
       updateHackerNewsConfig: (config: Partial<HackerNewsConfig>) =>
         set((state) => ({ hackerNews: { ...state.hackerNews, ...config } })),
@@ -475,6 +495,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
           twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
           forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
+          hiest: DEFAULT_HIEST_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
           typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
           errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,

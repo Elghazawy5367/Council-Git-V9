@@ -306,7 +306,7 @@ const Dashboard: React.FC = () => {
                 className="gap-2 glass-panel border-green-500/20 hover:bg-green-500/10"
               >
                 <span className="text-lg">🤖</span>
-                Intelligence Automation
+                Jump To Controls
               </Button>
               <Button 
                 variant="outline" 

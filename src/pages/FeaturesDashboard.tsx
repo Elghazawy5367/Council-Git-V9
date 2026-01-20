@@ -485,9 +485,9 @@ const FeaturesDashboard: React.FC = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => navigate('/features/scout')}
+                  onClick={() => window.open(`${GITHUB_REPO_URL}/actions`, '_blank')}
                 >
-                  👻 Phantom Scout (Active)
+                  📡 Daily Intelligence Feed
                 </Button>
                 <Button 
                   variant="outline" 
@@ -495,15 +495,15 @@ const FeaturesDashboard: React.FC = () => {
                   className="w-full justify-start glass-panel hover:bg-violet-500/10"
                   onClick={() => navigate('/features/scout')}
                 >
-                  📡 Sonar Scanner
+                  👻 The Sonar
                 </Button>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => window.open(`${GITHUB_REPO_URL}/blob/main/data/intelligence/latest.md`, '_blank')}
+                  onClick={() => navigate('/features/scout')}
                 >
-                  📄 Latest Scout Report
+                  📡 The Drill
                 </Button>
                 <Button 
                   variant="outline" 

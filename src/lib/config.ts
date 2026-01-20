@@ -1,6 +1,15 @@
 import { ModelInfo } from './types';
 import type { ExecutionMode } from '@/features/council/lib/types';
 
+// Features Branding
+export const FEATURE_NAMES = {
+  SONAR: 'The Sonar',
+  DRILL: 'The Mining Drill',
+  SNIPER: 'The Sniper',
+  SPYGLASS: 'The Spyglass',
+  DEBT_METER: 'The Debt Meter'
+};
+
 // The Magnificent 7 Model Fleet
 export const GITHUB_OWNER = "Elghazawy5367";
 export const GITHUB_REPO = "Council-Git-V9"; // <--- The correct repo

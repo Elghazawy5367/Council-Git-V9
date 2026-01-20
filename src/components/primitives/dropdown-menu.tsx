@@ -317,7 +317,7 @@ const ProjectFeaturesDropdown = () => {
       enabled: hackerNews.enabled,
       category: "intelligence",
       configKey: "hackerNews",
-      toggleAction: () => updateHackerNewsConfig({ enabled: !hackerNews.enabled })
+      toggleAction: () => updateHackerNewsConfig({ enabled: !hackerNews.enabled, schedule: hackerNews.schedule || '0 12 * * *' })
     },
     { 
       name: "Twin Mimicry", 

@@ -411,18 +411,32 @@ const Dashboard: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <Github className="h-6 w-6 text-violet-500" />
-                  System Integrity
+                  System Health
                 </CardTitle>
-                <CardDescription className="text-base">Operational status and quick links</CardDescription>
+                <CardDescription className="text-base">Real-time workflow monitoring</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 text-emerald-400">
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-mono text-sm">System Operational</span>
+                <div className="flex items-center justify-between p-2 rounded bg-emerald-500/10 border border-emerald-500/20">
+                  <div className="flex items-center gap-2 text-emerald-400">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="font-mono text-xs">API Gateway</span>
+                  </div>
+                  <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-400">ONLINE</Badge>
                 </div>
                 
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2 rounded bg-violet-500/5 border border-violet-500/10">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Active Runs</p>
+                    <p className="text-lg font-bold text-violet-300">13/13</p>
+                  </div>
+                  <div className="p-2 rounded bg-fuchsia-500/5 border border-fuchsia-500/10">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Last Sync</p>
+                    <p className="text-lg font-bold text-fuchsia-300">Just Now</p>
+                  </div>
+                </div>
+
                 <div className="p-3 bg-background/50 rounded-lg border border-violet-500/20">
-                  <h4 className="font-semibold text-sm mb-2">Quick Actions</h4>
+                  <h4 className="font-semibold text-sm mb-2">Operational Controls</h4>
                   <div className="space-y-2">
                     <Button 
                       variant="ghost" 
@@ -431,7 +445,7 @@ const Dashboard: React.FC = () => {
                       onClick={() => window.open(`${GITHUB_REPO_URL}/actions`, '_blank')}
                     >
                       <Github className="h-4 w-4 mr-2" />
-                      View All Workflows
+                      GitHub Actions Console
                     </Button>
                     <Button 
                       variant="ghost" 

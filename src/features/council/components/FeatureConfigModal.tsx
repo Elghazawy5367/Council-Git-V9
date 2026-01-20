@@ -140,6 +140,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             <TabsTrigger value="market-gap" className="text-xs px-2 py-2">
               <span className="mr-1">🎯</span> Gaps
             </TabsTrigger>
+            <TabsTrigger value="scout" className="text-xs px-2 py-2">
+              <span className="mr-1">👻</span> Scout
+            </TabsTrigger>
             <TabsTrigger value="more" className="text-xs px-2 py-2">
               <span className="mr-1">➕</span> More
             </TabsTrigger>

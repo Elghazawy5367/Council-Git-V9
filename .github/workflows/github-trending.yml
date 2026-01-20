@@ -1,0 +1,18 @@
+name: GitHub Trending
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run Trending Scan
+        run: npm install && node scripts/scan-trending.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

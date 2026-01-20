@@ -1,0 +1,18 @@
+name: Twin Mimicry
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+jobs:
+  mimic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run Twin Mimicry
+        run: npm install && node scripts/twin-mimicry.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

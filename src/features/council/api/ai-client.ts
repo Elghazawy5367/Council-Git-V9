@@ -60,22 +60,19 @@ export async function callExpert(
     ...expert,
     hasWebSearch: expert.hasWebSearch ?? false,
     modeBehavior: {
-      separated: expert.modeBehavior.separated,
-      synthesis: expert.modeBehavior.synthesis,
-      debate: expert.modeBehavior.debate,
-      pipeline: expert.modeBehavior.pipeline,
+      ...expert.modeBehavior,
       modeName: expert.modeBehavior.modeName || "defaultMode",
       description: expert.modeBehavior.description || "No description provided",
       isEnabled: expert.modeBehavior.isEnabled ?? true,
-    } as ModeBehavior, // Ensure alignment with ModeBehavior type
-  }; // Ensure modeBehavior matches the ModeBehavior type
+    },
+  };
 
   // Explicitly cast expertWithDefaults to the expected structure
   const systemPrompt = buildSystemPrompt(
     {
       basePersona: expertWithDefaults.basePersona,
       modeBehavior: expertWithDefaults.modeBehavior,
-      hasWebSearch: expertWithDefaults.hasWebSearch,
+      hasWebSearch: expertWithDefaults.expertHasWebSearch ?? expertWithDefaults.hasWebSearch,
       knowledge: expertWithDefaults.knowledge.map((file) => ({
         name: file.name,
         content: file.content,

@@ -143,6 +143,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             <TabsTrigger value="scout" className="text-xs px-2 py-2">
               <span className="mr-1">👻</span> Scout
             </TabsTrigger>
+            <TabsTrigger value="hiest" className="text-xs px-2 py-2">
+              <span className="mr-1">💎</span> HIEST
+            </TabsTrigger>
             <TabsTrigger value="more" className="text-xs px-2 py-2">
               <span className="mr-1">➕</span> More
             </TabsTrigger>
@@ -599,6 +602,28 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                   <Label>Enable Analysis</Label>
                   <Switch checked={marketGap.enabled} onCheckedChange={(checked) => updateMarketGapConfig({ enabled: checked })} />
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="hiest" className="space-y-4">
+            <Card className="border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-teal-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">💎</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">HIEST Intelligence</CardTitle>
+                    <CardDescription className="mt-1">
+                      High-Impact Intelligence & Extraction Strategy Tool
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  HIEST is the master orchestration layer for all intelligence gathering modules.
+                  It correlates signals across GitHub, Reddit, and X to find the "highest" impact opportunities.
+                </p>
               </CardContent>
             </Card>
           </TabsContent>

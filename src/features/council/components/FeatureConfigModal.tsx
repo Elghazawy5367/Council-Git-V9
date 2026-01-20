@@ -614,18 +614,52 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 <div className="flex items-center gap-3">
                   <div className="text-3xl">💎</div>
                   <div className="flex-1">
-                    <CardTitle className="text-xl">HIEST Intelligence</CardTitle>
+                    <CardTitle className="text-xl">HIEST Master Orchestration</CardTitle>
                     <CardDescription className="mt-1">
-                      High-Impact Intelligence & Extraction Strategy Tool
+                      High-Impact Intelligence & Extraction Strategy Tool - Cross-platform correlation engine
                     </CardDescription>
                   </div>
+                  <Switch
+                    checked={hiest.enabled}
+                    onCheckedChange={(checked) => updateHIESTConfig({ enabled: checked })}
+                  />
                 </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  HIEST is the master orchestration layer for all intelligence gathering modules.
-                  It correlates signals across GitHub, Reddit, and X to find the "highest" impact opportunities.
-                </p>
+              <CardContent className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>🎯 Orchestration Mode</Label>
+                    <Select value={hiest.orchestrationMode} onValueChange={(value: 'aggressive' | 'balanced' | 'conservative') => updateHIESTConfig({ orchestrationMode: value })}>
+                      <SelectTrigger className="glass-panel">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="aggressive">🚀 Aggressive (Maximum Signals)</SelectItem>
+                        <SelectItem value="balanced">⚖️ Balanced (Optimal ROI)</SelectItem>
+                        <SelectItem value="conservative">🛡️ Conservative (High Precision)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>🔬 Correlation Depth (1-10)</Label>
+                    <Input 
+                      type="number" 
+                      value={hiest.correlationDepth} 
+                      onChange={(e) => updateHIESTConfig({ correlationDepth: parseInt(e.target.value) })}
+                      className="glass-panel"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                  <div className="space-y-0.5">
+                    <Label>✨ Auto-Extract Insights</Label>
+                    <p className="text-xs text-muted-foreground">Automatically synthesize correlated signals into reports</p>
+                  </div>
+                  <Switch 
+                    checked={hiest.autoExtract}
+                    onCheckedChange={(checked) => updateHIESTConfig({ autoExtract: checked })}
+                  />
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

@@ -157,30 +157,30 @@ export const ControlPanel: React.FC = () => {
             </Button>
           </div>
           <Tabs value={mode} onValueChange={(v) => setMode(v as ExecutionMode)}>
-            <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-1">
+            <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-2 gap-2">
               {(Object.keys(MODE_DESCRIPTIONS) as ExecutionMode[]).map((modeKey) => {
                 const IconComponent = MODE_ICONS[modeKey];
                 return (
                   <TabsTrigger
                     key={modeKey}
                     value={modeKey}
-                    className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-2 text-xs data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground whitespace-nowrap"
                   >
-                    <IconComponent className="h-4 w-4" />
-                    <span className="hidden sm:inline">{MODE_DESCRIPTIONS[modeKey].name}</span>
+                    <IconComponent className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                    <span className="hidden md:inline text-[10px] sm:text-xs leading-tight">{MODE_DESCRIPTIONS[modeKey].name}</span>
                   </TabsTrigger>
                 );
               })}
             </TabsList>
           </Tabs>
-          <p className="text-xs text-muted-foreground">{MODE_DESCRIPTIONS[mode].description}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">{MODE_DESCRIPTIONS[mode].description}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <label className="text-sm font-medium text-foreground">Active Experts</label>
-              <Badge variant="secondary" className="font-mono">{activeExpertCount}</Badge>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center gap-3">
+              <label className="text-sm font-medium text-foreground whitespace-nowrap">Active Experts</label>
+              <Badge variant="secondary" className="font-mono min-w-[2.5rem] text-center px-3">{activeExpertCount}</Badge>
             </div>
             <Slider
               value={[activeExpertCount]}
@@ -188,16 +188,19 @@ export const ControlPanel: React.FC = () => {
               min={1}
               max={5}
               step={1}
-              className="slider-council"
+              className="slider-council px-1"
             />
-            <div className="flex justify-between text-xs text-muted-foreground"><span>1</span><span>5</span></div>
+            <div className="flex justify-between text-xs text-muted-foreground px-2">
+              <span>1</span>
+              <span>5</span>
+            </div>
           </div>
 
           {mode === 'adversarial' && (
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label className="text-sm font-medium text-foreground">Debate Rounds</label>
-                <Badge variant="secondary" className="font-mono">{debateRounds}</Badge>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center gap-3">
+                <label className="text-sm font-medium text-foreground whitespace-nowrap">Debate Rounds</label>
+                <Badge variant="secondary" className="font-mono min-w-[2.5rem] text-center px-3">{debateRounds}</Badge>
               </div>
               <Slider
                 value={[debateRounds]}
@@ -205,9 +208,12 @@ export const ControlPanel: React.FC = () => {
                 min={1}
                 max={5}
                 step={1}
-                className="slider-council"
+                className="slider-council px-1"
               />
-              <div className="flex justify-between text-xs text-muted-foreground"><span>1</span><span>5</span></div>
+              <div className="flex justify-between text-xs text-muted-foreground px-2">
+                <span>1</span>
+                <span>5</span>
+              </div>
             </div>
           )}
         </div>

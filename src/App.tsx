@@ -8,9 +8,8 @@ import { Toaster } from "@/components/primitives/sonner";
 
 // Lazy load pages for code splitting
 const Index = React.lazy(() => import("@/pages/Index"));
-const Dashboard = React.lazy(() => import("@/pages/Dashboard"));
+const AutomationDashboard = React.lazy(() => import("@/pages/AutomationDashboard"));
 const QualityDashboard = React.lazy(() => import("@/pages/QualityDashboard"));
-const FeaturesDashboard = React.lazy(() => import("@/pages/FeaturesDashboard"));
 const ScoutConfig = React.lazy(() => import("@/pages/features/ScoutConfig"));
 const NotFound = React.lazy(() => import("@/pages/NotFound"));
 
@@ -38,9 +37,8 @@ const App = () => (
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/features" element={<AutomationDashboard />} />
               <Route path="/quality" element={<QualityDashboard />} />
-              <Route path="/features" element={<FeaturesDashboard />} />
               <Route path="/features/scout" element={<ScoutConfig />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -3,15 +3,15 @@ import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useMemoryStore } from '@/features/council/store/memory-store';
 import { 
-  Brain, 
   Settings, 
   Lock, 
   Unlock, 
   DollarSign, 
   History, 
-  Home, 
   LayoutGrid, 
-  Shield 
+  Shield,
+  Zap,
+  Brain
 } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
@@ -36,9 +36,7 @@ export const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
-    { to: '/', label: 'Council', icon: Home },
-    { to: '/dashboard', label: 'Automation', icon: Brain },
-    { to: '/features', label: 'Features', icon: LayoutGrid },
+    { to: '/features', label: 'Automation', icon: Zap },
     { to: '/quality', label: 'Quality', icon: Shield },
   ];
 

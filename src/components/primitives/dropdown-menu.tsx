@@ -191,6 +191,7 @@ const ProjectFeaturesDropdown = () => {
     hackerNews,
     twinMimicry,
     forkEvolution,
+    promptHeist,
     updateScoutConfig,
     updateMirrorConfig,
     updateQualityConfig,
@@ -213,6 +214,7 @@ const ProjectFeaturesDropdown = () => {
     updateHackerNewsConfig,
     updateTwinMimicryConfig,
     updateForkEvolutionConfig,
+    updatePromptHeistConfig,
   } = useFeatureConfigStore();
 
   interface Feature {
@@ -336,6 +338,15 @@ const ProjectFeaturesDropdown = () => {
       category: "intelligence",
       configKey: "forkEvolution",
       toggleAction: () => updateForkEvolutionConfig({ enabled: !forkEvolution.enabled })
+    },
+    { 
+      name: "The HEIST", 
+      description: "Import world-class prompts from elite repositories",
+      icon: "🎭",
+      enabled: promptHeist.enabled,
+      category: "intelligence",
+      configKey: "promptHeist",
+      toggleAction: () => updatePromptHeistConfig({ enabled: !promptHeist.enabled })
     },
     
     // Quality Layer

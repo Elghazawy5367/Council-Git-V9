@@ -24,7 +24,7 @@ interface FeatureConfigModalProps {
 }
 
 export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, onClose, initialTab }) => {
-  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap', 'viral-radar', 'twin-mimicry', 'fork-evolution', 'hackernews'].includes(initialTab) 
+  const defaultTab = initialTab && ['scout', 'mirror', 'quality', 'self-improve', 'stargazer', 'data', 'forms', 'errors', 'auth', 'more', 'reddit-sniper', 'reddit-pain-points', 'github-trending', 'market-gap', 'viral-radar', 'twin-mimicry', 'fork-evolution', 'heist', 'hackernews'].includes(initialTab) 
     ? initialTab 
     : "scout";
 
@@ -42,7 +42,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     hackerNews,
     twinMimicry,
     forkEvolution,
-    hiest,
+    promptHeist,
     dataFetching,
     typeSafeForms,
     errorHandling,
@@ -61,7 +61,7 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
     updateHackerNewsConfig,
     updateTwinMimicryConfig,
     updateForkEvolutionConfig,
-    updateHIESTConfig,
+    updatePromptHeistConfig,
     updateDataFetchingConfig,
     updateTypeSafeFormsConfig,
     updateErrorHandlingConfig,
@@ -127,6 +127,9 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             <TabsTrigger value="fork-evolution" className="text-xs px-2 py-2">
               <span className="mr-1">🍴</span> Fork
             </TabsTrigger>
+            <TabsTrigger value="heist" className="text-xs px-2 py-2">
+              <span className="mr-1">🎭</span> HEIST
+            </TabsTrigger>
             <TabsTrigger value="data" className="text-xs px-2 py-2">
               <span className="mr-1">📊</span> Data
             </TabsTrigger>
@@ -144,9 +147,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </TabsTrigger>
             <TabsTrigger value="scout" className="text-xs px-2 py-2">
               <span className="mr-1">👻</span> Scout
-            </TabsTrigger>
-            <TabsTrigger value="hiest" className="text-xs px-2 py-2">
-              <span className="mr-1">💎</span> HIEST
             </TabsTrigger>
             <TabsTrigger value="more" className="text-xs px-2 py-2">
               <span className="mr-1">➕</span> More
@@ -548,6 +548,153 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
             </Card>
           </TabsContent>
 
+          <TabsContent value="heist" className="space-y-4">
+            <Card className="border-2 border-violet-500/20 bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl">🎭</div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">The HEIST</CardTitle>
+                    <CardDescription className="mt-1">
+                      Import 290+ battle-tested prompts from danielmiessler/fabric
+                    </CardDescription>
+                  </div>
+                  <Switch
+                    checked={promptHeist.enabled}
+                    onCheckedChange={(checked) => updatePromptHeistConfig({ enabled: checked })}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      🔄 Auto-Update
+                    </Label>
+                    <div className="flex items-center gap-3">
+                      <Switch
+                        checked={promptHeist.autoUpdate}
+                        onCheckedChange={(checked) => updatePromptHeistConfig({ autoUpdate: checked })}
+                      />
+                      <span className="text-sm text-muted-foreground">
+                        {promptHeist.autoUpdate ? 'Enabled' : 'Disabled'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      📅 Update Frequency
+                    </Label>
+                    <Select 
+                      value={promptHeist.updateFrequency} 
+                      onValueChange={(value: 'daily' | 'weekly' | 'monthly') => 
+                        updatePromptHeistConfig({ updateFrequency: value })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="daily">Daily</SelectItem>
+                        <SelectItem value="weekly">Weekly</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      ⏰ Cache Expiry (hours)
+                    </Label>
+                    <Input 
+                      type="number" 
+                      min="1"
+                      max="720"
+                      value={promptHeist.cacheExpiry} 
+                      onChange={(e) => updatePromptHeistConfig({ cacheExpiry: parseInt(e.target.value) || 168 })}
+                      placeholder="168"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Currently: {promptHeist.cacheExpiry}h ({Math.round(promptHeist.cacheExpiry / 24)} days)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-border/50">
+                  <Label className="text-base font-semibold">📚 Enabled Categories</Label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {['analysis', 'validation', 'synthesis', 'strategy', 'extraction', 'improvement'].map((category) => (
+                      <div key={category} className="flex items-center gap-2">
+                        <Switch
+                          checked={promptHeist.preferredCategories.includes(category)}
+                          onCheckedChange={(checked) => {
+                            const updated = checked
+                              ? [...promptHeist.preferredCategories, category]
+                              : promptHeist.preferredCategories.filter(c => c !== category);
+                            updatePromptHeistConfig({ preferredCategories: updated });
+                          }}
+                        />
+                        <Label className="capitalize cursor-pointer">
+                          {category}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-border/50">
+                  <Label className="text-base font-semibold">🎯 Core Patterns</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Currently enabled: {promptHeist.patternsEnabled.length} patterns
+                  </p>
+                  <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto p-2 bg-muted/30 rounded-lg">
+                    {[
+                      'extract_wisdom',
+                      'analyze_claims', 
+                      'create_summary',
+                      'find_logical_fallacies',
+                      'explain_code',
+                      'improve_writing',
+                      'rate_content',
+                      'create_pattern',
+                      'summarize_paper',
+                      'extract_ideas'
+                    ].map((pattern) => (
+                      <div key={pattern} className="flex items-center gap-2">
+                        <Switch
+                          checked={promptHeist.patternsEnabled.includes(pattern)}
+                          onCheckedChange={(checked) => {
+                            const updated = checked
+                              ? [...promptHeist.patternsEnabled, pattern]
+                              : promptHeist.patternsEnabled.filter(p => p !== pattern);
+                            updatePromptHeistConfig({ patternsEnabled: updated });
+                          }}
+                        />
+                        <Label className="font-mono text-xs cursor-pointer">
+                          {pattern}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-border/50">
+                  <div className="flex items-start gap-3 text-sm">
+                    <div className="text-xl">💡</div>
+                    <div className="space-y-1">
+                      <p className="font-medium">About The HEIST</p>
+                      <p className="text-muted-foreground text-xs leading-relaxed">
+                        Imports world-class prompt patterns from danielmiessler/fabric (MIT License).
+                        20 patterns already downloaded. Run <code className="px-1 py-0.5 bg-muted rounded text-xs">npm run heist</code> to update.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="data" className="space-y-4">
             <Card>
               <CardHeader><CardTitle>📊 Data & Caching</CardTitle></CardHeader>
@@ -603,62 +750,6 @@ export const FeatureConfigModal: React.FC<FeatureConfigModalProps> = ({ isOpen, 
                 <div className="flex items-center justify-between">
                   <Label>Enable Analysis</Label>
                   <Switch checked={marketGap.enabled} onCheckedChange={(checked) => updateMarketGapConfig({ enabled: checked })} />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="hiest" className="space-y-4">
-            <Card className="border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-teal-500/5">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl">💎</div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl">HIEST Master Orchestration</CardTitle>
-                    <CardDescription className="mt-1">
-                      High-Impact Intelligence & Extraction Strategy Tool - Cross-platform correlation engine
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={hiest.enabled}
-                    onCheckedChange={(checked) => updateHIESTConfig({ enabled: checked })}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>🎯 Orchestration Mode</Label>
-                    <Select value={hiest.orchestrationMode} onValueChange={(value: 'aggressive' | 'balanced' | 'conservative') => updateHIESTConfig({ orchestrationMode: value })}>
-                      <SelectTrigger className="glass-panel">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="aggressive">🚀 Aggressive (Maximum Signals)</SelectItem>
-                        <SelectItem value="balanced">⚖️ Balanced (Optimal ROI)</SelectItem>
-                        <SelectItem value="conservative">🛡️ Conservative (High Precision)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>🔬 Correlation Depth (1-10)</Label>
-                    <Input 
-                      type="number" 
-                      value={hiest.correlationDepth} 
-                      onChange={(e) => updateHIESTConfig({ correlationDepth: parseInt(e.target.value) })}
-                      className="glass-panel"
-                    />
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
-                  <div className="space-y-0.5">
-                    <Label>✨ Auto-Extract Insights</Label>
-                    <p className="text-xs text-muted-foreground">Automatically synthesize correlated signals into reports</p>
-                  </div>
-                  <Switch 
-                    checked={hiest.autoExtract}
-                    onCheckedChange={(checked) => updateHIESTConfig({ autoExtract: checked })}
-                  />
                 </div>
               </CardContent>
             </Card>

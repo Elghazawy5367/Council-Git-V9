@@ -49,6 +49,7 @@ const FeaturesDashboard: React.FC = () => {
     hackerNews,
     twinMimicry,
     forkEvolution,
+    promptHeist,
     stargazerAnalysis
   } = useFeatureConfigStore();
   
@@ -181,6 +182,15 @@ const FeaturesDashboard: React.FC = () => {
         workflow: 'fork-evolution.yml',
         schedule: forkEvolution.schedule,
         status: forkEvolution.enabled ? 'active' : 'idle',
+      },
+      {
+        id: 'prompt-heist',
+        name: 'The HEIST',
+        description: 'Import 290+ world-class prompts from danielmiessler/fabric',
+        icon: '🎭',
+        workflow: 'heist-prompts.ts',
+        schedule: 'monthly',
+        status: promptHeist.enabled ? 'active' : 'idle',
       },
       {
         id: 'scout',

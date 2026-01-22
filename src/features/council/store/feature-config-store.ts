@@ -95,6 +95,15 @@ export interface AgentOrchestrationConfig {
   executionMode: 'parallel' | 'consensus' | 'adversarial' | 'sequential';
 }
 
+export interface PromptHeistConfig {
+  enabled: boolean;
+  autoUpdate: boolean;
+  updateFrequency: 'daily' | 'weekly' | 'monthly';
+  patternsEnabled: string[];
+  cacheExpiry: number; // hours
+  preferredCategories: string[];
+}
+
 export interface LocalDatabaseConfig {
   enabled: boolean;
   useDexie: boolean;
@@ -159,13 +168,6 @@ export interface HackerNewsConfig {
   schedule: string;
 }
 
-export interface HIESTConfig {
-  enabled: boolean;
-  orchestrationMode: 'aggressive' | 'balanced' | 'conservative';
-  correlationDepth: number;
-  autoExtract: boolean;
-}
-
 export interface FeatureConfigState {
   scout: ScoutConfig;
   mirror: MirrorConfig;
@@ -180,7 +182,6 @@ export interface FeatureConfigState {
   hackerNews: HackerNewsConfig;
   twinMimicry: TwinMimicryConfig;
   forkEvolution: ForkEvolutionConfig;
-  hiest: HIESTConfig;
   dataFetching: DataFetchingConfig;
   typeSafeForms: TypeSafeFormsConfig;
   errorHandling: ErrorHandlingConfig;
@@ -189,6 +190,7 @@ export interface FeatureConfigState {
   virtualizedLists: VirtualizedListsConfig;
   streamingAI: StreamingAIConfig;
   agentOrchestration: AgentOrchestrationConfig;
+  promptHeist: PromptHeistConfig;
   localDatabase: LocalDatabaseConfig;
   
   updateScoutConfig: (config: Partial<ScoutConfig>) => void;
@@ -203,7 +205,6 @@ export interface FeatureConfigState {
   updateViralRadarConfig: (config: Partial<ViralRadarConfig>) => void;
   updateTwinMimicryConfig: (config: Partial<TwinMimicryConfig>) => void;
   updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) => void;
-  updateHIESTConfig: (config: Partial<HIESTConfig>) => void;
   updateHackerNewsConfig: (config: { enabled: boolean; schedule: string }) => void;
   updateDataFetchingConfig: (config: Partial<DataFetchingConfig>) => void;
   updateTypeSafeFormsConfig: (config: Partial<TypeSafeFormsConfig>) => void;
@@ -213,6 +214,7 @@ export interface FeatureConfigState {
   updateVirtualizedListsConfig: (config: Partial<VirtualizedListsConfig>) => void;
   updateStreamingAIConfig: (config: Partial<StreamingAIConfig>) => void;
   updateAgentOrchestrationConfig: (config: Partial<AgentOrchestrationConfig>) => void;
+  updatePromptHeistConfig: (config: Partial<PromptHeistConfig>) => void;
   updateLocalDatabaseConfig: (config: Partial<LocalDatabaseConfig>) => void;
   
   resetToDefaults: () => void;
@@ -376,11 +378,13 @@ const DEFAULT_HACKER_NEWS_CONFIG: HackerNewsConfig = {
   schedule: '0 12 * * *',
 };
 
-const DEFAULT_HIEST_CONFIG: HIESTConfig = {
+const DEFAULT_PROMPT_HEIST_CONFIG: PromptHeistConfig = {
   enabled: true,
-  orchestrationMode: 'balanced',
-  correlationDepth: 5,
-  autoExtract: true,
+  autoUpdate: false,
+  updateFrequency: 'monthly',
+  patternsEnabled: ['extract_wisdom', 'analyze_claims', 'create_summary'],
+  cacheExpiry: 168, // 7 days
+  preferredCategories: ['analysis', 'validation', 'synthesis'],
 };
 
 export const useFeatureConfigStore = create<FeatureConfigState>(
@@ -400,7 +404,6 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
       twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
       forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
-      hiest: DEFAULT_HIEST_CONFIG,
       dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
       typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
       errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -409,6 +412,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       virtualizedLists: DEFAULT_VIRTUALIZED_LISTS_CONFIG,
       streamingAI: DEFAULT_STREAMING_AI_CONFIG,
       agentOrchestration: DEFAULT_AGENT_ORCHESTRATION_CONFIG,
+      promptHeist: DEFAULT_PROMPT_HEIST_CONFIG,
       localDatabase: DEFAULT_LOCAL_DATABASE_CONFIG,
       
       updateScoutConfig: (config: Partial<ScoutConfig>) =>
@@ -446,9 +450,6 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       
       updateForkEvolutionConfig: (config: Partial<ForkEvolutionConfig>) =>
         set((state) => ({ forkEvolution: { ...state.forkEvolution, ...config } })),
-
-      updateHIESTConfig: (config: Partial<HIESTConfig>) =>
-        set((state) => ({ hiest: { ...state.hiest, ...config } })),
       
       updateHackerNewsConfig: (config: Partial<HackerNewsConfig>) =>
         set((state) => ({ hackerNews: { ...state.hackerNews, ...config } })),
@@ -495,7 +496,6 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           hackerNews: DEFAULT_HACKER_NEWS_CONFIG,
           twinMimicry: DEFAULT_TWIN_MIMICRY_CONFIG,
           forkEvolution: DEFAULT_FORK_EVOLUTION_CONFIG,
-          hiest: DEFAULT_HIEST_CONFIG,
           dataFetching: DEFAULT_DATA_FETCHING_CONFIG,
           typeSafeForms: DEFAULT_TYPE_SAFE_FORMS_CONFIG,
           errorHandling: DEFAULT_ERROR_HANDLING_CONFIG,
@@ -504,6 +504,7 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
           virtualizedLists: DEFAULT_VIRTUALIZED_LISTS_CONFIG,
           streamingAI: DEFAULT_STREAMING_AI_CONFIG,
           agentOrchestration: DEFAULT_AGENT_ORCHESTRATION_CONFIG,
+          promptHeist: DEFAULT_PROMPT_HEIST_CONFIG,
           localDatabase: DEFAULT_LOCAL_DATABASE_CONFIG,
         }),
     }),

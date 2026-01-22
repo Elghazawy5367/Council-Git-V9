@@ -286,10 +286,10 @@ export const ControlPanel: React.FC = () => {
             variant="outline"
             size="sm"
             className="w-full gap-2 border-emerald-500/20 hover:bg-emerald-500/10 text-xs"
-            onClick={() => handleOpenConfig('hiest')}
+            onClick={() => handleOpenConfig('heist')}
           >
-            <span className="text-sm">💎</span>
-            HIEST Intelligence
+            <span className="text-sm">🎭</span>
+            The HEIST
           </Button>
         </div>
 

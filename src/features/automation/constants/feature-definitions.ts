@@ -321,6 +321,80 @@ export const FEATURE_DEFINITIONS: FeatureDefinition[] = [
       },
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // PROMPT ENGINEERING
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'prompt-heist',
+    name: 'The HEIST',
+    category: 'intelligence',
+    description: 'Import battle-tested prompts from danielmiessler/fabric - 290+ world-class patterns for AI orchestration',
+    icon: '🎭',
+    enabled: true,
+    status: 'active',
+    metrics: {
+      lastRun: null,
+      nextRun: null,
+      successRate: 100,
+      totalRuns: 0,
+      reportsGenerated: 0,
+      averageExecutionTime: 0,
+    },
+    defaultConfig: {
+      featureId: 'prompt-heist',
+      featureName: 'The HEIST',
+      enabled: true,
+      runMode: 'manual',
+      limits: {
+        maxRunTime: 60,
+        maxAPIRequests: 30,
+        maxDataPoints: 20,
+        retryAttempts: 2,
+        cooldownPeriod: 86400, // 24 hours
+      },
+      targets: {
+        repository: {
+          owner: 'danielmiessler',
+          repo: 'fabric',
+          branch: 'main',
+          path: 'patterns',
+        },
+        patterns: {
+          enabled: [
+            'extract_wisdom',
+            'analyze_claims',
+            'create_summary',
+            'find_logical_fallacies',
+            'explain_code',
+            'improve_writing',
+          ],
+          categories: ['analysis', 'validation', 'synthesis', 'strategy', 'extraction', 'improvement'],
+        },
+      },
+      processing: {
+        autoUpdate: false,
+        updateFrequency: 'monthly',
+        cacheExpiry: 168, // 7 days in hours
+        filters: {
+          minPatternLength: 10,
+          excludeDeprecated: true,
+        },
+        attribution: {
+          includeSource: true,
+          includeLicense: true,
+          includeAuthor: true,
+        },
+      },
+      output: {
+        format: 'markdown',
+        storage: 'local',
+        directory: 'prompts/fabric',
+        organizeByCategory: true,
+        includeMetadata: true,
+      },
+    },
+  },
 ];
 
 // Helper to get feature by ID

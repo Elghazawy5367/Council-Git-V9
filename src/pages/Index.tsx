@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useMemo } from "react";
+import React, { Suspense, lazy } from "react";
 import { Header } from "@/features/council/components/Header";
 import { ControlPanel } from "@/features/council/components/ControlPanel";
 import { ExpertCard } from "@/features/council/components/ExpertCard";
@@ -10,6 +10,7 @@ import { useSettingsStore } from "@/features/settings/store/settings-store";
 import { ErrorBoundary } from "react-error-boundary";
 import { AlertCircle } from "lucide-react";
 import { NoExpertsEmptyState } from "@/components/EmptyState";
+import { LayoutDebugger } from "@/components/LayoutDebugger";
 
 const SettingsModal = lazy(() => import("@/features/settings/components/SettingsModal"));
 const HistorySidebar = lazy(() => import("@/features/council/components/HistoryPanel"));
@@ -35,21 +36,10 @@ const Index: React.FC = () => {
   const experts = useExpertStore(state => state.experts);
   const showSettings = useSettingsStore(state => state.showSettings);
   const setShowSettings = useSettingsStore(state => state.setShowSettings);
-  const showHistory = useSettingsStore(state => state.showHistory);
   const setShowHistory = useSettingsStore(state => state.setShowHistory);
+  const showHistory = useSettingsStore(state => state.showHistory);
   const showMemory = useSettingsStore(state => state.showMemory);
   const setShowMemory = useSettingsStore(state => state.setShowMemory);
-
-  const getGridCols = useMemo(() => {
-    return () => {
-      const totalCols = activeExpertCount + 1;
-      if (totalCols <= 2) return "grid-cols-1 md:grid-cols-2";
-      if (totalCols <= 3) return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
-      if (totalCols <= 4) return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
-      if (totalCols <= 5) return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5";
-      return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6";
-    };
-  }, [activeExpertCount]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -61,9 +51,9 @@ const Index: React.FC = () => {
         <Header />
       </ErrorBoundary>
 
-      <main className="flex-1 container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1 space-y-4">
+      <main className="flex-1 container mx-auto px-4 py-6 max-w-screen-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1 lg:min-w-[300px] space-y-4">
             {/* Control Panel - Protected */}
             <ErrorBoundary
               FallbackComponent={ComponentErrorFallback}
@@ -81,7 +71,7 @@ const Index: React.FC = () => {
             </ErrorBoundary>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             {/* Expert Grid - Protected */}
             <ErrorBoundary
               FallbackComponent={ComponentErrorFallback}
@@ -90,7 +80,7 @@ const Index: React.FC = () => {
               {experts.length === 0 ? (
                 <NoExpertsEmptyState onAddExpert={() => setShowSettings(true)} />
               ) : (
-                <div className={`grid ${getGridCols()} gap-4 auto-rows-fr stagger-fade-in`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr stagger-fade-in">
                   {experts.slice(0, activeExpertCount).map((expert, index) => <ExpertCard key={expert.id} index={index} />)}
                   
                   {/* Synthesis Card - Protected */}

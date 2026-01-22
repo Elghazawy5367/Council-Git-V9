@@ -27,9 +27,7 @@ export const VerdictPanel: React.FC = () => {
 
   return (
     <div
-      className={`glass-panel p-4 rounded-lg flex flex-col transition-all duration-300 h-full ${
-        isVerdictReady ? 'min-h-[200px]' : ''
-      }`}
+      className="glass-panel p-4 rounded-lg flex flex-col min-h-[200px] transition-all duration-300 h-full"
     >
       <div className="flex-1 flex flex-col">
         <h2 className="text-lg font-semibold mb-3 text-gradient">Verdict</h2>

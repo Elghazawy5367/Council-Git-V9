@@ -177,11 +177,11 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                     </span>
                   </div>
                 ) : (
-                  <p className="text-[10px] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     {positionInfo.specialty}
                   </p>
                 )}
-                <p className="text-[10px] text-muted-foreground truncate">
+                <p className="text-xs text-muted-foreground truncate">
                   {selectedModel?.name || 'Unknown Model'}
                 </p>
               </div>
@@ -411,7 +411,7 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                   </span>
                   {expert.isLoading && <Loader2 className="h-3 w-3 animate-spin text-primary" />}
                 </div>
-                <div className="flex-1 min-h-0 overflow-y-auto rounded-md bg-muted/30 p-2">
+                <div className="flex-1 min-h-0 overflow-y-auto rounded-md bg-muted/30 p-2 max-h-[300px]">
                   <SafeMarkdown content={expert.output} className="text-xs" />
                 </div>
               </div>

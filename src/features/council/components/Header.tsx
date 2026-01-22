@@ -2,6 +2,7 @@ import React from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useMemoryStore } from '@/features/council/store/memory-store';
+import { formatCount, formatCurrency } from '@/lib/format';
 import { 
   Settings, 
   Lock, 
@@ -102,15 +103,15 @@ export const Header: React.FC = () => {
               <ProjectFeaturesDropdown />
             </div>
             
-            {/* Memory badge (hidden on mobile) */}
-            <div className="hidden md:block">
+            {/* Memory badge (hidden until desktop) */}
+            <div className="hidden lg:block">
               <MemoryBadge count={memoryCount} onClick={() => setShowMemory(true)} />
             </div>
 
             {/* Cost tracker (hidden on mobile) */}
             <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/30">
               <DollarSign className="h-4 w-4 text-council-success" />
-              <span className="font-mono text-sm text-foreground">${cost.total.toFixed(4)}</span>
+              <span className="font-mono text-sm text-foreground">{formatCurrency(cost.total, 4)}</span>
             </div>
 
             <div className="flex items-center gap-1">

@@ -118,7 +118,7 @@ export const PersonaSelector: React.FC = () => {
             <span>Load Individual Personas</span>
           </CollapsibleTrigger>
           
-          <CollapsibleContent className="space-y-3 pt-3">
+          <CollapsibleContent className="space-y-3 pt-3 max-h-80 overflow-y-auto">
             <div className="space-y-2 pl-2 border-l-2 border-primary/30">
               {Array.from({ length: activeExpertCount }).map((_, idx) => {
                 const expert = experts[idx];

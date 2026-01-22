@@ -151,23 +151,24 @@ export const ControlPanel: React.FC = () => {
               variant="ghost" 
               size="icon" 
               className="h-8 w-8 hover:bg-primary/10 hover:text-primary"
-              onClick={() => handleOpenConfig()}
+              onClick={() => setShowSettings(true)}
+              title="Configure synthesis settings"
             >
               <Settings className="h-4 w-4" />
             </Button>
           </div>
-          <Tabs value={mode} onValueChange={(v) => setMode(v as ExecutionMode)}>
-            <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-2 gap-2">
+          <Tabs value={mode} onValueChange={(v) => setMode(v as ExecutionMode)} className="w-full pb-8">
+            <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-3 gap-3">
               {(Object.keys(MODE_DESCRIPTIONS) as ExecutionMode[]).map((modeKey) => {
                 const IconComponent = MODE_ICONS[modeKey];
                 return (
                   <TabsTrigger
                     key={modeKey}
                     value={modeKey}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-2 text-xs data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground whitespace-nowrap"
+                    className="flex flex-col items-center justify-center gap-1.5 min-w-[60px] px-2 py-4 text-xs font-medium min-h-[48px] data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground"
                   >
-                    <IconComponent className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
-                    <span className="hidden md:inline text-[10px] sm:text-xs leading-tight">{MODE_DESCRIPTIONS[modeKey].name}</span>
+                    <IconComponent className="h-5 w-5 flex-shrink-0" />
+                    <span className="text-xs leading-snug">{MODE_DESCRIPTIONS[modeKey].name}</span>
                   </TabsTrigger>
                 );
               })}
@@ -176,43 +177,47 @@ export const ControlPanel: React.FC = () => {
           <p className="text-xs text-muted-foreground leading-relaxed">{MODE_DESCRIPTIONS[mode].description}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center gap-3">
-              <label className="text-sm font-medium text-foreground whitespace-nowrap">Active Experts</label>
-              <Badge variant="secondary" className="font-mono min-w-[2.5rem] text-center px-3">{activeExpertCount}</Badge>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-5">
+            <div className="flex justify-between items-center gap-4">
+              <label className="text-sm font-medium text-foreground">Active Experts</label>
+              <Badge variant="secondary" className="font-mono text-base px-4 py-1">{activeExpertCount}</Badge>
             </div>
-            <Slider
-              value={[activeExpertCount]}
-              onValueChange={([value]) => setActiveExpertCount(value)}
-              min={1}
-              max={5}
-              step={1}
-              className="slider-council px-1"
-            />
-            <div className="flex justify-between text-xs text-muted-foreground px-2">
-              <span>1</span>
-              <span>5</span>
+            <div className="px-2">
+              <Slider
+                value={[activeExpertCount]}
+                onValueChange={([value]) => setActiveExpertCount(value)}
+                min={1}
+                max={5}
+                step={1}
+                className="slider-council"
+              />
+            </div>
+            <div className="flex justify-between text-xs text-muted-foreground px-3">
+              <span className="font-medium">1</span>
+              <span className="font-medium">5</span>
             </div>
           </div>
 
           {mode === 'adversarial' && (
-            <div className="space-y-4">
-              <div className="flex justify-between items-center gap-3">
-                <label className="text-sm font-medium text-foreground whitespace-nowrap">Debate Rounds</label>
-                <Badge variant="secondary" className="font-mono min-w-[2.5rem] text-center px-3">{debateRounds}</Badge>
+            <div className="space-y-5">
+              <div className="flex justify-between items-center gap-4">
+                <label className="text-sm font-medium text-foreground">Debate Rounds</label>
+                <Badge variant="secondary" className="font-mono text-base px-4 py-1">{debateRounds}</Badge>
               </div>
-              <Slider
-                value={[debateRounds]}
-                onValueChange={([value]) => setDebateRounds(value)}
-                min={1}
-                max={5}
-                step={1}
-                className="slider-council px-1"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground px-2">
-                <span>1</span>
-                <span>5</span>
+              <div className="px-2">
+                <Slider
+                  value={[debateRounds]}
+                  onValueChange={([value]) => setDebateRounds(value)}
+                  min={1}
+                  max={5}
+                  step={1}
+                  className="slider-council"
+                />
+              </div>
+              <div className="flex justify-between text-xs text-muted-foreground px-3">
+                <span className="font-medium">1</span>
+                <span className="font-medium">5</span>
               </div>
             </div>
           )}

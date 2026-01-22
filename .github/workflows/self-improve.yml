@@ -1,0 +1,106 @@
+name: Self-Improving Loop
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      niche:
+        description: 'Target niche to analyze'
+        required: false
+        default: 'developer-tools'
+        type: string
+      minStars:
+        description: 'Minimum stars threshold'
+        required: false
+        default: '1000'
+        type: string
+      maxRepos:
+        description: 'Maximum repositories to analyze'
+        required: false
+        default: '20'
+        type: string
+  
+  # Scheduled: Every Sunday at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * 0'
+
+jobs:
+  self-improve:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Self-Improvement Learning
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run learn -- \
+            --niche="${{ github.event.inputs.niche || 'developer-tools' }}" \
+            --min-stars="${{ github.event.inputs.minStars || '1000' }}" \
+            --max-repos="${{ github.event.inputs.maxRepos || '20' }}" \
+            --github-token="${{ secrets.GITHUB_TOKEN }}"
+      
+      - name: Check for knowledge base updates
+        id: check_changes
+        run: |
+          git diff --quiet src/lib/knowledge-base/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push knowledge updates
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/lib/knowledge-base/
+          git commit -m "🧠 Self-Improve: Update knowledge base with new patterns
+
+          Analyzed: ${{ github.event.inputs.niche || 'developer-tools' }}
+          Min Stars: ${{ github.event.inputs.minStars || '1000' }}
+          Max Repos: ${{ github.event.inputs.maxRepos || '20' }}
+          
+          Generated on: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          
+          This is an automated commit from the Self-Improving Loop workflow."
+          git push
+      
+      - name: Create summary
+        if: always()
+        run: |
+          echo "# 🧠 Self-Improvement Learning Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Configuration" >> $GITHUB_STEP_SUMMARY
+          echo "- **Niche**: ${{ github.event.inputs.niche || 'developer-tools' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Min Stars**: ${{ github.event.inputs.minStars || '1000' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Max Repos**: ${{ github.event.inputs.maxRepos || '20' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "data/learning/latest.json" ]; then
+            echo "## Results" >> $GITHUB_STEP_SUMMARY
+            echo "Learning data saved to \`data/learning/latest.json\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Knowledge Base Updated" >> $GITHUB_STEP_SUMMARY
+            echo "- Positioning patterns" >> $GITHUB_STEP_SUMMARY
+            echo "- Pricing strategies" >> $GITHUB_STEP_SUMMARY
+            echo "- Feature patterns" >> $GITHUB_STEP_SUMMARY
+            echo "- Architecture insights" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "*The Council learns from the best to become better.*" >> $GITHUB_STEP_SUMMARY

@@ -54,6 +54,7 @@ const AutomationDashboard: React.FC = () => {
     hackerNews,
     twinMimicry,
     forkEvolution,
+    promptHeist,
     stargazerAnalysis
   } = useFeatureConfigStore();
   
@@ -188,6 +189,15 @@ const AutomationDashboard: React.FC = () => {
         status: forkEvolution.enabled ? 'active' : 'idle',
       },
       {
+        id: 'heist',
+        name: 'The HEIST',
+        description: 'Import 290+ world-class prompts from danielmiessler/fabric',
+        icon: '🎭',
+        workflow: 'heist-prompts.ts',
+        schedule: 'monthly',
+        status: promptHeist.enabled ? 'active' : 'idle',
+      },
+      {
         id: 'scout',
         name: 'Phantom Scout',
         description: '24/7 automated GitHub intelligence gathering',
@@ -206,7 +216,7 @@ const AutomationDashboard: React.FC = () => {
         status: scout.enabled ? 'active' : 'idle',
       },
     ]);
-  }, [scout, mirror, quality, selfImprove, githubTrending, marketGap, redditSniper, redditPainPoints, viralRadar, twinMimicry, forkEvolution, stargazerAnalysis, hackerNews]);
+  }, [scout, mirror, quality, selfImprove, githubTrending, marketGap, redditSniper, redditPainPoints, viralRadar, twinMimicry, forkEvolution, promptHeist, stargazerAnalysis, hackerNews]);
 
   const getWorkflowUrl = (workflow: string): string => {
     return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
@@ -261,6 +271,8 @@ const AutomationDashboard: React.FC = () => {
         return `Target: ${twinMimicry.targetRepo || 'None'} | Style: ${twinMimicry.mimicStyle}`;
       case 'fork-evolution':
         return `Min Forks: ${forkEvolution.minForks} | Tracking: ${forkEvolution.trackChanges ? 'Yes' : 'No'}`;
+      case 'heist':
+        return `Patterns: ${promptHeist.patternsEnabled.length} enabled | Cache: ${promptHeist.cacheExpiry}h | Auto-update: ${promptHeist.autoUpdate ? 'On' : 'Off'}`;
       case 'github-trending':
         return `Topics: ${githubTrending.topics.join(', ')} | Langs: ${githubTrending.languages.join(', ')}`;
       case 'market-gap':
@@ -315,7 +327,7 @@ const AutomationDashboard: React.FC = () => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
                   Automation Control Center
                 </h1>
-                <p className="text-xs text-muted-foreground">Manage all 14 core automation features • {features.filter(f => f.status === 'active' || f.status === 'scheduled').length} active</p>
+                <p className="text-xs text-muted-foreground">Manage all {features.length} core automation features • {features.filter(f => f.status === 'active' || f.status === 'scheduled').length} active</p>
               </div>
             </div>
             <div className="flex gap-2">

@@ -478,6 +478,9 @@ export const useFeatureConfigStore = create<FeatureConfigState>(
       updateAgentOrchestrationConfig: (config: Partial<AgentOrchestrationConfig>) =>
         set((state) => ({ agentOrchestration: { ...state.agentOrchestration, ...config } })),
       
+      updatePromptHeistConfig: (config: Partial<PromptHeistConfig>) =>
+        set((state) => ({ promptHeist: { ...state.promptHeist, ...config } })),
+      
       updateLocalDatabaseConfig: (config: Partial<LocalDatabaseConfig>) =>
         set((state) => ({ localDatabase: { ...state.localDatabase, ...config } })),
       

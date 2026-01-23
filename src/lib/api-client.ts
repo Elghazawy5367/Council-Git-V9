@@ -205,9 +205,10 @@ export class APIClient {
       }
     }
 
-    // Prepare fetch options
+    // Remove params and schema from options (internal use)
+    const { params: _params, schema, ...restOptions } = options;
     const fetchOptions: RequestInit = {
-      ...options,
+      ...restOptions,
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -215,9 +216,6 @@ export class APIClient {
         ...options.headers
       }
     };
-
-    // Remove params and schema from options (internal use)
-    const { params, schema, ...restOptions } = options;
 
     // Generate cache key
     const cacheKey = this.getCacheKey(finalUrl, fetchOptions);

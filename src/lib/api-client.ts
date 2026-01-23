@@ -17,8 +17,10 @@ import {
   RateLimitError,
   errorRecovery,
   logError,
-  parseError
+  parseError,
+  ValidationError
 } from './error-handler';
+import { z } from 'zod';
 
 export interface APIConfig {
   baseURL?: string;
@@ -30,11 +32,12 @@ export interface APIConfig {
   cacheTime?: number; // in milliseconds
 }
 
-export interface RequestOptions extends RequestInit {
+export interface RequestOptions<T = any> extends RequestInit {
   params?: Record<string, any>;
   timeout?: number;
   skipCache?: boolean;
   skipRetry?: boolean;
+  schema?: z.ZodSchema<T>;
 }
 
 interface CacheEntry<T> {
@@ -182,7 +185,7 @@ export class APIClient {
    */
   async request<T>(
     endpoint: string,
-    options: RequestOptions = {}
+    options: RequestOptions<T> = {}
   ): Promise<T> {
     const url = `${this.config.baseURL}${endpoint}`;
     const method = options.method || 'GET';
@@ -213,8 +216,8 @@ export class APIClient {
       }
     };
 
-    // Remove params from options (already in URL)
-    delete (options as any).params;
+    // Remove params and schema from options (internal use)
+    const { params, schema, ...restOptions } = options;
 
     // Generate cache key
     const cacheKey = this.getCacheKey(finalUrl, fetchOptions);
@@ -251,12 +254,27 @@ export class APIClient {
 
       // Parse response
       const contentType = response.headers.get('content-type');
-      let data: T;
+      let data: any;
 
       if (contentType?.includes('application/json')) {
         data = await response.json();
       } else {
-        data = await response.text() as any;
+        data = await response.text();
+      }
+
+      // Runtime validation with Zod if schema provided
+      if (options.schema) {
+        const result = options.schema.safeParse(data);
+        if (!result.success) {
+          const validationError = new ValidationError(
+            `API response validation failed for ${endpoint}`,
+            undefined,
+            result.error.format()
+          );
+          logError(validationError, { endpoint, method });
+          throw validationError;
+        }
+        data = result.data;
       }
 
       // Cache successful GET requests
@@ -264,7 +282,7 @@ export class APIClient {
         this.setCache(cacheKey, data);
       }
 
-      return data;
+      return data as T;
     };
 
     try {

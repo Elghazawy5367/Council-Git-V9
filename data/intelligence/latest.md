@@ -1,6 +1,6 @@
 # Council Intelligence Report
 
-**Generated:** 1/26/2026, 6:28:51 AM
+**Generated:** 1/28/2026, 6:28:19 AM
 **Niche:** developer tools
 **Scan Depth:** normal
 
@@ -33,14 +33,14 @@
 - **Pain Point:** Missing TypeScript support
 - **Impact:** high | **Effort:** low
 - **Confidence:** 80%
-- **Competition:** none
+- **Competition:** weak
 
 ### 2. Build optimized alternative with better performance
 
 - **Pain Point:** Performance issues with large datasets
 - **Impact:** high | **Effort:** high
 - **Confidence:** 90%
-- **Competition:** strong
+- **Competition:** weak
 
 ## Emerging Trends
 

@@ -124,7 +124,7 @@ export class ExecutionEngine {
    */
   private async routeToRuthlessJudge(
     report: FeatureReport,
-    config: FeatureConfiguration
+    _config: FeatureConfiguration
   ): Promise<void> {
     const reportsStore = useReportsStore.getState();
     
@@ -142,7 +142,7 @@ export class ExecutionEngine {
    */
   private async routeToCouncil(
     report: FeatureReport,
-    config: FeatureConfiguration
+    _config: FeatureConfiguration
   ): Promise<void> {
     const reportsStore = useReportsStore.getState();
     

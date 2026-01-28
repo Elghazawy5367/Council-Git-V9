@@ -84,7 +84,7 @@ export async function addMemoryEntry(entry: Omit<MemoryEntry, 'id' | 'timestamp'
   
   // Prune old low-relevance entries if over max
   if (memory.entries.length > MAX_ENTRIES) {
-    memory.entries
+    memory.entries = memory.entries
       .sort((a, b) => {
         // Keep high relevance and recent entries
         const recencyA = Date.now() - new Date(a.timestamp).getTime();

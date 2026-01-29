@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Reddit & HackerNews Data Fetching Hooks
  * Mirrors: TanStack Query best practices
@@ -12,6 +11,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { redditAPI, hackerNewsAPI } from '@/lib/api-client';
 import { RedditPost, RedditListingSchema, HackerNewsSearchResponse, HackerNewsSearchResponseSchema, BuyingIntentSignal, validateData } from '@/lib/validation';
+import type { RedditSearchFilters, HackerNewsSearchFilters } from '@/lib/types';
 
 /**
  * Query keys
@@ -19,12 +19,12 @@ import { RedditPost, RedditListingSchema, HackerNewsSearchResponse, HackerNewsSe
 export const redditKeys = {
   all: ['reddit'] as const,
   subreddit: (name: string, sort?: string) => [...redditKeys.all, 'subreddit', name, sort] as const,
-  search: (query: string, filters?: Record<string, any>) => [...redditKeys.all, 'search', query, filters] as const,
+  search: (query: string, filters?: RedditSearchFilters) => [...redditKeys.all, 'search', query, filters] as const,
   buyingIntent: (keywords: string[]) => [...redditKeys.all, 'buyingIntent', keywords] as const
 };
 export const hackerNewsKeys = {
   all: ['hackernews'] as const,
-  search: (query: string, filters?: Record<string, any>) => [...hackerNewsKeys.all, 'search', query, filters] as const,
+  search: (query: string, filters?: HackerNewsSearchFilters) => [...hackerNewsKeys.all, 'search', query, filters] as const,
   askHN: (query?: string) => [...hackerNewsKeys.all, 'ask', query] as const,
   showHN: (query?: string) => [...hackerNewsKeys.all, 'show', query] as const,
   trending: () => [...hackerNewsKeys.all, 'trending'] as const
@@ -58,7 +58,7 @@ export function useRedditSearch(params: RedditSearchParams, options?: Omit<UseQu
       if (params.time) queryParams.t = params.time;
       if (params.after) queryParams.after = params.after;
       if (params.query) queryParams.q = params.query;
-      const data = await redditAPI.get<any>(endpoint, queryParams);
+      const data = await redditAPI.get<{ data: { children: Array<{ data: RedditPost }> } }>(endpoint, queryParams);
       const validated = validateData(RedditListingSchema, data, 'Reddit Listing');
       return validated.data.children.map((child) => child.data);
     },
@@ -83,7 +83,7 @@ export function useRedditBuyingIntent(targetKeywords: string[], subreddits: stri
       for (const subreddit of subreddits) {
         for (const keyword of targetKeywords) {
           try {
-            const posts = await redditAPI.get<any>(`/r/${subreddit}/search.json`, {
+            const posts = await redditAPI.get<{ data: { children: Array<{ data: RedditPost }> } }>(`/r/${subreddit}/search.json`, {
               q: `alternative ${keyword}`,
               restrict_sr: 'true',
               sort: 'relevance',
@@ -138,7 +138,7 @@ export function useHackerNewsSearch(params: HackerNewsSearchParams, options?: Om
       if (params.numericFilters && params.numericFilters.length > 0) {
         searchParams.numericFilters = params.numericFilters.join(',');
       }
-      const data = await hackerNewsAPI.get<any>('/search', searchParams);
+      const data = await hackerNewsAPI.get<HackerNewsSearchResponse>('/search', searchParams);
       return validateData(HackerNewsSearchResponseSchema, data, 'HackerNews Search');
     },
     staleTime: 1000 * 60 * 10,
@@ -163,7 +163,7 @@ export function useAskHNAlternatives(targetProducts: string[], options?: Omit<Us
         const queries = [`alternative ${product}`, `replace ${product}`, `better than ${product}`];
         for (const query of queries) {
           try {
-            const data = await hackerNewsAPI.get<any>('/search', {
+            const data = await hackerNewsAPI.get<HackerNewsSearchResponse>('/search', {
               query,
               tags: 'ask_hn',
               numericFilters: `points>=5,created_at_i>${oneDayAgo}`,
@@ -209,7 +209,7 @@ export function useShowHNTrending(options?: Omit<UseQueryOptions<HackerNewsSearc
     queryKey: hackerNewsKeys.showHN(),
     queryFn: async () => {
       const oneDayAgo = Math.floor(Date.now() / 1000) - 24 * 60 * 60;
-      const data = await hackerNewsAPI.get<any>('/search', {
+      const data = await hackerNewsAPI.get<HackerNewsSearchResponse>('/search', {
         tags: 'show_hn',
         numericFilters: `points>=50,created_at_i>${oneDayAgo}`,
         hitsPerPage: 50

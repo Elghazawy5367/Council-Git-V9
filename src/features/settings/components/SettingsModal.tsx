@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/primitives/button';
 import { Input } from '@/components/primitives/input';
 import { Label } from '@/components/primitives/label';
+import { toast } from 'sonner';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -48,24 +49,40 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
   const handleCreate = async () => {
     if (newPassword !== confirmPassword) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
-    const result = await handleCreateVault({ 
-      password: newPassword, 
-      openRouterKey,
-      githubApiKey,
-      redditApiKey
-    });
-    if (result.success) {
-      onClose();
+    try {
+      const result = await handleCreateVault({ 
+        password: newPassword, 
+        openRouterKey,
+        githubApiKey,
+        redditApiKey
+      });
+      if (result.success) {
+        toast.success('Vault created successfully');
+        onClose();
+      } else {
+        toast.error(result.error || 'Failed to create vault');
+      }
+    } catch (error) {
+      console.error('Failed to create vault:', error);
+      toast.error('Failed to create vault');
     }
   };
 
   const handleUnlock = async () => {
-    const result = await handleUnlockVault(password);
-    if (result.success) {
-      onClose();
+    try {
+      const result = await handleUnlockVault(password);
+      if (result.success) {
+        toast.success('Vault unlocked successfully');
+        onClose();
+      } else {
+        toast.error(result.error || 'Failed to unlock vault');
+      }
+    } catch (error) {
+      console.error('Failed to unlock vault:', error);
+      toast.error('Failed to unlock vault');
     }
   };
 

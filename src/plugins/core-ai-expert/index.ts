@@ -42,8 +42,13 @@ export const coreAiExpertPlugin: ExpertPlugin = {
   },
 
   execute: async (_input: string, _config: Record<string, unknown>) => {
-    // Execution logic would go here, calling the AI client
-    return "Expert analysis completed.";
+    try {
+      // Execution logic would go here, calling the AI client
+      return "Expert analysis completed.";
+    } catch (error) {
+      console.error('Core AI Expert execution failed:', error);
+      throw new Error('Failed to execute core AI expert analysis');
+    }
   }
 };
 

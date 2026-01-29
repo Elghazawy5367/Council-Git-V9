@@ -66,7 +66,7 @@ function writeSnapshot(files) {
 
 // Main function
 function createSnapshot() {
-  console.log('Scanning directories...');
+  
 
   // Scan the src directory
   const srcFiles = scanDirectory(SRC_DIR);
@@ -79,12 +79,12 @@ function createSnapshot() {
   // Combine all files
   const allFiles = [...srcFiles, ...rootFiles];
 
-  console.log(`Found ${allFiles.length} files. Writing snapshot...`);
+  
 
   // Write the snapshot
   writeSnapshot(allFiles);
 
-  console.log(`Snapshot complete! Check ${OUTPUT_FILE}`);
+  
 }
 
 // Execute the script

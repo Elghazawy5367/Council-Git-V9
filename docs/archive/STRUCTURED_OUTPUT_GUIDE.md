@@ -99,14 +99,13 @@ const result = await synthesizeVerdict(
 
 // Access structured data
 if (result.structured) {
-  console.log('Consensus:', result.structured.consensus);
-  console.log('High-confidence insights:', 
-    result.structured.keyInsights.filter(i => i.confidence === 'high')
+  
+  
   );
 }
 
 // Original markdown still available
-console.log('Full verdict:', result.verdict);
+
 ```
 
 ### 2. Disable Structured Output (For Speed)
@@ -129,8 +128,8 @@ const opportunities = result.structured?.keyInsights.filter(
 );
 
 opportunities?.forEach(opp => {
-  console.log(`🚀 ${opp.content}`);
-  console.log(`   Supported by: ${opp.supportingExperts?.join(', ')}`);
+  
+  }`);
 });
 ```
 
@@ -154,9 +153,9 @@ if (criticalConflicts && criticalConflicts.length > 0) {
 ### 5. Extract Action Items
 ```typescript
 if (result.structured?.actionItems) {
-  console.log('📋 Next Steps:');
+  
   result.structured.actionItems.forEach((item, i) => {
-    console.log(`${i + 1}. ${item}`);
+    
   });
 }
 ```

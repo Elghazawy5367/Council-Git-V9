@@ -158,8 +158,8 @@ data/
  * Provides unlimited free AI tokens for uninterrupted coding.
  */
 export function openGoogleStudio(projectPath?: string): void {
-  console.log('🚀 Google Studio Hack');
-  console.log('   Bypass: Copilot message limits');
+  
+  
   // ... browser automation
 }
 ```

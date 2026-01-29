@@ -59,7 +59,7 @@ The Council now includes comprehensive protection mechanisms to prevent crashes 
 ```tsx
 <ErrorBoundary
   FallbackComponent={ComponentErrorFallback}
-  onReset={() => console.log('[Component] Error boundary reset')}
+  onReset={() => }
 >
   <YourComponent />
 </ErrorBoundary>

@@ -614,7 +614,7 @@ const ControlPanel = () => {
       config: synthesisConfig,
       apiKey: apiKey,
       onProgress: (message) => {
-        console.log(message); // "Running Balanced Judgment..."
+         // "Running Balanced Judgment..."
       }
     });
   };
@@ -657,7 +657,7 @@ const StreamingExample = () => {
         setCurrentOutput(fullText); // Update UI in real-time
       },
       onComplete: (finalText) => {
-        console.log('Synthesis complete!');
+        
         // Parse and display structured output
       }
     });
@@ -697,10 +697,10 @@ const advancedSynthesis = async () => {
     }
   );
   
-  console.log('Verdict:', result.verdict);
-  console.log('Cost:', result.cost);
-  console.log('Structured:', result.structured);
-  console.log('Expert Weights:', result.weights);
+  
+  
+  
+  
 };
 ```
 
@@ -1071,9 +1071,9 @@ const result = await synthesizeVerdict(
   }
 );
 
-console.log(result.verdict);
-console.log(`Cost: $${result.cost.toFixed(4)}`);
-console.log(`Confidence: ${result.structured?.confidence}`);
+
+}`);
+
 ```
 
 ### Example 2: Streaming with Weights
@@ -1119,7 +1119,7 @@ const validateAndResynthesize = async (
   
   // If low quality, upgrade to Balanced
   if (result.structured?.confidence === 'low') {
-    console.log('Quick synthesis had low confidence, upgrading to Balanced');
+    
     result = await synthesizeVerdict(expertOutputs, task, 'synthesis', apiKey, {
       tier: 'balanced'
     });
@@ -1127,7 +1127,7 @@ const validateAndResynthesize = async (
   
   // If still low quality, use Deep
   if (result.structured?.confidence === 'low') {
-    console.log('Balanced synthesis had low confidence, upgrading to Deep');
+    
     result = await synthesizeVerdict(expertOutputs, task, 'synthesis', apiKey, {
       tier: 'deep'
     });

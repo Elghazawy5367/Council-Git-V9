@@ -151,7 +151,7 @@ async function scanGoogleTrends(niche?: string): Promise<ViralPost[]> {
 
 /* Reserved for future implementation
 async function _scanGoogleTrendsWeb(geo: string = 'US'): Promise<ViralPost[]> {
-  console.log(`🌍 Scanning Google Trends (${geo})...`);
+  ...`);
   
   try {
     const url = `https://trends.google.com/trends/trendingsearches/daily?geo=${geo}`;
@@ -186,7 +186,7 @@ async function _scanGoogleTrendsWeb(geo: string = 'US'): Promise<ViralPost[]> {
       });
     }
     
-    console.log(`   Found: ${posts.length} trending searches`);
+    
     return posts;
   } catch (error) {
     console.error('Failed to scan Google Trends web:', error);

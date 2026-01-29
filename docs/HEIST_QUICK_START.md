@@ -222,9 +222,9 @@ const result = await synthesizeWithMultiplePatterns(
   ['extract_wisdom', 'analyze_claims', 'find_logical_fallacies']
 );
 
-console.log(result.wisdom);     // Key insights
-console.log(result.claims);     // Fact-checked claims
-console.log(result.fallacies);  // Logical errors
+     // Key insights
+     // Fact-checked claims
+  // Logical errors
 ```
 
 ### Pattern Metadata
@@ -236,9 +236,9 @@ import { PromptVault } from '@/lib/prompt-heist';
 const vault = new PromptVault();
 const metadata = vault.getPatternMetadata('extract_wisdom');
 
-console.log(metadata.category);     // 'analysis'
-console.log(metadata.lines);        // 60
-console.log(metadata.cachedAt);     // timestamp
+     // 'analysis'
+        // 60
+     // timestamp
 ```
 
 ---

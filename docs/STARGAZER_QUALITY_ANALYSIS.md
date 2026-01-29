@@ -351,7 +351,7 @@ Stargazer data changes slowly, so 24-hour cache is safe and efficient.
 # In browser console after loading the app
 const { useStargazerQuality } = window.__REACT_QUERY__;
 const result = useStargazerQuality('facebook/react');
-console.log(result.data);
+
 ```
 
 ---
@@ -473,7 +473,7 @@ const goldmines = findGoldmines(opportunities);
 // 2. Analyze top 3
 goldmines.slice(0, 3).forEach(repo => {
   const quality = useStargazerQuality(`${repo.owner}/${repo.name}`);
-  console.log(`${repo.name}: ${quality.data?.qualityScore}/100`);
+  
 });
 
 // 3. Pick the one with highest quality score

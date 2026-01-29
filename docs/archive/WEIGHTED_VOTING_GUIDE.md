@@ -115,7 +115,7 @@ const result = await synthesizeVerdict(
 );
 
 // Check weights
-console.log(result.weights);
+
 // [
 //   { expertName: 'GPT-4 Strategist', weight: 0.87, normalizedWeight: 0.78 },
 //   { expertName: 'Llama Critic', weight: 0.32, normalizedWeight: 0.22 }
@@ -151,7 +151,7 @@ if (imbalance.hasImbalance) {
   // "⚠️ 3/5 experts have below-average weights. Consider prioritizing Market Analyst's analysis."
 }
 
-console.log('Top experts:', imbalance.topExperts);
+
 // ['Market Analyst', 'Product Strategist', 'Tech Architect']
 ```
 
@@ -168,7 +168,7 @@ const weight = calculateExpertWeight(
   'Evaluate market opportunity'
 );
 
-console.log(weight);
+
 // {
 //   expertId: 'expert1',
 //   expertName: 'Strategic Advisor',

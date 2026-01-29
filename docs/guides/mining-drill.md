@@ -55,9 +55,9 @@ const painPoints = await minePainPoints('facebook', 'react', {
 // Analyze for insights
 const insights = analyzePainPoints(painPoints);
 
-console.log(`Found ${insights.totalPainPoints} pain points`);
-console.log(`High intent: ${insights.highIntentCount}`);
-console.log(`Top keywords:`, insights.topPainKeywords);
+
+
+
 ```
 
 ## Output Example

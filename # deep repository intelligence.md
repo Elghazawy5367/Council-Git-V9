@@ -599,10 +599,10 @@ ${Object.entries(report.fileTree).map((\[path, file\]) \=\> \`
   }
 
   async analyze() {  
-    console.log('🔍 Starting deep repository analysis...');  
+      
     this.scanDirectory(this.rootPath);  
       
-    console.log('📊 Generating report...');  
+      
     const report \= this.generateReport();  
     const markdown \= this.generateMarkdownReport();
 
@@ -610,10 +610,10 @@ ${Object.entries(report.fileTree).map((\[path, file\]) \=\> \`
     fs.writeFileSync('repo-analysis.json', JSON.stringify(report, null, 2));  
     fs.writeFileSync('repo-analysis.md', markdown);
 
-    console.log('✅ Analysis complete\!');  
-    console.log(\`📄 Reports saved:\`);  
-    console.log(\`   \- repo-analysis.json (detailed)\`);  
-    console.log(\`   \- repo-analysis.md (human-readable)\`);
+      
+      
+    \`);  
+    \`);
 
     return report;  
   }  
@@ -622,11 +622,11 @@ ${Object.entries(report.fileTree).map((\[path, file\]) \=\> \`
 // Run analysis  
 const analyzer \= new RepoAnalyzer(process.cwd());  
 analyzer.analyze().then(report \=\> {  
-  console.log('\\n📊 Summary:');  
-  console.log(\`   Files analyzed: ${report.statistics.totalFiles}\`);  
-  console.log(\`   Total lines: ${report.statistics.totalLines}\`);  
-  console.log(\`   Issues found: ${report.issues.total}\`);  
-  console.log(\`   Recommendations: ${report.recommendations.length}\`);  
+    
+    
+    
+    
+    
 });
 
 ### **Step 3: Run the Scanner**

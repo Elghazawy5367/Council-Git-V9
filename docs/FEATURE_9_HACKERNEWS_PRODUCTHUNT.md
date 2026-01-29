@@ -550,11 +550,11 @@ async function queryProductHunt(query: string, variables?: any) {
 
 ```typescript
 function logRateLimitInfo(response: Response) {
-  console.log("========= RATE LIMIT INFO =========");
-  console.log("TOTAL => ", response.headers.get("x-rate-limit-limit"));
-  console.log("REMAINING => ", response.headers.get("x-rate-limit-remaining"));
-  console.log("RESET IN => ", response.headers.get("x-rate-limit-reset"));
-  console.log("===================================");
+  
+  );
+  );
+  );
+  
 }
 
 async function queryWithRateLimit(query: string, variables?: any) {
@@ -778,7 +778,7 @@ const ph = new ProductHuntClient(process.env.PH_ACCESS_TOKEN!);
 
 // Get today's trending products
 const trending = await ph.getTodaysPosts(20);
-console.log(trending[0]);
+
 // {
 //   id: "12345",
 //   name: "SuperTool",
@@ -947,7 +947,7 @@ const buyingSignals = await intelligence.scanBuyingIntent([
   "slack", "notion", "jira", "asana", "trello", "figma"
 ]);
 
-console.log(buyingSignals[0]);
+
 // {
 //   source: "hackernews",
 //   type: "buying_intent",
@@ -1011,9 +1011,9 @@ async function generateDailyIntelligenceReport() {
 
 // Run daily at 9 AM
 cron.schedule("0 9 * * *", async () => {
-  console.log("Generating daily intelligence report...");
+  
   const report = await generateDailyIntelligenceReport();
-  console.log(`Report generated: ${report.summary.totalSignals} signals found`);
+  
 });
 ```
 
@@ -1221,7 +1221,7 @@ async function main() {
   
   // Run intelligence scan every 6 hours
   cron.schedule("0 */6 * * *", async () => {
-    console.log("🔍 Starting intelligence scan...");
+    
     
     const buyingSignals = await intelligence.scanBuyingIntent([
       "slack", "notion", "jira", "github", "figma", "linear"
@@ -1237,7 +1237,7 @@ async function main() {
     );
     
     if (highPriority.length > 0) {
-      console.log(`🚨 Found ${highPriority.length} high-priority signals!`);
+      
       
       // Send Slack notification (optional)
       await sendSlackNotification({
@@ -1246,10 +1246,10 @@ async function main() {
       });
     }
     
-    console.log(`✅ Scan complete: ${buyingSignals.length} signals, ${launches.length} launches`);
+    
   });
   
-  console.log("🤖 Intelligence bot started. Monitoring HN + PH...");
+  
 }
 
 main().catch(console.error);

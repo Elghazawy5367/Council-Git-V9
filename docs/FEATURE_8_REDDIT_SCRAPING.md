@@ -342,7 +342,7 @@ class RedditScraper {
         if (response.status === 429) {
           // Rate limited - exponential backoff
           const backoffTime = Math.pow(2, attempt) * 1000;
-          console.log(`Rate limited. Waiting ${backoffTime}ms...`);
+          
           await this.delay(backoffTime);
           continue;
         }

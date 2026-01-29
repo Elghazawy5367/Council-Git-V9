@@ -1,6 +1,5 @@
 // Session History Management
 import { CouncilSession } from './types';
-
 const HISTORY_STORAGE_KEY = 'council_session_history_v18';
 const MAX_SESSIONS = 50;
 
@@ -9,11 +8,8 @@ export function getSessions(): CouncilSession[] {
   try {
     const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
     if (!stored) return [];
-
     const sessions = JSON.parse(stored);
-
     if (!Array.isArray(sessions)) {
-      console.warn('Stored session history is not an array, clearing it.');
       localStorage.removeItem(HISTORY_STORAGE_KEY);
       return [];
     }
@@ -21,9 +17,8 @@ export function getSessions(): CouncilSession[] {
     // Convert timestamp strings back to Date objects and validate structure
     return sessions.map((s: Partial<CouncilSession>) => ({
       ...s,
-      timestamp: new Date(s.timestamp!),
+      timestamp: new Date(s.timestamp!)
     })).filter(s => s.id && s.timestamp) as CouncilSession[]; // Basic validation
-
   } catch (e) {
     console.error('Failed to load session history:', e);
     // If parsing fails, also clear the corrupted data.
@@ -41,17 +36,15 @@ export function saveSession(session: Omit<CouncilSession, 'id' | 'timestamp'>): 
   const newSession: CouncilSession = {
     ...session,
     id: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-    timestamp: new Date(),
+    timestamp: new Date()
   };
-  
   try {
     const sessions = getSessions();
     // Add new session at the beginning
     sessions.unshift(newSession);
-    
+
     // Keep only the most recent sessions
     const trimmed = sessions.slice(0, MAX_SESSIONS);
-    
     localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(trimmed));
     return newSession;
   } catch (e) {
@@ -91,27 +84,23 @@ export function formatSessionPreview(session: CouncilSession): string {
   if (!session || !session.task || typeof session.task !== 'string') {
     return '[Untitled Session]';
   }
-  const taskPreview = session.task.length > 60 
-    ? session.task.slice(0, 60) + '...' 
-    : session.task;
+  const taskPreview = session.task.length > 60 ? session.task.slice(0, 60) + '...' : session.task;
   return taskPreview;
 }
 
 // Format relative time
 export function formatRelativeTime(date: Date): string {
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
-        return 'Invalid date';
-    }
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    return 'Invalid date';
+  }
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
-  
   if (diffMins < 1) return 'Just now';
   if (diffMins < 60) return `${diffMins}m ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays < 7) return `${diffDays}d ago`;
-  
   return date.toLocaleDateString();
 }

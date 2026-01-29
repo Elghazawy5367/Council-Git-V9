@@ -5,7 +5,6 @@ import { RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { SynthesisConfig, SynthesisResult } from '@/features/council/lib/types';
 import { UseMutationResult } from '@tanstack/react-query';
 import { ExpertOutput } from '@/features/council/store/execution-store';
-
 interface ExpertOutputFooterProps {
   expert: ExpertOutput;
   expertName?: string;
@@ -14,10 +13,11 @@ interface ExpertOutputFooterProps {
   onRetry?: () => void;
   isRetrying?: boolean;
 }
-
 export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
-  const { executeCouncil, isLoading } = useExecutionStore();
-
+  const {
+    executeCouncil,
+    isLoading
+  } = useExecutionStore();
   const onRetry = () => {
     const mockMutationResult = {
       mutate: ({
@@ -25,7 +25,7 @@ export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
         task,
         config,
         apiKey,
-        onProgress,
+        onProgress
       }: {
         expertOutputs: ExpertOutput[];
         task: string;
@@ -33,36 +33,26 @@ export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
         apiKey: string;
         onProgress: (message: string) => void;
       }) => {
-        console.log('Mock mutation executed', expertOutputs, task, config, apiKey);
         onProgress('Mock progress message');
-      },
-    } as UseMutationResult<
-      SynthesisResult,
-      Error,
-      { expertOutputs: ExpertOutput[]; task: string; config: SynthesisConfig; apiKey: string; onProgress: (message: string) => void },
-      unknown
-    >;
-
+      }
+    } as UseMutationResult<SynthesisResult, Error, {
+      expertOutputs: ExpertOutput[];
+      task: string;
+      config: SynthesisConfig;
+      apiKey: string;
+      onProgress: (message: string) => void;
+    }, unknown>;
     executeCouncil(mockMutationResult);
   };
-
-  return (
-    <div className="flex items-center justify-end gap-1 pt-2 border-t border-border/50 flex-shrink-0">
+  return <div className="flex items-center justify-end gap-1 pt-2 border-t border-border/50 flex-shrink-0">
       <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-green-500/10 hover:text-green-500">
         <ThumbsUp className="h-3.5 w-3.5" />
       </Button>
       <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-red-500/10 hover:text-red-500">
         <ThumbsDown className="h-3.5 w-3.5" />
       </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={onRetry}
-        disabled={isLoading}
-        className="h-6 w-6 hover:bg-blue-500/10 hover:text-blue-500"
-      >
+      <Button variant="ghost" size="icon" onClick={onRetry} disabled={isLoading} className="h-6 w-6 hover:bg-blue-500/10 hover:text-blue-500">
         <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? 'animate-spin' : ''}`} />
       </Button>
-    </div>
-  );
+    </div>;
 };

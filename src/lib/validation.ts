@@ -48,7 +48,6 @@ export const GitHubRepoSchema = z.object({
     spdx_id: z.string()
   }).nullable().optional()
 });
-
 export type GitHubRepo = z.infer<typeof GitHubRepoSchema>;
 
 /**
@@ -59,7 +58,6 @@ export const GitHubSearchResponseSchema = z.object({
   incomplete_results: z.boolean(),
   items: z.array(GitHubRepoSchema)
 });
-
 export type GitHubSearchResponse = z.infer<typeof GitHubSearchResponseSchema>;
 
 /**
@@ -79,7 +77,6 @@ export const BlueOceanOpportunitySchema = z.object({
   reasoning: z.string(),
   actionableInsights: z.array(z.string())
 });
-
 export type BlueOceanOpportunity = z.infer<typeof BlueOceanOpportunitySchema>;
 
 /**
@@ -100,7 +97,6 @@ export const RedditPostSchema = z.object({
   link_flair_text: z.string().nullable().optional(),
   over_18: z.boolean().optional()
 });
-
 export type RedditPost = z.infer<typeof RedditPostSchema>;
 
 /**
@@ -111,17 +107,14 @@ export const RedditListingSchema = z.object({
   data: z.object({
     after: z.string().nullable(),
     before: z.string().nullable(),
-    children: z.array(
-      z.object({
-        kind: z.string(),
-        data: RedditPostSchema
-      })
-    ),
+    children: z.array(z.object({
+      kind: z.string(),
+      data: RedditPostSchema
+    })),
     dist: z.number().optional(),
     modhash: z.string().optional()
   })
 });
-
 export type RedditListing = z.infer<typeof RedditListingSchema>;
 
 /**
@@ -144,12 +137,12 @@ export const BuyingIntentSignalSchema = z.object({
   engagement: z.object({
     upvotes: z.number(),
     comments: z.number(),
-    velocity: z.number(), // comments per hour
+    velocity: z.number(),
+    // comments per hour
     created: z.string()
   }),
   analysis: z.string()
 });
-
 export type BuyingIntentSignal = z.infer<typeof BuyingIntentSignalSchema>;
 
 /**
@@ -173,7 +166,6 @@ export const GitHubUserSchema = z.object({
   created_at: z.string().optional(),
   updated_at: z.string().optional()
 });
-
 export type GitHubUser = z.infer<typeof GitHubUserSchema>;
 
 /**
@@ -201,7 +193,6 @@ export const StargazerQualitySchema = z.object({
     recommendation: z.string()
   })
 });
-
 export type StargazerQuality = z.infer<typeof StargazerQualitySchema>;
 
 /**
@@ -220,7 +211,6 @@ export const HackerNewsItemSchema = z.object({
   created_at_i: z.number(),
   _tags: z.array(z.string())
 });
-
 export type HackerNewsItem = z.infer<typeof HackerNewsItemSchema>;
 
 /**
@@ -236,7 +226,6 @@ export const HackerNewsSearchResponseSchema = z.object({
   query: z.string(),
   params: z.string()
 });
-
 export type HackerNewsSearchResponse = z.infer<typeof HackerNewsSearchResponseSchema>;
 
 /**
@@ -253,17 +242,14 @@ export const ProductHuntPostSchema = z.object({
   website: z.string().url().optional(),
   createdAt: z.string(),
   featuredAt: z.string().optional(),
-  topics: z.array(
-    z.object({
-      name: z.string()
-    })
-  ).optional(),
+  topics: z.array(z.object({
+    name: z.string()
+  })).optional(),
   user: z.object({
     username: z.string(),
     headline: z.string().optional()
   }).optional()
 });
-
 export type ProductHuntPost = z.infer<typeof ProductHuntPostSchema>;
 
 /**
@@ -288,7 +274,6 @@ export const ExpertConfigSchema = z.object({
     pipeline: z.string().optional()
   }).optional()
 });
-
 export type ExpertConfig = z.infer<typeof ExpertConfigSchema>;
 
 /**
@@ -303,7 +288,6 @@ export const SynthesisConfigSchema = z.object({
   customInstructions: z.string().optional(),
   options: z.record(z.unknown()).optional()
 });
-
 export type SynthesisConfig = z.infer<typeof SynthesisConfigSchema>;
 
 /**
@@ -326,7 +310,6 @@ export const ScoutAnalysisSchema = z.object({
     daysAbandoned: z.number().optional()
   }).optional()
 });
-
 export type ScoutAnalysis = z.infer<typeof ScoutAnalysisSchema>;
 
 /**
@@ -337,24 +320,13 @@ export type ScoutAnalysis = z.infer<typeof ScoutAnalysisSchema>;
  * Validate data against a Zod schema
  * Throws ValidationError if validation fails
  */
-export const validateData = <T>(
-  schema: z.ZodSchema<T>,
-  data: unknown,
-  context?: string
-): T => {
+export const validateData = <T,>(schema: z.ZodSchema<T>, data: unknown, context?: string): T => {
   try {
     return schema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errorMessages = error.errors
-        .map(e => `${e.path.join('.')}: ${e.message}`)
-        .join(', ');
-      
-      throw new ValidationError(
-        `Validation failed${context ? ` for ${context}` : ''}: ${errorMessages}`,
-        error.errors[0]?.path.join('.'),
-        data
-      );
+      const errorMessages = error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
+      throw new ValidationError(`Validation failed${context ? ` for ${context}` : ''}: ${errorMessages}`, error.errors[0]?.path.join('.'), data);
     }
     throw error;
   }
@@ -363,10 +335,7 @@ export const validateData = <T>(
 /**
  * Safely validate data, return null on failure
  */
-export const safeValidate = <T>(
-  schema: z.ZodSchema<T>,
-  data: unknown
-): T | null => {
+export const safeValidate = <T,>(schema: z.ZodSchema<T>, data: unknown): T | null => {
   const result = schema.safeParse(data);
   return result.success ? result.data : null;
 };
@@ -374,16 +343,11 @@ export const safeValidate = <T>(
 /**
  * Validate array of data
  */
-export const validateArray = <T>(
-  schema: z.ZodSchema<T>,
-  data: unknown[],
-  context?: string
-): T[] => {
+export const validateArray = <T,>(schema: z.ZodSchema<T>, data: unknown[], context?: string): T[] => {
   return data.map((item, index) => {
     try {
       return validateData(schema, item, context ? `${context}[${index}]` : `item[${index}]`);
     } catch (error) {
-      console.warn(`Validation failed for array item ${index}, skipping:`, error);
       return null;
     }
   }).filter((item): item is T => item !== null);
@@ -393,11 +357,7 @@ export const validateArray = <T>(
  * Partial validation - allows missing fields
  * Note: Only works with z.ZodObject schemas
  */
-export const validatePartial = <T extends z.ZodRawShape>(
-  schema: z.ZodObject<T>,
-  data: unknown,
-  context?: string
-): Partial<z.infer<z.ZodObject<T>>> => {
+export const validatePartial = <T extends z.ZodRawShape,>(schema: z.ZodObject<T>, data: unknown, context?: string): Partial<z.infer<z.ZodObject<T>>> => {
   const partialSchema = schema.partial();
   return validateData(partialSchema, data, context);
 };
@@ -405,12 +365,7 @@ export const validatePartial = <T extends z.ZodRawShape>(
 /**
  * Validate and transform data
  */
-export const validateAndTransform = <T, R>(
-  schema: z.ZodSchema<T>,
-  data: unknown,
-  transform: (validated: T) => R,
-  context?: string
-): R => {
+export const validateAndTransform = <T, R>(schema: z.ZodSchema<T>, data: unknown, transform: (validated: T) => R, context?: string): R => {
   const validated = validateData(schema, data, context);
   return transform(validated);
 };

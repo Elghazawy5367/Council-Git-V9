@@ -11,15 +11,29 @@ export interface HNOpportunity {
   highlights: string[];
 }
 
+interface HNApiHit {
+  objectID: string;
+  title: string;
+  comment_text: string;
+  points: number;
+  author: string;
+  created_at: string;
+  url: string;
+}
+
+interface HNApiResponse {
+  hits: HNApiHit[];
+}
+
 export async function fetchHNTrends(query: string = 'SaaS OR "show hn" OR "looking for"'): Promise<HNOpportunity[]> {
   try {
-    const response = await hackerNewsAPI.get<any>('/search_by_date', {
+    const response = await hackerNewsAPI.get<HNApiResponse>('/search_by_date', {
       query,
       tags: 'story',
       hitsPerPage: 50
     });
 
-    return response.hits.map((hit: any) => {
+    return response.hits.map((hit: HNApiHit) => {
       const title = hit.title || '';
       const content = (hit.comment_text || '').toLowerCase();
       

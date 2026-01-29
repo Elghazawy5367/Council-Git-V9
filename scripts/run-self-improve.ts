@@ -4,7 +4,6 @@
  * 
  * Executes the self-improvement learning cycle and generates reports.
  */
-
 import * as fs from "fs";
 import * as path from "path";
 import { learnFromSuccess } from "../src/lib/self-improve";
@@ -19,19 +18,17 @@ function parseArgs(): {
 } {
   const args = process.argv.slice(2);
   const options: Record<string, string> = {};
-  
   args.forEach(arg => {
     const [key, value] = arg.split("=");
     if (key.startsWith("--")) {
       options[key.slice(2)] = value;
     }
   });
-  
   return {
     niche: options.niche || "developer tools",
     minStars: parseInt(options["min-stars"] || "1000"),
     maxRepos: parseInt(options["max-repos"] || "20"),
-    githubToken: options["github-token"] || process.env.GITHUB_TOKEN,
+    githubToken: options["github-token"] || process.env.GITHUB_TOKEN
   };
 }
 
@@ -45,57 +42,25 @@ function formatConfidence(confidence: number): string {
 
 // Print learning results
 function printResults(result: LearningResult): void {
-  console.log("\n" + "=".repeat(80));
-  console.log("🎓 SELF-IMPROVEMENT LEARNING REPORT");
-  console.log("=".repeat(80));
-  
-  console.log(`\n📌 Niche: ${result.niche}`);
-  console.log(`📊 Repositories analyzed: ${result.reposAnalyzed}`);
-  console.log(`🔍 Patterns discovered: ${result.patternsFound.length}`);
-  console.log(`💡 Insights generated: ${result.insights.length}`);
-  console.log(`🎯 Recommendations: ${result.recommendations.length}\n`);
-  
   // Group patterns by category
   const byCategory = result.patternsFound.reduce((acc, p) => {
     if (!acc[p.category]) acc[p.category] = [];
     acc[p.category].push(p);
     return acc;
   }, {} as Record<string, SuccessPattern[]>);
-  
+
   // Print patterns by category
   Object.entries(byCategory).forEach(([category, patterns]) => {
-    console.log(`\n${"─".repeat(80)}`);
-    console.log(`📂 ${category.toUpperCase()} PATTERNS (${patterns.length})`);
-    console.log("─".repeat(80));
-    
-    patterns
-      .sort((a, b) => b.confidence - a.confidence)
-      .forEach((pattern, idx) => {
-        console.log(`\n${idx + 1}. ${pattern.pattern}`);
-        console.log(`   Confidence: ${formatConfidence(pattern.confidence)} (${Math.round(pattern.confidence)}%)`);
-        console.log(`   Evidence: ${pattern.evidence.length} data point(s)`);
-        console.log(`   Learned from: ${pattern.learnedFrom.slice(0, 3).join(", ")}${pattern.learnedFrom.length > 3 ? "..." : ""}`);
-      });
+    patterns.sort((a, b) => b.confidence - a.confidence).forEach((pattern, idx) => {});
   });
-  
+
   // Print insights
-  console.log(`\n${"─".repeat(80)}`);
-  console.log("💡 KEY INSIGHTS");
-  console.log("─".repeat(80));
-  result.insights.forEach((insight, idx) => {
-    console.log(`${idx + 1}. ${insight}`);
-  });
-  
+
+  result.insights.forEach((insight, idx) => {});
+
   // Print recommendations
-  console.log(`\n${"─".repeat(80)}`);
-  console.log("🎯 ACTIONABLE RECOMMENDATIONS");
-  console.log("─".repeat(80));
-  result.recommendations.forEach((rec, idx) => {
-    console.log(`${idx + 1}. ${rec}`);
-  });
-  
-  console.log("\n" + "=".repeat(80));
-  console.log("✅ Learning cycle complete!\n");
+
+  result.recommendations.forEach((rec, idx) => {});
 }
 
 // Generate markdown report
@@ -104,89 +69,76 @@ function generateMarkdownReport(result: LearningResult, outputPath: string): voi
   markdown += `**Generated:** ${new Date(result.timestamp).toLocaleString()}\n`;
   markdown += `**Niche:** ${result.niche}\n`;
   markdown += `**Repositories Analyzed:** ${result.reposAnalyzed}\n\n`;
-  
   markdown += `## Summary\n\n`;
   markdown += `- **Patterns Discovered:** ${result.patternsFound.length}\n`;
   markdown += `- **Insights Generated:** ${result.insights.length}\n`;
   markdown += `- **Recommendations:** ${result.recommendations.length}\n\n`;
-  
+
   // Group patterns
   const byCategory = result.patternsFound.reduce((acc, p) => {
     if (!acc[p.category]) acc[p.category] = [];
     acc[p.category].push(p);
     return acc;
   }, {} as Record<string, SuccessPattern[]>);
-  
+
   // Write patterns by category
   Object.entries(byCategory).forEach(([category, patterns]) => {
     markdown += `## ${category.charAt(0).toUpperCase() + category.slice(1)} Patterns\n\n`;
-    
-    patterns
-      .sort((a, b) => b.confidence - a.confidence)
-      .forEach((pattern, idx) => {
-        markdown += `### ${idx + 1}. ${pattern.pattern}\n\n`;
-        markdown += `**Confidence:** ${Math.round(pattern.confidence)}%\n\n`;
-        markdown += `**Evidence:**\n`;
-        pattern.evidence.forEach(ev => {
-          markdown += `- ${ev}\n`;
-        });
-        markdown += `\n**Learned from:**\n`;
-        pattern.learnedFrom.forEach(repo => {
-          markdown += `- [${repo}](https://github.com/${repo})\n`;
-        });
-        markdown += `\n`;
+    patterns.sort((a, b) => b.confidence - a.confidence).forEach((pattern, idx) => {
+      markdown += `### ${idx + 1}. ${pattern.pattern}\n\n`;
+      markdown += `**Confidence:** ${Math.round(pattern.confidence)}%\n\n`;
+      markdown += `**Evidence:**\n`;
+      pattern.evidence.forEach(ev => {
+        markdown += `- ${ev}\n`;
       });
+      markdown += `\n**Learned from:**\n`;
+      pattern.learnedFrom.forEach(repo => {
+        markdown += `- [${repo}](https://github.com/${repo})\n`;
+      });
+      markdown += `\n`;
+    });
   });
-  
+
   // Write insights
   markdown += `## Key Insights\n\n`;
   result.insights.forEach((insight, idx) => {
     markdown += `${idx + 1}. ${insight}\n`;
   });
   markdown += `\n`;
-  
+
   // Write recommendations
   markdown += `## Actionable Recommendations\n\n`;
   result.recommendations.forEach((rec, idx) => {
     markdown += `${idx + 1}. ${rec}\n`;
   });
   markdown += `\n`;
-  
   markdown += `---\n\n`;
   markdown += `*This report was automatically generated by the Self-Improving Council system.*\n`;
-  
   fs.writeFileSync(outputPath, markdown);
-  console.log(`📄 Full report saved to: ${outputPath}\n`);
 }
 
 // Main execution
 async function main(): Promise<void> {
   const options = parseArgs();
-  
-  console.log("🚀 Starting self-improvement learning cycle...\n");
-  console.log(`Configuration:`);
-  console.log(`  Niche: ${options.niche}`);
-  console.log(`  Min stars: ${options.minStars}`);
-  console.log(`  Max repos: ${options.maxRepos}`);
-  console.log(`  GitHub token: ${options.githubToken ? "✓ Provided" : "✗ Not provided (using mock data)"}\n`);
-  
   try {
     // Run learning
     const result = await learnFromSuccess(options.niche, {
       minStars: options.minStars,
       maxRepos: options.maxRepos,
-      githubToken: options.githubToken,
+      githubToken: options.githubToken
     });
-    
+
     // Print results
     printResults(result);
-    
+
     // Generate report
     const logsDir = path.join(process.cwd(), "logs");
-    fs.mkdirSync(logsDir, { recursive: true });
+    fs.mkdirSync(logsDir, {
+      recursive: true
+    });
     const reportPath = path.join(logsDir, "self-improve-report.md");
     generateMarkdownReport(result, reportPath);
-    
+
     // Exit successfully
     process.exit(0);
   } catch (error) {

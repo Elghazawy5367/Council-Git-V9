@@ -38,10 +38,28 @@ export interface StargazerAnalysis {
   };
 }
 
+interface GitHubUserFromStargazers {
+  login: string;
+  type: 'User' | 'Organization';
+  company?: string | null;
+}
+
+interface GitHubUserFromDetails {
+  login: string;
+  followers: number;
+  public_repos: number;
+  avatar_url: string;
+  type: string;
+}
+
+interface GitHubRepo {
+  stargazers_count: number;
+}
+
 const BIG_TECH_COMPANIES = ['google', 'meta', 'stripe', 'vercel', 'shopify', 'amazon', 'microsoft', 'netflix'];
 
 export async function getInfluencerDetails(username: string): Promise<Influencer> {
-  const data = await githubAPI.get<any>(`/users/${username}`);
+  const data = await githubAPI.get<GitHubUserFromDetails>(`/users/${username}`);
   return {
     login: data.login,
     followers: data.followers,
@@ -51,7 +69,7 @@ export async function getInfluencerDetails(username: string): Promise<Influencer
   };
 }
 
-export function calculateStargazerQuality(stargazers: any[], totalCount: number, repoName: string): StargazerAnalysis {
+export function calculateStargazerQuality(stargazers: GitHubUserFromStargazers[], totalCount: number, repoName: string): StargazerAnalysis {
   const influencers: Influencer[] = [];
   const companyMap = new Map<string, number>();
   const notableBackers: NotableBacker[] = [];
@@ -59,7 +77,7 @@ export function calculateStargazerQuality(stargazers: any[], totalCount: number,
   let bigTechCount = 0;
   let orgCount = 0;
 
-  stargazers.forEach((user: any) => {
+  stargazers.forEach((user: GitHubUserFromStargazers) => {
     // Basic heuristics since we might not have full profiles for all
     if (user.type === 'Organization') {
       orgCount++;
@@ -118,8 +136,8 @@ export function calculateStargazerQuality(stargazers: any[], totalCount: number,
 }
 
 export async function analyzeStargazers(owner: string, repo: string): Promise<StargazerAnalysis> {
-  const repoData = await githubAPI.get<any>(`/repos/${owner}/${repo}`);
-  const stargazers = await githubAPI.get<any[]>(`/repos/${owner}/${repo}/stargazers`, {
+  const repoData = await githubAPI.get<GitHubRepo>(`/repos/${owner}/${repo}`);
+  const stargazers = await githubAPI.get<GitHubUserFromStargazers[]>(`/repos/${owner}/${repo}/stargazers`, {
     per_page: 100,
   });
 

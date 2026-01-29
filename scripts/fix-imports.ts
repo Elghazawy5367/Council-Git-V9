@@ -10,16 +10,13 @@ import * as path from "path";
 const project = new Project({
   tsConfigFilePath: "tsconfig.json",
   manipulationSettings: {
-    quoteKind: QuoteKind.Double,
-  },
+    quoteKind: QuoteKind.Double
+  }
 });
-
 const srcDir = path.resolve("src");
-
 project.getSourceFiles().forEach((sourceFile) => {
   const imports = sourceFile.getImportDeclarations();
   let madeChanges = false;
-
   imports.forEach((importDecl) => {
     const moduleSpecifier = importDecl.getModuleSpecifierValue();
 
@@ -32,12 +29,9 @@ project.getSourceFiles().forEach((sourceFile) => {
       if (importPath.startsWith(srcDir)) {
         const relativeToSrc = path.relative(srcDir, importPath);
         const aliasPath = `@/${relativeToSrc.replace(/\\/g, "/")}`;
-        
-        // Clean up common extensions and index files
-        const cleanAlias = aliasPath
-          .replace(/\.(ts|tsx|js|jsx)$/, "")
-          .replace(/\/index$/, "");
 
+        // Clean up common extensions and index files
+        const cleanAlias = aliasPath.replace(/\.(ts|tsx|js|jsx)$/, "").replace(/\/index$/, "");
         if (moduleSpecifier !== cleanAlias) {
           importDecl.setModuleSpecifier(cleanAlias);
           madeChanges = true;
@@ -45,18 +39,11 @@ project.getSourceFiles().forEach((sourceFile) => {
       }
     }
   });
-
-  if (madeChanges) {
-    console.log(`Updated imports in: ${sourceFile.getFilePath()}`);
-  }
-});
+  if (madeChanges) // eslint-disable-next-line no-empty
+    {}});
 
 // Use --dry-run to skip saving
 const isDryRun = process.argv.includes("--dry-run");
-
-if (isDryRun) {
-  console.log("\n[DRY RUN] Previewing changes... (No files modified)");
-} else {
-  project.saveSync();
-  console.log("\n[SUCCESS] All imports updated and saved.");
+if (isDryRun) // eslint-disable-next-line no-empty
+  {} else {project.saveSync();
 }

@@ -10,18 +10,8 @@
  * const result = await client.post<Response>('/users', { name: 'John' });
  */
 
-import {
-  APIError,
-  NetworkError,
-  TimeoutError,
-  RateLimitError,
-  errorRecovery,
-  logError,
-  parseError,
-  ValidationError
-} from './error-handler';
+import { APIError, NetworkError, TimeoutError, RateLimitError, errorRecovery, logError, parseError, ValidationError } from './error-handler';
 import { z } from 'zod';
-
 export interface APIConfig {
   baseURL?: string;
   timeout?: number;
@@ -31,7 +21,6 @@ export interface APIConfig {
   useCache?: boolean;
   cacheTime?: number; // in milliseconds
 }
-
 export interface RequestOptions<T = any> extends RequestInit {
   params?: Record<string, any>;
   timeout?: number;
@@ -39,7 +28,6 @@ export interface RequestOptions<T = any> extends RequestInit {
   skipRetry?: boolean;
   schema?: z.ZodSchema<T>;
 }
-
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
@@ -53,7 +41,6 @@ export class APIClient {
   private config: Required<APIConfig>;
   private cache: Map<string, CacheEntry<any>> = new Map();
   private activeRequests: Map<string, Promise<any>> = new Map();
-
   constructor(config: APIConfig = {}) {
     this.config = {
       baseURL: config.baseURL || '',
@@ -81,15 +68,13 @@ export class APIClient {
    */
   private getFromCache<T>(key: string): T | null {
     const entry = this.cache.get(key);
-    
     if (!entry) return null;
-    
+
     // Check if expired
     if (Date.now() > entry.expiresAt) {
       this.cache.delete(key);
       return null;
     }
-    
     return entry.data as T;
   }
 
@@ -112,28 +97,21 @@ export class APIClient {
       this.cache.clear();
       return;
     }
-
     const keysToDelete: string[] = [];
     for (const key of this.cache.keys()) {
       if (key.includes(pattern)) {
         keysToDelete.push(key);
       }
     }
-    
     keysToDelete.forEach(key => this.cache.delete(key));
   }
 
   /**
    * Fetch with timeout support
    */
-  private async fetchWithTimeout(
-    url: string,
-    options: RequestInit,
-    timeoutMs: number
-  ): Promise<Response> {
+  private async fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
     try {
       const response = await fetch(url, {
         ...options,
@@ -155,10 +133,8 @@ export class APIClient {
    */
   private async parseErrorResponse(response: Response, endpoint: string, method: string): Promise<never> {
     let errorMessage = `${method} ${endpoint} failed with status ${response.status}`;
-    
     try {
       const contentType = response.headers.get('content-type');
-      
       if (contentType?.includes('application/json')) {
         const errorData = await response.json();
         errorMessage = errorData.message || errorData.error || errorMessage;
@@ -176,37 +152,32 @@ export class APIClient {
       const retryAfterSeconds = retryAfter ? parseInt(retryAfter, 10) : undefined;
       throw new RateLimitError(errorMessage, retryAfterSeconds);
     }
-
     throw new APIError(errorMessage, endpoint, response.status, method);
   }
 
   /**
    * Core request method with retry and caching
    */
-  async request<T>(
-    endpoint: string,
-    options: RequestOptions<T> = {}
-  ): Promise<T> {
+  async request<T>(endpoint: string, options: RequestOptions<T> = {}): Promise<T> {
     const url = `${this.config.baseURL}${endpoint}`;
     const method = options.method || 'GET';
     const timeout = options.timeout || this.config.timeout;
-    
+
     // Build query string from params
     let finalUrl = url;
     if (options.params) {
-      const queryString = new URLSearchParams(
-        Object.entries(options.params)
-          .filter(([_, value]) => value !== undefined && value !== null)
-          .map(([key, value]) => [key, String(value)])
-      ).toString();
-      
+      const queryString = new URLSearchParams(Object.entries(options.params).filter(([_, value]) => value !== undefined && value !== null).map(([key, value]) => [key, String(value)])).toString();
       if (queryString) {
         finalUrl = `${url}${url.includes('?') ? '&' : '?'}${queryString}`;
       }
     }
 
     // Remove params and schema from options (internal use)
-    const { params: _params, schema, ...restOptions } = options;
+    const {
+      params: _params,
+      schema,
+      ...restOptions
+    } = options;
     const fetchOptions: RequestInit = {
       ...restOptions,
       method,
@@ -224,14 +195,12 @@ export class APIClient {
     if (method === 'GET' && this.config.useCache && !options.skipCache) {
       const cached = this.getFromCache<T>(cacheKey);
       if (cached) {
-        console.log(`[APIClient] Cache hit: ${method} ${endpoint}`);
         return cached;
       }
 
       // Check if request is already in flight (request deduplication)
       const activeRequest = this.activeRequests.get(cacheKey);
       if (activeRequest) {
-        console.log(`[APIClient] Deduplicating request: ${method} ${endpoint}`);
         return activeRequest;
       }
     }
@@ -239,7 +208,6 @@ export class APIClient {
     // Create request function
     const requestFn = async (): Promise<T> => {
       const response = await this.fetchWithTimeout(finalUrl, fetchOptions, timeout);
-
       if (!response.ok) {
         await this.parseErrorResponse(response, endpoint, method);
       }
@@ -253,7 +221,6 @@ export class APIClient {
       // Parse response
       const contentType = response.headers.get('content-type');
       let data: any;
-
       if (contentType?.includes('application/json')) {
         data = await response.json();
       } else {
@@ -264,12 +231,11 @@ export class APIClient {
       if (options.schema) {
         const result = options.schema.safeParse(data);
         if (!result.success) {
-          const validationError = new ValidationError(
-            `API response validation failed for ${endpoint}`,
-            undefined,
-            result.error.format()
-          );
-          logError(validationError, { endpoint, method });
+          const validationError = new ValidationError(`API response validation failed for ${endpoint}`, undefined, result.error.format());
+          logError(validationError, {
+            endpoint,
+            method
+          });
           throw validationError;
         }
         data = result.data;
@@ -279,36 +245,27 @@ export class APIClient {
       if (method === 'GET' && this.config.useCache && !options.skipCache) {
         this.setCache(cacheKey, data);
       }
-
       return data as T;
     };
-
     try {
       // Store active request for deduplication
       if (method === 'GET' && !options.skipCache) {
-        const requestPromise = options.skipRetry
-          ? requestFn()
-          : errorRecovery.retry(requestFn, this.config.retries, this.config.retryDelay);
-        
+        const requestPromise = options.skipRetry ? requestFn() : errorRecovery.retry(requestFn, this.config.retries, this.config.retryDelay);
         this.activeRequests.set(cacheKey, requestPromise);
-        
         const result = await requestPromise;
-        
         this.activeRequests.delete(cacheKey);
-        
         return result;
       }
 
       // Non-GET requests or when cache is disabled
-      return options.skipRetry
-        ? await requestFn()
-        : await errorRecovery.retry(requestFn, this.config.retries, this.config.retryDelay);
-
+      return options.skipRetry ? await requestFn() : await errorRecovery.retry(requestFn, this.config.retries, this.config.retryDelay);
     } catch (error) {
       this.activeRequests.delete(cacheKey);
-      
       const appError = parseError(error);
-      logError(appError, { endpoint, method });
+      logError(appError, {
+        endpoint,
+        method
+      });
       throw appError;
     }
   }
@@ -382,7 +339,8 @@ export const githubAPI = new APIClient({
   retries: 3,
   retryDelay: 1000,
   useCache: true,
-  cacheTime: 1000 * 60 * 30, // 30 minutes
+  cacheTime: 1000 * 60 * 30,
+  // 30 minutes
   timeout: 15000
 });
 
@@ -393,9 +351,11 @@ export const redditAPI = new APIClient({
     'User-Agent': 'TheCouncil-Research-Bot/1.0.0 (by /u/TheCouncilBot)'
   },
   retries: 2,
-  retryDelay: 2000, // Reddit is more aggressive with rate limiting
+  retryDelay: 2000,
+  // Reddit is more aggressive with rate limiting
   useCache: true,
-  cacheTime: 1000 * 60 * 15, // 15 minutes
+  cacheTime: 1000 * 60 * 15,
+  // 15 minutes
   timeout: 20000
 });
 
@@ -408,7 +368,8 @@ export const hackerNewsAPI = new APIClient({
   retries: 3,
   retryDelay: 1000,
   useCache: true,
-  cacheTime: 1000 * 60 * 10, // 10 minutes
+  cacheTime: 1000 * 60 * 10,
+  // 10 minutes
   timeout: 10000
 });
 

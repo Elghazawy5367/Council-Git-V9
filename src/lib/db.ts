@@ -16,13 +16,11 @@ export interface Expert {
   persona?: string; // Added in v2
   description?: string;
 }
-
 export interface Session {
   id?: number;
   title: string;
   createdAt: number;
 }
-
 export interface DecisionRecord {
   id?: number;
   timestamp: number;
@@ -38,46 +36,40 @@ export interface DecisionRecord {
   success: boolean;
   outputs?: string; // JSON stringified expert outputs
 }
-
 export class CouncilDatabase extends Dexie {
   experts!: Table<Expert>;
   sessions!: Table<Session>;
   decisionRecords!: Table<DecisionRecord>;
-
   constructor() {
     super("CouncilDB");
 
     // VERSION 1: Initial Definition
     this.version(1).stores({
       experts: "++id, name, role, model",
-      sessions: "++id, title, createdAt",
+      sessions: "++id, title, createdAt"
     });
 
     // VERSION 2: Schema Evolution
     // Adds 'persona' field and populates it based on 'role' for existing records
-    this.version(2)
-      .stores({
-        experts: "++id, name, role, model, persona", // Add persona to index
-      })
-      .upgrade(async (tx) => {
-        // Data transformation: Map existing roles to initial personas
-        return tx.table("experts").toCollection().modify(expert => {
-          if (!expert.persona) {
-            expert.persona = `Specialist in ${expert.role}`;
-          }
-        });
+    this.version(2).stores({
+      experts: "++id, name, role, model, persona" // Add persona to index
+    }).upgrade(async (tx) => {
+      // Data transformation: Map existing roles to initial personas
+      return tx.table("experts").toCollection().modify((expert) => {
+        if (!expert.persona) {
+          expert.persona = `Specialist in ${expert.role}`;
+        }
       });
+    });
 
     // VERSION 3: Add decision records for analytics
-    this.version(3)
-      .stores({
-        experts: "++id, name, role, model, persona",
-        sessions: "++id, title, createdAt",
-        decisionRecords: "++id, timestamp, mode, task, success", // Add analytics table
-      });
+    this.version(3).stores({
+      experts: "++id, name, role, model, persona",
+      sessions: "++id, title, createdAt",
+      decisionRecords: "++id, timestamp, mode, task, success" // Add analytics table
+    });
   }
 }
-
 export const db = new CouncilDatabase();
 
 /**
@@ -86,7 +78,6 @@ export const db = new CouncilDatabase();
 export async function initDatabase() {
   try {
     await db.open();
-    console.log("[CouncilDB] Migration successful or database up to date.");
   } catch (err) {
     console.error("[CouncilDB] Critical migration failure:", err);
     // Error Recovery: In extreme cases, notify user or implement secondary fallback
@@ -100,14 +91,8 @@ export async function initDatabase() {
  */
 export async function testMigration() {
   if (process.env.NODE_ENV !== "development") return;
-
-  console.log("[CouncilDB] Starting migration test...");
   const experts = await db.experts.toArray();
-  const needsPersona = experts.some(e => !e.persona);
-  
-  if (needsPersona) {
-    console.warn("[CouncilDB] Test detected unmigrated data. Running version check...");
-  } else {
-    console.log("[CouncilDB] Migration verification complete. All records have personas.");
-  }
-}
+  const needsPersona = experts.some((e) => !e.persona);
+  if (needsPersona) // eslint-disable-next-line no-empty
+    {} else // eslint-disable-next-line no-empty
+    {}}

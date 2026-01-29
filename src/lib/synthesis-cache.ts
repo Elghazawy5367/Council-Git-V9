@@ -1,7 +1,6 @@
 // Synthesis Cache - Semantic caching for expert outputs
 import { openDB, IDBPDatabase } from 'idb';
 import type { SynthesisOutput } from './types';
-
 interface CachedSynthesis {
   id: string;
   contentHash: string;
@@ -16,7 +15,6 @@ interface CachedSynthesis {
   hitCount: number;
   expertCount: number;
 }
-
 interface CacheStats {
   totalEntries: number;
   totalHits: number;
@@ -25,7 +23,6 @@ interface CacheStats {
   oldestEntry: number;
   newestEntry: number;
 }
-
 const DB_NAME = 'council-synthesis-cache';
 const DB_VERSION = 1;
 const STORE_NAME = 'syntheses';
@@ -40,16 +37,17 @@ let db: IDBPDatabase | null = null;
  */
 export async function initSynthesisCache(): Promise<void> {
   if (db) return;
-  
   db = await openDB(DB_NAME, DB_VERSION, {
     upgrade(database) {
       if (!database.objectStoreNames.contains(STORE_NAME)) {
-        const store = database.createObjectStore(STORE_NAME, { keyPath: 'id' });
+        const store = database.createObjectStore(STORE_NAME, {
+          keyPath: 'id'
+        });
         store.createIndex('taskHash', 'taskHash');
         store.createIndex('timestamp', 'timestamp');
         store.createIndex('hitCount', 'hitCount');
       }
-    },
+    }
   });
 }
 
@@ -60,7 +58,7 @@ function generateHash(content: string): string {
   let hash = 0;
   for (let i = 0; i < content.length; i++) {
     const char = content.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32-bit integer
   }
   return Math.abs(hash).toString(36);
@@ -91,63 +89,48 @@ function generateTaskHash(task: string): string {
 /**
  * Find cached synthesis by similarity
  */
-export async function findCachedSynthesis(
-  expertOutputs: Record<string, { expertName: string; output: string }>,
-  task: string,
-  tier: string
-): Promise<CachedSynthesis | null> {
+export async function findCachedSynthesis(expertOutputs: Record<string, {
+  expertName: string;
+  output: string;
+}>, task: string, tier: string): Promise<CachedSynthesis | null> {
   await initSynthesisCache();
   if (!db) return null;
-  
   const taskHash = generateTaskHash(task);
   const now = Date.now();
-  
   try {
     // Get all entries for this task hash
     const entries = await db.getAllFromIndex(STORE_NAME, 'taskHash', taskHash);
-    
+
     // Filter by tier and age
-    const validEntries = entries.filter(entry => 
-      entry.tier === tier && 
-      (now - entry.timestamp) < MAX_AGE_MS &&
-      entry.expertCount === Object.keys(expertOutputs).length
-    );
-    
+    const validEntries = entries.filter((entry) => entry.tier === tier && now - entry.timestamp < MAX_AGE_MS && entry.expertCount === Object.keys(expertOutputs).length);
     if (validEntries.length === 0) return null;
-    
+
     // Find most similar entry
     let bestMatch: CachedSynthesis | null = null;
     let bestSimilarity = 0;
-    
     for (const entry of validEntries) {
       // Reconstruct expert outputs from cache (we don't store full outputs, just hashes)
       // For now, use simple content hash comparison
-      const currentHashes = Object.values(expertOutputs).map(e => generateHash(e.output));
-      
+      const currentHashes = Object.values(expertOutputs).map((e) => generateHash(e.output));
+
       // Check if hashes match (exact match)
-      const hashesMatch = currentHashes.length === entry.expertHashes.length &&
-        currentHashes.every((h, i) => h === entry.expertHashes[i]);
-      
+      const hashesMatch = currentHashes.length === entry.expertHashes.length && currentHashes.every((h, i) => h === entry.expertHashes[i]);
       if (hashesMatch) {
         bestMatch = entry;
         bestSimilarity = 1.0;
         break;
       }
     }
-    
+
     // If no exact match, return null (we could implement fuzzy matching here)
     if (bestSimilarity >= SIMILARITY_THRESHOLD && bestMatch) {
       // Update hit count
       bestMatch.hitCount++;
       await db.put(STORE_NAME, bestMatch);
-      
-      console.log(`🎯 Cache HIT: Saved $${bestMatch.cost.toFixed(4)} (${bestMatch.hitCount} hits)`);
       return bestMatch;
     }
-    
     return null;
   } catch (error) {
-    console.warn('Cache lookup failed:', error);
     return null;
   }
 }
@@ -155,22 +138,16 @@ export async function findCachedSynthesis(
 /**
  * Store synthesis result in cache
  */
-export async function cacheSynthesis(
-  expertOutputs: Record<string, { expertName: string; output: string }>,
-  task: string,
-  tier: string,
-  verdict: string,
-  structured: SynthesisOutput | undefined,
-  cost: number
-): Promise<void> {
+export async function cacheSynthesis(expertOutputs: Record<string, {
+  expertName: string;
+  output: string;
+}>, task: string, tier: string, verdict: string, structured: SynthesisOutput | undefined, cost: number): Promise<void> {
   await initSynthesisCache();
   if (!db) return;
-  
   const taskHash = generateTaskHash(task);
-  const expertHashes = Object.values(expertOutputs).map(e => generateHash(e.output));
+  const expertHashes = Object.values(expertOutputs).map((e) => generateHash(e.output));
   const contentHash = generateHash(verdict);
   const id = `${taskHash}_${contentHash}_${Date.now()}`;
-  
   const entry: CachedSynthesis = {
     id,
     contentHash,
@@ -183,33 +160,26 @@ export async function cacheSynthesis(
     cost,
     timestamp: Date.now(),
     hitCount: 0,
-    expertCount: Object.keys(expertOutputs).length,
+    expertCount: Object.keys(expertOutputs).length
   };
-  
   try {
     await db.add(STORE_NAME, entry);
-    console.log('💾 Cached synthesis result');
-    
     // Cleanup old entries if cache is too large
     await cleanupCache();
-  } catch (error) {
-    console.warn('Failed to cache synthesis:', error);
-  }
-}
+  } catch (error) // eslint-disable-next-line no-empty
+  {}}
 
 /**
  * Cleanup old or excess cache entries
  */
 async function cleanupCache(): Promise<void> {
   if (!db) return;
-  
   try {
     const allEntries = await db.getAll(STORE_NAME);
-    
     if (allEntries.length <= MAX_CACHE_SIZE) {
       return;
     }
-    
+
     // Sort by hit count (ascending) and age (oldest first)
     const sorted = allEntries.sort((a, b) => {
       // Prioritize entries with fewer hits
@@ -219,18 +189,14 @@ async function cleanupCache(): Promise<void> {
       // Then by age (oldest first)
       return a.timestamp - b.timestamp;
     });
-    
+
     // Remove excess entries
     const toRemove = sorted.slice(0, allEntries.length - MAX_CACHE_SIZE);
     for (const entry of toRemove) {
       await db.delete(STORE_NAME, entry.id);
     }
-    
-    console.log(`🧹 Cleaned up ${toRemove.length} cache entries`);
-  } catch (error) {
-    console.warn('Cache cleanup failed:', error);
-  }
-}
+  } catch (error) // eslint-disable-next-line no-empty
+  {}}
 
 /**
  * Get cache statistics
@@ -244,34 +210,30 @@ export async function getCacheStats(): Promise<CacheStats> {
       totalSaved: 0,
       cacheSize: 0,
       oldestEntry: 0,
-      newestEntry: 0,
+      newestEntry: 0
     };
   }
-  
   try {
     const allEntries = await db.getAll(STORE_NAME);
-    
     const totalHits = allEntries.reduce((sum, e) => sum + e.hitCount, 0);
-    const totalSaved = allEntries.reduce((sum, e) => sum + (e.cost * e.hitCount), 0);
-    const timestamps = allEntries.map(e => e.timestamp);
-    
+    const totalSaved = allEntries.reduce((sum, e) => sum + e.cost * e.hitCount, 0);
+    const timestamps = allEntries.map((e) => e.timestamp);
     return {
       totalEntries: allEntries.length,
       totalHits,
       totalSaved,
       cacheSize: JSON.stringify(allEntries).length,
       oldestEntry: Math.min(...timestamps, Date.now()),
-      newestEntry: Math.max(...timestamps, 0),
+      newestEntry: Math.max(...timestamps, 0)
     };
   } catch (error) {
-    console.warn('Failed to get cache stats:', error);
     return {
       totalEntries: 0,
       totalHits: 0,
       totalSaved: 0,
       cacheSize: 0,
       oldestEntry: 0,
-      newestEntry: 0,
+      newestEntry: 0
     };
   }
 }
@@ -282,14 +244,10 @@ export async function getCacheStats(): Promise<CacheStats> {
 export async function clearSynthesisCache(): Promise<void> {
   await initSynthesisCache();
   if (!db) return;
-  
   try {
     await db.clear(STORE_NAME);
-    console.log('🗑️ Synthesis cache cleared');
-  } catch (error) {
-    console.warn('Failed to clear cache:', error);
-  }
-}
+  } catch (error) // eslint-disable-next-line no-empty
+  {}}
 
 /**
  * Remove expired cache entries
@@ -297,26 +255,17 @@ export async function clearSynthesisCache(): Promise<void> {
 export async function removeExpiredEntries(): Promise<number> {
   await initSynthesisCache();
   if (!db) return 0;
-  
   const now = Date.now();
   let removedCount = 0;
-  
   try {
     const allEntries = await db.getAll(STORE_NAME);
-    
     for (const entry of allEntries) {
       if (now - entry.timestamp > MAX_AGE_MS) {
         await db.delete(STORE_NAME, entry.id);
         removedCount++;
       }
     }
-    
-    if (removedCount > 0) {
-      console.log(`🗑️ Removed ${removedCount} expired cache entries`);
-    }
-  } catch (error) {
-    console.warn('Failed to remove expired entries:', error);
-  }
-  
-  return removedCount;
+    if (removedCount > 0) // eslint-disable-next-line no-empty
+      {}} catch (error) // eslint-disable-next-line no-empty
+  {}return removedCount;
 }

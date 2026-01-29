@@ -169,14 +169,6 @@ export interface HackerNewsSearchFilters {
   hitsPerPage?: number;
 }
 
-// Scout-specific Types
-export interface ScoutIssue {
-  number: number;
-  title: string;
-  body: string | null;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  html_url: string;
-  state: 'open' | 'closed';
-}
+// Scout-specific Types (reuse GitHubIssue for better type coverage)
+// Note: ScoutIssue is an alias to GitHubIssue for backward compatibility
+export type ScoutIssue = GitHubIssue;

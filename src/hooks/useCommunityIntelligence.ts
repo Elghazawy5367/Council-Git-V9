@@ -58,7 +58,7 @@ export function useRedditSearch(params: RedditSearchParams, options?: Omit<UseQu
       if (params.time) queryParams.t = params.time;
       if (params.after) queryParams.after = params.after;
       if (params.query) queryParams.q = params.query;
-      const data = await redditAPI.get<{ data: { children: Array<{ data: RedditPost }> } }>(endpoint, queryParams);
+      const data = await redditAPI.get<unknown>(endpoint, queryParams);
       const validated = validateData(RedditListingSchema, data, 'Reddit Listing');
       return validated.data.children.map((child) => child.data);
     },
@@ -83,7 +83,7 @@ export function useRedditBuyingIntent(targetKeywords: string[], subreddits: stri
       for (const subreddit of subreddits) {
         for (const keyword of targetKeywords) {
           try {
-            const posts = await redditAPI.get<{ data: { children: Array<{ data: RedditPost }> } }>(`/r/${subreddit}/search.json`, {
+            const posts = await redditAPI.get<unknown>(`/r/${subreddit}/search.json`, {
               q: `alternative ${keyword}`,
               restrict_sr: 'true',
               sort: 'relevance',

@@ -1,6 +1,10 @@
-import { create } from 'zustand';
-import { Expert } from '@/features/council/lib/types'; // Ensure consistent Expert type
-import { KnowledgeFile } from '@/features/council/lib/types';
+/**
+ * @deprecated This store is deprecated. Please use the unified council store from @/stores/council.store
+ * This file now provides backward compatibility by proxying to the new store.
+ */
+
+import { Expert, KnowledgeFile } from '@/features/council/lib/types';
+import { useCouncilStore } from '@/stores/council.store';
 
 interface ExpertState {
   experts: Expert[];
@@ -10,39 +14,42 @@ interface ExpertState {
   removeKnowledge: (expertIndex: number, fileId: string) => void;
 }
 
-export const useExpertStore = create<ExpertState>((set) => ({
-  experts: [],
-  setExperts: (experts) => set({ experts }),
-  updateExpert: (index, expertUpdates) =>
-    set((state) => ({
-      experts: state.experts.map((e, i) => {
-        if (i !== index) return e;
-        const updated = { ...e, ...expertUpdates };
-        // Ensure content is populated
-        if (!updated.content) {
-          updated.content = updated.output || 'No content available';
-        }
-        // Sync pluginConfig with legacy config if core-ai-expert
-        if (updated.pluginId === 'core-ai-expert' && updated.pluginConfig) {
-          updated.config = { ...updated.config, ...updated.pluginConfig };
-        }
-        return updated;
-      }),
-    })),
-  addKnowledge: (expertIndex, files) =>
-    set((state) => ({
-      experts: state.experts.map((e, i) =>
-        i === expertIndex
-          ? { ...e, knowledge: [...e.knowledge, ...files] }
-          : e
-      ),
-    })),
-  removeKnowledge: (expertIndex, fileId) =>
-    set((state) => ({
-      experts: state.experts.map((e, i) =>
-        i === expertIndex
-          ? { ...e, knowledge: e.knowledge.filter((f) => f.id !== fileId) }
-          : e
-      ),
-    })),
-}));
+// Log deprecation warning once
+if (typeof window !== 'undefined' && !window.__expert_store_warned) {
+  console.warn(
+    '[DEPRECATED] useExpertStore from @/features/council/store/expert-store is deprecated.\n' +
+    'Please migrate to @/stores/council.store (useCouncilStore).\n' +
+    'This compatibility layer will be removed in a future version.'
+  );
+  window.__expert_store_warned = true;
+}
+
+declare global {
+  interface Window {
+    __expert_store_warned?: boolean;
+  }
+}
+
+/**
+ * Backward compatibility wrapper for useExpertStore
+ * Proxies to the unified council store
+ */
+export const useExpertStore = (selector?: (state: ExpertState) => any) => {
+  if (selector) {
+    return useCouncilStore((state) => selector({
+      experts: state.experts,
+      setExperts: state.setExperts,
+      updateExpert: state.updateExpert,
+      addKnowledge: state.addKnowledge,
+      removeKnowledge: state.removeKnowledge,
+    }));
+  }
+  
+  return useCouncilStore((state) => ({
+    experts: state.experts,
+    setExperts: state.setExperts,
+    updateExpert: state.updateExpert,
+    addKnowledge: state.addKnowledge,
+    removeKnowledge: state.removeKnowledge,
+  }));
+};

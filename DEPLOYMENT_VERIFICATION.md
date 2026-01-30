@@ -49,7 +49,7 @@ VERCEL=1 npm run build
 ✅ Build time: ~14 seconds
 
 # TypeScript check
-npm run typecheck
+npm run type-check
 ✅ No TypeScript errors in configuration files
 ```
 

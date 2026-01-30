@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => {
   
   // Detect deployment target
   const isVercel = process.env.VERCEL === '1';
-  const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
   
   return {
     // Conditional base path for dual deployment support

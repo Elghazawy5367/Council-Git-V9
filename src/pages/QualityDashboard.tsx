@@ -16,6 +16,7 @@ import {
   GitPullRequest,
   Activity
 } from "lucide-react";
+import { toast } from 'sonner';
 
 
 interface PipelineReport {
@@ -97,6 +98,7 @@ export default function QualityDashboard(): JSX.Element {
       setPatterns(mockPatterns);
     } catch (error) {
       console.error("Failed to load dashboard data:", error);
+      toast.error('Failed to load dashboard data');
     } finally {
       setLoading(false);
     }

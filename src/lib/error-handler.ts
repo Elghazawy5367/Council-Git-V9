@@ -270,3 +270,67 @@ export const withErrorHandling = <T extends (...args: any[]) => Promise<any>,>(f
     }
   }) as T;
 };
+
+/**
+ * Safe async function wrapper with toast notifications
+ * Returns { data, error } pattern for easier error handling
+ */
+export async function safeAsync<T>(
+  fn: () => Promise<T>,
+  options?: {
+    errorMessage?: string;
+    successMessage?: string;
+    onError?: (error: Error) => void;
+    showToast?: boolean;
+  }
+): Promise<{ data: T | null; error: Error | null }> {
+  const { errorMessage = 'Operation failed', successMessage, onError, showToast = true } = options || {};
+  
+  try {
+    const result = await fn();
+    
+    // Dynamic import to avoid circular dependency issues
+    if (successMessage && showToast) {
+      const { toast } = await import('sonner');
+      toast.success(successMessage);
+    }
+    
+    return { data: result, error: null };
+  } catch (error) {
+    const appError = parseError(error);
+    console.error(errorMessage, appError);
+    
+    // Show toast notification
+    if (showToast) {
+      const { toast } = await import('sonner');
+      toast.error(errorMessage);
+    }
+    
+    // Call custom error handler if provided
+    if (onError) {
+      onError(appError);
+    }
+    
+    return { data: null, error: appError };
+  }
+}
+
+/**
+ * Retry wrapper with toast notifications and exponential backoff
+ */
+export async function retryWithToast<T>(
+  fn: () => Promise<T>,
+  options?: {
+    maxRetries?: number;
+    delayMs?: number;
+    errorMessage?: string;
+    successMessage?: string;
+  }
+): Promise<{ data: T | null; error: Error | null }> {
+  const { maxRetries = 3, delayMs = 1000, errorMessage = 'Operation failed', successMessage } = options || {};
+  
+  return safeAsync(
+    () => errorRecovery.retry(fn, maxRetries, delayMs),
+    { errorMessage, successMessage }
+  );
+}

@@ -12,6 +12,7 @@ import { GoldmineDetector } from '@/features/council/components/GoldmineDetector
 import { loadAllOpportunities } from '@/lib/opportunity-loader';
 import { Opportunity } from '@/lib/goldmine-detector';
 import { getSessionKeys } from '@/features/council/lib/vault';
+import { toast } from 'sonner';
 
 const FeatureConfigModal = lazy(() => import('@/features/council/components/FeatureConfigModal'));
 
@@ -63,6 +64,7 @@ const FeaturesDashboard: React.FC = () => {
         setOpportunities(opps);
       } catch (error) {
         console.error('Failed to load opportunities:', error);
+        toast.error('Failed to load opportunities');
       } finally {
         setLoadingOpportunities(false);
       }

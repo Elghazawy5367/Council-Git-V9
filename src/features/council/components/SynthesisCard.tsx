@@ -37,8 +37,13 @@ export const SynthesisCard: React.FC = () => {
 
   const handleCopy = async () => {
     if (synthesisResult?.content) {
-      await navigator.clipboard.writeText(synthesisResult.content);
-      toast.success('Synthesis copied to clipboard');
+      try {
+        await navigator.clipboard.writeText(synthesisResult.content);
+        toast.success('Synthesis copied to clipboard');
+      } catch (error) {
+        console.error('Failed to copy to clipboard:', error);
+        toast.error('Failed to copy to clipboard');
+      }
     }
   };
 

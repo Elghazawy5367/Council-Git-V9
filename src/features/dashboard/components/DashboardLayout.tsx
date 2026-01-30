@@ -26,6 +26,7 @@ import {
   Calendar,
   Trash2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const DATE_RANGES = {
   '7d': { label: 'Last 7 days', days: 7 },
@@ -57,7 +58,13 @@ export const DashboardLayout: React.FC = () => {
 
   const handleClearData = async () => {
     if (confirm('Are you sure you want to clear all analytics data? This cannot be undone.')) {
-      await clearAllData();
+      try {
+        await clearAllData();
+        toast.success('Analytics data cleared successfully');
+      } catch (error) {
+        console.error('Failed to clear analytics data:', error);
+        toast.error('Failed to clear analytics data');
+      }
     }
   };
 

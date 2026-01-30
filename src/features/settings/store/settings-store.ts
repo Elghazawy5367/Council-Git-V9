@@ -98,6 +98,27 @@ export const useSettingsStore = create<SettingsState>(
       },
       handleLockVault: () => {
         lockVault();
+        set({ 
+          vaultStatus: getVaultStatus(), 
+          openRouterKey: '', 
+          githubApiKey: '', 
+          redditApiKey: '' 
+        });
+        toast.success('Vault Locked');
+      },
+    }),
+    {
+      name: 'settings-storage',
+      partialize: (state) => ({
+        apiKey: state.apiKey,
+        model: state.model,
+        synthesisConfig: state.synthesisConfig,
+        // Note: API keys are managed by vault, not persisted here
+        // UI state is managed by UIStore, not persisted here
+      }),
+    }
+  )
+);
         set({ vaultStatus: getVaultStatus(), openRouterKey: '', githubApiKey: '', redditApiKey: '' });
         toast.info('Vault Locked');
       },

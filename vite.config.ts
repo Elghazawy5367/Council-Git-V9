@@ -5,14 +5,9 @@ import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Detect deployment target
-  const isVercel = process.env.VERCEL === '1';
-  
   return {
-    // Conditional base path for dual deployment support
-    // GitHub Pages needs: /Council-Git-V9/
-    // Vercel needs: /
-    base: isVercel ? '/' : '/Council-Git-V9/',
+    // GitHub Pages base path
+    base: '/Council-Git-V9/',
     server: {
       host: "0.0.0.0",
       port: 5000,
@@ -31,8 +26,6 @@ export default defineConfig(({ mode }) => {
     },
   plugins: [
     react(),
-    // NO vite-tsconfig-paths - causes Vercel conflicts
-    // Use manual path aliases in resolve.alias instead
     // Check TypeScript errors in real-time during dev
     // ESLint checker disabled due to configuration incompatibility
     mode === 'development' && checker({

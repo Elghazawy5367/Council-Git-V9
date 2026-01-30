@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Deployment Integration Verification Script
-# Tests all deployment platforms: GitHub Pages, Vercel, Firebase, IDX
+# Tests GitHub Pages and Firebase deployment platforms
 
 echo "🔍 Verifying Deployment Configuration..."
 echo "========================================"
@@ -42,7 +42,6 @@ check_content() {
 echo ""
 echo "📄 Configuration Files:"
 echo "-----------------------"
-check_file "vercel.json"
 check_file "firebase.json"
 check_file ".idxrc"
 check_file "vite.config.ts"
@@ -56,13 +55,6 @@ check_file ".github/workflows/deploy.yml"
 check_file "public/.nojekyll"
 check_file "public/404.html"
 check_content "vite.config.ts" "Council-Git-V9"
-
-echo ""
-echo "🌐 Vercel Configuration:"
-echo "------------------------"
-check_content "vercel.json" "\"outputDirectory\": \"dist\""
-check_content "vercel.json" "\"framework\": \"vite\""
-check_content "vercel.json" "rewrites"
 
 echo ""
 echo "🔥 Firebase Configuration:"
@@ -121,9 +113,7 @@ if [ $errors -eq 0 ]; then
     echo ""
     echo "Deployment platforms ready:"
     echo "  • GitHub Pages: https://elghazawy5367.github.io/Council-Git-V9/"
-    echo "  • Vercel: Run 'vercel' or 'vercel --prod'"
     echo "  • Firebase: Run 'firebase deploy'"
-    echo "  • IDX: Open in Google IDX and run tasks"
     exit 0
 else
     echo -e "${RED}❌ $errors error(s) found${NC}"

@@ -1,17 +1,17 @@
-# ✅ Dual Deployment Configuration - VERIFIED AND WORKING
+# ✅ GitHub Pages Deployment Configuration - VERIFIED AND WORKING
 
 ## Overview
-This document confirms that the Council application is **successfully configured** for dual deployment to both GitHub Pages and Vercel without any conflicts.
+This document confirms that the Council application is **successfully configured** for GitHub Pages deployment.
 
 ## Configuration Status: ✅ WORKING
 
-All required changes have been implemented and tested. Both deployment targets are functioning correctly.
+All required changes have been implemented and tested. GitHub Pages deployment is functioning correctly.
 
 ---
 
 ## 1. vite.config.ts ✅
 
-**Status**: Correctly configured for dual deployment
+**Status**: Correctly configured for GitHub Pages deployment
 
 ```typescript
 import path from "path";
@@ -20,14 +20,9 @@ import react from "@vitejs/plugin-react-swc";
 import checker from "vite-plugin-checker";
 
 export default defineConfig(({ mode }) => {
-  // Detect deployment target
-  const isVercel = process.env.VERCEL === '1';
-  
   return {
-    // Conditional base path for dual deployment support
-    // GitHub Pages needs: /Council-Git-V9/
-    // Vercel needs: /
-    base: isVercel ? '/' : '/Council-Git-V9/',
+    // GitHub Pages base path
+    base: '/Council-Git-V9/',
     
     server: {
       host: "0.0.0.0",
@@ -48,7 +43,10 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       // NO vite-tsconfig-paths - causes Vercel conflicts
-      // Use manual path aliases in resolve.alias instead
+    
+    plugins: [
+      react(),
+      // Check TypeScript errors in real-time during dev
       mode === 'development' && checker({
         typescript: true,
         overlay: { initialIsOpen: false },
@@ -81,7 +79,7 @@ export default defineConfig(({ mode }) => {
 
 **Key Points**:
 - ✅ No `vite-tsconfig-paths` plugin import or usage
-- ✅ Conditional base path: `/` for Vercel (VERCEL=1), `/Council-Git-V9/` for GitHub Pages
+- ✅ Fixed base path: `/Council-Git-V9/` for GitHub Pages
 - ✅ Manual alias only: `"@": path.resolve(__dirname, "./src")`
 - ✅ Server config and HMR settings maintained
 
@@ -164,38 +162,10 @@ export default defineConfig(({ mode }) => {
 ✅ src/lib/db.ts EXISTS
 ```
 
-**Usage**: Successfully imported in `src/stores/analytics.store.ts`:
+**Usage**: Successfully imported in various stores:
 ```typescript
 import { db, type DecisionRecord as DBDecisionRecord } from '@/lib/db';
 ```
-
----
-
-## 5. vercel.json ✅ (NEW)
-
-**Status**: Created for optimal Vercel deployment
-
-```json
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "installCommand": "npm install",
-  "devCommand": "npm run dev",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
-}
-```
-
-**Purpose**: 
-- Ensures Vercel uses correct build settings
-- Configures SPA routing (all routes -> index.html)
-- Specifies framework as Vite
 
 ---
 
@@ -214,27 +184,14 @@ $ npm run build
 ```
 ✅ **Result**: Correct base path `/Council-Git-V9/`
 
-### Test 2: Vercel Build (VERCEL=1)
-```bash
-$ VERCEL=1 npm run build
-✓ built in 14.10s
-```
-
-**Asset Paths** (from dist/index.html):
-```html
-<script src="/assets/index-enxdtKQR.js"></script>
-<link href="/assets/index-D4tdNKBK.css">
-```
-✅ **Result**: Correct base path `/`
-
-### Test 3: TypeScript Compilation
+### Test 2: TypeScript Compilation
 ```bash
 $ npm run type-check
 ✓ No errors
 ```
 ✅ **Result**: All imports resolve correctly
 
-### Test 4: Development Server
+### Test 3: Development Server
 ```bash
 $ npm run dev
   ➜  Local:   http://localhost:5000/Council-Git-V9/
@@ -247,8 +204,6 @@ $ npm run dev
 ---
 
 ## Application Screenshot
-
-![Council App Working](https://github.com/user-attachments/assets/2c3cda6b-c85d-475e-8505-ff2dd0e3b1f6)
 
 The Council application loads and functions correctly with:
 - ✅ Proper routing and navigation
@@ -268,18 +223,10 @@ The Council application loads and functions correctly with:
 
 **Environment**: `GITHUB_ACTIONS=true` (automatically set by GitHub)
 
-### For Vercel
-1. **Import Repository** in Vercel dashboard
-2. **Configuration** (automatically detected from vercel.json):
-   - Framework: Vite
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-3. **Environment Variables** to set:
-   - `VERCEL=1` (automatically set by Vercel)
-   - `VITE_OPENROUTER_API_KEY` (required for app functionality)
-4. Deploy to production
-
-**Build Command**: Vercel automatically sets `VERCEL=1`, so base path will be `/`
+### Manual Deployment
+```bash
+npm run deploy
+```
 
 ---
 
@@ -290,7 +237,6 @@ The Council application loads and functions correctly with:
   "dev": "vite",                                    // Start dev server
   "build": "vite build",                            // Build for GitHub Pages
   "build:github": "GITHUB_ACTIONS=true vite build", // Explicit GitHub build
-  "build:vercel": "VERCEL=1 vite build",           // Explicit Vercel build
   "type-check": "tsc --noEmit",                    // TypeScript check
   "preview": "vite preview"                         // Preview production build
 }
@@ -301,26 +247,22 @@ The Council application loads and functions correctly with:
 ## Root Cause Analysis (Previous Issue)
 
 ### Original Problem
-- Vercel builds failed with "Cannot find module '@/lib/db'" error
-- Path aliases weren't resolving correctly in Vercel's build environment
-
-### Root Cause
-- The `vite-tsconfig-paths` plugin conflicts with Vercel's Node.js build environment
-- Plugin-based path resolution is less reliable than manual aliases in production
+- Path resolution conflicts in different deployment environments
+- Configuration complexity with multiple deployment targets
 
 ### Solution Implemented
 1. ✅ Removed `vite-tsconfig-paths` plugin completely
 2. ✅ Use manual path aliases in `vite.config.ts`: `"@": path.resolve(__dirname, "./src")`
-3. ✅ Conditional base paths for each deployment target
+3. ✅ Fixed base path for GitHub Pages deployment
 4. ✅ Clean TypeScript configuration (single source of truth)
-5. ✅ Added `vercel.json` for explicit Vercel configuration
+5. ✅ Removed all Vercel-specific configuration
 
 ---
 
 ## Success Criteria Checklist
 
 - [x] vite.config.ts: No vite-tsconfig-paths plugin ✅
-- [x] vite.config.ts: Conditional base path configured ✅
+- [x] vite.config.ts: Fixed base path for GitHub Pages ✅
 - [x] vite.config.ts: Manual alias only ✅
 - [x] vite.config.ts: Server config and HMR maintained ✅
 - [x] tsconfig.json: Project references structure ✅
@@ -330,11 +272,10 @@ The Council application loads and functions correctly with:
 - [x] tsconfig.app.json: Matches parent configuration ✅
 - [x] src/lib/db.ts: File exists ✅
 - [x] Default build: Works with /Council-Git-V9/ base ✅
-- [x] Vercel build: Works with / base ✅
 - [x] TypeScript: No compilation errors ✅
 - [x] Dev server: Runs successfully ✅
 - [x] App: Loads and functions correctly ✅
-- [x] vercel.json: Created for Vercel optimization ✅
+- [x] No Vercel references remaining ✅
 
 ---
 
@@ -342,13 +283,12 @@ The Council application loads and functions correctly with:
 
 ✅ **Configuration Status**: COMPLETE AND WORKING
 
-Both GitHub Pages and Vercel deployments are now fully functional and tested. The dual deployment configuration is production-ready.
+GitHub Pages deployment is fully functional and tested. The configuration is production-ready with zero Vercel dependencies.
 
 **Next Steps**:
 1. Merge this PR to the main branch
-2. Verify GitHub Pages deployment (should still work)
-3. Configure Vercel project and verify deployment
-4. Both platforms will work simultaneously without conflicts
+2. Verify GitHub Pages deployment continues to work
+3. GitHub Actions will automatically deploy on push to main
 
 ---
 

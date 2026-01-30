@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "build:github": "GITHUB_ACTIONS=true vite build",
-    "build:vercel": "VERCEL=1 vite build",
     "build:strict": "tsc --noEmit && vite build",
     "build:dev": "vite build --mode development",
     "type-check": "tsc --noEmit",
@@ -36,7 +35,6 @@
     "twin": "tsx src/lib/twin-mimicry.ts",
     "viral": "tsx src/lib/viral-radar.ts",
     "verify-deploy": "bash scripts/verify-deployments.sh",
-    "deploy:vercel": "vercel --prod",
     "deploy:firebase": "firebase deploy",
     "deploy:github": "npm run deploy"
   },

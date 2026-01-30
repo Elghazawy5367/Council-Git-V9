@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Deployment Setup Script
-# This script helps configure all deployment platforms
+# This script helps configure GitHub Pages and Firebase deployment platforms
 
 set -e
 
@@ -26,18 +26,16 @@ fi
 echo ""
 echo -e "${BLUE}Select deployment platforms to setup:${NC}"
 echo "1) GitHub Pages (Automatic)"
-echo "2) Vercel (Manual Setup Required)"
-echo "3) Firebase Hosting (Manual Setup Required)"
-echo "4) IDX by Google (Already Configured)"
-echo "5) Setup All"
-echo "6) Skip Setup"
+echo "2) Firebase Hosting (Manual Setup Required)"
+echo "3) IDX by Google (Already Configured)"
+echo "4) Setup All"
+echo "5) Skip Setup"
 echo ""
-read -p "Enter choice [1-6]: " choice
+read -p "Enter choice [1-5]: " choice
 
 case $choice in
     1)
         echo -e "${YELLOW}GitHub Pages Setup${NC}"
-        echo "✓ Configuration file: vercel.json"
         echo "✓ Workflow: .github/workflows/deploy.yml"
         echo "✓ Base path: /Council-Git-V9/"
         echo ""
@@ -51,29 +49,6 @@ case $choice in
         ;;
 
     2)
-        echo -e "${YELLOW}Vercel Deployment Setup${NC}"
-        echo ""
-        echo "Install Vercel CLI:"
-        npm install -g vercel 2>/dev/null || echo "⚠ Vercel CLI not installed, please install manually: npm install -g vercel"
-        echo ""
-        echo "Next steps:"
-        echo "1. Run: vercel link"
-        echo "2. Select your organization"
-        echo "3. Create new project"
-        echo "4. Get your credentials from https://vercel.com/account/tokens"
-        echo ""
-        echo "GitHub Secrets to add:"
-        echo "  VERCEL_TOKEN - Authentication token"
-        echo "  VERCEL_ORG_ID - Organization ID"
-        echo "  VERCEL_PROJECT_ID - Project ID"
-        echo ""
-        echo "Add them at:"
-        echo "https://github.com/Elghazawy5367/Council-Git-V9/settings/secrets/actions"
-        echo ""
-        echo -e "${GREEN}✓ Follow these steps to complete Vercel setup${NC}"
-        ;;
-
-    3)
         echo -e "${YELLOW}Firebase Hosting Setup${NC}"
         echo ""
         echo "Install Firebase CLI:"
@@ -94,7 +69,7 @@ case $choice in
         echo -e "${GREEN}✓ Follow these steps to complete Firebase setup${NC}"
         ;;
 
-    4)
+    3)
         echo -e "${YELLOW}IDX by Google${NC}"
         echo ""
         echo "✓ .idxrc configuration file is ready"
@@ -110,33 +85,29 @@ case $choice in
         echo -e "${GREEN}✓ IDX integration complete!${NC}"
         ;;
 
-    5)
+    4)
         echo -e "${YELLOW}Setting up all platforms...${NC}"
         echo ""
         echo -e "${BLUE}1. GitHub Pages${NC}"
         echo "   ✓ Configuration ready"
         echo "   ✓ Workflow configured"
         echo ""
-        echo -e "${BLUE}2. Vercel${NC}"
-        npm install -g vercel 2>/dev/null || true
-        echo "   ⚠ Requires: vercel link, VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID"
-        echo ""
-        echo -e "${BLUE}3. Firebase${NC}"
+        echo -e "${BLUE}2. Firebase${NC}"
         npm install -g firebase-tools 2>/dev/null || true
         echo "   ⚠ Requires: firebase login, firebase init hosting, FIREBASE_TOKEN"
         echo ""
-        echo -e "${BLUE}4. IDX${NC}"
+        echo -e "${BLUE}3. IDX${NC}"
         echo "   ✓ Configuration ready"
         echo ""
         echo -e "${GREEN}All platforms configured!${NC}"
         echo ""
         echo "Next steps:"
-        echo "1. Add GitHub Secrets: https://github.com/Elghazawy5367/Council-Git-V9/settings/secrets/actions"
-        echo "2. Follow manual setup steps for Vercel and Firebase"
-        echo "3. Read DEPLOYMENT_INTEGRATION.md for detailed instructions"
+        echo "1. Add GitHub Secrets (if using Firebase): https://github.com/Elghazawy5367/Council-Git-V9/settings/secrets/actions"
+        echo "2. Follow manual setup steps for Firebase if needed"
+        echo "3. Read DEPLOYMENT_VERIFICATION.md for detailed instructions"
         ;;
 
-    6)
+    5)
         echo "Skipping setup. You can run this script anytime."
         ;;
 
@@ -149,6 +120,6 @@ esac
 echo ""
 echo -e "${GREEN}Setup complete!${NC}"
 echo ""
-echo "For more information, see: DEPLOYMENT_INTEGRATION.md"
+echo "For more information, see: DEPLOYMENT_VERIFICATION.md"
 echo "Build and deploy with: npm run build && npm run deploy"
 echo ""

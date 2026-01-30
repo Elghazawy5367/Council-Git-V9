@@ -67,9 +67,7 @@ echo ""
 echo "📄 Checking deployment files..."
 REQUIRED_FILES=(
     ".github/workflows/deploy.yml"
-    "vercel.json"
-    ".vercelignore"
-    "DEPLOYMENT.md"
+    "DEPLOYMENT_VERIFICATION.md"
     "dist/index.html"
 )
 

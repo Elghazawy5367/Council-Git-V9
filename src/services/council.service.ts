@@ -78,7 +78,7 @@ export async function executeExpert(
 
 /**
  * Execute all experts in the council
- * Now uses true parallel execution with Promise.all() for better performance
+ * Now uses true parallel execution with Promise.allSettled() for better performance and error isolation
  */
 export async function executeCouncilExperts(
   context: ExecutionContext,

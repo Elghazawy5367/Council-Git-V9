@@ -200,7 +200,7 @@ export const ControlPanel: React.FC = () => {
             <p className="text-xs text-muted-foreground">Select how the judge will synthesize expert insights</p>
             <Tabs value={judgeMode} onValueChange={setJudgeMode} className="w-full pb-4">
               <TabsList className="grid grid-cols-2 w-full bg-muted/50 p-3 gap-3">
-                {(Object.keys(JUDGE_MODE_DESCRIPTIONS) as string[]).map((modeKey) => {
+                {Object.keys(JUDGE_MODE_DESCRIPTIONS).map((modeKey) => {
                   const IconComponent = JUDGE_MODE_ICONS[modeKey] || Gavel;
                   const modeInfo = JUDGE_MODE_DESCRIPTIONS[modeKey];
                   return (

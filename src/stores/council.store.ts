@@ -47,8 +47,8 @@ interface CouncilState {
   setTask: (task: string) => void;
   mode: ExecutionMode;
   setMode: (mode: ExecutionMode) => void;
-  judgeMode: string; // Phase 2 judge mode selection
-  setJudgeMode: (mode: string) => void;
+  judgeMode: 'ruthless-judge' | 'consensus-judge' | 'debate-judge' | 'pipeline-judge'; // Phase 2 judge mode selection
+  setJudgeMode: (mode: 'ruthless-judge' | 'consensus-judge' | 'debate-judge' | 'pipeline-judge') => void;
   activeExpertCount: number;
   setActiveExpertCount: (count: number) => void;
   debateRounds: number;
@@ -221,7 +221,7 @@ export const useCouncilStore = create<CouncilState>((set, get) => ({
     // Add judge mode to synthesis config
     const configWithJudge = {
       ...synthesisConfig,
-      judgeMode: state.judgeMode as any,
+      judgeMode: state.judgeMode,
       customInstructions: `${synthesisConfig.customInstructions || ''}\n\nJudge Mode: ${state.judgeMode}`,
     };
 

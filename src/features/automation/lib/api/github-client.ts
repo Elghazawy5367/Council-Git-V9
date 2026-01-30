@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * GitHub API Client for Features Automation
  * Handles API calls to GitHub for trending repos, issues, etc.
  */
 
 import { GITHUB_OWNER, GITHUB_REPO } from '@/lib/config';
+import type { GitHubIssue } from '@/lib/types';
 
 interface GitHubRepo {
   id: number;
@@ -213,7 +213,7 @@ export class GitHubAPIClient {
       labels?: string[];
       perPage?: number;
     } = {}
-  ): Promise<any[]> {
+  ): Promise<GitHubIssue[]> {
     const params = new URLSearchParams({
       state: options.state || 'open',
       per_page: (options.perPage || 30).toString(),
@@ -233,7 +233,7 @@ export class GitHubAPIClient {
   /**
    * Search issues across GitHub
    */
-  async searchIssues(query: string, perPage = 30): Promise<any[]> {
+  async searchIssues(query: string, perPage = 30): Promise<GitHubIssue[]> {
     const params = new URLSearchParams({
       q: query,
       per_page: perPage.toString(),

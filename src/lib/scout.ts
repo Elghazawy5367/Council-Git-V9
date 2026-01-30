@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * The Scout - GitHub Intelligence Extraction System
  * 
@@ -14,6 +13,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { GITHUB_OWNER, GITHUB_REPO } from './config';
+import type { GitHubRawRepo, ScoutIssue } from './types';
 
 /**
  * Consult the Living Knowledge Base (Angle 1)
@@ -178,7 +178,7 @@ export async function scanBlueOcean(topic: string): Promise<Opportunity[]> {
 /**
  * Transform GitHub repo to Opportunity
  */
-function transformToOpportunity(repo: any): Opportunity {
+function transformToOpportunity(repo: GitHubRawRepo): Opportunity {
   const now = new Date();
   const lastUpdate = new Date(repo.updated_at);
   const daysSinceUpdate = Math.floor((now.getTime() - lastUpdate.getTime()) / (1000 * 60 * 60 * 24));
@@ -412,7 +412,7 @@ function getConfig(): ScoutConfig {
 /**
  * Find trending repositories in target niche
  */
-async function findTrendingRepos(config: ScoutConfig): Promise<any[]> {
+async function findTrendingRepos(config: ScoutConfig): Promise<GitHubRawRepo[]> {
   const cacheFile = path.join(process.cwd(), "data", "cache", "repos.json");
 
   // Check cache
@@ -426,7 +426,7 @@ async function findTrendingRepos(config: ScoutConfig): Promise<any[]> {
 
   // Search GitHub
   const query = buildSearchQuery(config.targetNiche);
-  const repos: any[] = [];
+  const repos: GitHubRawRepo[] = [];
   try {
     const response = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${config.maxRepos}`, {
       headers: {
@@ -454,7 +454,7 @@ async function findTrendingRepos(config: ScoutConfig): Promise<any[]> {
 /**
  * Extract pain points from repositories
  */
-async function extractPainPoints(repos: any[], config: ScoutConfig): Promise<PainPoint[]> {
+async function extractPainPoints(repos: GitHubRawRepo[], config: ScoutConfig): Promise<PainPoint[]> {
   const painPoints: PainPoint[] = [];
   const token = process.env.GITHUB_TOKEN;
 
@@ -700,7 +700,7 @@ async function isCacheValid(file: string, expiryHours: number): Promise<boolean>
   const age = Date.now() - stats.mtimeMs;
   return age < expiryHours * 60 * 60 * 1000;
 }
-function calculateSeverity(issue: any, indicators: string[]): PainPoint["severity"] {
+function calculateSeverity(issue: ScoutIssue, indicators: string[]): PainPoint["severity"] {
   const score = indicators.length + issue.comments / 10;
   if (score > 5) return "critical";
   if (score > 3) return "high";
@@ -747,7 +747,8 @@ function estimateMarketSize(point: PainPoint): number {
   return point.frequency * 100; // Rough estimate
 }
 function assessCompetition(): ProductOpportunity["competition"] {
-  return ["none", "weak", "moderate", "strong"][Math.floor(Math.random() * 4)] as any;
+  const options: Array<ProductOpportunity["competition"]> = ["none", "weak", "moderate", "strong"];
+  return options[Math.floor(Math.random() * 4)];
 }
 function estimateEffort(solution: string): ProductOpportunity["effort"] {
   if (solution.includes("simple") || solution.includes("tool")) return "low";
@@ -780,14 +781,31 @@ function sleep(ms: number): Promise<void> {
 
 // Mock data generators
 
-function generateMockRepos(config: ScoutConfig): any[] {
-  const mockRepos = [];
+function generateMockRepos(config: ScoutConfig): GitHubRawRepo[] {
+  const mockRepos: GitHubRawRepo[] = [];
   for (let i = 0; i < config.maxRepos; i++) {
     mockRepos.push({
+      id: i + 1000,
       full_name: `user/project-${i}`,
       name: `project-${i}`,
+      owner: {
+        login: 'user',
+        id: 1,
+        avatar_url: 'https://avatars.githubusercontent.com/u/1',
+        html_url: 'https://github.com/user',
+        type: 'User'
+      },
       stargazers_count: 1000 - i * 10,
-      description: `Mock ${config.targetNiche} project`
+      watchers_count: 900 - i * 10,
+      forks_count: 100 - i,
+      open_issues_count: 10,
+      language: 'TypeScript',
+      topics: [config.targetNiche],
+      description: `Mock ${config.targetNiche} project`,
+      html_url: `https://github.com/user/project-${i}`,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      pushed_at: new Date().toISOString()
     });
   }
   return mockRepos;

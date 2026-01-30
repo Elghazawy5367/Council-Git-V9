@@ -88,3 +88,87 @@ export type SynthesisOutput = z.infer<typeof SynthesisOutputSchema>;
 export type Insight = z.infer<typeof InsightSchema>;
 export type Conflict = z.infer<typeof ConflictSchema>;
 export type ExpertWeightInfo = z.infer<typeof ExpertWeightInfoSchema>;
+
+// GitHub API Types
+export interface GitHubIssue {
+  id: number;
+  number: number;
+  title: string;
+  body: string | null;
+  state: 'open' | 'closed';
+  user: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+  };
+  labels: Array<{
+    id: number;
+    name: string;
+    color: string;
+    description: string | null;
+  }>;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  html_url: string;
+  comments: number;
+  pull_request?: {
+    url: string;
+    html_url: string;
+  };
+}
+
+export interface GitHubRawRepo {
+  id: number;
+  name: string;
+  full_name: string;
+  owner: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+    type: string;
+  };
+  description: string | null;
+  html_url: string;
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  language: string | null;
+  topics?: string[];
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
+}
+
+export interface GitHubRateLimitData {
+  rate: {
+    limit: number;
+    remaining: number;
+    reset: number;
+  };
+}
+
+// API Filter Types
+export interface RedditSearchFilters {
+  subreddit?: string;
+  query?: string;
+  sort?: 'hot' | 'new' | 'top' | 'rising';
+  time?: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
+  limit?: number;
+  after?: string;
+}
+
+export interface HackerNewsSearchFilters {
+  query?: string;
+  tags?: string[];
+  numericFilters?: string[];
+  page?: number;
+  hitsPerPage?: number;
+}
+
+// Scout-specific Types (reuse GitHubIssue for better type coverage)
+// Note: ScoutIssue is an alias to GitHubIssue for backward compatibility
+export type ScoutIssue = GitHubIssue;

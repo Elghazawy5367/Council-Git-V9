@@ -1,17 +1,18 @@
 import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import tsconfigPaths from "vite-tsconfig-paths";
 import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Detect if running in GitHub Codespaces or similar HTTPS environment
-  const isCodespaces = process.env.CODESPACES === 'true' || process.env.GITHUB_CODESPACE_TOKEN;
+  // Detect deployment target
+  const isVercel = process.env.VERCEL === '1';
   
   return {
-    // Base path for deployment
-    base: './',
+    // Conditional base path for dual deployment support
+    // GitHub Pages needs: /Council-Git-V9/
+    // Vercel needs: /
+    base: isVercel ? '/' : '/Council-Git-V9/',
     server: {
       host: "0.0.0.0",
       port: 5000,
@@ -29,8 +30,9 @@ export default defineConfig(({ mode }) => {
       },
     },
   plugins: [
-    react(), 
-    tsconfigPaths(),
+    react(),
+    // NO vite-tsconfig-paths - causes Vercel conflicts
+    // Use manual path aliases in resolve.alias instead
     // Check TypeScript errors in real-time during dev
     // ESLint checker disabled due to configuration incompatibility
     mode === 'development' && checker({

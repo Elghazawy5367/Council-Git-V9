@@ -119,12 +119,3 @@ export const useSettingsStore = create<SettingsState>(
     }
   )
 );
-        set({ vaultStatus: getVaultStatus(), openRouterKey: '', githubApiKey: '', redditApiKey: '' });
-        toast.info('Vault Locked');
-      },
-    }),
-    {
-      name: 'council-settings-storage',
-    }
-  )
-);

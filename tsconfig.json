@@ -7,9 +7,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@legacy/*": ["./src/old-structure/*"],
-      "@features/*": ["./src/features/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

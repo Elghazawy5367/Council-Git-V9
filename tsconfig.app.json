@@ -26,11 +26,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    /* Path aliases - must match tsconfig.json and vite.config.ts */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "types": ["node"]
   },
   "include": ["src"]

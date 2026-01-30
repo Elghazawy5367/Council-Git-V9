@@ -38,7 +38,6 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          GITHUB_ACTIONS: 'true'  # Redundant but explicit for clarity
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

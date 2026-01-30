@@ -5,9 +5,6 @@ import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Detect if running in GitHub Codespaces or similar HTTPS environment
-  const isCodespaces = process.env.CODESPACES === 'true' || process.env.GITHUB_CODESPACE_TOKEN;
-  
   // Detect deployment target
   const isVercel = process.env.VERCEL === '1';
   

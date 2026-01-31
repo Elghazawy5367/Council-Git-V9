@@ -113,6 +113,7 @@ function calculateOutputQuality(output: string): number {
 
 /**
  * Extract confidence level from output text (0-1)
+ * Note: All regex patterns are case-insensitive (/i flag), so no toLowerCase() needed
  */
 function extractConfidence(output: string): number {
   // High confidence signals

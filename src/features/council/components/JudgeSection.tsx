@@ -12,7 +12,7 @@
  * 8. Copy button for judge output
  */
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useCouncilContext } from '@/contexts/CouncilContext';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
@@ -34,9 +34,10 @@ export function JudgeSection(): JSX.Element | null {
   const [isScoresExpanded, setIsScoresExpanded] = useState(false);
   const [isContradictionsExpanded, setIsContradictionsExpanded] = useState(false);
 
-  // Only show if we have at least 2 successful responses
-  const successfulResponses = execution.llmResponses.filter(
-    (r) => r.status === 'success'
+  // Only show if we have at least 2 successful responses - memoized for performance
+  const successfulResponses = useMemo(() => 
+    execution.llmResponses.filter((r) => r.status === 'success'),
+    [execution.llmResponses]
   );
 
   if (successfulResponses.length < 2) {

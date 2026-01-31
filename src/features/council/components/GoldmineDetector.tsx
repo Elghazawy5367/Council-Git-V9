@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
@@ -74,10 +74,14 @@ export const GoldmineDetector: React.FC<GoldmineDetectorProps> = ({ opportunitie
     );
   }
 
-  const totalRevenue = goldmines.slice(0, 10).reduce((sum, repo) => {
-    const metrics = calculateGoldmineMetrics(repo);
-    return sum + metrics.estimatedRevenueLow;
-  }, 0);
+  // Memoize revenue calculation for performance
+  const totalRevenue = useMemo(() => 
+    goldmines.slice(0, 10).reduce((sum, repo) => {
+      const metrics = calculateGoldmineMetrics(repo);
+      return sum + metrics.estimatedRevenueLow;
+    }, 0),
+    [goldmines]
+  );
 
   return (
     <div className="space-y-6">

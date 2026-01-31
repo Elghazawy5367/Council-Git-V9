@@ -352,24 +352,30 @@ Wrap your JSON response in \`\`\`json and \`\`\` tags.`;
 
 // Helper: Build weighted synthesis context
 function buildWeightedContext(weights: ReturnType<typeof createWeightedOutputs>, imbalance: ReturnType<typeof detectWeightImbalance>): string {
-  let context = '\n\n--- EXPERT WEIGHT ANALYSIS ---\n\n';
+  // Use array to avoid string concatenation performance issues
+  const parts: string[] = ['\n\n--- EXPERT WEIGHT ANALYSIS ---\n\n'];
 
   // Sort by weight
   const sorted = [...weights].sort((a, b) => b.weight - a.weight);
-  context += 'Expert weights (higher = more reliable):\n';
-  sorted.forEach((w) => {
+  parts.push('Expert weights (higher = more reliable):\n');
+  
+  for (const w of sorted) {
     const percentage = (w.normalizedWeight * 100).toFixed(1);
     const stars = '★'.repeat(Math.ceil(w.weight * 5));
-    context += `- ${w.expertName}: ${(w.weight * 100).toFixed(0)}% quality (${percentage}% of total) ${stars}\n`;
-  });
-  context += `\nTop ${Math.min(3, sorted.length)} experts to prioritize: ${sorted.slice(0, 3).map((w) => w.expertName).join(', ')}\n`;
-  if (imbalance.hasImbalance) {
-    context += `\n⚠️ WEIGHT IMBALANCE DETECTED: ${imbalance.warning}\n`;
+    parts.push(`- ${w.expertName}: ${(w.weight * 100).toFixed(0)}% quality (${percentage}% of total) ${stars}\n`);
   }
-  context += '\n--- END WEIGHT ANALYSIS ---\n\n';
-  context += '**INSTRUCTION**: Prioritize insights from higher-weighted experts in your synthesis. ';
-  context += 'When experts disagree, give more weight to those with higher quality scores.\n';
-  return context;
+  
+  parts.push(`\nTop ${Math.min(3, sorted.length)} experts to prioritize: ${sorted.slice(0, 3).map((w) => w.expertName).join(', ')}\n`);
+  
+  if (imbalance.hasImbalance) {
+    parts.push(`\n⚠️ WEIGHT IMBALANCE DETECTED: ${imbalance.warning}\n`);
+  }
+  
+  parts.push('\n--- END WEIGHT ANALYSIS ---\n\n');
+  parts.push('**INSTRUCTION**: Prioritize insights from higher-weighted experts in your synthesis. ');
+  parts.push('When experts disagree, give more weight to those with higher quality scores.\n');
+  
+  return parts.join('');
 }
 
 // Streaming synthesis function

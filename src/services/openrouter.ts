@@ -87,6 +87,13 @@ export default class OpenRouterService {
     selectedLLMs: string[],
     onProgress?: (progress: ExecutionProgress) => void
   ): Promise<LLMResponse[]> {
+    // Log execution start
+    console.log('[OpenRouter] Starting parallel execution', {
+      prompt: prompt.substring(0, 50) + '...',
+      selectedLLMs,
+      filesCount: files.length
+    });
+
     const llmsToExecute = AVAILABLE_LLMS.filter((llm) => 
       selectedLLMs.includes(llm.id) && llm.enabled
     );
@@ -132,7 +139,16 @@ export default class OpenRouterService {
       }
     });
 
-    return Promise.all(promises);
+    const results = await Promise.all(promises);
+    
+    // Log execution complete
+    console.log('[OpenRouter] Parallel execution complete', {
+      totalLLMs: results.length,
+      successful: results.filter(r => r.status === 'success').length,
+      failed: results.filter(r => r.status === 'error').length
+    });
+
+    return results;
   }
 
   /**

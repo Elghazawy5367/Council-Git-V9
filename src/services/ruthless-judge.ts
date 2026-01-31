@@ -58,12 +58,23 @@ class RuthlessJudgeService {
    * Judge multiple LLM responses and synthesize a unified answer
    */
   async judge(responses: LLMResponse[]): Promise<JudgmentResult> {
+    // Log judgment start
+    console.log('[Judge] Running judgment', {
+      responsesCount: responses.length,
+      llms: responses.map(r => r.llmId)
+    });
+
     // Handle edge cases
     if (responses.length === 0) {
+      console.log('[Judge] No responses to judge');
       return this.handleNoResponses();
     }
 
     const successfulResponses = responses.filter(r => r.status === 'success' && r.response.trim());
+    console.log('[Judge] Successful responses', {
+      count: successfulResponses.length,
+      llms: successfulResponses.map(r => r.llmId)
+    });
     
     if (successfulResponses.length === 0) {
       return this.handleAllFailures(responses);
@@ -78,14 +89,22 @@ class RuthlessJudgeService {
 
     try {
       // Call GPT-4 as the judge
+      console.log('[Judge] Calling GPT-4 judge with prompt length:', judgePrompt.length);
       const judgeResponse = await this.callJudge(judgePrompt);
       
       // Parse and validate response
       const parsedResult = this.parseJudgeResponse(judgeResponse, successfulResponses);
       
+      console.log('[Judge] Judgment complete', {
+        confidence: parsedResult.confidence,
+        contradictions: parsedResult.contradictions.length,
+        llmsScored: Object.keys(parsedResult.scoreBreakdown).length
+      });
+      
       return parsedResult;
     } catch (error) {
-      console.error('Judge error:', error);
+      console.error('[Judge] Judge error:', error);
+      console.log('[Judge] Using fallback judgment');
       // Fallback: return basic synthesis
       return this.createFallbackJudgment(successfulResponses);
     }

@@ -180,6 +180,13 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
       throw new Error('No LLMs selected');
     }
 
+    console.log('[Council] Running parallel execution', {
+      inputText: input.text.substring(0, 50) + '...',
+      selectedLLMs: llmSelection.selectedLLMs,
+      filesCount: input.files.length,
+      phase: execution.phase
+    });
+
     setExecution((prev) => ({
       ...prev,
       phase: 'parallel',
@@ -204,6 +211,12 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
         }
       );
 
+      console.log('[Council] Parallel execution complete', {
+        responsesReceived: responses.length,
+        successful: responses.filter(r => r.status === 'success').length,
+        failed: responses.filter(r => r.status === 'error').length
+      });
+
       setExecution((prev) => ({
         ...prev,
         phase: 'idle',
@@ -211,6 +224,7 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
         llmResponses: responses,
       }));
     } catch (error) {
+      console.error('[Council] Execution error:', error);
       setExecution((prev) => ({
         ...prev,
         phase: 'idle',
@@ -249,6 +263,15 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
     if (execution.llmResponses.length === 0) {
       throw new Error('No LLM responses to synthesize');
     }
+
+    const successfulResponses = execution.llmResponses.filter((r) => r.status === 'success');
+    
+    console.log('[Council] Running judge synthesis', {
+      mode: judge.mode,
+      totalResponses: execution.llmResponses.length,
+      successfulResponses: successfulResponses.length,
+      llms: successfulResponses.map(r => r.llmId)
+    });
 
     setJudge((prev) => ({
       ...prev,
@@ -292,6 +315,10 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
       const judgeResponse = responses[0];
 
       if (judgeResponse.status === 'success') {
+        console.log('[Council] Judge synthesis complete', {
+          mode: judge.mode,
+          responseLength: judgeResponse.response.length
+        });
         setJudge((prev) => ({
           ...prev,
           isRunning: false,
@@ -306,6 +333,7 @@ export function CouncilProvider({ children }: CouncilProviderProps): JSX.Element
         phase: 'idle',
       }));
     } catch (error) {
+      console.error('[Council] Judge synthesis error:', error);
       setJudge((prev) => ({
         ...prev,
         isRunning: false,

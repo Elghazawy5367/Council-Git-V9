@@ -114,6 +114,30 @@ export const MODE_DESCRIPTIONS: Record<string, { name: string; description: stri
   },
 };
 
+// Phase 2: Judge Mode Descriptions for Synthesis
+export const JUDGE_MODE_DESCRIPTIONS: Record<string, { name: string; description: string; icon: string }> = {
+  'ruthless-judge': {
+    name: 'Ruthless Judge',
+    description: 'Critical analysis with brutal honesty - filters weak arguments and surfaces only high-confidence insights (Default)',
+    icon: 'Gavel',
+  },
+  'consensus-judge': {
+    name: 'Consensus Judge',
+    description: 'Finds common ground and builds unified perspective from all expert views',
+    icon: 'GitMerge',
+  },
+  'debate-judge': {
+    name: 'Debate Judge',
+    description: 'Highlights conflicts and weighs opposing arguments - shows all sides with scoring',
+    icon: 'Swords',
+  },
+  'pipeline-judge': {
+    name: 'Pipeline Judge',
+    description: 'Sequential synthesis where each expert builds upon previous insights',
+    icon: 'Workflow',
+  },
+};
+
 export const MODE_BEHAVIORS = {
   separated: {
     instruction: 'Provide your independent analysis without considering other perspectives.',

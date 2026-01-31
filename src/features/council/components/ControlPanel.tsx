@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
-import { useControlPanelStore } from '@/features/council/store/control-panel-store';
-import { useExecutionStore } from '@/features/council/store/execution-store';
+import { useCouncilStore } from '@/stores/council.store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useShallow } from 'zustand/react/shallow';
-import { MODE_DESCRIPTIONS } from '@/lib/config';
-import { ExecutionMode, SynthesisConfig } from '@/features/council/lib/types';
+import { JUDGE_MODE_DESCRIPTIONS } from '@/lib/config';
+import { SynthesisConfig } from '@/features/council/lib/types';
 import { Card, CardContent } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Textarea } from '@/components/primitives/textarea';
@@ -17,23 +16,22 @@ import {
   Upload,
   FileText,
   X,
-  Layers,
-  GitMerge,
-  Swords,
-  Workflow,
   Loader2,
   Play,
   Target,
   MessageSquare,
+  Gavel,
+  CheckCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { PersonaSelector } from './PersonaSelector';
 
-const MODE_ICONS: Record<ExecutionMode, React.ComponentType<{ className?: string }>> = {
-  parallel: Layers,
-  consensus: GitMerge,
-  adversarial: Swords,
-  sequential: Workflow,
+// Judge mode icons
+const JUDGE_MODE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  'ruthless-judge': Gavel,
+  'consensus-judge': CheckCircle,
+  'debate-judge': MessageSquare,
+  'pipeline-judge': Target,
 };
 
 import { FeatureConfigModal } from './FeatureConfigModal';
@@ -50,29 +48,40 @@ export const ControlPanel: React.FC = () => {
   const {
     task,
     setTask,
-    mode,
-    setMode,
+    judgeMode,
+    setJudgeMode,
     activeExpertCount,
     setActiveExpertCount,
-    debateRounds,
-    setDebateRounds,
     fileData,
     setFileData,
-  } = useControlPanelStore(useShallow((state) => ({
+    executionPhase,
+    isLoading,
+    isSynthesizing,
+    statusMessage,
+    executePhase1,
+    executePhase2,
+  } = useCouncilStore(useShallow((state) => ({
     task: state.task,
     setTask: state.setTask,
-    mode: state.mode,
-    setMode: state.setMode,
+    judgeMode: state.judgeMode,
+    setJudgeMode: state.setJudgeMode,
     activeExpertCount: state.activeExpertCount,
     setActiveExpertCount: state.setActiveExpertCount,
-    debateRounds: state.debateRounds,
-    setDebateRounds: state.setDebateRounds,
     fileData: state.fileData,
     setFileData: state.setFileData,
+    executionPhase: state.executionPhase,
+    isLoading: state.isLoading,
+    isSynthesizing: state.isSynthesizing,
+    statusMessage: state.statusMessage,
+    executePhase1: state.executePhase1,
+    executePhase2: state.executePhase2,
   })));
 
-  const { isLoading, statusMessage } = useExecutionStore(useShallow((state) => ({ isLoading: state.isLoading, statusMessage: state.statusMessage })));
-  const { vaultStatus, setShowSettings } = useSettingsStore(useShallow((state) => ({ vaultStatus: state.vaultStatus, setShowSettings: state.setShowSettings })));
+  const { vaultStatus, setShowSettings } = useSettingsStore(useShallow((state) => ({ 
+    vaultStatus: state.vaultStatus, 
+    setShowSettings: state.setShowSettings 
+  })));
+  
   const synthesisMutation = useExecuteSynthesis();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -101,7 +110,7 @@ export const ControlPanel: React.FC = () => {
     toast.info('File context removed');
   };
 
-  const handleExecuteClick = () => {
+  const handlePhase1Click = () => {
     if (vaultStatus.isLocked) {
       setShowSettings(true);
       toast.error('Please unlock the vault first');
@@ -112,22 +121,22 @@ export const ControlPanel: React.FC = () => {
       return;
     }
 
-    const defaultConfig: SynthesisConfig = {
-      tier: 'quick',
-      model: 'default-model',
-      fallbackModel: 'fallback-model',
-      temperature: 0.7,
-      maxTokens: 1000,
-      customInstructions: 'Default instructions', // Added missing property
-    };
-
-    synthesisMutation.mutate({
-      task,
-      config: synthesisMutation.variables?.config || defaultConfig,
-      apiKey: synthesisMutation.variables?.apiKey || '',
-      onProgress: synthesisMutation.variables?.onProgress || (() => {}),
-    });
+    executePhase1();
   };
+
+  const handlePhase2Click = () => {
+    if (executionPhase !== 'phase1-complete') {
+      toast.error('Please run Phase 1 (Run Council) first');
+      return;
+    }
+
+    executePhase2(synthesisMutation);
+  };
+
+  const isPhase1Running = isLoading && executionPhase === 'phase1-experts';
+  const isPhase2Running = isSynthesizing && executionPhase === 'phase2-synthesis';
+  const canRunPhase1 = !isLoading && executionPhase !== 'phase1-experts';
+  const canRunPhase2 = executionPhase === 'phase1-complete' && !isSynthesizing;
 
   return (
     <Card className="glass-panel-elevated">
@@ -144,9 +153,10 @@ export const ControlPanel: React.FC = () => {
           />
         </div>
 
-        <div className="space-y-3">
+        {/* Phase 1 Section: Expert Configuration */}
+        <div className="space-y-3 border-t pt-4">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">Execution Mode</label>
+            <label className="text-sm font-medium text-foreground">Phase 1: Expert Configuration</label>
             <Button 
               variant="ghost" 
               size="icon" 
@@ -157,27 +167,8 @@ export const ControlPanel: React.FC = () => {
               <Settings className="h-4 w-4" />
             </Button>
           </div>
-          <Tabs value={mode} onValueChange={(v) => setMode(v as ExecutionMode)} className="w-full pb-8">
-            <TabsList className="grid grid-cols-4 w-full bg-muted/50 p-3 gap-3">
-              {(Object.keys(MODE_DESCRIPTIONS) as ExecutionMode[]).map((modeKey) => {
-                const IconComponent = MODE_ICONS[modeKey];
-                return (
-                  <TabsTrigger
-                    key={modeKey}
-                    value={modeKey}
-                    className="flex flex-col items-center justify-center gap-1.5 min-w-[60px] px-2 py-4 text-xs font-medium min-h-[48px] data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground"
-                  >
-                    <IconComponent className="h-5 w-5 flex-shrink-0" />
-                    <span className="text-xs leading-snug">{MODE_DESCRIPTIONS[modeKey].name}</span>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-          </Tabs>
-          <p className="text-xs text-muted-foreground leading-relaxed">{MODE_DESCRIPTIONS[mode].description}</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <p className="text-xs text-muted-foreground">All experts will analyze in parallel</p>
+          
           <div className="space-y-5">
             <div className="flex justify-between items-center gap-4">
               <label className="text-sm font-medium text-foreground">Active Experts</label>
@@ -198,30 +189,36 @@ export const ControlPanel: React.FC = () => {
               <span className="font-medium">5</span>
             </div>
           </div>
-
-          {mode === 'adversarial' && (
-            <div className="space-y-5">
-              <div className="flex justify-between items-center gap-4">
-                <label className="text-sm font-medium text-foreground">Debate Rounds</label>
-                <Badge variant="secondary" className="font-mono text-base px-4 py-1">{debateRounds}</Badge>
-              </div>
-              <div className="px-2">
-                <Slider
-                  value={[debateRounds]}
-                  onValueChange={([value]) => setDebateRounds(value)}
-                  min={1}
-                  max={5}
-                  step={1}
-                  className="slider-council"
-                />
-              </div>
-              <div className="flex justify-between text-xs text-muted-foreground px-3">
-                <span className="font-medium">1</span>
-                <span className="font-medium">5</span>
-              </div>
-            </div>
-          )}
         </div>
+
+        {/* Phase 2 Section: Judge Mode Selection */}
+        {executionPhase === 'phase1-complete' && (
+          <div className="space-y-3 border-t pt-4 border-primary/20 bg-primary/5 -mx-6 px-6 py-4 rounded-lg">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-foreground">Phase 2: Judge Mode Selection</label>
+            </div>
+            <p className="text-xs text-muted-foreground">Select how the judge will synthesize expert insights</p>
+            <Tabs value={judgeMode} onValueChange={setJudgeMode} className="w-full pb-4">
+              <TabsList className="grid grid-cols-2 w-full bg-muted/50 p-3 gap-3">
+                {Object.keys(JUDGE_MODE_DESCRIPTIONS).map((modeKey) => {
+                  const IconComponent = JUDGE_MODE_ICONS[modeKey] || Gavel;
+                  const modeInfo = JUDGE_MODE_DESCRIPTIONS[modeKey];
+                  return (
+                    <TabsTrigger
+                      key={modeKey}
+                      value={modeKey}
+                      className="flex flex-col items-center justify-center gap-1.5 min-w-[80px] px-2 py-4 text-xs font-medium min-h-[60px] data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground"
+                    >
+                      <IconComponent className="h-5 w-5 flex-shrink-0" />
+                      <span className="text-xs leading-snug text-center">{modeInfo.name}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            </Tabs>
+            <p className="text-xs text-muted-foreground leading-relaxed">{JUDGE_MODE_DESCRIPTIONS[judgeMode]?.description}</p>
+          </div>
+        )}
 
         <div className="space-y-3">
           <label className="text-sm font-medium text-foreground">File Context (Optional)</label>
@@ -293,13 +290,40 @@ export const ControlPanel: React.FC = () => {
           </Button>
         </div>
 
-        <Button className="w-full h-14 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30" onClick={handleExecuteClick} disabled={isLoading || !task.trim()}>
-          {isLoading ? (
-            <><Loader2 className="h-5 w-5 mr-2 animate-spin" />{statusMessage || 'Processing...'}</>
-          ) : (
-            <><Play className="h-5 w-5 mr-2" />Execute Council</>
+        {/* Two-Phase Execution Buttons */}
+        <div className="space-y-3">
+          {/* Phase 1 Button */}
+          <Button 
+            className="w-full h-14 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30" 
+            onClick={handlePhase1Click} 
+            disabled={!canRunPhase1 || !task.trim()}
+          >
+            {isPhase1Running ? (
+              <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Phase 1: Running...</>
+            ) : executionPhase === 'phase1-complete' || executionPhase === 'complete' ? (
+              <><CheckCircle className="h-5 w-5 mr-2" />Phase 1 Complete</>
+            ) : (
+              <><Play className="h-5 w-5 mr-2" />Run Council (Phase 1)</>
+            )}
+          </Button>
+
+          {/* Phase 2 Button - Only shown after Phase 1 completes */}
+          {(executionPhase === 'phase1-complete' || executionPhase === 'complete') && (
+            <Button 
+              className="w-full h-14 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-purple-500/25 transition-all hover:shadow-xl hover:shadow-purple-500/30" 
+              onClick={handlePhase2Click} 
+              disabled={!canRunPhase2}
+            >
+              {isPhase2Running ? (
+                <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Phase 2: Synthesizing...</>
+              ) : executionPhase === 'complete' ? (
+                <><CheckCircle className="h-5 w-5 mr-2" />Phase 2 Complete</>
+              ) : (
+                <><Gavel className="h-5 w-5 mr-2" />Run Judge (Phase 2)</>
+              )}
+            </Button>
           )}
-        </Button>
+        </div>
 
         <FeatureConfigModal 
           isOpen={isConfigOpen} 
@@ -307,7 +331,7 @@ export const ControlPanel: React.FC = () => {
           initialTab={selectedFeatureTab}
         />
 
-        {isLoading && statusMessage && (
+        {(isLoading || isSynthesizing) && statusMessage && (
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
             {statusMessage}

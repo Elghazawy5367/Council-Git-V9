@@ -52,7 +52,11 @@ export interface Expert {
   content?: string; // Added to align with control-panel-store.ts
 }
 
+// Phase 1: Expert execution mode (all experts run in parallel)
 export type ExecutionMode = 'parallel' | 'consensus' | 'adversarial' | 'sequential';
+
+// Phase 2: Judge/synthesis modes for unifying expert outputs
+export type JudgeMode = 'ruthless-judge' | 'consensus-judge' | 'debate-judge' | 'pipeline-judge';
 
 export type SynthesisTier = 'quick' | 'balanced' | 'deep';
 
@@ -64,6 +68,7 @@ export interface SynthesisConfig {
   maxTokens?: number;
   customInstructions?: string;
   options?: Record<string, unknown>;
+  judgeMode?: JudgeMode; // Phase 2: Judge mode selection
 }
 
 export interface SynthesisResult {
@@ -76,7 +81,7 @@ export interface SynthesisResult {
 
 export interface ExecutionState {
   isRunning: boolean;
-  currentPhase: string;
+  currentPhase: 'idle' | 'phase1-experts' | 'phase1-complete' | 'phase2-synthesis' | 'complete';
   progress: number;
   startTime?: Date;
   outputs: Record<string, string>;

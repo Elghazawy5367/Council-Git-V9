@@ -5,6 +5,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import RootErrorBoundary from "@/components/ErrorBoundary";
 import { Toaster } from "@/components/primitives/sonner";
+import { CouncilProvider } from "@/contexts/CouncilContext";
+import { CouncilWorkflow } from "@/features/council/components/CouncilWorkflow";
 
 // Lazy load pages for code splitting
 const Index = React.lazy(() => import("@/pages/Index"));
@@ -31,21 +33,24 @@ const PageLoader = () => (
 const App = () => (
   <RootErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <HashRouter>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/features" element={<AutomationDashboard />} />
-              <Route path="/quality" element={<QualityDashboard />} />
-              <Route path="/features/scout" element={<ScoutConfig />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </HashRouter>
-      </TooltipProvider>
+      <CouncilProvider>
+        <TooltipProvider>
+          <Toaster />
+          <HashRouter>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/council" element={<CouncilWorkflow />} />
+                <Route path="/features" element={<AutomationDashboard />} />
+                <Route path="/quality" element={<QualityDashboard />} />
+                <Route path="/features/scout" element={<ScoutConfig />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </HashRouter>
+        </TooltipProvider>
+      </CouncilProvider>
     </QueryClientProvider>
   </RootErrorBoundary>
 );

@@ -78,6 +78,7 @@ export async function executeExpert(
 
 /**
  * Execute all experts in the council
+ * Now uses true parallel execution with Promise.allSettled() for better performance and error isolation
  */
 export async function executeCouncilExperts(
   context: ExecutionContext,
@@ -87,25 +88,25 @@ export async function executeCouncilExperts(
   const collectedOutputs: Record<string, { expertName: string; output: string; model: string }> = {};
   let expertsCost = 0;
 
-  for (let i = 0; i < context.activeExperts.length; i++) {
-    const expert = context.activeExperts[i];
-    onStatusUpdate(`${expert.name} is analyzing...`);
-    onExpertUpdate(i, { isLoading: true, output: '' });
+  // For parallel mode, execute all experts simultaneously
+  if (context.mode === 'parallel') {
+    onStatusUpdate('Running all experts in parallel...');
+    
+    // Initialize all experts as loading
+    for (let i = 0; i < context.activeExperts.length; i++) {
+      onExpertUpdate(i, { isLoading: true, output: '' });
+    }
 
-    const previousOutputs =
-      context.mode === 'sequential' || context.mode === 'adversarial'
-        ? Object.fromEntries(Object.entries(collectedOutputs).map(([id, data]) => [id, data.output]))
-        : undefined;
-
-    try {
-      const result = await executeExpert(
+    // Execute all experts in parallel using Promise.allSettled for error isolation
+    const expertPromises = context.activeExperts.map((expert, index) => 
+      executeExpert(
         expert,
         context.task,
         context.mode,
         context.apiKey,
         {
           onToken: (token) => {
-            onExpertUpdate(i, { output: token });
+            onExpertUpdate(index, { output: token });
           },
           onComplete: (fullText) => {
             // Complete callback handled in executeExpert
@@ -113,33 +114,113 @@ export async function executeCouncilExperts(
           onError: (error) => {
             console.error(`Streaming error for expert ${expert.name}:`, error);
           },
-        },
-        previousOutputs
-      );
+        }
+      ).then(result => ({ index, expert, result, success: true }))
+        .catch(error => ({ index, expert, error, success: false }))
+    );
 
-      collectedOutputs[expert.id] = {
-        expertName: expert.name,
-        output: result.output,
-        model: expert.model,
-      };
-      expertsCost += result.cost;
+    const results = await Promise.allSettled(expertPromises);
 
-      onExpertUpdate(i, { output: result.output, isLoading: false });
-    } catch (error) {
-      console.error(`Error with expert ${expert.name}:`, error);
-      const errorMessage = 'Failed to generate output.';
-      
-      onExpertUpdate(i, { 
-        output: errorMessage, 
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      });
+    // Process results
+    results.forEach((promiseResult, idx) => {
+      if (promiseResult.status === 'fulfilled') {
+        const { index, expert, result, success } = promiseResult.value;
+        
+        if (success && result) {
+          collectedOutputs[expert.id] = {
+            expertName: expert.name,
+            output: result.output,
+            model: expert.model,
+          };
+          expertsCost += result.cost;
+          onExpertUpdate(index, { output: result.output, isLoading: false });
+        } else {
+          const errorMessage = 'Failed to generate output.';
+          collectedOutputs[expert.id] = {
+            expertName: expert.name,
+            output: errorMessage,
+            model: expert.model,
+          };
+          onExpertUpdate(index, { 
+            output: errorMessage, 
+            isLoading: false,
+            error: promiseResult.value.error instanceof Error ? promiseResult.value.error.message : 'Unknown error'
+          });
+        }
+      } else {
+        // Promise.allSettled rejected (should not happen with our error handling)
+        const expert = context.activeExperts[idx];
+        const errorMessage = 'Failed to generate output.';
+        collectedOutputs[expert.id] = {
+          expertName: expert.name,
+          output: errorMessage,
+          model: expert.model,
+        };
+        onExpertUpdate(idx, { 
+          output: errorMessage, 
+          isLoading: false,
+          error: promiseResult.reason?.message || 'Unknown error'
+        });
+      }
+    });
 
-      collectedOutputs[expert.id] = {
-        expertName: expert.name,
-        output: errorMessage,
-        model: expert.model,
-      };
+    onStatusUpdate('All experts have completed their analysis!');
+  } else {
+    // For sequential/adversarial modes, execute one at a time
+    for (let i = 0; i < context.activeExperts.length; i++) {
+      const expert = context.activeExperts[i];
+      onStatusUpdate(`${expert.name} is analyzing...`);
+      onExpertUpdate(i, { isLoading: true, output: '' });
+
+      const previousOutputs =
+        context.mode === 'sequential' || context.mode === 'adversarial'
+          ? Object.fromEntries(Object.entries(collectedOutputs).map(([id, data]) => [id, data.output]))
+          : undefined;
+
+      try {
+        const result = await executeExpert(
+          expert,
+          context.task,
+          context.mode,
+          context.apiKey,
+          {
+            onToken: (token) => {
+              onExpertUpdate(i, { output: token });
+            },
+            onComplete: (fullText) => {
+              // Complete callback handled in executeExpert
+            },
+            onError: (error) => {
+              console.error(`Streaming error for expert ${expert.name}:`, error);
+            },
+          },
+          previousOutputs
+        );
+
+        collectedOutputs[expert.id] = {
+          expertName: expert.name,
+          output: result.output,
+          model: expert.model,
+        };
+        expertsCost += result.cost;
+
+        onExpertUpdate(i, { output: result.output, isLoading: false });
+      } catch (error) {
+        console.error(`Error with expert ${expert.name}:`, error);
+        const errorMessage = 'Failed to generate output.';
+        
+        onExpertUpdate(i, { 
+          output: errorMessage, 
+          isLoading: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        });
+
+        collectedOutputs[expert.id] = {
+          expertName: expert.name,
+          output: errorMessage,
+          model: expert.model,
+        };
+      }
     }
   }
 

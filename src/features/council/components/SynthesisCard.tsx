@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { useSettingsStore } from '@/features/settings/store/settings-store';
 import { useShallow } from 'zustand/react/shallow';
@@ -29,13 +29,13 @@ const TIER_ICONS: Record<SynthesisTier, React.ComponentType<{ className?: string
   deep: Brain,
 };
 
-export const SynthesisCard: React.FC = () => {
+const SynthesisCardComponent: React.FC = () => {
   const { synthesisResult, isSynthesizing } = useExecutionStore(useShallow((state) => ({ synthesisResult: state.synthesisResult, isSynthesizing: state.isSynthesizing })));
   const { synthesisConfig, setSynthesisConfig } = useSettingsStore(useShallow((state) => ({ synthesisConfig: state.synthesisConfig, setSynthesisConfig: state.setSynthesisConfig })));
   const [showConfig, setShowConfig] = useState<boolean>(false); // Fixed type of showConfig
   const tierConfig = SYNTHESIS_TIERS[synthesisConfig.tier];
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     if (synthesisResult?.content) {
       try {
         await navigator.clipboard.writeText(synthesisResult.content);
@@ -45,7 +45,7 @@ export const SynthesisCard: React.FC = () => {
         toast.error('Failed to copy to clipboard');
       }
     }
-  };
+  }, [synthesisResult]);
 
   return (
     <Card className="glass-panel transition-all duration-300 ring-2 ring-accent/30 h-full flex flex-col">
@@ -209,5 +209,8 @@ export const SynthesisCard: React.FC = () => {
     </Card>
   );
 };
+
+// Memoize to prevent unnecessary re-renders
+export const SynthesisCard = memo(SynthesisCardComponent);
 
 export default SynthesisCard;

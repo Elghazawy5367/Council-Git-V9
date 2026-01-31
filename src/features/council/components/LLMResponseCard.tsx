@@ -10,7 +10,7 @@
  * 6. Syntax highlighting for code blocks
  */
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
@@ -321,3 +321,6 @@ export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCa
     </Collapsible>
   );
 }
+
+// Memoize to prevent unnecessary re-renders
+export default memo(LLMResponseCard);

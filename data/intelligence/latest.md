@@ -1,6 +1,6 @@
 # Council Intelligence Report
 
-**Generated:** 1/30/2026, 6:39:54 AM
+**Generated:** 1/31/2026, 6:30:58 AM
 **Niche:** developer tools
 **Scan Depth:** normal
 

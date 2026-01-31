@@ -69,6 +69,16 @@ function calculateModelQuality(modelId: string): number {
   return DEFAULT_MODEL_SCORE;
 }
 
+// Cache for regex compilation to improve performance
+const REGEX_CACHE = {
+  structure: /[-•*]\s/,
+  headers: /#{1,3}\s/,
+  specifics: /\d+%|\$\d+|\d+x|example:|specifically:|data shows/i,
+  highConfidence: /\b(definitely|certainly|clearly|strongly recommend|confident that|proven|evidence shows)\b/i,
+  mediumConfidence: /\b(likely|probably|should|recommend|suggests|indicates|appears)\b/i,
+  lowConfidence: /\b(maybe|perhaps|possibly|might|could|uncertain|unclear|depends)\b/i,
+};
+
 /**
  * Calculate output quality score (0-1) based on characteristics
  */
@@ -86,13 +96,13 @@ function calculateOutputQuality(output: string): number {
   }
   
   // Structure factor (has sections/bullets)
-  const hasStructure = /[-•*]\s/.test(output) || /#{1,3}\s/.test(output);
+  const hasStructure = REGEX_CACHE.structure.test(output) || REGEX_CACHE.headers.test(output);
   if (hasStructure) {
     score += 0.15;
   }
   
   // Specificity factor (has numbers, data, examples)
-  const hasSpecifics = /\d+%|\$\d+|\d+x|example:|specifically:|data shows/i.test(output);
+  const hasSpecifics = REGEX_CACHE.specifics.test(output);
   if (hasSpecifics) {
     score += 0.15;
   }
@@ -105,26 +115,18 @@ function calculateOutputQuality(output: string): number {
  * Extract confidence level from output text (0-1)
  */
 function extractConfidence(output: string): number {
-  const lowerOutput = output.toLowerCase();
-  
   // High confidence signals
-  if (
-    /\b(definitely|certainly|clearly|strongly recommend|confident that|proven|evidence shows)\b/i.test(lowerOutput)
-  ) {
+  if (REGEX_CACHE.highConfidence.test(output)) {
     return 0.9;
   }
   
   // Medium confidence signals
-  if (
-    /\b(likely|probably|should|recommend|suggests|indicates|appears)\b/i.test(lowerOutput)
-  ) {
+  if (REGEX_CACHE.mediumConfidence.test(output)) {
     return 0.7;
   }
   
   // Low confidence signals
-  if (
-    /\b(maybe|perhaps|possibly|might|could|uncertain|unclear|depends)\b/i.test(lowerOutput)
-  ) {
+  if (REGEX_CACHE.lowConfidence.test(output)) {
     return 0.4;
   }
   

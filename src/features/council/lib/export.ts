@@ -22,8 +22,16 @@ export function exportToCSV(data: ExportData): string {
     ]);
   });
   
-  // Convert to CSV string
-  return rows.map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n');
+  // Convert to CSV string - optimized to avoid nested map
+  const csvLines: string[] = [];
+  for (const row of rows) {
+    const quotedCells: string[] = [];
+    for (const cell of row) {
+      quotedCells.push(`"${cell}"`);
+    }
+    csvLines.push(quotedCells.join(','));
+  }
+  return csvLines.join('\n');
 }
 
 export function downloadCSV(content: string, filename: string): void {
@@ -74,22 +82,26 @@ function markdownToDocxParagraphs(text: string): Paragraph[] {
         spacing: { before: 200, after: 200 },
       }));
     } else if (trimmed) {
-      // Parse inline formatting
+      // Parse inline formatting - optimized to avoid redundant regex
       const children: TextRun[] = [];
-      const boldRegex = /\*\*(.+?)\*\*/g;
-      let lastIndex = 0;
-      let match;
       
-      while ((match = boldRegex.exec(trimmed)) !== null) {
-        if (match.index > lastIndex) {
-          children.push(new TextRun({ text: trimmed.slice(lastIndex, match.index) }));
+      // Quick check if bold formatting exists before regex processing
+      if (trimmed.includes('**')) {
+        const boldRegex = /\*\*(.+?)\*\*/g;
+        let lastIndex = 0;
+        let match;
+        
+        while ((match = boldRegex.exec(trimmed)) !== null) {
+          if (match.index > lastIndex) {
+            children.push(new TextRun({ text: trimmed.slice(lastIndex, match.index) }));
+          }
+          children.push(new TextRun({ text: match[1], bold: true }));
+          lastIndex = match.index + match[0].length;
         }
-        children.push(new TextRun({ text: match[1], bold: true }));
-        lastIndex = match.index + match[0].length;
-      }
-      
-      if (lastIndex < trimmed.length) {
-        children.push(new TextRun({ text: trimmed.slice(lastIndex) }));
+        
+        if (lastIndex < trimmed.length) {
+          children.push(new TextRun({ text: trimmed.slice(lastIndex) }));
+        }
       }
       
       if (children.length === 0) {

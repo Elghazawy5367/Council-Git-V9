@@ -1,6 +1,6 @@
 # Council Intelligence Report
 
-**Generated:** 1/31/2026, 6:30:58 AM
+**Generated:** 2/1/2026, 6:41:53 AM
 **Niche:** developer tools
 **Scan Depth:** normal
 
@@ -40,7 +40,7 @@
 - **Pain Point:** Performance issues with large datasets
 - **Impact:** high | **Effort:** high
 - **Confidence:** 90%
-- **Competition:** weak
+- **Competition:** moderate
 
 ## Emerging Trends
 

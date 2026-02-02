@@ -1,33 +1,30 @@
 /**
  * The Scout - GitHub Intelligence Extraction System
  * 
- * Exploits GitHub as a free market research platform.
- * Runs 24/7 on GitHub Actions servers at zero cost.
+ * Analyzes GitHub data to extract market intelligence.
+ * Contains unique algorithms for:
+ * - Blue Ocean opportunity detection
+ * - Pain point clustering
+ * - Trend analysis
+ * - Opportunity scoring
  * 
- * API Limits:
- * - GitHub Actions: 5,000 requests/hour (vs 60 for personal)
- * - Search API: 30 requests/minute
- * - Strategy: Cache aggressively, scan smart
+ * NOTE: API calls extracted to src/services/github.service.ts
  */
 
 import * as fs from "fs";
 import * as path from "path";
 import { GITHUB_OWNER, GITHUB_REPO } from './config';
 import type { GitHubRawRepo, ScoutIssue } from './types';
+import { getGitHubService } from '@/services/github.service';
 
 /**
  * Consult the Living Knowledge Base (Angle 1)
  * Fetches content from the /knowledge folder in the project repository
  */
-export async function consultKnowledgeBase(filename: string) {
-  const user = GITHUB_OWNER;
-  const repo = GITHUB_REPO;
-  const branch = "main";
-  const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/knowledge/${filename}`;
+export async function consultKnowledgeBase(filename: string): Promise<string> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Knowledge file not found: ${filename}`);
-    return await response.text();
+    const githubService = getGitHubService();
+    return await githubService.getFileContent(GITHUB_OWNER, GITHUB_REPO, `knowledge/${filename}`);
   } catch (error) {
     console.error("Knowledge retrieval failed:", error);
     return "I could not find that information in the archives.";
@@ -37,15 +34,10 @@ export async function consultKnowledgeBase(filename: string) {
 /**
  * Fetch an Engineered Prompt from the /prompts folder (Angle 2)
  */
-export async function getEngineeredPrompt(path: string) {
-  const user = GITHUB_OWNER;
-  const repo = GITHUB_REPO;
-  const branch = "main";
-  const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/prompts/${path}`;
+export async function getEngineeredPrompt(promptPath: string): Promise<string | null> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Prompt file not found: ${path}`);
-    return await response.text();
+    const githubService = getGitHubService();
+    return await githubService.getFileContent(GITHUB_OWNER, GITHUB_REPO, `prompts/${promptPath}`);
   } catch (error) {
     console.error("Prompt retrieval failed:", error);
     return null;
@@ -131,26 +123,21 @@ function getDateXDaysAgo(days: number): string {
  * Scan for Blue Ocean opportunities (abandoned goldmines)
  */
 export async function scanBlueOcean(topic: string): Promise<Opportunity[]> {
-  const token = process.env.GITHUB_TOKEN;
+  const githubService = getGitHubService();
   const opportunities: Opportunity[] = [];
-  if (!token) {
-    return generateMockOpportunities(topic);
-  }
+  
   try {
     // Search for repositories with proven demand
     // Strategy: Find popular projects that haven't been updated recently
-    const queries = [`topic:${topic} stars:>1000 pushed:<${getDateXDaysAgo(365)}`, `topic:${topic} stars:500..5000 pushed:<${getDateXDaysAgo(365)}`, `${topic} in:name,description stars:>1000 archived:false`];
+    const queries = [
+      `topic:${topic} stars:>1000 pushed:<${getDateXDaysAgo(365)}`,
+      `topic:${topic} stars:500..5000 pushed:<${getDateXDaysAgo(365)}`,
+      `${topic} in:name,description stars:>1000 archived:false`,
+    ];
+
     for (const query of queries) {
-      const response = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=30`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/vnd.github.v3+json"
-        }
-      });
-      if (!response.ok) {
-        continue;
-      }
-      const data = await response.json();
+      const data = await githubService.searchRepositories(query, { perPage: 30 });
+      
       for (const repo of data.items || []) {
         const opp = transformToOpportunity(repo);
 
@@ -169,9 +156,13 @@ export async function scanBlueOcean(topic: string): Promise<Opportunity[]> {
   }
 
   // Remove duplicates and sort by score
-  const unique = Array.from(new Map(opportunities.map((o) => [o.url, o])).values()).sort((a, b) => b.blueOceanScore - a.blueOceanScore);
+  const unique = Array.from(
+    new Map(opportunities.map((o) => [o.url, o])).values()
+  ).sort((a, b) => b.blueOceanScore - a.blueOceanScore);
+
   // Save to file
   await saveBlueOceanReport(unique, topic);
+
   return unique;
 }
 
@@ -419,92 +410,94 @@ async function findTrendingRepos(config: ScoutConfig): Promise<GitHubRawRepo[]> 
   if (await isCacheValid(cacheFile, config.cacheExpiry)) {
     return JSON.parse(fs.readFileSync(cacheFile, "utf-8"));
   }
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    return generateMockRepos(config);
-  }
 
-  // Search GitHub
-  const query = buildSearchQuery(config.targetNiche);
-  const repos: GitHubRawRepo[] = [];
+  const githubService = getGitHubService();
+
   try {
-    const response = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${config.maxRepos}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.github.v3+json"
-      }
+    // Search GitHub
+    const query = buildSearchQuery(config.targetNiche);
+    const data = await githubService.searchRepositories(query, {
+      sort: 'stars',
+      order: 'desc',
+      perPage: config.maxRepos,
     });
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
-    const data = await response.json();
-    repos.push(...(data.items || []));
+
+    const repos = data.items || [];
 
     // Cache results
-    fs.mkdirSync(path.dirname(cacheFile), {
-      recursive: true
-    });
+    fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
     fs.writeFileSync(cacheFile, JSON.stringify(repos, null, 2));
+
+    return repos;
   } catch (error) {
+    console.error("Failed to fetch repositories:", error);
     return generateMockRepos(config);
   }
-  return repos;
 }
 
 /**
  * Extract pain points from repositories
  */
-async function extractPainPoints(repos: GitHubRawRepo[], config: ScoutConfig): Promise<PainPoint[]> {
+async function extractPainPoints(
+  repos: GitHubRawRepo[],
+  config: ScoutConfig
+): Promise<PainPoint[]> {
   const painPoints: PainPoint[] = [];
-  const token = process.env.GITHUB_TOKEN;
+  const githubService = getGitHubService();
 
   // Pain point indicators (keywords that suggest problems)
-  const indicators = ["doesn't work", "not working", "broken", "bug", "issue", "problem", "error", "fail", "can't", "unable to", "missing", "need", "wish", "would be nice", "feature request", "frustrated", "annoying", "confusing", "difficult", "hard to"];
+  const indicators = [
+    "doesn't work", "not working", "broken", "bug", "issue", "problem",
+    "error", "fail", "can't", "unable to", "missing", "need", "wish",
+    "would be nice", "feature request", "frustrated", "annoying",
+    "confusing", "difficult", "hard to"
+  ];
+
   for (const repo of repos.slice(0, Math.min(repos.length, config.maxRepos))) {
     try {
       // Fetch issues (pain points are often in issues)
-      const issuesUrl = `https://api.github.com/repos/${repo.full_name}/issues?state=all&per_page=20&sort=comments&direction=desc`;
-      if (token) {
-        const response = await fetch(issuesUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/vnd.github.v3+json"
-          }
-        });
-        if (response.ok) {
-          const issues = await response.json();
-          for (const issue of issues) {
-            const text = `${issue.title} ${issue.body || ""}`.toLowerCase();
-            const matchedIndicators = indicators.filter((ind) => text.includes(ind));
-            if (matchedIndicators.length > 0) {
-              painPoints.push({
-                id: `${repo.full_name}-${issue.number}`,
-                source: "issue",
-                repository: repo.full_name,
-                title: issue.title,
-                description: (issue.body || "").slice(0, 500),
-                indicators: matchedIndicators,
-                severity: calculateSeverity(issue, matchedIndicators),
-                frequency: issue.comments,
-                firstSeen: issue.created_at,
-                lastSeen: issue.updated_at,
-                urls: [issue.html_url]
-              });
-            }
-          }
+      const issues = await githubService.getRepositoryIssues(repo.full_name, {
+        state: 'all',
+        sort: 'comments',
+        direction: 'desc',
+        perPage: 20,
+      });
+
+      for (const issue of issues) {
+        const text = `${issue.title} ${issue.body || ""}`.toLowerCase();
+        const matchedIndicators = indicators.filter((ind) => text.includes(ind));
+
+        if (matchedIndicators.length > 0) {
+          painPoints.push({
+            id: `${repo.full_name}-${issue.number}`,
+            source: "issue",
+            repository: repo.full_name,
+            title: issue.title,
+            description: (issue.body || "").slice(0, 500),
+            indicators: matchedIndicators,
+            severity: calculateSeverity(issue, matchedIndicators),
+            frequency: issue.comments,
+            firstSeen: issue.created_at,
+            lastSeen: issue.updated_at,
+            urls: [issue.html_url],
+          });
         }
       }
 
       // Rate limit protection
       await sleep(1000); // 1 second between repos
-    } catch (error) // eslint-disable-next-line no-empty
-    {}if (painPoints.length >= config.maxIssues) break;
+    } catch (error) {
+      // Continue on error
+    }
+
+    if (painPoints.length >= config.maxIssues) break;
   }
 
   // Add mock data if no real data
   if (painPoints.length === 0) {
     painPoints.push(...generateMockPainPoints());
   }
+
   return painPoints;
 }
 

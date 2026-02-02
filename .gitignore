@@ -33,3 +33,4 @@ vite.config.js
 *.sln
 *.sw?
 test-scout-refactor.ts
+test-sniper-refactor.ts

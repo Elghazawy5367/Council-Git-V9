@@ -1,6 +1,7 @@
 import React from 'react';
 import { CouncilSession } from '@/features/council/lib/types';
-import { getSessions, deleteSession, clearHistory, formatRelativeTime, formatSessionPreview } from '@/features/council/lib/session-history';
+import { formatRelativeTime, formatSessionPreview } from '@/features/council/lib/session-history';
+import { useSessionHistory } from '@/features/council/hooks/useSessionHistory';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { ScrollArea } from '@/components/primitives/scroll-area';
@@ -59,24 +60,7 @@ interface HistoryPanelProps {
 
 // Standalone History Card Component (for inline display)
 export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefresh }) => {
-  const [sessions, setSessions] = React.useState<CouncilSession[]>([]);
-
-  React.useEffect(() => {
-    setSessions(getSessions() || []);
-  }, []);
-
-  const handleDelete = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    deleteSession(id);
-    setSessions(getSessions() || []);
-    toast.success('Session deleted');
-  };
-
-  const handleClearAll = () => {
-    clearHistory();
-    setSessions([]);
-    toast.success('History cleared');
-  };
+  const { sessions, handleDelete, handleClearAll } = useSessionHistory(true);
 
   const handleLoad = (session: CouncilSession) => {
     onLoadSession?.(session);
@@ -212,27 +196,14 @@ export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefr
 
 // Sidebar History Panel Component
 export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefresh, isOpen, onClose }) => {
-  const [sessions, setSessions] = React.useState<CouncilSession[]>([]);
+  const { sessions, loadSessions, handleDelete, handleClearAll } = useSessionHistory(false);
 
   React.useEffect(() => {
     // Only load sessions when panel opens, not on every render
     if (isOpen) {
-      setSessions(getSessions() || []);
+      loadSessions();
     }
-  }, [isOpen]);
-
-  const handleDelete = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    deleteSession(id);
-    setSessions(getSessions() || []);
-    toast.success('Session deleted');
-  };
-
-  const handleClearAll = () => {
-    clearHistory();
-    setSessions([]);
-    toast.success('History cleared');
-  };
+  }, [isOpen, loadSessions]);
 
   const handleLoad = (session: CouncilSession) => {
     onLoadSession?.(session);

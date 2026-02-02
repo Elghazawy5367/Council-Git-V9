@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { useExecutionStore } from '@/features/council/store/execution-store';
 import { Button } from '@/components/primitives/button';
 import { RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
@@ -13,12 +13,13 @@ interface ExpertOutputFooterProps {
   onRetry?: () => void;
   isRetrying?: boolean;
 }
-export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
+const ExpertOutputFooterComponent: React.FC<ExpertOutputFooterProps> = () => {
   const {
     executeCouncil,
     isLoading
   } = useExecutionStore();
-  const onRetry = () => {
+  
+  const onRetry = useCallback(() => {
     const mockMutationResult = {
       mutate: ({
         expertOutputs,
@@ -43,7 +44,8 @@ export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
       onProgress: (message: string) => void;
     }, unknown>;
     executeCouncil(mockMutationResult);
-  };
+  }, [executeCouncil]);
+  
   return <div className="flex items-center justify-end gap-1 pt-2 border-t border-border/50 flex-shrink-0">
       <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-green-500/10 hover:text-green-500">
         <ThumbsUp className="h-3.5 w-3.5" />
@@ -56,3 +58,6 @@ export const ExpertOutputFooter: React.FC<ExpertOutputFooterProps> = () => {
       </Button>
     </div>;
 };
+
+// Memoize to prevent unnecessary re-renders
+export const ExpertOutputFooter = memo(ExpertOutputFooterComponent);

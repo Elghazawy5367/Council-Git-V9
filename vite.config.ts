@@ -4,10 +4,14 @@ import react from "@vitejs/plugin-react-swc";
 import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
+  // Use base path only for production builds (GitHub Pages)
+  // In development, use root path for easier local testing
+  const base = command === 'build' && process.env.NODE_ENV === 'production' ? '/Council-Git-V9/' : '/';
+  
   return {
-    // GitHub Pages base path
-    base: '/Council-Git-V9/',
+    // GitHub Pages base path (only for production builds)
+    base,
     server: {
       host: "0.0.0.0",
       port: 5000,

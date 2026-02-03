@@ -1,7 +1,7 @@
 /**
- * Ruthless Judge Service
+ * Ruthless Judge Service - Enhanced with AutoGen Patterns
  * 
- * REQUIREMENTS:
+ * CORE REQUIREMENTS (PRESERVED):
  * 1. Take array of LLM responses
  * 2. Use GPT-4 (via OpenRouter) as the judge
  * 3. Extract key points from each response
@@ -9,6 +9,12 @@
  * 5. Score each response on accuracy, completeness, conciseness
  * 6. Synthesize unified answer with citations
  * 7. Provide judge commentary explaining choices
+ * 
+ * AUTOGEN ENHANCEMENTS:
+ * 8. Iterative refinement with multi-round judgment
+ * 9. Enhanced conflict resolution with evidence-based strategies
+ * 10. Conversation summarization with context tracking
+ * 11. Convergence detection for optimal stopping
  */
 
 import OpenRouterService, { LLMResponse } from './openrouter';
@@ -21,16 +27,51 @@ interface ScoreDetail {
   total: number;          // Average of above
 }
 
-// Judgment result interface
+// Conflict with severity and resolution strategy
+interface Conflict {
+  description: string;
+  severity: 'low' | 'medium' | 'high';
+  affectedResponses: string[]; // llmIds involved
+  evidence: string[];
+  resolution?: string;
+}
+
+// Refinement round tracking
+interface RefinementRound {
+  roundNumber: number;
+  unifiedResponse: string;
+  confidence: number;
+  contradictions: Conflict[];
+  improvements: string[];
+  converged: boolean;
+}
+
+// Conversation context for multi-turn tracking
+interface ConversationContext {
+  originalQuestion?: string;
+  rounds: RefinementRound[];
+  keyDecisionPoints: string[];
+  progressiveSummary: string;
+  totalRounds: number;
+}
+
+// Judgment result interface - Enhanced with AutoGen features
 export interface JudgmentResult {
   unifiedResponse: string; // Markdown formatted unified answer
   scoreBreakdown: { [llmId: string]: ScoreDetail };
-  contradictions: string[];
+  contradictions: string[]; // Kept for backward compatibility
+  conflicts?: Conflict[]; // Enhanced conflict tracking
   confidence: number; // 0-100
   judgeCommentary: string;
+  
+  // AutoGen enhancements
+  conversationContext?: ConversationContext;
+  refinementRounds?: number;
+  convergenceAchieved?: boolean;
+  finalSummary?: string;
 }
 
-// Internal structured response from judge
+// Internal structured response from judge - Enhanced
 interface JudgeStructuredResponse {
   unifiedResponse: string;
   scores: {
@@ -42,27 +83,78 @@ interface JudgeStructuredResponse {
     };
   };
   contradictions: string[];
+  conflicts?: Array<{
+    description: string;
+    severity: 'low' | 'medium' | 'high';
+    affectedResponses: string[];
+    evidence: string[];
+    resolution?: string;
+  }>;
   confidence: number;
   commentary: string;
+  improvements?: string[]; // Suggested improvements for next round
+  keyPoints?: string[];
+}
+
+// Options for judge execution
+export interface JudgeOptions {
+  enableIterativeRefinement?: boolean;
+  maxRefinementRounds?: number;
+  convergenceThreshold?: number; // Confidence threshold for convergence
+  enableConversationTracking?: boolean;
+  contextQuestion?: string;
 }
 
 class RuthlessJudgeService {
   private openRouterService: OpenRouterService;
   private judgeModel = 'openai/gpt-4-turbo-preview'; // GPT-4 for judging
+  private conversationContext: ConversationContext | null = null;
   
   constructor(apiKey: string) {
     this.openRouterService = new OpenRouterService(apiKey);
+    this.resetContext();
+  }
+
+  /**
+   * Reset conversation context (for new conversations)
+   */
+  resetContext(): void {
+    this.conversationContext = {
+      rounds: [],
+      keyDecisionPoints: [],
+      progressiveSummary: '',
+      totalRounds: 0,
+    };
   }
 
   /**
    * Judge multiple LLM responses and synthesize a unified answer
+   * Enhanced with AutoGen patterns
    */
-  async judge(responses: LLMResponse[]): Promise<JudgmentResult> {
+  async judge(
+    responses: LLMResponse[], 
+    options: JudgeOptions = {}
+  ): Promise<JudgmentResult> {
+    const {
+      enableIterativeRefinement = false,
+      maxRefinementRounds = 3,
+      convergenceThreshold = 85,
+      enableConversationTracking = false,
+      contextQuestion,
+    } = options;
+
     // Log judgment start
     console.log('[Judge] Running judgment', {
       responsesCount: responses.length,
-      llms: responses.map(r => r.llmId)
+      llms: responses.map(r => r.llmId),
+      iterativeRefinement: enableIterativeRefinement,
+      maxRounds: maxRefinementRounds,
     });
+
+    // Update conversation context
+    if (enableConversationTracking && contextQuestion) {
+      this.conversationContext!.originalQuestion = contextQuestion;
+    }
 
     // Handle edge cases
     if (responses.length === 0) {
@@ -84,34 +176,133 @@ class RuthlessJudgeService {
       return this.handleSingleResponse(successfulResponses[0]);
     }
 
-    // Create judge prompt
-    const judgePrompt = this.createJudgePrompt(successfulResponses);
-
     try {
-      // Call GPT-4 as the judge
-      console.log('[Judge] Calling GPT-4 judge with prompt length:', judgePrompt.length);
-      const judgeResponse = await this.callJudge(judgePrompt);
-      
-      // Parse and validate response
-      const parsedResult = this.parseJudgeResponse(judgeResponse, successfulResponses);
-      
-      console.log('[Judge] Judgment complete', {
-        confidence: parsedResult.confidence,
-        contradictions: parsedResult.contradictions.length,
-        llmsScored: Object.keys(parsedResult.scoreBreakdown).length
-      });
-      
-      return parsedResult;
+      // Use iterative refinement if enabled
+      if (enableIterativeRefinement) {
+        return await this.judgeWithIterativeRefinement(
+          successfulResponses,
+          maxRefinementRounds,
+          convergenceThreshold,
+          enableConversationTracking
+        );
+      }
+
+      // Standard single-pass judgment (original behavior)
+      return await this.judgeSinglePass(successfulResponses, enableConversationTracking);
     } catch (error) {
       console.error('[Judge] Judge error:', error);
       console.log('[Judge] Using fallback judgment');
-      // Fallback: return basic synthesis
       return this.createFallbackJudgment(successfulResponses);
     }
   }
 
   /**
-   * Create detailed prompt for the judge
+   * Single-pass judgment (original behavior, preserved)
+   */
+  private async judgeSinglePass(
+    successfulResponses: LLMResponse[],
+    trackConversation: boolean = false
+  ): Promise<JudgmentResult> {
+    const judgePrompt = this.createJudgePrompt(successfulResponses);
+    
+    console.log('[Judge] Calling GPT-4 judge with prompt length:', judgePrompt.length);
+    const judgeResponse = await this.callJudge(judgePrompt);
+    
+    const parsedResult = this.parseJudgeResponse(judgeResponse, successfulResponses);
+    
+    // Track in conversation context if enabled
+    if (trackConversation && this.conversationContext) {
+      this.updateConversationContext(parsedResult, 1, true);
+    }
+    
+    console.log('[Judge] Judgment complete', {
+      confidence: parsedResult.confidence,
+      contradictions: parsedResult.contradictions.length,
+      llmsScored: Object.keys(parsedResult.scoreBreakdown).length
+    });
+    
+    return parsedResult;
+  }
+
+  /**
+   * Iterative refinement judgment (AutoGen pattern)
+   */
+  private async judgeWithIterativeRefinement(
+    successfulResponses: LLMResponse[],
+    maxRounds: number,
+    convergenceThreshold: number,
+    trackConversation: boolean
+  ): Promise<JudgmentResult> {
+    console.log('[Judge] Starting iterative refinement', {
+      maxRounds,
+      convergenceThreshold,
+    });
+
+    let currentResult: JudgmentResult | null = null;
+    let previousConfidence = 0;
+    let roundNumber = 0;
+    let converged = false;
+
+    for (roundNumber = 1; roundNumber <= maxRounds; roundNumber++) {
+      console.log(`[Judge] Refinement round ${roundNumber}/${maxRounds}`);
+
+      // Create prompt with context from previous rounds
+      const prompt = this.createRefinementPrompt(
+        successfulResponses,
+        currentResult,
+        roundNumber
+      );
+
+      const judgeResponse = await this.callJudge(prompt);
+      currentResult = this.parseJudgeResponse(judgeResponse, successfulResponses);
+
+      // Track this round
+      if (trackConversation && this.conversationContext) {
+        this.updateConversationContext(currentResult, roundNumber, false);
+      }
+
+      // Check for convergence
+      const confidenceImprovement = currentResult.confidence - previousConfidence;
+      converged = 
+        currentResult.confidence >= convergenceThreshold ||
+        (roundNumber > 1 && Math.abs(confidenceImprovement) < 5);
+
+      console.log(`[Judge] Round ${roundNumber} results`, {
+        confidence: currentResult.confidence,
+        confidenceImprovement,
+        converged,
+      });
+
+      if (converged) {
+        console.log('[Judge] Convergence achieved');
+        break;
+      }
+
+      previousConfidence = currentResult.confidence;
+
+      // Small delay between rounds to avoid rate limiting
+      if (roundNumber < maxRounds) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+
+    // Mark convergence in final result
+    if (currentResult) {
+      currentResult.refinementRounds = roundNumber;
+      currentResult.convergenceAchieved = converged;
+      
+      // Generate final summary if conversation tracking is enabled
+      if (trackConversation && this.conversationContext) {
+        currentResult.finalSummary = this.generateFinalSummary();
+        currentResult.conversationContext = { ...this.conversationContext };
+      }
+    }
+
+    return currentResult!;
+  }
+
+  /**
+   * Create detailed prompt for the judge (original, preserved)
    */
   private createJudgePrompt(responses: LLMResponse[]): string {
     const responsesFormatted = responses.map((resp, index) => {
@@ -155,8 +346,18 @@ ${responsesFormatted}
     "Description of any contradictions found",
     "Another contradiction if any"
   ],
+  "conflicts": [
+    {
+      "description": "Detailed conflict description",
+      "severity": "high",
+      "affectedResponses": ["llmId1", "llmId2"],
+      "evidence": ["Evidence point 1", "Evidence point 2"],
+      "resolution": "How this conflict should be resolved"
+    }
+  ],
   "confidence": 85,
-  "commentary": "Detailed explanation of your judging process, what you considered, and why you made the choices you did in the synthesis."
+  "commentary": "Detailed explanation of your judging process, what you considered, and why you made the choices you did in the synthesis.",
+  "keyPoints": ["Key insight 1", "Key insight 2"]
 }
 \`\`\`
 
@@ -167,8 +368,213 @@ ${responsesFormatted}
 - If there are no contradictions, use an empty array
 - Confidence should reflect how certain you are about the unified answer
 - Commentary should be thorough and explain your reasoning
+- For conflicts, assess severity: "low" (minor differences), "medium" (significant disagreement), "high" (critical contradiction)
 
 Respond with ONLY the JSON, no other text.`;
+  }
+
+  /**
+   * Create refinement prompt for iterative rounds (AutoGen pattern)
+   */
+  private createRefinementPrompt(
+    responses: LLMResponse[],
+    previousResult: JudgmentResult | null,
+    roundNumber: number
+  ): string {
+    const responsesFormatted = responses.map((resp, index) => {
+      return `
+### Response ${index + 1}: ${resp.llmName} (ID: ${resp.llmId})
+${resp.response}
+`;
+    }).join('\n---\n');
+
+    let previousContext = '';
+    if (previousResult) {
+      previousContext = `
+
+**PREVIOUS ROUND RESULT (Round ${roundNumber - 1}):**
+Confidence: ${previousResult.confidence}/100
+
+Previous Unified Response:
+${previousResult.unifiedResponse}
+
+Previous Contradictions:
+${previousResult.contradictions.length > 0 ? previousResult.contradictions.join('\n') : 'None identified'}
+
+Previous Commentary:
+${previousResult.judgeCommentary}
+
+**YOUR REFINEMENT TASK:**
+Building on the previous analysis, focus on:
+1. Addressing any remaining contradictions or conflicts
+2. Improving the confidence of the unified answer
+3. Incorporating any overlooked insights from the original responses
+4. Providing clearer evidence-based resolutions for conflicts
+5. Identifying what improvements were made from the previous round`;
+    }
+
+    return `You are a ruthless AI judge performing ROUND ${roundNumber} of iterative refinement to synthesize the best possible answer.
+
+**ORIGINAL RESPONSES TO EVALUATE:**
+${responsesFormatted}
+${previousContext}
+
+**CRITICAL: Respond ONLY with valid JSON in this exact format:**
+\`\`\`json
+{
+  "unifiedResponse": "# Refined Synthesized Answer\\n\\nYour improved unified answer here with [citations]...",
+  "scores": {
+    "${responses[0].llmId}": {
+      "accuracy": 85,
+      "completeness": 90,
+      "conciseness": 80,
+      "reasoning": "Brief explanation of scores"
+    }
+  },
+  "contradictions": [
+    "Any remaining contradictions"
+  ],
+  "conflicts": [
+    {
+      "description": "Conflict description",
+      "severity": "high",
+      "affectedResponses": ["llmId1", "llmId2"],
+      "evidence": ["Evidence 1", "Evidence 2"],
+      "resolution": "Evidence-based resolution strategy"
+    }
+  ],
+  "confidence": 90,
+  "commentary": "Explain your refinement choices and improvements from previous round",
+  "improvements": ["Improvement 1", "Improvement 2"],
+  "keyPoints": ["Key insight 1", "Key insight 2"]
+}
+\`\`\`
+
+**REFINEMENT GUIDELINES:**
+- Focus on resolving high-severity conflicts first
+- Use evidence-based reasoning for conflict resolution
+- Improve clarity and completeness from previous round
+- Increase confidence only if genuinely more certain
+- Note specific improvements made in this round
+- Aim for convergence: if no significant improvements possible, reflect that in your response
+
+Respond with ONLY the JSON, no other text.`;
+  }
+
+  /**
+   * Update conversation context with current round results
+   */
+  private updateConversationContext(
+    result: JudgmentResult,
+    roundNumber: number,
+    isFinal: boolean
+  ): void {
+    if (!this.conversationContext) return;
+
+    const conflicts: Conflict[] = result.conflicts || 
+      result.contradictions.map(desc => ({
+        description: desc,
+        severity: 'medium' as const,
+        affectedResponses: [],
+        evidence: [],
+      }));
+
+    const round: RefinementRound = {
+      roundNumber,
+      unifiedResponse: result.unifiedResponse,
+      confidence: result.confidence,
+      contradictions: conflicts,
+      improvements: [], // Would be populated from parsed response
+      converged: isFinal,
+    };
+
+    this.conversationContext.rounds.push(round);
+    this.conversationContext.totalRounds = roundNumber;
+
+    // Update progressive summary
+    this.conversationContext.progressiveSummary = this.buildProgressiveSummary();
+
+    // Extract key decision points
+    if (conflicts.some(c => c.severity === 'high')) {
+      this.conversationContext.keyDecisionPoints.push(
+        `Round ${roundNumber}: Resolved high-severity conflicts`
+      );
+    }
+  }
+
+  /**
+   * Build progressive summary across rounds
+   */
+  private buildProgressiveSummary(): string {
+    if (!this.conversationContext || this.conversationContext.rounds.length === 0) {
+      return '';
+    }
+
+    const rounds = this.conversationContext.rounds;
+    const summary: string[] = [];
+
+    summary.push(`## Judgment Summary (${rounds.length} rounds)\n`);
+
+    if (this.conversationContext.originalQuestion) {
+      summary.push(`**Question:** ${this.conversationContext.originalQuestion}\n`);
+    }
+
+    summary.push('**Progress:**');
+    rounds.forEach(round => {
+      summary.push(
+        `- Round ${round.roundNumber}: Confidence ${round.confidence}%, ` +
+        `${round.contradictions.length} conflicts`
+      );
+    });
+
+    if (this.conversationContext.keyDecisionPoints.length > 0) {
+      summary.push('\n**Key Decisions:**');
+      this.conversationContext.keyDecisionPoints.forEach(point => {
+        summary.push(`- ${point}`);
+      });
+    }
+
+    return summary.join('\n');
+  }
+
+  /**
+   * Generate final summary of the judgment process
+   */
+  private generateFinalSummary(): string {
+    if (!this.conversationContext) return '';
+
+    const context = this.conversationContext;
+    const rounds = context.rounds;
+    
+    if (rounds.length === 0) return '';
+
+    const firstRound = rounds[0];
+    const lastRound = rounds[rounds.length - 1];
+    const confidenceGain = lastRound.confidence - firstRound.confidence;
+
+    const summary: string[] = [];
+    summary.push('## Judgment Process Summary\n');
+    
+    summary.push(`**Refinement Rounds:** ${context.totalRounds}`);
+    summary.push(`**Initial Confidence:** ${firstRound.confidence}%`);
+    summary.push(`**Final Confidence:** ${lastRound.confidence}%`);
+    summary.push(`**Confidence Gain:** ${confidenceGain > 0 ? '+' : ''}${confidenceGain}%\n`);
+
+    summary.push('**Conflict Resolution:**');
+    const initialConflicts = firstRound.contradictions.length;
+    const finalConflicts = lastRound.contradictions.length;
+    summary.push(`- Initial conflicts: ${initialConflicts}`);
+    summary.push(`- Resolved: ${Math.max(0, initialConflicts - finalConflicts)}`);
+    summary.push(`- Remaining: ${finalConflicts}\n`);
+
+    if (context.keyDecisionPoints.length > 0) {
+      summary.push('**Key Decision Points:**');
+      context.keyDecisionPoints.forEach(point => {
+        summary.push(`- ${point}`);
+      });
+    }
+
+    return summary.join('\n');
   }
 
   /**
@@ -206,7 +612,7 @@ Respond with ONLY the JSON, no other text.`;
   }
 
   /**
-   * Parse judge response and validate structure
+   * Parse judge response and validate structure (Enhanced)
    */
   private parseJudgeResponse(judgeResponse: string, originalResponses: LLMResponse[]): JudgmentResult {
     try {
@@ -244,10 +650,20 @@ Respond with ONLY the JSON, no other text.`;
         }
       });
 
+      // Convert enhanced conflicts or use simple contradictions
+      const conflicts: Conflict[] = parsed.conflicts || 
+        (parsed.contradictions || []).map(desc => ({
+          description: desc,
+          severity: 'medium' as const,
+          affectedResponses: [],
+          evidence: [],
+        }));
+
       return {
         unifiedResponse: parsed.unifiedResponse || 'No unified response generated.',
         scoreBreakdown,
-        contradictions: parsed.contradictions || [],
+        contradictions: parsed.contradictions || [], // Keep for backward compatibility
+        conflicts, // Enhanced conflict tracking
         confidence: Math.max(0, Math.min(100, parsed.confidence || 0)),
         judgeCommentary: parsed.commentary || 'No commentary provided.',
       };
@@ -346,4 +762,11 @@ Respond with ONLY the JSON, no other text.`;
 }
 
 export default RuthlessJudgeService;
-export type { JudgmentResult, ScoreDetail };
+export type { 
+  JudgmentResult, 
+  ScoreDetail, 
+  JudgeOptions, 
+  Conflict, 
+  ConversationContext, 
+  RefinementRound 
+};

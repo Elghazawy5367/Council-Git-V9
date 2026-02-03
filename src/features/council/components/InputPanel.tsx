@@ -11,7 +11,7 @@
  * 7. Loading state when running
  */
 
-import { useState, useRef, DragEvent } from 'react';
+import { useState } from 'react';
 import { useCouncilContext } from '@/contexts/CouncilContext';
 import { Button } from '@/components/primitives/button';
 import { Textarea } from '@/components/primitives/textarea';
@@ -19,17 +19,11 @@ import { Checkbox } from '@/components/primitives/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/primitives/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/primitives/tooltip';
-import { Upload, X, FileText, Image as ImageIcon, File, Loader2, Info } from 'lucide-react';
+import { Upload, Loader2, Info } from 'lucide-react';
 import { toast } from 'sonner';
+import { EnhancedFileUpload } from './EnhancedFileUpload';
 
 const MAX_CHARS = 10000;
-const ALLOWED_FILE_TYPES = {
-  images: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
-  pdfs: ['application/pdf'],
-  text: ['text/plain', 'text/markdown', 'text/csv'],
-};
-
-const ALL_ALLOWED_TYPES = [...ALLOWED_FILE_TYPES.images, ...ALLOWED_FILE_TYPES.pdfs, ...ALLOWED_FILE_TYPES.text];
 
 export function InputPanel() {
   const {
@@ -44,88 +38,12 @@ export function InputPanel() {
   } = useCouncilContext();
 
   const [uploadTab, setUploadTab] = useState<'local' | 'drive' | 'url'>('local');
-  const [isDragging, setIsDragging] = useState(false);
   const [urlInput, setUrlInput] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const charCount = input.text.length;
   const isOverLimit = charCount > MAX_CHARS;
   const isRunning = execution.isRunning;
   const canRun = input.text.trim().length > 0 && !isOverLimit && !isRunning && llmSelection.selectedLLMs.length > 0;
-
-  // Handle file validation
-  const validateFile = (file: File): boolean => {
-    if (!ALL_ALLOWED_TYPES.includes(file.type)) {
-      toast.error(`File type not supported: ${file.type}`);
-      return false;
-    }
-    
-    // 10MB limit
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error(`File too large: ${file.name}. Max size is 10MB`);
-      return false;
-    }
-    
-    return true;
-  };
-
-  // Handle file selection
-  const handleFileSelect = (files: FileList | null) => {
-    if (!files) return;
-    
-    const validFiles: File[] = [];
-    Array.from(files).forEach(file => {
-      if (validateFile(file)) {
-        validFiles.push(file);
-      }
-    });
-    
-    if (validFiles.length > 0) {
-      setInputFiles([...input.files, ...validFiles]);
-      toast.success(`Added ${validFiles.length} file(s)`);
-    }
-  };
-
-  // Handle drag and drop
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    handleFileSelect(e.dataTransfer.files);
-  };
-
-  // Remove file
-  const removeFile = (index: number) => {
-    const newFiles = input.files.filter((_, i) => i !== index);
-    setInputFiles(newFiles);
-  };
-
-  // Get file icon
-  const getFileIcon = (file: File) => {
-    if (ALLOWED_FILE_TYPES.images.includes(file.type)) {
-      return <ImageIcon className="h-4 w-4" />;
-    } else if (ALLOWED_FILE_TYPES.pdfs.includes(file.type)) {
-      return <File className="h-4 w-4 text-red-500" />;
-    } else {
-      return <FileText className="h-4 w-4" />;
-    }
-  };
-
-  // Format file size
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-  };
 
   // Handle Run Council
   const handleRunCouncil = async () => {
@@ -197,34 +115,12 @@ export function InputPanel() {
                 </TabsTrigger>
               </TabsList>
               
-              <TabsContent value="local" className="space-y-2">
-                <div
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-                    isDragging 
-                      ? 'border-primary bg-primary/10' 
-                      : 'border-muted-foreground/25 hover:border-primary/50'
-                  } ${isRunning ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  onClick={() => !isRunning && fileInputRef.current?.click()}
-                >
-                  <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
-                    Drag and drop files here, or click to browse
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Supports: Images, PDFs, Text files (Max 10MB)
-                  </p>
-                </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  multiple
-                  accept={ALL_ALLOWED_TYPES.join(',')}
-                  onChange={(e) => handleFileSelect(e.target.files)}
-                  className="hidden"
+              <TabsContent value="local" className="mt-4">
+                <EnhancedFileUpload
+                  files={input.files}
+                  onFilesChange={setInputFiles}
                   disabled={isRunning}
+                  maxFiles={10}
                 />
               </TabsContent>
               
@@ -249,36 +145,6 @@ export function InputPanel() {
               </TabsContent>
             </Tabs>
           </div>
-
-          {/* File Previews */}
-          {input.files.length > 0 && (
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Attached Files ({input.files.length})</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {input.files.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-2 p-2 rounded-md border bg-muted/50"
-                  >
-                    {getFileIcon(file)}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{file.name}</p>
-                      <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeFile(index)}
-                      disabled={isRunning}
-                      className="h-8 w-8 p-0"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* LLM Selector */}
           <div className="space-y-3">

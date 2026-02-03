@@ -1,8 +1,10 @@
 /**
  * The Sniper - Reddit Lead Generation
  * 
- * Scrapes Reddit for "Buying Intent" keywords.
- * Filters noise to save only high-intent leads ready to pay money.
+ * Uses Reddit API to find "Buying Intent" leads.
+ * Analyzes posts with unique algorithms to identify high-intent leads ready to pay.
+ * 
+ * Refactored to use RedditService for API calls while preserving analysis algorithms.
  * 
  * Priority: 9/10
  * Effort: Medium
@@ -10,6 +12,8 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { getRedditService } from '@/services/reddit.service';
+
 export interface RedditPost {
   id: string;
   title: string;
@@ -123,29 +127,24 @@ function categorizePost(post: RedditPost): string {
 }
 
 /**
- * Fetch posts from Reddit (using public API)
+ * Fetch posts from Reddit using RedditService
  */
 async function fetchRedditPosts(subreddit: string, limit: number = 100): Promise<RedditPost[]> {
-  const url = `https://www.reddit.com/r/${subreddit}/new.json?limit=${limit}`;
+  const redditService = getRedditService();
+  
   try {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Council-Intelligence-Bot/1.0'
-      }
+    const { posts } = await redditService.getSubredditPosts(subreddit, {
+      sort: 'new',
+      limit: Math.min(limit, 100), // Reddit API max is 100
     });
-    if (!response.ok) {
-      throw new Error(`Reddit API error: ${response.status}`);
-    }
-    const data = await response.json();
-    const posts: RedditPost[] = [];
-    for (const item of data.data.children) {
-      const post = item.data;
+
+    const analyzedPosts: RedditPost[] = [];
+    
+    for (const post of posts) {
       const combinedText = `${post.title} ${post.selftext || ''}`;
-      const {
-        score: buyingIntent,
-        keywords
-      } = calculateBuyingIntent(combinedText);
+      const { score: buyingIntent, keywords } = calculateBuyingIntent(combinedText);
       const urgency = calculateUrgency(combinedText);
+
       const redditPost: RedditPost = {
         id: post.id,
         title: post.title,
@@ -159,12 +158,14 @@ async function fetchRedditPosts(subreddit: string, limit: number = 100): Promise
         buyingIntentScore: buyingIntent,
         urgencyScore: urgency,
         keywords,
-        category: '' // Will be set later
+        category: '', // Will be set later
       };
+
       redditPost.category = categorizePost(redditPost);
-      posts.push(redditPost);
+      analyzedPosts.push(redditPost);
     }
-    return posts;
+
+    return analyzedPosts;
   } catch (error) {
     console.error(`Failed to fetch from r/${subreddit}:`, error);
     return [];

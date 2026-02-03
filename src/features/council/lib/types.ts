@@ -1,5 +1,30 @@
 // Council Feature Type Definitions
 
+/**
+ * AutoGen-style Message for expert communication
+ */
+export interface ExpertMessage {
+  id: string;
+  sender: string; // Expert ID
+  senderName: string;
+  recipient?: string; // Expert ID (undefined = broadcast to all)
+  content: string;
+  timestamp: Date;
+  type: 'response' | 'question' | 'critique' | 'clarification' | 'agreement';
+  replyTo?: string; // Message ID this is replying to
+  context?: Record<string, unknown>;
+}
+
+/**
+ * Conversation context for an expert
+ */
+export interface ConversationContext {
+  messages: ExpertMessage[];
+  previousResponses: Record<string, string>; // expertId -> output
+  conversationHistory: string; // Formatted history for prompt
+  round: number;
+}
+
 export interface ExpertConfig {
   temperature: number;
   maxTokens: number;
@@ -50,6 +75,11 @@ export interface Expert {
   pluginId?: string;
   pluginConfig?: Record<string, unknown>;
   content?: string; // Added to align with control-panel-store.ts
+  
+  // AutoGen-style messaging capabilities
+  conversationContext?: ConversationContext;
+  canSendMessages?: boolean; // Enable message passing for this expert
+  messageHandler?: (message: ExpertMessage) => void; // Optional message handler
 }
 
 // Phase 1: Expert execution mode (all experts run in parallel)

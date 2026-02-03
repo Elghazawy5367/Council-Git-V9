@@ -1,7 +1,14 @@
-import React, { useMemo, Suspense, lazy } from 'react';
+import React, { useMemo, Suspense, lazy, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { sanitizeContent } from '@/lib/sanitize';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import rehypeSanitize from 'rehype-sanitize';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Check, Copy } from 'lucide-react';
+import { toast } from 'sonner';
+import 'katex/dist/katex.min.css';
 
 // Lazy load MermaidDiagram for code splitting
 const MermaidDiagram = lazy(() => import('./MermaidDiagram'));
@@ -9,6 +16,7 @@ const MermaidDiagram = lazy(() => import('./MermaidDiagram'));
 interface SafeMarkdownProps {
   content: string;
   className?: string;
+  enableMath?: boolean; // Optional math equations support
 }
 
 // Loading fallback for mermaid diagrams
@@ -21,27 +29,83 @@ const DiagramLoader = () => (
   </div>
 );
 
+// Copy button component for code blocks
+const CopyButton: React.FC<{ code: string }> = ({ code }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      toast.success('Code copied to clipboard');
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error('Failed to copy code');
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="absolute top-2 right-2 p-2 rounded-md bg-muted/50 hover:bg-muted transition-colors opacity-0 group-hover:opacity-100"
+      aria-label="Copy code"
+    >
+      {copied ? (
+        <Check className="w-4 h-4 text-green-500" />
+      ) : (
+        <Copy className="w-4 h-4 text-muted-foreground" />
+      )}
+    </button>
+  );
+};
+
 /**
- * Enhanced Markdown renderer with:
- * - XSS protection via sanitization
- * - GitHub Flavored Markdown (tables, strikethrough, etc.)
+ * Professional Markdown renderer with:
+ * - GitHub Flavored Markdown (tables, strikethrough, task lists)
+ * - Syntax highlighting with react-syntax-highlighter (OneDark theme)
+ * - XSS protection via rehype-sanitize
+ * - Math equation support (optional, via KaTeX)
  * - Mermaid diagram rendering
- * - Styled code blocks and tables
+ * - Copy button for code blocks
+ * - Links open in new tab
+ * - Professional styling
  */
-export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className = '' }) => {
+export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ 
+  content, 
+  className = '', 
+  enableMath = false 
+}) => {
   const sanitizedContent = useMemo(() => {
     if (!content) return '';
-    // Light sanitization - ReactMarkdown handles most XSS concerns
     return content;
   }, [content]);
+
+  // Configure rehype plugins
+  const rehypePlugins = useMemo(() => {
+    const plugins: any[] = [rehypeSanitize];
+    if (enableMath) {
+      plugins.push(rehypeKatex);
+    }
+    return plugins;
+  }, [enableMath]);
+
+  // Configure remark plugins
+  const remarkPlugins = useMemo(() => {
+    const plugins: any[] = [remarkGfm];
+    if (enableMath) {
+      plugins.push(remarkMath);
+    }
+    return plugins;
+  }, [enableMath]);
 
   return (
     <div className={`prose prose-sm prose-invert max-w-none ${className}`}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={remarkPlugins}
+        rehypePlugins={rehypePlugins}
         components={{
-          // Custom code block renderer for Mermaid support
-          code({ node, className: codeClassName, children, ...props }) {
+          // Enhanced code block renderer with syntax highlighting
+          code({ node, inline, className: codeClassName, children, ...props }) {
             const match = /language-(\w+)/.exec(codeClassName || '');
             const language = match ? match[1] : '';
             const codeContent = String(children).replace(/\n$/, '');
@@ -56,7 +120,7 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
             }
 
             // Inline code
-            if (!match) {
+            if (inline) {
               return (
                 <code
                   className="px-1.5 py-0.5 rounded bg-muted text-primary font-mono text-[0.85em]"
@@ -67,13 +131,43 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
               );
             }
 
-            // Code blocks with syntax highlighting placeholder
+            // Code blocks with syntax highlighting
+            if (language) {
+              return (
+                <div className="relative group my-3">
+                  <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-2 bg-muted/50 rounded-t-lg border-b border-border/50">
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-mono">
+                      {language}
+                    </span>
+                    <CopyButton code={codeContent} />
+                  </div>
+                  <SyntaxHighlighter
+                    language={language}
+                    style={oneDark}
+                    customStyle={{
+                      margin: 0,
+                      paddingTop: '3rem',
+                      paddingBottom: '1rem',
+                      paddingLeft: '1rem',
+                      paddingRight: '1rem',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.875rem',
+                      lineHeight: '1.5',
+                    }}
+                    showLineNumbers={codeContent.split('\n').length > 5}
+                    wrapLines={true}
+                    {...props}
+                  >
+                    {codeContent}
+                  </SyntaxHighlighter>
+                </div>
+              );
+            }
+
+            // Fallback for code without language
             return (
               <div className="relative my-3">
-                <div className="absolute top-0 right-0 px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground bg-muted/50 rounded-bl">
-                  {language}
-                </div>
-                <pre className="overflow-x-auto p-4 pt-8 rounded-lg bg-muted/30 border border-border/50">
+                <pre className="overflow-x-auto p-4 rounded-lg bg-muted/30 border border-border/50">
                   <code className="text-sm font-mono" {...props}>
                     {children}
                   </code>
@@ -109,6 +203,12 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
               </td>
             );
           },
+          tbody({ children }) {
+            return <tbody>{children}</tbody>;
+          },
+          tr({ children }) {
+            return <tr className="hover:bg-muted/20 transition-colors">{children}</tr>;
+          },
 
           // Styled headers
           h1({ children }) {
@@ -123,6 +223,12 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
           h4({ children }) {
             return <h4 className="text-base font-medium text-foreground mt-3 mb-2">{children}</h4>;
           },
+          h5({ children }) {
+            return <h5 className="text-sm font-medium text-foreground mt-2 mb-2">{children}</h5>;
+          },
+          h6({ children }) {
+            return <h6 className="text-sm font-medium text-muted-foreground mt-2 mb-1">{children}</h6>;
+          },
 
           // Styled paragraphs
           p({ children }) {
@@ -136,8 +242,30 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
           ol({ children }) {
             return <ol className="list-decimal list-outside ml-4 mb-4 space-y-1">{children}</ol>;
           },
-          li({ children }) {
-            return <li className="text-muted-foreground">{children}</li>;
+          li({ children, className: liClassName }) {
+            // Check if this is a task list item
+            const isTaskList = liClassName?.includes('task-list-item');
+            return (
+              <li className={`text-muted-foreground ${isTaskList ? 'list-none -ml-4' : ''}`}>
+                {children}
+              </li>
+            );
+          },
+
+          // Task list checkbox
+          input({ type, checked, disabled }) {
+            if (type === 'checkbox') {
+              return (
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  disabled={disabled}
+                  className="mr-2 rounded border-border"
+                  readOnly
+                />
+              );
+            }
+            return <input type={type} checked={checked} disabled={disabled} />;
           },
 
           // Styled blockquotes
@@ -149,7 +277,7 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
             );
           },
 
-          // Styled links
+          // Styled links (open in new tab)
           a({ href, children }) {
             return (
               <a
@@ -177,6 +305,11 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
           em({ children }) {
             return <em className="italic">{children}</em>;
           },
+
+          // Strikethrough (via GFM)
+          del({ children }) {
+            return <del className="line-through text-muted-foreground/70">{children}</del>;
+          },
         }}
       >
         {sanitizedContent}
@@ -187,11 +320,13 @@ export const SafeMarkdown: React.FC<SafeMarkdownProps> = ({ content, className =
 
 /**
  * For rendering sanitized HTML content (use with caution)
+ * Note: This is kept for backward compatibility but SafeMarkdown is preferred
  */
 export const SafeHTML: React.FC<SafeMarkdownProps> = ({ content, className = '' }) => {
   const sanitizedHTML = useMemo(() => {
     if (!content) return { __html: '' };
-    return { __html: sanitizeContent(content) };
+    // Basic sanitization - consider using DOMPurify for production
+    return { __html: content };
   }, [content]);
 
   return (

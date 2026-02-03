@@ -39,6 +39,17 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Add .nojekyll for GitHub Pages
+        run: touch dist/.nojekyll
+
+      - name: Verify build artifacts
+        run: |
+          echo "Checking dist directory structure..."
+          ls -la dist/
+          echo ""
+          echo "Checking index.html asset paths..."
+          grep -o 'src="[^"]*\|href="[^"]*' dist/index.html | head -5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

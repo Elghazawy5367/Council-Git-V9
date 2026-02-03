@@ -12,7 +12,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { getRedditService } from '@/services/reddit.service';
+import { getRedditService } from '@/services/reddit-adapter.service';
 
 export interface RedditPost {
   id: string;

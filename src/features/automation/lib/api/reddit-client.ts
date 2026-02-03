@@ -1,71 +1,52 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Reddit API Client for Features Automation
- * Uses Reddit JSON API (no auth required for public data)
+ * Now uses snoowrap (official Reddit API wrapper) with OAuth2
  */
 
-interface RedditPost {
-  id: string;
-  selftext: string;
-  author: string;
-  subreddit: string;
-  score: number;
-  num_comments: number;
-  created_utc: number;
-  url: string;
-  permalink: string;
-  link_flair_text: string | null;
-  upvote_ratio: number;
-}
-interface RedditComment {
-  id: string;
-  body: string;
-  author: string;
-  score: number;
-  created_utc: number;
-  permalink: string;
-}
-interface RedditListing {
-  data: {
-    children: Array<{
-      data: RedditPost | RedditComment;
-    }>;
-    after: string | null;
-    before: string | null;
-  };
-}
-export class RedditAPIClient {
-  private baseURL = 'https://www.reddit.com';
-  private userAgent = 'Council-Intelligence-Gatherer/1.0';
-  private async fetchWithRetry(url: string, retries = 3): Promise<Response> {
-    for (let i = 0; i < retries; i++) {
-      try {
-        const response = await fetch(url, {
-          headers: {
-            'User-Agent': this.userAgent
-          }
-        });
-        if (response.status === 429) {
-          // Rate limited
-          const retryAfter = response.headers.get('Retry-After');
-          const waitTime = retryAfter ? parseInt(retryAfter) * 1000 : 2000 * Math.pow(2, i);
-          if (i < retries - 1) {
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            continue;
-          }
-        }
-        if (!response.ok) {
-          throw new Error(`Reddit API error: ${response.status} ${response.statusText}`);
-        }
-        return response;
-      } catch (error) {
-        if (i === retries - 1) throw error;
-        await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, i)));
-      }
-    }
-    throw new Error('Max retries exceeded');
-  }
+import {
+  getRedditSnoowrapService,
+  getRedditAuthConfigFromEnv,
+  RedditPost,
+  RedditComment,
+} from '@/services/reddit-snoowrap.service';
 
+// Re-export types for convenience
+export type { RedditPost, RedditComment };
+
+export class RedditAPIClient {
+  private service = getRedditSnoowrapService();
+  private initialized = false;
+
+  /**
+   * Initialize authentication
+   */
+  private async initialize(): Promise<void> {
+    if (this.initialized) return;
+
+    try {
+      const config = getRedditAuthConfigFromEnv();
+      if (config) {
+        await this.service.authenticate(config);
+      } else {
+        // Fallback to userless auth
+        const clientId = import.meta.env.VITE_REDDIT_CLIENT_ID || process.env.REDDIT_CLIENT_ID;
+        const clientSecret = import.meta.env.VITE_REDDIT_CLIENT_SECRET || process.env.REDDIT_CLIENT_SECRET;
+
+        if (clientId && clientSecret) {
+          await this.service.authenticateUserless(
+            clientId,
+            clientSecret,
+            'Council-Intelligence-Gatherer/2.0'
+          );
+        }
+      }
+      this.initialized = true;
+    } catch (error) {
+      console.error('Reddit authentication failed:', error);
+      throw error;
+    }
+  }
   /**
    * Get posts from a subreddit
    */
@@ -78,28 +59,32 @@ export class RedditAPIClient {
     posts: RedditPost[];
     after: string | null;
   }> {
-    const {
-      sort = 'hot',
-      timeRange = 'week',
-      limit = 25,
-      after
-    } = options;
-    const params = new URLSearchParams({
-      limit: limit.toString()
-    });
-    if (after) {
-      params.set('after', after);
+    await this.initialize();
+
+    const { sort = 'hot', timeRange = 'week', limit = 25 } = options;
+
+    let posts: RedditPost[];
+
+    switch (sort) {
+      case 'hot':
+        posts = await this.service.getHotPosts(subreddit, { limit });
+        break;
+      case 'top':
+        posts = await this.service.getTopPosts(subreddit, { time: timeRange, limit });
+        break;
+      case 'new':
+        posts = await this.service.getNewPosts(subreddit, { limit });
+        break;
+      case 'rising':
+        posts = await this.service.getRisingPosts(subreddit, { limit });
+        break;
+      default:
+        posts = await this.service.getHotPosts(subreddit, { limit });
     }
-    if (sort === 'top' && timeRange) {
-      params.set('t', timeRange);
-    }
-    const url = `${this.baseURL}/r/${subreddit}/${sort}.json?${params}`;
-    const response = await this.fetchWithRetry(url);
-    const data: RedditListing = await response.json();
-    const posts = data.data.children.map((child) => child.data as RedditPost);
+
     return {
       posts,
-      after: data.data.after
+      after: null, // Snoowrap pagination handled internally
     };
   }
 
@@ -111,27 +96,15 @@ export class RedditAPIClient {
     timeRange?: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
     limitPerSubreddit?: number;
   } = {}): Promise<RedditPost[]> {
-    const {
-      limitPerSubreddit = 25
-    } = options;
+    await this.initialize();
 
-    // Fetch from each subreddit
-    const promises = subreddits.map((subreddit) => this.getSubredditPosts(subreddit, {
-      ...options,
-      limit: limitPerSubreddit
-    }));
-    const results = await Promise.allSettled(promises);
+    const { sort = 'hot', timeRange = 'week', limitPerSubreddit = 25 } = options;
 
-    // Combine all posts
-    const allPosts: RedditPost[] = [];
-    results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        allPosts.push(...result.value.posts);
-      } else // eslint-disable-next-line no-empty
-        {}});
-
-    // Sort by score
-    return allPosts.sort((a, b) => b.score - a.score);
+    return await this.service.getMultipleSubredditPosts(subreddits, {
+      sort,
+      time: timeRange,
+      limit: limitPerSubreddit,
+    });
   }
 
   /**
@@ -143,27 +116,15 @@ export class RedditAPIClient {
     timeRange?: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
     limit?: number;
   } = {}): Promise<RedditPost[]> {
-    const {
-      sort = 'relevance',
-      timeRange = 'week',
-      limit = 50
-    } = options;
-    const params = new URLSearchParams({
-      q: query,
+    await this.initialize();
+
+    const { subreddit, sort = 'relevance', timeRange = 'week', limit = 50 } = options;
+
+    return await this.service.searchPosts(query, subreddit, {
       sort,
-      limit: limit.toString()
+      time: timeRange,
+      limit,
     });
-    if (timeRange) {
-      params.set('t', timeRange);
-    }
-    const searchPath = options.subreddit ? `/r/${options.subreddit}/search.json` : '/search.json';
-    if (options.subreddit) {
-      params.set('restrict_sr', 'true');
-    }
-    const url = `${this.baseURL}${searchPath}?${params}`;
-    const response = await this.fetchWithRetry(url);
-    const data: RedditListing = await response.json();
-    return data.data.children.map((child) => child.data as RedditPost);
   }
 
   /**
@@ -173,62 +134,40 @@ export class RedditAPIClient {
     sort?: 'confidence' | 'top' | 'new' | 'controversial' | 'old';
     limit?: number;
   } = {}): Promise<RedditComment[]> {
-    const {
-      sort = 'top',
-      limit = 100
-    } = options;
-    const params = new URLSearchParams({
-      sort,
-      limit: limit.toString()
-    });
-    const url = `${this.baseURL}/r/${subreddit}/comments/${postId}.json?${params}`;
-    const response = await this.fetchWithRetry(url);
-    const data = await response.json();
+    await this.initialize();
 
-    // Comments are in the second listing
-    if (!data[1] || !data[1].data) return [];
-    const comments: RedditComment[] = [];
-    const extractComments = (listing: any): void => {
-      if (!listing.data || !listing.data.children) return;
-      listing.data.children.forEach((child: any) => {
-        if (child.kind === 't1' && child.data) {
-          comments.push(child.data as RedditComment);
+    // Get comments with full threading
+    const comments = await this.service.getPostComments(postId, subreddit);
 
-          // Recursively get replies
-          if (child.data.replies) {
-            extractComments(child.data.replies);
-          }
+    // Flatten comment tree if needed
+    const flatComments: RedditComment[] = [];
+    const flatten = (commentList: RedditComment[]): void => {
+      commentList.forEach(comment => {
+        flatComments.push(comment);
+        if (comment.replies) {
+          flatten(comment.replies);
         }
       });
     };
-    extractComments(data[1]);
-    return comments;
+    flatten(comments);
+
+    // Apply limit if specified
+    const { limit = 100 } = options;
+    return flatComments.slice(0, limit);
   }
 
   /**
    * Filter posts by keywords
    */
   filterPostsByKeywords(posts: RedditPost[], keywords: string[], excludeKeywords: string[] = []): RedditPost[] {
-    if (keywords.length === 0 && excludeKeywords.length === 0) {
-      return posts;
-    }
-    return posts.filter((post) => {
-      const text = `${post.title} ${post.selftext}`.toLowerCase();
-
-      // Check if includes any keyword
-      const hasKeyword = keywords.length === 0 || keywords.some((keyword) => text.includes(keyword.toLowerCase()));
-
-      // Check if includes any excluded keyword
-      const hasExcludedKeyword = excludeKeywords.length > 0 && excludeKeywords.some((keyword) => text.includes(keyword.toLowerCase()));
-      return hasKeyword && !hasExcludedKeyword;
-    });
+    return this.service.filterPostsByKeywords(posts, keywords, excludeKeywords);
   }
 
   /**
    * Filter posts by minimum engagement
    */
   filterByEngagement(posts: RedditPost[], minUpvotes = 10, minComments = 5): RedditPost[] {
-    return posts.filter((post) => post.score >= minUpvotes && post.num_comments >= minComments);
+    return this.service.filterByEngagement(posts, minUpvotes, minComments);
   }
 
   /**

@@ -5,12 +5,12 @@ import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
-  // Use base path only for production builds (GitHub Pages)
+  // Use base path for all builds (GitHub Pages)
   // In development, use root path for easier local testing
-  const base = command === 'build' && process.env.NODE_ENV === 'production' ? '/Council-Git-V9/' : '/';
+  const base = command === 'build' ? '/Council-Git-V9/' : '/';
   
   return {
-    // GitHub Pages base path (only for production builds)
+    // GitHub Pages base path (for production builds)
     base,
     server: {
       host: "0.0.0.0",

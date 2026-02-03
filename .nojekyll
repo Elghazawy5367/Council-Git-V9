@@ -1,0 +1,8 @@
+# .nojekyll - GitHub Pages marker
+
+# This file tells GitHub Pages to:
+# 1. NOT use Jekyll processing
+# 2. Serve files exactly as they are
+# 3. Allow assets with underscores in names (default Jekyll ignores these)
+
+# This is required for React SPA deployments that use Vite with GitHub Pages.

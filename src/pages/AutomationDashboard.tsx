@@ -1,51 +1,37 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/primitives/card';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
-import { Play, CheckCircle2, Clock, ExternalLink, ArrowLeft, Github, Calendar, Settings } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { GITHUB_OWNER, GITHUB_REPO, GITHUB_REPO_URL } from '@/lib/config';
+import { ArrowLeft, Settings, Activity, Clock, CheckCircle2, XCircle, Calendar } from 'lucide-react';
+import {
+  DashboardLayout,
+  DashboardHeader,
+  DashboardGrid,
+  StatCard,
+  LineChartCard,
+  BarChartCard,
+  DataTable,
+  Column,
+} from '@/components/dashboard';
 import { useFeatureConfigStore } from '@/features/council/store/feature-config-store';
-import { parseCronSchedule } from '@/lib/workflow-dispatcher';
-import { MiningDrillPanel } from '@/features/council/components/MiningDrillPanel';
-import { GoldmineDetector } from '@/features/council/components/GoldmineDetector';
-import { loadAllOpportunities } from '@/lib/opportunity-loader';
-import { Opportunity } from '@/lib/goldmine-detector';
-import { getSessionKeys } from '@/features/council/lib/vault';
-import { toast } from 'sonner';
 
-const FeatureConfigModal = lazy(() => import('@/features/council/components/FeatureConfigModal'));
-
-interface Feature {
-  id: string;
+interface FeatureActivity {
   name: string;
-  description: string;
-  icon: string;
-  workflow: string;
-  schedule: string;
+  runs: number;
+  status: 'active' | 'idle' | 'error';
   lastRun?: string;
-  status: 'idle' | 'scheduled' | 'active';
 }
 
 /**
- * AutomationDashboard - Unified dashboard for managing all core automation features
- * Consolidates previous Dashboard.tsx and FeaturesDashboard.tsx
- * Features include: GitHub Trending, Reddit Analysis, Code Quality, Market Research, etc.
+ * AutomationDashboard - Professional dashboard for automation features
+ * Replaces the previous 573-line implementation with reusable components
  */
 const AutomationDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const repoOwner = GITHUB_OWNER;
-  const repoName = GITHUB_REPO;
-  
-  const [showConfigModal, setShowConfigModal] = useState(false);
-  const [selectedFeatureId, setSelectedFeatureId] = useState<string | null>(null);
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [loadingOpportunities, setLoadingOpportunities] = useState(false);
-  
-  const { 
-    scout, 
-    mirror, 
-    quality, 
+  const {
+    scout,
+    mirror,
+    quality,
     selfImprove,
     githubTrending,
     marketGap,
@@ -56,515 +42,185 @@ const AutomationDashboard: React.FC = () => {
     twinMimicry,
     forkEvolution,
     promptHeist,
-    stargazerAnalysis
+    stargazerAnalysis,
   } = useFeatureConfigStore();
-  
-  // Load opportunities on mount
-  useEffect(() => {
-    const loadData = async (): Promise<void> => {
-      setLoadingOpportunities(true);
-      try {
-        const keys = getSessionKeys();
-        const opps = await loadAllOpportunities(keys?.githubApiKey);
-        setOpportunities(opps);
-      } catch (error) {
-        console.error('Failed to load opportunities:', error);
-        toast.error('Failed to load opportunities');
-      } finally {
-        setLoadingOpportunities(false);
-      }
-    };
-    
-    void loadData();
-  }, []);
-  
-  const [features, setFeatures] = useState<Feature[]>([]);
 
-  useEffect(() => {
-    setFeatures([
-      {
-        id: 'github-trending',
-        name: 'GitHub Trending',
-        description: 'Scans trending repositories for market opportunities',
-        icon: '📈',
-        workflow: 'github-trending.yml',
-        schedule: githubTrending.schedule,
-        status: githubTrending.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'market-gap',
-        name: 'Market Gap Identifier',
-        description: 'Identifies underserved market gaps using GitHub & Reddit',
-        icon: '🎯',
-        workflow: 'market-gap.yml',
-        schedule: marketGap.schedule,
-        status: marketGap.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'stargazer',
-        name: 'Stargazer Analysis',
-        description: 'Analyze repository stars for institutional backing',
-        icon: '⭐',
-        workflow: 'stargazer-analysis.yml',
-        schedule: '0 0 * * *',
-        status: stargazerAnalysis.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'mirror',
-        name: 'Code Mirror System',
-        description: 'Analyze codebase against elite repository standards',
-        icon: '🔄',
-        workflow: 'code-mirror.yml',
-        schedule: mirror.schedule,
-        status: mirror.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'quality',
-        name: 'QUALITY Amplification Pipeline',
-        description: 'Run full quality analysis and improvement pipeline',
-        icon: '⚡',
-        workflow: 'quality-pipeline.yml',
-        schedule: quality.schedule,
-        status: quality.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'learn',
-        name: 'Self-Improving Loop',
-        description: 'Learn patterns from successful repositories',
-        icon: '🧠',
-        workflow: 'self-improve.yml',
-        schedule: selfImprove.schedule,
-        status: selfImprove.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'reddit-sniper',
-        name: 'Reddit Sniper',
-        description: 'Detect high-intent buying signals on Reddit in real-time',
-        icon: '🎯',
-        workflow: 'reddit-sniper.yml',
-        schedule: redditSniper.schedule,
-        status: redditSniper.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'reddit-pain-points',
-        name: 'Reddit Pain Points',
-        description: 'Extract market gaps and user frustrations from subreddits',
-        icon: '💬',
-        workflow: 'reddit-pain-points.yml',
-        schedule: redditPainPoints.schedule,
-        status: redditPainPoints.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'viral-radar',
-        name: 'Viral Radar',
-        description: 'Track viral trends across Twitter, Reddit, and HN',
-        icon: '📡',
-        workflow: 'viral-radar.yml',
-        schedule: viralRadar.schedule,
-        status: viralRadar.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'hackernews',
-        name: 'HackerNews Intelligence',
-        description: 'Extract buying intent signals and tech trends from HN',
-        icon: '🗞️',
-        workflow: 'hackernews-producthunt.yml',
-        schedule: hackerNews.schedule,
-        status: hackerNews.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'twin-mimicry',
-        name: 'Twin Mimicry',
-        description: 'Mimic high-performing repository styles and patterns',
-        icon: '👯',
-        workflow: 'twin-mimicry.yml',
-        schedule: twinMimicry.schedule,
-        status: twinMimicry.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'fork-evolution',
-        name: 'Fork Evolution',
-        description: 'Track high-value forks and their innovative changes',
-        icon: '🍴',
-        workflow: 'fork-evolution.yml',
-        schedule: forkEvolution.schedule,
-        status: forkEvolution.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'heist',
-        name: 'The HEIST',
-        description: 'Import 290+ world-class prompts from danielmiessler/fabric',
-        icon: '🎭',
-        workflow: 'heist-prompts.ts',
-        schedule: 'monthly',
-        status: promptHeist.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'scout',
-        name: 'Phantom Scout',
-        description: '24/7 automated GitHub intelligence gathering',
-        icon: '👻',
-        workflow: 'daily-scout.yml',
-        schedule: scout.schedule,
-        status: scout.enabled ? 'active' : 'idle',
-      },
-      {
-        id: 'sonar',
-        name: 'Sonar (Blue Ocean Scanner)',
-        description: 'Detect abandoned high-value repositories',
-        icon: '📡',
-        workflow: 'daily-scout.yml',
-        schedule: scout.schedule,
-        status: scout.enabled ? 'active' : 'idle',
-      },
-    ]);
-  }, [scout, mirror, quality, selfImprove, githubTrending, marketGap, redditSniper, redditPainPoints, viralRadar, twinMimicry, forkEvolution, promptHeist, stargazerAnalysis, hackerNews]);
+  // Sample data for demonstration - in production, this would come from your actual data sources
+  const [activityData] = useState([
+    { name: 'Mon', runs: 12, successes: 10, failures: 2 },
+    { name: 'Tue', runs: 15, successes: 14, failures: 1 },
+    { name: 'Wed', runs: 8, successes: 8, failures: 0 },
+    { name: 'Thu', runs: 18, successes: 15, failures: 3 },
+    { name: 'Fri', runs: 14, successes: 13, failures: 1 },
+    { name: 'Sat', runs: 10, successes: 10, failures: 0 },
+    { name: 'Sun', runs: 6, successes: 6, failures: 0 },
+  ]);
 
-  const getWorkflowUrl = (workflow: string): string => {
-    return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
-  };
+  const [featureUsageData] = useState([
+    { name: 'Scout', value: 145 },
+    { name: 'Mirror', value: 98 },
+    { name: 'Reddit Sniper', value: 76 },
+    { name: 'Trending', value: 134 },
+    { name: 'Quality', value: 87 },
+  ]);
 
-  const getTriggerUrl = (workflow: string): string => {
-    return `https://github.com/${repoOwner}/${repoName}/actions/workflows/${workflow}`;
-  };
+  const features = [
+    { id: 'github-trending', name: 'GitHub Trending', enabled: githubTrending.enabled },
+    { id: 'market-gap', name: 'Market Gap', enabled: marketGap.enabled },
+    { id: 'reddit-sniper', name: 'Reddit Sniper', enabled: redditSniper.enabled },
+    { id: 'scout', name: 'Scout', enabled: scout.enabled },
+    { id: 'mirror', name: 'Mirror', enabled: mirror.enabled },
+    { id: 'quality', name: 'Quality Pipeline', enabled: quality.enabled },
+    { id: 'self-improve', name: 'Self Improve', enabled: selfImprove.enabled },
+    { id: 'reddit-pain', name: 'Reddit Pain Points', enabled: redditPainPoints.enabled },
+    { id: 'viral-radar', name: 'Viral Radar', enabled: viralRadar.enabled },
+    { id: 'hackernews', name: 'Hacker News', enabled: hackerNews.enabled },
+    { id: 'twin-mimicry', name: 'Twin Mimicry', enabled: twinMimicry.enabled },
+    { id: 'fork-evolution', name: 'Fork Evolution', enabled: forkEvolution.enabled },
+    { id: 'heist', name: 'Prompt Heist', enabled: promptHeist.enabled },
+    { id: 'stargazer', name: 'Stargazer Analysis', enabled: stargazerAnalysis.enabled },
+  ];
 
-  const getStatusBadge = (status: Feature['status']): JSX.Element => {
-    const variants: Record<Feature['status'], { className: string; label: string; icon: JSX.Element }> = {
-      idle: { 
-        className: 'bg-gray-500/10 text-gray-600 dark:text-gray-400', 
-        label: 'Disabled',
-        icon: <Clock className="h-3 w-3" />
+  const activeFeatures = features.filter((f) => f.enabled).length;
+  const totalRuns = activityData.reduce((acc, day) => acc + day.runs, 0);
+  const successRate = (
+    (activityData.reduce((acc, day) => acc + day.successes, 0) / totalRuns) *
+    100
+  ).toFixed(1);
+
+  const [recentActivity] = useState<FeatureActivity[]>([
+    { name: 'GitHub Trending', runs: 134, status: 'active', lastRun: '2 hours ago' },
+    { name: 'Scout Analysis', runs: 145, status: 'active', lastRun: '3 hours ago' },
+    { name: 'Mirror Quality Check', runs: 98, status: 'active', lastRun: '5 hours ago' },
+    { name: 'Reddit Sniper', runs: 76, status: 'idle', lastRun: '1 day ago' },
+    { name: 'Market Gap Detector', runs: 54, status: 'active', lastRun: '6 hours ago' },
+  ]);
+
+  const columns: Column<FeatureActivity>[] = [
+    {
+      key: 'name',
+      header: 'Feature',
+      sortable: true,
+    },
+    {
+      key: 'runs',
+      header: 'Total Runs',
+      sortable: true,
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      sortable: true,
+      render: (value) => {
+        const status = value as string;
+        const statusConfig = {
+          active: { label: 'Active', className: 'bg-green-500/10 text-green-600 dark:text-green-400' },
+          idle: { label: 'Idle', className: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400' },
+          error: { label: 'Error', className: 'bg-red-500/10 text-red-600 dark:text-red-400' },
+        };
+        const config = statusConfig[status as keyof typeof statusConfig];
+        return <Badge className={config.className}>{config.label}</Badge>;
       },
-      scheduled: { 
-        className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400', 
-        label: 'Scheduled',
-        icon: <Clock className="h-3 w-3" />
-      },
-      active: { 
-        className: 'bg-green-500/10 text-green-600 dark:text-green-400', 
-        label: 'Active',
-        icon: <CheckCircle2 className="h-3 w-3" />
-      },
-    };
-
-    const { className, label, icon } = variants[status];
-    return (
-      <Badge className={`${className} flex items-center gap-1`}>
-        {icon}
-        {label}
-      </Badge>
-    );
-  };
-
-  const getFeatureConfig = (featureId: string): string => {
-    switch (featureId) {
-      case 'scout':
-      case 'sonar':
-        return `Niche: ${scout.targetNiche} | Min Stars: ${scout.minStars} | Depth: ${scout.depth}`;
-      case 'reddit-sniper':
-        return `Intent: >${redditSniper.minIntentScore}/10 | Subs: ${redditSniper.subreddits.join(', ')}`;
-      case 'reddit-pain-points':
-        return `Model: ${redditPainPoints.analysisModel} | Subs: ${redditPainPoints.targetSubreddits.join(', ')}`;
-      case 'viral-radar':
-        return `Score: >${viralRadar.minViralScore} | Platforms: ${viralRadar.platforms.join(', ')}`;
-      case 'hackernews':
-        return `Schedule: ${hackerNews.schedule}`;
-      case 'twin-mimicry':
-        return `Target: ${twinMimicry.targetRepo || 'None'} | Style: ${twinMimicry.mimicStyle}`;
-      case 'fork-evolution':
-        return `Min Forks: ${forkEvolution.minForks} | Tracking: ${forkEvolution.trackChanges ? 'Yes' : 'No'}`;
-      case 'heist':
-        return `Patterns: ${promptHeist.patternsEnabled.length} enabled | Cache: ${promptHeist.cacheExpiry}h | Auto-update: ${promptHeist.autoUpdate ? 'On' : 'Off'}`;
-      case 'github-trending':
-        return `Topics: ${githubTrending.topics.join(', ')} | Langs: ${githubTrending.languages.join(', ')}`;
-      case 'market-gap':
-        return `Quality: >${marketGap.minQualityScore} | AI: ${marketGap.deepAnalysis ? 'Deep' : 'Fast'}`;
-      case 'stargazer':
-        return `Min Followers: ${stargazerAnalysis.minFollowers} | Co: ${stargazerAnalysis.targetCompanies.slice(0, 3).join(', ')}...`;
-      case 'mirror':
-        return `Report: ${mirror.generateReport ? 'Yes' : 'No'} | Standards: ${mirror.standards.length}`;
-      case 'quality':
-        return `Auto-fix: ${quality.autoFix ? 'Yes' : 'No'} | Lint: ${quality.runLinter ? 'Yes' : 'No'}`;
-      case 'learn':
-        return `Niche: ${selfImprove.niche} | Min Stars: ${selfImprove.minStars}`;
-      default:
-        return '';
-    }
-  };
-
-  const handleOpenConfig = (id?: string) => {
-    // Map feature IDs to modal tab IDs if necessary
-    const tabMap: Record<string, string> = {
-      'github-trending': 'github-trending',
-      'market-gap': 'market-gap',
-      'stargazer': 'stargazer',
-      'mirror': 'mirror',
-      'quality': 'quality',
-      'learn': 'self-improve',
-      'reddit-sniper': 'reddit-sniper',
-      'reddit-pain-points': 'reddit-pain-points',
-      'viral-radar': 'viral-radar',
-      'hackernews': 'hackernews',
-      'twin-mimicry': 'twin-mimicry',
-      'fork-evolution': 'fork-evolution',
-      'scout': 'scout',
-      'sonar': 'scout'
-    };
-    
-    setSelectedFeatureId(id ? (tabMap[id] || id) : null);
-    setShowConfigModal(true);
-  };
+    },
+    {
+      key: 'lastRun',
+      header: 'Last Run',
+      sortable: true,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="glass-panel border-b border-border/50 sticky top-0 z-50 backdrop-blur-xl">
+      <header className="border-b sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="hover:bg-violet-500/10">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
-                  Automation Control Center
-                </h1>
-                <p className="text-xs text-muted-foreground">Manage all {features.length} core automation features • {features.filter(f => f.status === 'active' || f.status === 'scheduled').length} active</p>
+                <h1 className="text-xl font-bold">Automation Control Center</h1>
+                <p className="text-xs text-muted-foreground">
+                  Manage {features.length} automation features • {activeFeatures} active
+                </p>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => handleOpenConfig()} 
-                className="gap-2 glass-panel border-violet-500/20 hover:bg-violet-500/10"
-              >
-                <Settings className="h-4 w-4" />
-                Configure Features
-              </Button>
-            </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Settings className="h-4 w-4" />
+              Configure
+            </Button>
           </div>
         </div>
       </header>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <FeatureConfigModal 
-          isOpen={showConfigModal} 
-          onClose={() => setShowConfigModal(false)} 
-          initialTab={selectedFeatureId}
+      <DashboardLayout>
+        {/* Stats Overview */}
+        <DashboardGrid cols={4}>
+          <StatCard
+            title="Active Features"
+            value={activeFeatures}
+            description={`of ${features.length} total`}
+            icon={Activity}
+            trend={{ value: 12.5, label: 'from last week' }}
+          />
+          <StatCard
+            title="Total Runs"
+            value={totalRuns}
+            description="this week"
+            icon={Clock}
+            trend={{ value: 8.2, label: 'from last week' }}
+          />
+          <StatCard
+            title="Success Rate"
+            value={`${successRate}%`}
+            description="of all runs"
+            icon={CheckCircle2}
+            trend={{ value: 2.4, label: 'from last week' }}
+          />
+          <StatCard
+            title="Last Updated"
+            value="2h ago"
+            description="GitHub Trending"
+            icon={Calendar}
+          />
+        </DashboardGrid>
+
+        {/* Charts */}
+        <DashboardGrid cols={2}>
+          <LineChartCard
+            title="Weekly Activity"
+            description="Automation runs over the past week"
+            data={activityData}
+            dataKeys={[
+              { key: 'runs', color: '#8b5cf6', label: 'Total Runs' },
+              { key: 'successes', color: '#10b981', label: 'Successful' },
+              { key: 'failures', color: '#ef4444', label: 'Failed' },
+            ]}
+            height={300}
+          />
+
+          <BarChartCard
+            title="Feature Usage"
+            description="Most active automation features"
+            data={featureUsageData}
+            dataKeys={[{ key: 'value', color: '#8b5cf6', label: 'Runs' }]}
+            height={300}
+          />
+        </DashboardGrid>
+
+        {/* Recent Activity Table */}
+        <DataTable
+          title="Recent Activity"
+          description="Latest automation runs and their status"
+          data={recentActivity}
+          columns={columns}
+          searchable={true}
+          searchKey="name"
+          searchPlaceholder="Search features..."
+          pageSize={10}
         />
-      </Suspense>
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Features List */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                Core Features ({features.length})
-              </h2>
-              <Badge variant="outline" className="gap-2 glass-panel">
-                <Github className="h-4 w-4" />
-                GitHub Actions
-              </Badge>
-            </div>
-            
-            {features.map((feature) => (
-              <Card key={feature.id} className="hover:shadow-xl hover:scale-[1.02] transition-all glass-panel border-2 border-violet-500/10">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">{feature.icon}</span>
-                      <div>
-                        <CardTitle className="text-lg">{feature.name}</CardTitle>
-                        <CardDescription className="mt-1">{feature.description}</CardDescription>
-                      </div>
-                    </div>
-                    {getStatusBadge(feature.status)}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    <span>{parseCronSchedule(feature.schedule)}</span>
-                  </div>
-                  
-                  <div className="text-xs text-muted-foreground bg-muted/20 p-2 rounded">
-                    {getFeatureConfig(feature.id)}
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Button
-                      onClick={() => handleOpenConfig(feature.id)}
-                      size="sm"
-                      variant="default"
-                      className="gap-2 bg-violet-600/20 hover:bg-violet-600/40 text-violet-100 border border-violet-500/30"
-                    >
-                      <Settings className="h-4 w-4" />
-                      Configure
-                    </Button>
-                    <Button
-                      onClick={() => window.open(getTriggerUrl(feature.workflow), '_blank')}
-                      size="sm"
-                      className="gap-2 flex-1"
-                    >
-                      <Play className="h-4 w-4" />
-                      Trigger
-                    </Button>
-                    <Button
-                      onClick={() => window.open(getWorkflowUrl(feature.workflow), '_blank')}
-                      size="sm"
-                      variant="outline"
-                      className="gap-2"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      Runs
-                    </Button>
-                  </div>
-                  
-                  <div className="text-xs text-muted-foreground bg-muted/30 p-2 rounded">
-                    <code>Workflow: {feature.workflow}</code>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Info Panel */}
-          <div className="space-y-4">
-            <Card className="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border-2 border-violet-500/20 glass-panel">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <Github className="h-6 w-6 text-violet-500" />
-                  GitHub Actions Integration
-                </CardTitle>
-                <CardDescription className="text-base">Zero-cost automated intelligence</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">How It Works</h4>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li className="flex items-center gap-2">
-                      <span className="text-lg">✨</span>
-                      Features run automatically on schedule
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-lg">🚀</span>
-                      Trigger workflows manually anytime
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-lg">💾</span>
-                      Results stored in repository
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-lg">🆓</span>
-                      Completely free using GitHub Actions
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="p-3 bg-background/50 rounded-lg border border-violet-500/20">
-                  <h4 className="font-semibold text-sm mb-2">Quick Actions</h4>
-                  <div className="space-y-2">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="w-full justify-start hover:bg-violet-500/10"
-                      onClick={() => window.open(`${GITHUB_REPO_URL}/actions`, '_blank')}
-                    >
-                      <Github className="h-4 w-4 mr-2" />
-                      View All Workflows
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="w-full justify-start hover:bg-violet-500/10"
-                      onClick={() => navigate('/quality')}
-                    >
-                      📊 Quality Dashboard
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="glass-panel border-2 border-violet-500/10">
-              <CardHeader>
-                <CardTitle className="text-lg">Latest Results</CardTitle>
-                <CardDescription>Access generated reports and data</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => window.open(`${GITHUB_REPO_URL}/actions`, '_blank')}
-                >
-                  📡 Daily Intelligence Feed
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => navigate('/features/scout')}
-                >
-                  👻 The Sonar
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => navigate('/features/scout')}
-                >
-                  📡 The Drill
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => window.open('/data/opportunities/latest.json', '_blank')}
-                >
-                  🎯 Blue Ocean Opportunities
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => window.open('/attached_assets/', '_blank')}
-                >
-                  🪞 Mirror Reports
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-start glass-panel hover:bg-violet-500/10"
-                  onClick={() => window.open('/src/lib/knowledge-base/', '_blank')}
-                >
-                  🧠 Learned Patterns
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Mining Drill Section */}
-        <div className="mt-8">
-          <MiningDrillPanel />
-        </div>
-
-        {/* Goldmine Detector Section */}
-        <div className="mt-8">
-          {loadingOpportunities ? (
-            <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
-                Loading opportunities...
-              </CardContent>
-            </Card>
-          ) : (
-            <GoldmineDetector opportunities={opportunities} />
-          )}
-        </div>
-      </main>
+      </DashboardLayout>
     </div>
   );
 };

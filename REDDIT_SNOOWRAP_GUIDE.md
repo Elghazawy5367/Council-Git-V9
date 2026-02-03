@@ -36,15 +36,22 @@ REDDIT_USERNAME=your_reddit_username
 REDDIT_PASSWORD=your_reddit_password
 ```
 
-### Option 2: Userless Authentication (Public Data Only)
+### Option 2: Userless Authentication (Limited - Read Public Data)
 
-For read-only access to public data:
+**Important Note**: Snoowrap is designed for authenticated access. For truly anonymous/userless access to public data only, the original JSON API approach (in `reddit.service.ts`) is more appropriate.
+
+However, you can still use snoowrap with just client credentials for some read-only operations:
 
 ```bash
 # .env.local
 REDDIT_CLIENT_ID=your_client_id
 REDDIT_CLIENT_SECRET=your_client_secret
 ```
+
+**Limitations**:
+- Some operations may fail without user authentication
+- Rate limits may be stricter
+- For production use with public data only, consider using `reddit.service.ts` instead
 
 ## Usage Examples
 

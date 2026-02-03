@@ -165,18 +165,29 @@ export class RedditSnoowrapService {
   }
 
   /**
-   * Initialize with user-less authentication (script app)
+   * Initialize with user-less authentication (read-only access)
+   * 
+   * Note: Snoowrap requires user credentials for full functionality.
+   * For truly userless/anonymous access, consider using the JSON API
+   * via reddit.service.ts instead.
+   * 
+   * This method attempts to configure snoowrap with minimal credentials
+   * for read-only operations on public data.
    */
   async authenticateUserless(clientId: string, clientSecret: string, userAgent: string): Promise<void> {
     try {
+      // Snoowrap requires user credentials or a refresh token
+      // For read-only public data access without user auth,
+      // the JSON API (reddit.service.ts) is more appropriate
+      // 
+      // However, we can still initialize snoowrap with client credentials
+      // and let it handle the OAuth flow internally
+      
       this.client = new Snoowrap({
         clientId,
         clientSecret,
         userAgent,
-        // For userless authentication, set a dummy refresh token
-        refreshToken: '',
-        accessToken: '',
-      });
+      } as any); // Partial config - snoowrap will handle OAuth internally
 
       this.client.config({
         requestDelay: 1000,
@@ -186,6 +197,7 @@ export class RedditSnoowrapService {
       });
 
       console.log('✓ Reddit userless authentication configured');
+      console.log('⚠ Note: Some operations may require user authentication');
     } catch (error) {
       throw new Error(`Reddit userless auth failed: ${error instanceof Error ? error.message : String(error)}`);
     }

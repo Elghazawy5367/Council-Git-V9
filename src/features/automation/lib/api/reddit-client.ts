@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Reddit API Client for Features Automation
  * Now uses snoowrap (official Reddit API wrapper) with OAuth2

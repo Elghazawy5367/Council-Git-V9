@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-02-03T20:39:19.898Z",
+  "summary": {
+    "totalOpportunities": 20,
+    "highImpact": 9,
+    "readyToBuild": 5
+  },
+  "recommendations": [
+    "Priority 1: Add missing feature as standalone tool",
+    "  - Addresses pain point: Unsure how to resolve `Missing field while writing result` error when using subscriptions",
+    "Watch trend: like (13 mentions)",
+    "Secondary trends: about (12 mentions), request (17 mentions)",
+    "Quick wins available: 5 high-impact, low-effort opportunities",
+    "Review opportunities in data/opportunities/latest.json",
+    "Set up alerts for new pain points"
+  ],
+  "detailedAnalysis": "## Market Analysis\n\nBased on scanning 25 repositories, we identified 105 distinct pain points.\n\n### Key Findings\n\n- **High-impact opportunities**: 9\n- **Low-effort builds**: 6\n- **Emerging trends**: 10\n\n### Top Opportunities\n\n1. **Add missing feature as standalone tool**\n   - Impact: HIGH\n   - Effort: LOW\n\n2. **Tool to solve: fix(i18n): Make rest of the tools translatable and translate them to German**\n   - Impact: HIGH\n   - Effort: LOW\n\n3. **Add missing feature as standalone tool**\n   - Impact: HIGH\n   - Effort: LOW\n\n### Emerging Trends\n\n- like (13 mentions)\n- about (12 mentions)\n- request (17 mentions)\n- there (14 mentions)\n- https (35 mentions)\n- github (17 mentions)\n- into (11 mentions)\n- support (15 mentions)\n- issue (22 mentions)\n- using (20 mentions)\n\n",
+  "metadata": {
+    "generatedBy": "Council Intelligence System",
+    "version": "2.0",
+    "dataSource": "scout-data"
+  }
+}

@@ -1,22 +1,30 @@
 /**
- * LLMResponseCard Component
+ * Enhanced LLMResponseCard Component
  * 
- * REQUIREMENTS:
- * 1. Header with LLM icon, name, provider badge
- * 2. Content area with markdown-rendered response
- * 3. Footer with 4 buttons (thumbs up/down, retry, copy, export)
- * 4. Status indicators (loading, success, error)
- * 5. Collapsible/expandable
- * 6. Syntax highlighting for code blocks
+ * Inspired by:
+ * - Vercel AI SDK (streaming responses)
+ * - OpenAI Playground (code blocks with copy)
+ * - ChatGPT interface (typewriter effect)
+ * 
+ * Features:
+ * 1. Streaming text with typewriter effect
+ * 2. Syntax-highlighted code blocks with copy buttons
+ * 3. Collapsible/expandable sections
+ * 4. Loading states with skeleton
+ * 5. Error states with retry
+ * 6. Professional UI polish
  */
 
-import { useState, memo } from 'react';
+import { useState, memo, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
 import { Badge } from '@/components/primitives/badge';
 import { Skeleton } from '@/components/primitives/skeleton';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/primitives/collapsible';
-import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { 
   ThumbsUp, 
   ThumbsDown, 
@@ -28,7 +36,9 @@ import {
   AlertCircle,
   Clock,
   CheckCircle,
-  DollarSign
+  DollarSign,
+  Check,
+  Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { AVAILABLE_LLMS } from '@/services/openrouter';
@@ -38,13 +48,141 @@ interface LLMResponseCardProps {
   response: LLMResponse;
   onFeedback?: (type: 'up' | 'down') => void;
   onRetry?: () => void;
+  streaming?: boolean; // Enable typewriter effect
+  streamingSpeed?: number; // Characters per chunk (default: 3)
 }
 
-export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCardProps) {
+/**
+ * Custom hook for typewriter effect
+ * Simulates character-by-character text streaming
+ */
+function useTypewriter(text: string, enabled: boolean, speed: number = 3): string {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+  
+  useEffect(() => {
+    if (!enabled) {
+      setDisplayedText(text);
+      setIsComplete(true);
+      return;
+    }
+
+    setDisplayedText('');
+    setIsComplete(false);
+    
+    let currentIndex = 0;
+    const intervalDuration = 16; // ~60fps for smooth animation
+    
+    const interval = setInterval(() => {
+      if (currentIndex < text.length) {
+        // Add multiple characters per frame for faster streaming
+        const chunk = text.slice(currentIndex, currentIndex + speed);
+        currentIndex += speed;
+        setDisplayedText(text.slice(0, currentIndex));
+      } else {
+        setIsComplete(true);
+        clearInterval(interval);
+      }
+    }, intervalDuration);
+
+    return () => clearInterval(interval);
+  }, [text, enabled, speed]);
+
+  return displayedText;
+}
+
+/**
+ * Code block component with syntax highlighting and copy button
+ */
+function CodeBlock({ language, value, inline }: { language?: string; value: string; inline?: boolean }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      toast.success('Code copied!');
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      toast.error('Failed to copy code');
+    }
+  };
+
+  // Inline code
+  if (inline) {
+    return (
+      <code className="px-1.5 py-0.5 rounded bg-muted text-primary font-mono text-[0.85em]">
+        {value}
+      </code>
+    );
+  }
+
+  // Code block with syntax highlighting
+  return (
+    <div className="relative group my-4">
+      {/* Language badge */}
+      {language && (
+        <div className="absolute top-3 left-3 px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground bg-background/80 rounded z-10">
+          {language}
+        </div>
+      )}
+      
+      {/* Copy button */}
+      <button
+        onClick={handleCopy}
+        className="absolute top-3 right-3 p-2 rounded-md bg-background/80 hover:bg-background border border-border/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+        title="Copy code"
+      >
+        {copied ? (
+          <Check className="h-4 w-4 text-green-500" />
+        ) : (
+          <Copy className="h-4 w-4 text-muted-foreground" />
+        )}
+      </button>
+
+      {/* Syntax highlighted code */}
+      <SyntaxHighlighter
+        language={language || 'text'}
+        style={oneDark}
+        customStyle={{
+          margin: 0,
+          borderRadius: '0.5rem',
+          padding: '1.5rem',
+          paddingTop: '2.5rem',
+          fontSize: '0.875rem',
+          lineHeight: '1.5',
+        }}
+        showLineNumbers={value.split('\n').length > 5}
+        wrapLines={true}
+        wrapLongLines={false}
+      >
+        {value}
+      </SyntaxHighlighter>
+    </div>
+  );
+}
+
+export function LLMResponseCard({ 
+  response, 
+  onFeedback, 
+  onRetry,
+  streaming = false,
+  streamingSpeed = 3
+}: LLMResponseCardProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
+  
+  // Typewriter effect for streaming responses
+  const displayedText = useTypewriter(
+    response.response || '', 
+    streaming && response.status === 'success',
+    streamingSpeed
+  );
+  
+  const isStreaming = streaming && displayedText.length < (response.response?.length || 0);
+  const contentToRender = streaming ? displayedText : response.response;
 
-  // Get LLM configuration from AVAILABLE_LLMS
+  // Get LLM configuration
   const llmConfig = AVAILABLE_LLMS.find(llm => llm.id === response.llmId);
   const llmIcon = llmConfig?.icon || '🤖';
   const llmName = response.llmName || llmConfig?.name || 'Unknown LLM';
@@ -67,18 +205,17 @@ export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCa
   // Handle copy to clipboard
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(response.response);
+      await navigator.clipboard.writeText(response.response || '');
       toast.success('Response copied to clipboard!');
     } catch (error) {
       toast.error('Failed to copy to clipboard');
-      console.error('Copy error:', error);
     }
   };
 
   // Handle export as file
   const handleExport = () => {
     try {
-      const blob = new Blob([response.response], { type: 'text/markdown' });
+      const blob = new Blob([response.response || ''], { type: 'text/markdown' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -90,7 +227,6 @@ export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCa
       toast.success('Response exported!');
     } catch (error) {
       toast.error('Failed to export response');
-      console.error('Export error:', error);
     }
   };
 
@@ -225,10 +361,17 @@ export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCa
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="default" className="gap-1">
-                <CheckCircle className="h-3 w-3" />
-                Success
-              </Badge>
+              {isStreaming ? (
+                <Badge variant="secondary" className="gap-1">
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  Streaming
+                </Badge>
+              ) : (
+                <Badge variant="default" className="gap-1">
+                  <CheckCircle className="h-3 w-3" />
+                  Success
+                </Badge>
+              )}
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                   {isExpanded ? (
@@ -244,10 +387,122 @@ export function LLMResponseCard({ response, onFeedback, onRetry }: LLMResponseCa
         
         <CollapsibleContent>
           <CardContent className="space-y-4">
-            {/* Response content with markdown rendering and syntax highlighting */}
+            {/* Response content with enhanced markdown rendering */}
             <div className="rounded-lg border bg-muted/30 p-4 max-h-[600px] overflow-y-auto">
-              {response.response ? (
-                <SafeMarkdown content={response.response} />
+              {contentToRender ? (
+                <div className="prose prose-sm prose-invert max-w-none">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      code({ node, inline, className, children, ...props }) {
+                        const match = /language-(\w+)/.exec(className || '');
+                        const language = match ? match[1] : undefined;
+                        const codeContent = String(children).replace(/\n$/, '');
+
+                        return (
+                          <CodeBlock
+                            language={language}
+                            value={codeContent}
+                            inline={inline}
+                          />
+                        );
+                      },
+                      // Styled tables
+                      table({ children }) {
+                        return (
+                          <div className="overflow-x-auto my-4">
+                            <table className="min-w-full border-collapse border border-border/50 rounded-lg overflow-hidden">
+                              {children}
+                            </table>
+                          </div>
+                        );
+                      },
+                      thead({ children }) {
+                        return <thead className="bg-muted/50">{children}</thead>;
+                      },
+                      th({ children }) {
+                        return (
+                          <th className="px-4 py-2 text-left text-sm font-semibold text-foreground border-b border-border/50">
+                            {children}
+                          </th>
+                        );
+                      },
+                      td({ children }) {
+                        return (
+                          <td className="px-4 py-2 text-sm text-muted-foreground border-b border-border/30">
+                            {children}
+                          </td>
+                        );
+                      },
+                      // Styled headers
+                      h1({ children }) {
+                        return <h1 className="text-2xl font-bold text-foreground mt-6 mb-4 border-b border-border/50 pb-2">{children}</h1>;
+                      },
+                      h2({ children }) {
+                        return <h2 className="text-xl font-semibold text-foreground mt-5 mb-3">{children}</h2>;
+                      },
+                      h3({ children }) {
+                        return <h3 className="text-lg font-medium text-foreground mt-4 mb-2">{children}</h3>;
+                      },
+                      h4({ children }) {
+                        return <h4 className="text-base font-medium text-foreground mt-3 mb-2">{children}</h4>;
+                      },
+                      // Styled paragraphs
+                      p({ children }) {
+                        return <p className="mb-3 text-muted-foreground leading-relaxed">{children}</p>;
+                      },
+                      // Styled lists
+                      ul({ children }) {
+                        return <ul className="list-disc list-outside ml-4 mb-4 space-y-1">{children}</ul>;
+                      },
+                      ol({ children }) {
+                        return <ol className="list-decimal list-outside ml-4 mb-4 space-y-1">{children}</ol>;
+                      },
+                      li({ children }) {
+                        return <li className="text-muted-foreground">{children}</li>;
+                      },
+                      // Styled blockquotes
+                      blockquote({ children }) {
+                        return (
+                          <blockquote className="border-l-4 border-primary/50 pl-4 my-4 italic text-muted-foreground bg-muted/20 py-2 rounded-r">
+                            {children}
+                          </blockquote>
+                        );
+                      },
+                      // Styled links
+                      a({ href, children }) {
+                        return (
+                          <a
+                            href={href}
+                            className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {children}
+                          </a>
+                        );
+                      },
+                      // Horizontal rule
+                      hr() {
+                        return <hr className="my-6 border-border/50" />;
+                      },
+                      // Strong text
+                      strong({ children }) {
+                        return <strong className="font-semibold text-foreground">{children}</strong>;
+                      },
+                      // Emphasis
+                      em({ children }) {
+                        return <em className="italic">{children}</em>;
+                      },
+                    }}
+                  >
+                    {contentToRender}
+                  </ReactMarkdown>
+                  {/* Blinking cursor during streaming */}
+                  {isStreaming && (
+                    <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-0.5" />
+                  )}
+                </div>
               ) : (
                 <p className="text-sm text-muted-foreground italic">No response content</p>
               )}

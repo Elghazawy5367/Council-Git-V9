@@ -5,7 +5,6 @@ import { Progress } from "@/components/primitives/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/primitives/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/primitives/alert";
 import { ScrollArea } from "@/components/primitives/scroll-area";
-import { Button } from "@/components/primitives/button";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -15,19 +14,10 @@ import {
   Zap,
   BookOpen,
   GitPullRequest,
-  Activity,
-  ArrowLeft
+  Activity
 } from "lucide-react";
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
-import {
-  DashboardLayout,
-  DashboardHeader,
-  DashboardGrid,
-  StatCard,
-  LineChartCard,
-  BarChartCard,
-} from '@/components/dashboard';
+
 
 interface PipelineReport {
   timestamp: string;
@@ -56,12 +46,7 @@ interface SuccessPattern {
   learnedFrom: string[];
 }
 
-/**
- * QualityDashboard - Professional dashboard for code quality tracking
- * Refactored from 498 lines to use reusable dashboard components
- */
 export default function QualityDashboard(): JSX.Element {
-  const navigate = useNavigate();
   const [pipelineReport, setPipelineReport] = useState<PipelineReport | null>(null);
   const [patterns, setPatterns] = useState<SuccessPattern[]>([]);
   const [loading, setLoading] = useState(true);
@@ -159,7 +144,7 @@ export default function QualityDashboard(): JSX.Element {
 
   if (!pipelineReport) {
     return (
-      <DashboardLayout>
+      <div className="container mx-auto p-6 max-w-7xl">
         <Alert>
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No Data Available</AlertTitle>
@@ -168,7 +153,7 @@ export default function QualityDashboard(): JSX.Element {
             <code className="block mt-2 p-2 bg-muted rounded">npm run improve</code>
           </AlertDescription>
         </Alert>
-      </DashboardLayout>
+      </div>
     );
   }
 
@@ -176,37 +161,23 @@ export default function QualityDashboard(): JSX.Element {
     ? scoreHistory[scoreHistory.length - 1].score - scoreHistory[scoreHistory.length - 2].score
     : 0;
 
-  // Prepare data for charts
-  const qualityBreakdownData = [
-    { name: "Error Handling", score: 99 },
-    { name: "Type Safety", score: 99 },
-    { name: "Performance", score: 99 },
-    { name: "Architecture", score: 99 },
-  ];
-
-  const scoreHistoryChartData = scoreHistory.map(entry => ({
-    name: entry.date,
-    score: entry.score,
-  }));
-
   return (
-    <DashboardLayout>
+    <div className="container mx-auto p-6 max-w-7xl space-y-6">
       {/* Header */}
-      <DashboardHeader
-        heading="Quality Dashboard"
-        text="Track code quality and learned patterns"
-      >
-        <div className="text-right text-sm">
-          <p className="text-muted-foreground">Last updated</p>
-          <p className="font-medium">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight">Quality Dashboard</h1>
+          <p className="text-muted-foreground mt-2">
+            Track code quality and learned patterns
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-sm text-muted-foreground">Last updated</p>
+          <p className="text-sm font-medium">
             {new Date(pipelineReport.timestamp).toLocaleString()}
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
-        </Button>
-      </DashboardHeader>
+      </div>
 
       {/* Overall Score Card */}
       <Card className="border-2">
@@ -234,33 +205,70 @@ export default function QualityDashboard(): JSX.Element {
         </CardHeader>
       </Card>
 
-      {/* Stats Grid using StatCard */}
-      <DashboardGrid cols={4}>
-        <StatCard
-          title="Files Analyzed"
-          value={pipelineReport.codeAnalysis.totalFiles}
-          description={`${pipelineReport.codeAnalysis.filesNeedingWork} need work`}
-          icon={Target}
-        />
-        <StatCard
-          title="Critical Issues"
-          value={pipelineReport.codeAnalysis.criticalIssues}
-          description="Require immediate attention"
-          icon={AlertCircle}
-        />
-        <StatCard
-          title="Patterns Learned"
-          value={pipelineReport.learningResults.patternsDiscovered}
-          description={`${pipelineReport.learningResults.highConfidencePatterns} high confidence`}
-          icon={BookOpen}
-        />
-        <StatCard
-          title="Improvements"
-          value={pipelineReport.improvements.applied.length + pipelineReport.improvements.suggested.length}
-          description={`${pipelineReport.improvements.applied.length} applied`}
-          icon={Zap}
-        />
-      </DashboardGrid>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Target className="h-4 w-4 text-blue-500" />
+              Files Analyzed
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{pipelineReport.codeAnalysis.totalFiles}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {pipelineReport.codeAnalysis.filesNeedingWork} need work
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 text-red-500" />
+              Critical Issues
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{pipelineReport.codeAnalysis.criticalIssues}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Require immediate attention
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-purple-500" />
+              Patterns Learned
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{pipelineReport.learningResults.patternsDiscovered}</div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {pipelineReport.learningResults.highConfidencePatterns} high confidence
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
+              <Zap className="h-4 w-4 text-yellow-500" />
+              Improvements
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {pipelineReport.improvements.applied.length + pipelineReport.improvements.suggested.length}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {pipelineReport.improvements.applied.length} applied
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Tabs for detailed views */}
       <Tabs defaultValue="overview" className="space-y-4">
@@ -273,37 +281,52 @@ export default function QualityDashboard(): JSX.Element {
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-4">
-          <DashboardGrid cols={2}>
-            <BarChartCard
-              title="Quality Breakdown"
-              description="Scores across different categories"
-              data={qualityBreakdownData}
-              dataKey="score"
-              nameKey="name"
-              color="hsl(var(--primary))"
-            />
-            
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  Next Steps
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[250px]">
-                  <ul className="space-y-3">
-                    {pipelineReport.nextSteps.map((step, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-primary font-bold mt-0.5">{idx + 1}.</span>
-                        <span className="text-sm">{step}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          </DashboardGrid>
+          <Card>
+            <CardHeader>
+              <CardTitle>Quality Breakdown</CardTitle>
+              <CardDescription>Scores across different categories</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* Mock detailed scores - in real app, would come from report */}
+              {[
+                { name: "Error Handling", score: 99 },
+                { name: "Type Safety", score: 99 },
+                { name: "Performance", score: 99 },
+                { name: "Architecture", score: 99 },
+              ].map((category) => (
+                <div key={category.name} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">{category.name}</span>
+                    <span className={`text-sm font-bold ${getScoreColor(category.score)}`}>
+                      {category.score}/100
+                    </span>
+                  </div>
+                  <Progress value={category.score} className="h-2" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                Next Steps
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[200px]">
+                <ul className="space-y-3">
+                  {pipelineReport.nextSteps.map((step, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-primary font-bold mt-0.5">{idx + 1}.</span>
+                      <span className="text-sm">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </ScrollArea>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Patterns Tab */}
@@ -368,7 +391,7 @@ export default function QualityDashboard(): JSX.Element {
 
         {/* Improvements Tab */}
         <TabsContent value="improvements" className="space-y-4">
-          <DashboardGrid cols={2}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -420,7 +443,7 @@ export default function QualityDashboard(): JSX.Element {
                 </ScrollArea>
               </CardContent>
             </Card>
-          </DashboardGrid>
+          </div>
 
           <Card>
             <CardHeader>
@@ -443,29 +466,33 @@ export default function QualityDashboard(): JSX.Element {
 
         {/* History Tab */}
         <TabsContent value="history" className="space-y-4">
-          {scoreHistory.length > 0 ? (
-            <LineChartCard
-              title="Quality Score History"
-              description="Track improvement over time"
-              data={scoreHistoryChartData}
-              lines={[{ dataKey: 'score', color: 'hsl(var(--primary))' }]}
-              height={300}
-            />
-          ) : (
-            <Card>
-              <CardHeader>
-                <CardTitle>Quality Score History</CardTitle>
-                <CardDescription>Track improvement over time</CardDescription>
-              </CardHeader>
-              <CardContent>
+          <Card>
+            <CardHeader>
+              <CardTitle>Quality Score History</CardTitle>
+              <CardDescription>Track improvement over time</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {scoreHistory.length > 0 ? (
+                <div className="space-y-4">
+                  {scoreHistory.map((entry, idx) => (
+                    <div key={idx} className="flex items-center gap-4">
+                      <span className="text-sm text-muted-foreground w-24">{entry.date}</span>
+                      <Progress value={entry.score} className="flex-1 h-3" />
+                      <span className={`text-sm font-bold w-12 ${getScoreColor(entry.score)}`}>
+                        {entry.score}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
                 <p className="text-sm text-muted-foreground">
                   Run the quality pipeline multiple times to see history.
                 </p>
-              </CardContent>
-            </Card>
-          )}
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
-    </DashboardLayout>
+    </div>
   );
 }

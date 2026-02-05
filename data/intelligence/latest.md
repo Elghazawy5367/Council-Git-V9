@@ -1,6 +1,6 @@
 # Council Intelligence Report
 
-**Generated:** 2/4/2026, 6:42:28 AM
+**Generated:** 2/5/2026, 6:51:04 AM
 **Niche:** developer tools
 **Scan Depth:** normal
 
@@ -54,14 +54,14 @@
 - **Pain Point:** Unsure how to resolve `Missing field while writing result` error when using subscriptions
 - **Impact:** high | **Effort:** low
 - **Confidence:** 100%
-- **Competition:** moderate
+- **Competition:** strong
 
 ### 2. Tool to solve: fix(i18n): Make rest of the tools translatable and translate them to German
 
 - **Pain Point:** fix(i18n): Make rest of the tools translatable and translate them to German
 - **Impact:** high | **Effort:** low
 - **Confidence:** 100%
-- **Competition:** moderate
+- **Competition:** none
 
 ### 3. Add missing feature as standalone tool
 
@@ -82,7 +82,7 @@
 - **Pain Point:** feat(new tool): Regex Tester (and Cheatsheet)
 - **Impact:** high | **Effort:** low
 - **Confidence:** 69%
-- **Competition:** weak
+- **Competition:** none
 
 ## Emerging Trends
 

@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Council</title>
+  <title>The Council - Page Not Found</title>
   <script>
-    // Redirect to index.html with the path as a query parameter
-    // This handles client-side routing for GitHub Pages
-    var pathSegmentsToKeep = 1;
-    var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-      l.hash
-    );
+    (function() {
+      var l = window.location;
+      // We need to keep the repository name in the path for GitHub Pages.
+      // E.g., /repo-name/
+      var pathSegmentsToKeep = 1; 
+      var repoPath = l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/');
+      var pagePath = l.pathname.slice(repoPath.length);
+      
+      // Redirect to the same URL but with the path inside the hash,
+      // which HashRouter can handle.
+      // E.g. /repo-name/my-page -> /repo-name/#/my-page
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        repoPath + '/#' + pagePath.slice(1) + l.search + l.hash
+      );
+    }());
   </script>
 </head>
 <body>

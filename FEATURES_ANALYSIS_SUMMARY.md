@@ -1,9 +1,9 @@
 # Council Features Analysis - Executive Summary
 
 **Analysis Date**: February 7, 2026  
-**Analysis Type**: Deep code + UI audit + Special focus areas  
-**Full Report**: [COMPREHENSIVE_FEATURES_ANALYSIS.md](./COMPREHENSIVE_FEATURES_ANALYSIS.md) (962 lines, extended)  
-**Version**: 1.1 (Extended with special focus areas)
+**Analysis Type**: Deep code + UI audit + Special focus areas + GitHub Actions workflows  
+**Full Report**: [COMPREHENSIVE_FEATURES_ANALYSIS.md](./COMPREHENSIVE_FEATURES_ANALYSIS.md) (1,379 lines, extended)  
+**Version**: 1.2 (Extended with GitHub Actions & Automation analysis)
 
 ---
 
@@ -172,23 +172,30 @@ The full analysis document (`COMPREHENSIVE_FEATURES_ANALYSIS.md`) contains:
 4. **Automation Dashboard** - 15 GitHub Actions workflows
 5. **Priority Matrix** - Features sorted by importance
 6. **Health Summary** - TypeScript, build, test status
-7. **Special Focus Areas** (NEW) - Deep dive into:
+7. **Special Focus Areas** (V1.1) - Deep dive into:
    - Core Council unique features (Ruthless Judge, Expert System, Conflict Resolution)
    - Dev Tools (Twin Mimicry V1/V2, Self-Improve, Prompt Heist, Code Mirror)
    - External Integrations (Scout, Reddit Sniper, APIs)
    - UI/UX Components (Expert Cards, Dashboard, Config Panels)
-8. **Cross-Reference** (NEW) - Documentation vs implementation comparison
-9. **Enhanced Deliverables** (NEW):
+8. **Cross-Reference** (V1.1) - Documentation vs implementation comparison
+9. **Enhanced Deliverables** (V1.1):
    - Complete inventory table (35+ features)
    - Status summary dashboard (ASCII art)
    - Critical path identification (MVP blockers)
    - Quick win recommendations (<4 hours)
    - Integration opportunities (4 pipelines)
-10. **Technical Considerations** (NEW) - Security, dependencies, hardcoded values
+10. **Technical Considerations** (V1.1) - Security, dependencies, hardcoded values
+11. **GitHub Actions & Automation** (V1.2 - NEW):
+   - 11 workflow analyses with status (5 functional, 5 broken, 1 partial)
+   - Missing wrapper scripts identified (5 workflows)
+   - Report generation capabilities assessment
+   - Cost analysis (within free tier)
+   - Workflow configuration quality review
+   - Recommendations with effort estimates
 
-**Total Pages**: 962 lines (extended from 335)  
-**File Size**: ~38KB  
-**Format**: Structured markdown with tables, status indicators, actionable recommendations, and integration diagrams
+**Total Pages**: 1,379 lines (extended from 962)  
+**File Size**: ~52KB  
+**Format**: Structured markdown with tables, status indicators, actionable recommendations, ASCII dashboards, and workflow configurations
 
 ---
 
@@ -362,3 +369,137 @@ Multi-Expert Deliberation → Ruthless Judge → Council Memory → Expert Weigh
 - ✅ All critical deps installed and up-to-date
 - ❌ Missing: @tanstack/react-query, @tanstack/react-virtual
 - ✅ No deprecated dependencies found
+
+---
+
+## 🤖 GitHub Actions & Automation Status (V1.2 - NEW)
+
+### Workflow Summary
+
+**11 Total Workflows Analyzed:**
+- ✅ **Functional**: 5 workflows (45%) - Daily Scout, Self-Improve, Reddit Radar, Viral Radar, HN/PH, Deploy
+- ❌ **Broken**: 5 workflows (45%) - GitHub Trending, Market Gap, Stargazer, Twin Mimicry, Fork Evolution
+- ⚠️ **Partial**: 1 workflow (9%) - Viral Radar has scraping issues
+
+```
+╔════════════════════════════════════════════════════════╗
+║         GITHUB ACTIONS WORKFLOWS SUMMARY               ║
+╠════════════════════════════════════════════════════════╣
+║ Total Workflows:                  11                   ║
+║ Functional:                       5 (45%)             ║
+║ Broken (missing scripts):         5 (45%)             ║
+║ Partial (has issues):             1 (9%)              ║
+║                                                        ║
+║ Features:                                             ║
+║   Manual Trigger:                 11 (100%)           ║
+║   Scheduled Execution:            10 (91%)            ║
+║   Auto-commit Results:            5 (45%)             ║
+║   Generate Reports:               5 (45%)             ║
+║                                                        ║
+║ Cost: Within GitHub Free Tier    ✅                   ║
+║ Monthly Usage: ~1,500/2,000 min  (75%)               ║
+╚════════════════════════════════════════════════════════╝
+```
+
+### Critical Workflow Issues
+
+#### 1. Missing Wrapper Scripts (5 workflows) 🔴
+**Problem:** Workflows reference scripts that don't exist
+- `github-trending.yml` → `scripts/scan-trending.js` ❌
+- `market-gap.yml` → `scripts/analyze-market-gap.js` ❌
+- `stargazer-analysis.yml` → `scripts/analyze-stargazers.js` ❌
+- `twin-mimicry.yml` → `scripts/twin-mimicry.js` ❌
+- `fork-evolution.yml` → `scripts/track-forks.js` ❌
+
+**Root Cause:** Algorithms exist in `src/lib/*.ts` but workflows expect `.js` wrapper scripts
+
+**Quick Fix:** Create wrapper scripts (1-2h per workflow)
+**Better Fix:** Update workflows to use `npx tsx` pattern (1h per workflow)
+**Total Effort:** 5-10 hours to fix all
+
+#### 2. Market Gap Completely Missing 🔴
+- Workflow broken (no script)
+- Algorithm not implemented
+- Feature claimed in UI but doesn't exist
+- **Effort:** 8-12 hours to implement fully
+
+#### 3. No Workflow Monitoring ⚠️
+- No status display in FeaturesDashboard
+- No failure notifications
+- Users can't see last run time/status
+- **Effort:** 4-6 hours to add monitoring
+
+### Functional Workflows (5)
+
+✅ **Daily Phantom Scout** - Generates markdown reports daily at 6 AM UTC
+✅ **Self-Improving Loop** - Updates knowledge base weekly, full GitHub Actions summary
+✅ **Reddit Radar** - Collects buying intent leads daily at 8 AM UTC  
+✅ **HackerNews/ProductHunt** - Intelligence gathering daily at noon UTC
+✅ **Deploy to GitHub Pages** - Automated deployment on push to main
+
+### Report Generation Status
+
+**Workflows Generating Reports (5):**
+1. Daily Scout → `data/intelligence/blue-ocean-{date}.md`
+2. Self-Improve → `data/learning/latest.json` + knowledge base updates
+3. Reddit Radar → `data/sniper-leads.json`
+4. Viral Radar → `data/viral-radar.json` (may have scraping issues)
+5. HN/ProductHunt → `data/intelligence/*.md`
+
+**Report Storage:**
+```
+data/
+├── intelligence/    # Scout, HN/PH markdown reports
+├── opportunities/   # Scout JSON opportunity data
+├── cache/          # Cached API responses
+├── reports/        # General reports directory
+└── learning/       # Self-Improve knowledge updates
+```
+
+**Current Data:** 5 opportunity JSON files found (25-30KB each)
+
+### Workflow Configuration Quality
+
+**Good Practices Found:**
+- ✅ All workflows support manual triggering (`workflow_dispatch`)
+- ✅ Proper permissions (`contents: write`, etc.)
+- ✅ Auto-commit actions for data persistence
+- ✅ Self-Improve has comprehensive step summaries
+- ✅ Deploy workflow includes verification steps
+
+**Issues Found:**
+- ❌ Inconsistent Node versions (18 vs 20)
+- ❌ Mix of `npm install` vs `npm ci`
+- ❌ No timeout configurations
+- ❌ No error handling/retry logic
+- ❌ No failure notifications
+
+### Cost & Usage
+
+**GitHub Actions Free Tier:**
+- Limit: 2,000 minutes/month (public repos)
+- Current Usage: ~1,500 minutes/month (75%)
+- Headroom: 500 minutes/month
+- **Status:** ✅ Well within free tier
+
+**If all workflows were functional:**
+- Estimated: ~1,800 minutes/month
+- **Still within free tier** ✅
+
+### Recommendations Priority
+
+#### High Priority (Must Fix) - 17-28 hours
+1. **Fix 5 broken workflows** (5-10h) - Create scripts or update configs
+2. **Implement Market Gap** (8-12h) - Algorithm + script + testing
+3. **Add workflow monitoring** (4-6h) - Status display in FeaturesDashboard
+
+#### Medium Priority (Quality) - 7-10 hours
+4. **Standardize workflow config** (2-3h) - Node 20, npm ci, timeouts
+5. **Add failure notifications** (2-3h) - Email/Slack alerts
+6. **Create workflow templates** (3-4h) - Reduce duplication
+
+#### Low Priority (Enhancement) - 10-14 hours
+7. **Add workflow tests** (6-8h) - Local testing with `act`
+8. **Improve report formats** (4-6h) - Standardize schemas, add CSV
+
+**Total Effort to Full Functionality:** 34-52 hours

@@ -960,3 +960,420 @@ Expert Selection (Better prompts)
 **Extended Sections Added**: January 7, 2026  
 **Extension Version**: 1.1  
 **Next Update**: After implementing critical path items
+
+---
+
+## 11. GITHUB ACTIONS & AUTOMATION WORKFLOWS ANALYSIS
+
+### Overview
+Council uses GitHub Actions for zero-cost automation (2,000 free minutes/month). Analysis of 11 workflow files and their integration with the application.
+
+### Workflow Inventory
+
+#### 1. Daily Phantom Scout (`daily-scout.yml`)
+- **Status**: ✅ FUNCTIONAL
+- **Schedule**: Daily at 6 AM UTC (`0 6 * * *`)
+- **Trigger**: Scheduled + Manual (`workflow_dispatch`)
+- **Script**: `npx tsx src/lib/scout.ts`
+- **Output**: `data/intelligence/blue-ocean-{date}.md`
+- **Report**: YES - Generates markdown reports
+- **Auto-commit**: YES - Uses `stefanzweifel/git-auto-commit-action@v4`
+- **Permissions**: `contents: write`
+- **Validation**: ⚠️ Script exists (`src/lib/scout.ts`, 837 lines verified)
+- **Issues**: None
+- **Dependencies**: Node 18, tsx, npm install
+- **Integration**: Feeds into Intelligence Layer
+
+#### 2. GitHub Trending (`github-trending.yml`)
+- **Status**: ❌ BROKEN - Script missing
+- **Schedule**: Daily at midnight UTC (`0 0 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `node scripts/scan-trending.js`
+- **Output**: Unknown (script doesn't exist)
+- **Report**: NO - Script not found
+- **Auto-commit**: NO
+- **Permissions**: Uses `GITHUB_TOKEN`
+- **Validation**: ❌ Script `scripts/scan-trending.js` does NOT exist
+- **Issues**: **CRITICAL** - Workflow references non-existent script
+- **Dependencies**: Node 20
+- **Fix Required**: 4-6 hours - Create `scripts/scan-trending.js` or update to use existing lib file
+
+#### 3. Market Gap Identifier (`market-gap.yml`)
+- **Status**: ❌ BROKEN - Script missing
+- **Schedule**: Weekly on Sunday at noon UTC (`0 12 * * 0`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `node scripts/analyze-market-gap.js`
+- **Output**: Unknown (script doesn't exist)
+- **Report**: NO - Script not found
+- **Auto-commit**: NO
+- **Permissions**: Uses `GITHUB_TOKEN`
+- **Validation**: ❌ Script `scripts/analyze-market-gap.js` does NOT exist
+- **Issues**: **CRITICAL** - Workflow references non-existent script, matches UI claim issue
+- **Dependencies**: Node 20
+- **Fix Required**: 8-12 hours - Implement Market Gap algorithm + script
+
+#### 4. Stargazer Analysis (`stargazer-analysis.yml`)
+- **Status**: ❌ BROKEN - Script missing
+- **Schedule**: Daily at midnight UTC (`0 0 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `node scripts/analyze-stargazers.js`
+- **Output**: Unknown (script doesn't exist)
+- **Report**: NO - Script not found
+- **Auto-commit**: NO
+- **Permissions**: Uses `GITHUB_TOKEN`
+- **Validation**: ❌ Script `scripts/analyze-stargazers.js` does NOT exist (but `src/lib/stargazer-intelligence.ts` exists)
+- **Issues**: Workflow points to wrong file location
+- **Dependencies**: Node 20
+- **Fix Required**: 1-2 hours - Create wrapper script or update workflow to use `npx tsx src/lib/stargazer-intelligence.ts`
+
+#### 5. Self-Improving Loop (`self-improve.yml`)
+- **Status**: ✅ FUNCTIONAL
+- **Schedule**: Weekly on Sunday at 2 AM UTC (`0 2 * * 0`)
+- **Trigger**: Scheduled + Manual with inputs (niche, minStars, maxRepos)
+- **Script**: `npm run learn` (calls `scripts/run-self-improve.ts`)
+- **Output**: `data/learning/latest.json`, updates `src/lib/knowledge-base/`
+- **Report**: YES - Creates GitHub Actions summary + JSON data
+- **Auto-commit**: YES - Commits knowledge base updates
+- **Permissions**: `contents: write`, `pull-requests: write`
+- **Validation**: ✅ Script exists (`scripts/run-self-improve.ts`, verified)
+- **Issues**: None
+- **Dependencies**: Node 20, npm ci
+- **Integration**: Updates knowledge base for Expert Persona System
+- **Notes**: Well-configured with workflow inputs and step summary
+
+#### 6. Twin Mimicry (`twin-mimicry.yml`)
+- **Status**: ❌ BROKEN - Script missing
+- **Schedule**: Weekly on Sunday at midnight UTC (`0 0 * * 0`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `node scripts/twin-mimicry.js`
+- **Output**: Unknown (script doesn't exist)
+- **Report**: NO - Script not found
+- **Auto-commit**: NO
+- **Permissions**: Uses `GITHUB_TOKEN`
+- **Validation**: ❌ Script `scripts/twin-mimicry.js` does NOT exist (but `src/lib/twin-mimicry.ts` and `src/lib/twin-mimicry-v2.ts` exist)
+- **Issues**: Workflow points to wrong file location
+- **Dependencies**: Node 20
+- **Fix Required**: 1-2 hours - Create wrapper script or update workflow
+
+#### 7. Reddit Radar (`reddit-radar.yml`)
+- **Status**: ✅ FUNCTIONAL
+- **Schedule**: Daily at 8 AM UTC (`0 8 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `npx tsx src/lib/reddit-sniper.ts`
+- **Output**: `data/sniper-leads.json`
+- **Report**: YES - Generates JSON report
+- **Auto-commit**: YES - Uses `stefanzweifel/git-auto-commit-action@v4`
+- **Permissions**: `contents: write`
+- **Validation**: ✅ Script exists (`src/lib/reddit-sniper.ts`, verified)
+- **Issues**: None
+- **Dependencies**: Node 18, tsx
+- **Integration**: Reddit Sniper intelligence gathering
+
+#### 8. Viral Radar (`viral-radar.yml`)
+- **Status**: ⚠️ PARTIAL - Script exists but may have scraping issues
+- **Schedule**: Daily at 10 AM UTC (`0 10 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `npx tsx src/lib/viral-radar.ts`
+- **Output**: `data/viral-radar.json`
+- **Report**: YES - Generates JSON report
+- **Auto-commit**: YES - Uses `stefanzweifel/git-auto-commit-action@v4`
+- **Permissions**: `contents: write`
+- **Validation**: ✅ Script exists (`src/lib/viral-radar.ts`, 391 lines verified)
+- **Issues**: Known scraping issues (from previous analysis)
+- **Dependencies**: Node 18, tsx
+- **Integration**: Cross-platform trend tracking
+
+#### 9. Fork Evolution (`fork-evolution.yml`)
+- **Status**: ❌ BROKEN - Script missing
+- **Schedule**: Daily at noon UTC (`0 12 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `node scripts/track-forks.js`
+- **Output**: Unknown (script doesn't exist)
+- **Report**: NO - Script not found
+- **Auto-commit**: NO
+- **Permissions**: Uses `GITHUB_TOKEN`
+- **Validation**: ❌ Script `scripts/track-forks.js` does NOT exist (but `src/lib/fork-evolution.ts` exists)
+- **Issues**: Workflow points to wrong file location
+- **Dependencies**: Node 20
+- **Fix Required**: 1-2 hours - Create wrapper script or update workflow
+
+#### 10. HackerNews & ProductHunt Radar (`hackernews-producthunt.yml`)
+- **Status**: ✅ FUNCTIONAL
+- **Schedule**: Daily at noon UTC (`0 12 * * *`)
+- **Trigger**: Scheduled + Manual
+- **Script**: `npx tsx src/features/automation/lib/features/hackernews-producthunt.ts`
+- **Output**: `data/intelligence/*.md`
+- **Report**: YES - Generates markdown reports
+- **Auto-commit**: YES - Uses `stefanzweifel/git-auto-commit-action@v4`
+- **Permissions**: `contents: write`
+- **Validation**: ✅ Script exists (`src/features/automation/lib/features/hackernews-producthunt.ts`, 480 lines verified)
+- **Issues**: None
+- **Dependencies**: Node 18, tsx
+- **Integration**: HackerNews Intelligence + ProductHunt Intelligence
+
+#### 11. Deploy to GitHub Pages (`deploy.yml`)
+- **Status**: ✅ FUNCTIONAL - Production deployment
+- **Schedule**: None (triggered on push to main)
+- **Trigger**: Push to main + Manual (`workflow_dispatch`)
+- **Script**: `npm run build`
+- **Output**: GitHub Pages deployment at custom URL
+- **Report**: NO - Deployment only
+- **Auto-commit**: NO - Uses GitHub Pages artifact upload
+- **Permissions**: `contents: read`, `pages: write`, `id-token: write`
+- **Validation**: ✅ Build command exists in package.json
+- **Issues**: None
+- **Dependencies**: Node 20, npm ci
+- **Integration**: Application deployment
+- **Notes**: Includes verification steps, .nojekyll file, concurrency control
+
+---
+
+### Summary Statistics
+
+```
+╔════════════════════════════════════════════════════════╗
+║         GITHUB ACTIONS WORKFLOWS SUMMARY               ║
+╠════════════════════════════════════════════════════════╣
+║ Total Workflows:                  11                   ║
+║                                                        ║
+║ Status Breakdown:                                     ║
+║   ✅ FUNCTIONAL:                  5 (45%)             ║
+║   ⚠️ PARTIAL:                     1 (9%)              ║
+║   ❌ BROKEN:                      5 (45%)             ║
+║                                                        ║
+║ Features:                                             ║
+║   Manual Trigger (workflow_dispatch): 11 (100%)      ║
+║   Scheduled Execution:                10 (91%)       ║
+║   Auto-commit Results:                5 (45%)        ║
+║   Generate Reports:                   5 (45%)        ║
+║                                                        ║
+║ Integration with App:                                 ║
+║   Referenced in FeaturesDashboard:    YES            ║
+║   User-triggerable from UI:           YES (planned)  ║
+║   Report storage in data/:            YES            ║
+╚════════════════════════════════════════════════════════╝
+```
+
+---
+
+### Critical Issues
+
+#### 1. Missing Wrapper Scripts (5 workflows) - HIGH PRIORITY
+**Affected workflows:**
+- `github-trending.yml` → needs `scripts/scan-trending.js`
+- `market-gap.yml` → needs `scripts/analyze-market-gap.js`
+- `stargazer-analysis.yml` → needs `scripts/analyze-stargazers.js`
+- `twin-mimicry.yml` → needs `scripts/twin-mimicry.js`
+- `fork-evolution.yml` → needs `scripts/track-forks.js`
+
+**Root Cause:** Workflows reference `.js` wrapper scripts in `scripts/` directory, but:
+- Core algorithms exist in `src/lib/*.ts`
+- Workflows expect Node scripts, not TypeScript direct execution
+- Mismatch between workflow configuration and actual file structure
+
+**Solutions:**
+1. **Quick Fix (1-2h per workflow)**: Create simple wrapper scripts:
+   ```javascript
+   // scripts/analyze-stargazers.js
+   const { runStargazerAnalysis } = require('../dist/lib/stargazer-intelligence.js');
+   runStargazerAnalysis().catch(console.error);
+   ```
+
+2. **Better Fix (1h per workflow)**: Update workflows to use `npx tsx` pattern:
+   ```yaml
+   - name: Run Stargazer Analysis
+     run: npx tsx src/lib/stargazer-intelligence.ts
+   ```
+
+**Impact:** 5 workflows are non-functional, 45% of automation is broken
+
+**Effort to Fix All:** 5-10 hours total
+
+---
+
+#### 2. Market Gap Script Completely Missing - CRITICAL
+**Issue:** Both workflow AND implementation are missing
+- Workflow claims to run `scripts/analyze-market-gap.js`
+- No algorithm file exists in `src/lib/market-gap-identifier.ts`
+- Feature claimed in UI dropdown but completely unimplemented
+
+**Fix Required:** 8-12 hours to implement full feature
+
+---
+
+#### 3. No Workflow Monitoring or Failure Alerts
+**Issue:** No centralized way to track workflow success/failure
+- Workflows run silently
+- No notification on failures
+- No dashboard showing last run status
+- FeaturesDashboard shows config but not execution status
+
+**Recommendation:** Add workflow monitoring (2-3h):
+- Use GitHub API to fetch workflow run status
+- Display in FeaturesDashboard with last run time and status
+- Add failure notifications via GitHub Issues or email
+
+---
+
+### Data Output & Report Generation
+
+**Report Storage Structure:**
+```
+data/
+├── cache/                    # Cached API responses
+├── intelligence/             # Scout, HN/PH reports (markdown)
+├── opportunities/            # Scout opportunity data (JSON)
+├── reports/                  # General reports
+├── sniper-leads.json        # Reddit Sniper results
+├── viral-radar.json         # Viral Radar results
+└── learning/                # Self-Improve knowledge base
+    └── latest.json
+```
+
+**Workflows Generating Reports (5/11):**
+1. ✅ **Daily Phantom Scout**: Markdown reports in `data/intelligence/`
+2. ✅ **Self-Improving Loop**: JSON + knowledge base updates
+3. ✅ **Reddit Radar**: JSON leads in `data/sniper-leads.json`
+4. ⚠️ **Viral Radar**: JSON trends (may have scraping issues)
+5. ✅ **HackerNews/ProductHunt**: Markdown reports in `data/intelligence/`
+
+**Workflows NOT Generating Reports (5/11 - all broken):**
+- GitHub Trending (script missing)
+- Market Gap (script missing)
+- Stargazer Analysis (script missing)
+- Twin Mimicry (script missing)
+- Fork Evolution (script missing)
+
+**Deploy Workflow (1/11):** Deployment only, no reports
+
+---
+
+### Workflow Configuration Quality
+
+**Good Practices Found:**
+- ✅ All workflows use `workflow_dispatch` for manual triggering
+- ✅ Proper permissions specified (`contents: write`, etc.)
+- ✅ Auto-commit actions for data persistence
+- ✅ Self-Improve workflow has comprehensive step summaries
+- ✅ Deploy workflow includes verification steps
+- ✅ Concurrency control in deploy workflow
+
+**Issues Found:**
+- ❌ Inconsistent Node versions (Node 18 vs 20)
+- ❌ Mix of `npm install` (slow) vs `npm ci` (fast, deterministic)
+- ❌ No error handling or retry logic
+- ❌ No timeout configurations (could run forever)
+- ❌ No artifact uploads for non-committing workflows
+- ❌ Missing environment variable validations
+
+**Recommendations:**
+1. Standardize on Node 20 across all workflows (1h)
+2. Use `npm ci` everywhere for faster, deterministic installs (30min)
+3. Add timeout-minutes: 10 to all jobs (30min)
+4. Add error notifications (2-3h)
+5. Create reusable workflow templates (3-4h)
+
+---
+
+### Integration with FeaturesDashboard
+
+**Current Status:**
+- FeaturesDashboard.tsx lists 14 automation features
+- Each feature has a workflow name (e.g., `github-trending.yml`)
+- UI has "Run Feature" button to trigger `workflow_dispatch`
+- Uses `workflow-dispatcher.ts` to make GitHub API calls
+
+**Workflow Dispatch Integration:**
+```typescript
+// src/lib/workflow-dispatcher.ts (150 lines)
+// Triggers workflows via GitHub API workflow_dispatch endpoint
+```
+
+**Issues:**
+1. **5 workflows will fail** when triggered from UI (missing scripts)
+2. **No status feedback** after triggering (user doesn't know if it worked)
+3. **No error handling** if workflow dispatch fails
+4. **No last-run display** showing when workflow last executed
+
+**Fix Required:** 4-6 hours
+- Fix 5 broken workflows (scripting)
+- Add status polling after dispatch
+- Display last run time and status from GitHub API
+- Show workflow run logs in modal
+
+---
+
+### Recommendations
+
+#### High Priority (Must Fix)
+
+1. **Fix 5 Broken Workflows** (5-10h)
+   - Create wrapper scripts OR update workflows to use `npx tsx`
+   - Test each workflow with `act` (GitHub Actions local runner)
+   - Verify reports are generated
+
+2. **Implement Market Gap Feature** (8-12h)
+   - Create `src/lib/market-gap-identifier.ts`
+   - Create `scripts/analyze-market-gap.js` wrapper
+   - Match algorithm to UI claims
+
+3. **Add Workflow Status to FeaturesDashboard** (4-6h)
+   - Fetch last run status from GitHub API
+   - Display success/failure with timestamp
+   - Add "View Logs" button linking to GitHub Actions
+
+#### Medium Priority (Improve Quality)
+
+4. **Standardize Workflow Configuration** (2-3h)
+   - Node 20 everywhere
+   - `npm ci` instead of `npm install`
+   - Add timeout-minutes
+   - Consistent naming
+
+5. **Add Workflow Monitoring** (2-3h)
+   - Create monitoring dashboard
+   - Email/Slack notifications on failure
+   - Weekly summary report
+
+6. **Create Workflow Templates** (3-4h)
+   - Reusable `intelligence-workflow.yml` template
+   - Reusable `analysis-workflow.yml` template
+   - Reduce duplication
+
+#### Low Priority (Nice to Have)
+
+7. **Add Workflow Tests** (6-8h)
+   - Use `act` for local testing
+   - Add CI checks for workflow YAML validity
+   - Automated testing of wrapper scripts
+
+8. **Improve Report Formats** (4-6h)
+   - Standardize JSON schema
+   - Add CSV exports
+   - Create summary dashboard page
+
+---
+
+### Cost Analysis
+
+**GitHub Actions Free Tier:**
+- 2,000 minutes/month for public repositories
+- Currently using ~10 workflows × 5 minutes × 30 days = 1,500 minutes/month
+- **Status:** ✅ Within free tier
+- **Headroom:** 500 minutes/month available
+
+**If all workflows were functional:**
+- 10 intelligence workflows running daily
+- Average 5-10 minutes per run
+- Estimated: ~1,800 minutes/month
+- **Still within free tier** ✅
+
+---
+
+**Analysis Complete**: February 7, 2026  
+**Workflows Analyzed**: 11 total  
+**Functional**: 5 (45%)  
+**Broken**: 5 (45%)  
+**Partial**: 1 (9%)  
+**Critical Issues**: 2 (missing scripts, no Market Gap)  
+**Recommended Actions**: Fix broken workflows (5-10h), implement Market Gap (8-12h), add monitoring (4-6h)

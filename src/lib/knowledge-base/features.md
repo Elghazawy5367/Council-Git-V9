@@ -1,6 +1,6 @@
 # Feature Priorities
 
-*Last updated: 2/1/2026, 4:32:32 AM*
+*Last updated: 2/8/2026, 4:35:29 AM*
 *Learned from: developer-tools (20 repositories)*
 
 ## Key Patterns
@@ -19,5 +19,5 @@
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 - [GitHubDaily/GitHubDaily](https://github.com/GitHubDaily/GitHubDaily)
 - [streamlit/streamlit](https://github.com/streamlit/streamlit)
-- [appsmithorg/appsmith](https://github.com/appsmithorg/appsmith)
+- [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
 

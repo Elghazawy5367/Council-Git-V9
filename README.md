@@ -39,6 +39,26 @@ npm run quality        # Full quality pipeline
 npm run learn          # Learn from successful repos
 ```
 
+### 🔄 Repository Mirror Tool
+Complete repository mirroring with all refs, tags, and branches:
+
+```bash
+# Mirror this repository to a new location
+cd scripts
+./mirror-repository.sh
+```
+
+**Default mirrors:**
+- Source: `https://github.com/Elghazawy5367/Council-Git-V9`
+- Destination: `https://github.com/Elghazawy5367/Council-Git-V9A`
+
+**Custom repositories:**
+```bash
+./mirror-repository.sh <source-url> <destination-url>
+```
+
+**Documentation:** See [scripts/README-MIRROR.md](scripts/README-MIRROR.md)
+
 ---
 
 ## How can I edit this code?

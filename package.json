@@ -35,6 +35,7 @@
     "twin": "tsx src/lib/twin-mimicry.ts",
     "viral": "tsx src/lib/viral-radar.ts",
     "mining-drill": "tsx scripts/run-mining-drill.ts",
+    "stargazer": "tsx scripts/analyze-stargazers.ts",
     "verify-deploy": "bash scripts/verify-deployments.sh",
     "deploy:firebase": "firebase deploy",
     "deploy:github": "npm run deploy"

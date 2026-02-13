@@ -191,8 +191,7 @@ async function analyzeForkEcosystem(
     // Analyze each fork
     for (const fork of forks) {
       // Check if active (commits in last 90 days)
-      const ninetyDaysAgo = new Date();
-      ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+      const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
       
       if (new Date(fork.updated_at) > ninetyDaysAgo) {
         analysis.activeForks++;

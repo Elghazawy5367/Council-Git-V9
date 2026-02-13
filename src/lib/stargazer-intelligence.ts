@@ -67,8 +67,30 @@ async function searchRepositoriesByTopic(
   octokit: Octokit,
   topics: string[],
   keywords: string[]
-): Promise<any[]> {
-  const repos: any[] = [];
+): Promise<Array<{
+  id: number;
+  full_name: string;
+  name: string;
+  owner: { login: string };
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+}>> {
+  const repos: Array<{
+    id: number;
+    full_name: string;
+    name: string;
+    owner: { login: string };
+    description: string | null;
+    stargazers_count: number;
+    forks_count: number;
+    created_at: string;
+    updated_at: string;
+    html_url: string;
+  }> = [];
   
   for (const topic of topics) {
     try {
@@ -96,12 +118,25 @@ async function searchRepositoriesByTopic(
   return uniqueRepos;
 }
 
+interface RepoData {
+  id: number;
+  full_name: string;
+  name: string;
+  owner: { login: string };
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+}
+
 /**
  * Analyze stargazers for a repository
  */
 async function analyzeStargazers(
   octokit: Octokit,
-  repo: any
+  repo: RepoData
 ): Promise<StargazerAnalysis> {
   const analysis: StargazerAnalysis = {
     totalStars: repo.stargazers_count,
@@ -135,27 +170,18 @@ async function analyzeStargazers(
       per_page: 100
     });
     
-    // Analyze stargazers for institutional backing and influencers
+    // Analyze stargazers for institutional backing
+    // Note: listStargazersForRepo returns minimal user data without company field
+    // For production use, consider fetching full user details for top stargazers
     for (const stargazer of stargazers) {
-      if (!stargazer.user) continue;
-      
+      // Use optional chaining for safety since user may be undefined
       const user = stargazer.user;
+      if (!user) continue;
       
-      // Check for institutional backing (company affiliation)
-      if (user.company) {
-        const company = user.company.toLowerCase().replace(/[@\s]/g, '');
-        const isInstitutional = INSTITUTIONAL_KEYWORDS.some(inst => 
-          company.includes(inst)
-        );
-        
-        if (isInstitutional && !analysis.institutionalBackers.includes(user.login)) {
-          analysis.institutionalBackers.push(user.login);
-        }
-      }
-      
-      // Check for influencers (high follower count)
-      // We'll need to fetch full user details for follower count
-      // For now, skip to avoid excessive API calls
+      // The basic stargazer endpoint doesn't include company info
+      // We're primarily relying on star count and velocity for quality signals
+      // Institutional backing detection would require additional API calls
+      // which we skip here to preserve rate limits
     }
     
     // Rate limiting: small delay after stargazer check
@@ -194,7 +220,7 @@ async function analyzeStargazers(
  * Analyze business opportunities from repository and analysis
  */
 function analyzeBusinessOpportunity(
-  repo: any,
+  repo: RepoData,
   analysis: StargazerAnalysis
 ): string {
   const opportunities: string[] = [];
@@ -242,7 +268,7 @@ function analyzeBusinessOpportunity(
 function generateReport(
   nicheId: string,
   nicheName: string,
-  repositories: Array<{repo: any, analysis: StargazerAnalysis}>
+  repositories: Array<{repo: RepoData, analysis: StargazerAnalysis}>
 ): string {
   const date = new Date().toISOString().split('T')[0];
   
@@ -272,7 +298,7 @@ function generateReport(
     
     markdown += `**Metrics:**\n`;
     markdown += `- Stars: ${analysis.totalStars.toLocaleString()}\n`;
-    markdown += `- Star Velocity (30d): +${analysis.starVelocity30d}/month\n`;
+    markdown += `- Star Velocity (projected monthly): +${analysis.starVelocity30d}\n`;
     markdown += `- Forks: ${repo.forks_count.toLocaleString()}\n`;
     markdown += `- Last Updated: ${new Date(repo.updated_at).toLocaleDateString()}\n\n`;
     
@@ -339,7 +365,7 @@ export async function runStargazerAnalysis(): Promise<void> {
       console.log(`  → Found ${repos.length} unique repositories`);
       
       // Analyze stargazers for each repo (limit to 30 to avoid rate limits)
-      const analyzed: Array<{repo: any, analysis: StargazerAnalysis}> = [];
+      const analyzed: Array<{repo: RepoData, analysis: StargazerAnalysis}> = [];
       const reposToAnalyze = repos.slice(0, 30);
       
       for (let i = 0; i < reposToAnalyze.length; i++) {

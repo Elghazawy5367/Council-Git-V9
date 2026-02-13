@@ -34,6 +34,7 @@
     "forks": "tsx src/lib/fork-evolution.ts",
     "twin": "tsx src/lib/twin-mimicry.ts",
     "viral": "tsx src/lib/viral-radar.ts",
+    "stargazer": "tsx scripts/analyze-stargazers.ts",
     "verify-deploy": "bash scripts/verify-deployments.sh",
     "deploy:firebase": "firebase deploy",
     "deploy:github": "npm run deploy"
@@ -94,6 +95,7 @@
     "idb": "^8.0.1",
     "idb-keyval": "^6.2.2",
     "input-otp": "^1.4.2",
+    "js-yaml": "^4.1.1",
     "lint-staged": "^16.2.7",
     "lucide-react": "^0.462.0",
     "mermaid": "^10.9.5",
@@ -125,6 +127,7 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.19.3",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",

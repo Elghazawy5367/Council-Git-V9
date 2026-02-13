@@ -1,0 +1,516 @@
+# Council App - Target Niches Configuration
+# Created: February 13, 2026
+# Purpose: Multi-niche monitoring for passive income opportunities
+# Profile: Solo non-technical founder, low budget, seeking cash flow
+
+version: "1.0"
+
+# Niche Selection Criteria Applied:
+# - Pain Score: 85+ / 100
+# - Solo-Founder Fit: 90+ / 100  
+# - Non-technical: Templates, reports, guides (NO coding required)
+# - Fast to revenue: 1-4 weeks to first dollar
+# - Market size: 1,000+ potential customers
+# - Multiple revenue models: Reports, templates, consulting, products
+
+niches:
+  # =============================================================================
+  # NICHE 1: Freelancer Scope Creep Prevention
+  # =============================================================================
+  # Recommended as #1 starter by research
+  # Pain: 90/100 | Opportunity: 87/100 | Solo-Fit: 92/100
+  - id: "freelancer-scope-creep"
+    name: "Freelancer Scope Creep Prevention Tools"
+    
+    overview:
+      title: "Scope Creep Prevention & Contract Management for Freelancers"
+      description: |
+        Freelancers losing thousands of dollars annually to scope creep - clients 
+        requesting additional work beyond the original agreement. They need simple 
+        tools and templates to define, track, and enforce project boundaries.
+      pain_score: 90
+      opportunity_score: 87
+      solo_founder_fit: 92
+      estimated_market_size: "75,000-150,000 freelancers (US)"
+      growth_trend: "growing"
+      
+    pain_points:
+      primary: "Clients constantly request additional work beyond original scope, eating into profit margins and time"
+      secondary: "Freelancers don't know how to say no without damaging client relationships"
+      tertiary: "No clear way to track scope changes and communicate costs for additional work"
+      
+    revenue_opportunities:
+      - model: "Templates & Scripts"
+        price_range: "$39-$149"
+        examples:
+          - "Scope Creep Email Script Library (25 templates) - $39"
+          - "Anti-Scope-Creep Contract Bundle (10 templates) - $97"
+          - "Scope Change Calculator (spreadsheet) - $49"
+      - model: "Consulting & Coaching"
+        price_range: "$297-$1,497"
+        examples:
+          - "Freelance Boundary Coaching (3 sessions) - $497-$1,497"
+          - "Contract Audit + Fixes (1-hour) - $297"
+      - model: "Reports & Guides"
+        price_range: "$39-$97"
+        examples:
+          - "Scope Creep Survival Guide (scripts, templates, calculators) - $39-$97"
+      - model: "Simple Tools"
+        price_range: "$15-$39/month"
+        examples:
+          - "Scope Tracker SaaS (log scope, track changes, generate invoices) - $29/month"
+          
+    time_to_first_revenue: "7-14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'Scope Creep Email Script Library' (25 templates) → Sell for $39"
+      - "Week 3-4: Package 'Anti-Scope-Creep Contract Bundle' → Sell for $97"
+      - "Month 2: Offer 'Scope Boundary Coaching' (1-hour calls) → $297/session"
+      
+    monitoring:
+      keywords:
+        - "scope creep"
+        - "freelance scope"
+        - "client requesting more work"
+        - "freelance contracts"
+        - "project boundaries"
+        - "unpaid freelance work"
+        - "scope creep prevention"
+        - "freelance pricing"
+        
+      subreddits:
+        - "r/freelance"
+        - "r/Upwork"
+        - "r/Fiverr"
+        - "r/freelanceWriters"
+        - "r/graphic_design"
+        - "r/webdev"
+        - "r/forhire"
+        
+      github_topics:
+        - "freelance"
+        - "project-management"
+        - "invoicing"
+        - "contracts"
+        
+      github_search_queries:
+        - "freelance contract"
+        - "scope management"
+        - "project tracking"
+        - "freelance tools"
+
+  # =============================================================================
+  # NICHE 2: Newsletter Deliverability for Solo Creators
+  # =============================================================================
+  # Highest solo-founder fit (95/100)
+  # Pain: 88/100 | Opportunity: 85/100 | Solo-Fit: 95/100
+  - id: "newsletter-deliverability"
+    name: "Newsletter Deliverability Solutions for Solo Creators"
+    
+    overview:
+      title: "Newsletter Deliverability Optimization for Independent Creators"
+      description: |
+        Solo newsletter creators struggling with emails landing in spam, low open 
+        rates, and deliverability issues. They need simple, affordable solutions 
+        to fix technical setup and improve inbox placement without becoming email experts.
+      pain_score: 88
+      opportunity_score: 85
+      solo_founder_fit: 95
+      estimated_market_size: "50,000-100,000+ creators"
+      growth_trend: "growing"
+      
+    pain_points:
+      primary: "30%+ of newsletter emails going to spam even with proper SPF/DKIM/DMARC setup"
+      secondary: "Newsletter creators don't understand technical requirements and can't diagnose why emails aren't delivering"
+      tertiary: "Deliverability tools and services are expensive or require technical expertise"
+      
+    revenue_opportunities:
+      - model: "Reports & Checklists"
+        price_range: "$49-$149"
+        examples:
+          - "Newsletter Deliverability Audit Checklist (15-point diagnostic) - $49"
+          - "Deliverability Rescue Guide (step-by-step fixes) - $79-$149"
+      - model: "Templates & Tools"
+        price_range: "$29-$79"
+        examples:
+          - "SPF/DKIM/DMARC Setup Template Pack (all major platforms + videos) - $29-$79"
+          - "Email Setup Checklist - $29"
+      - model: "Consulting & Audits"
+        price_range: "$297-$997"
+        examples:
+          - "Deliverability Rescue Package (1-hour audit + fixes + 30-day monitoring) - $297-$997"
+          - "Quick Fix Session (1-hour Zoom) - $297"
+      - model: "SaaS Tools"
+        price_range: "$19-$49/month"
+        examples:
+          - "Deliverability Dashboard (monitor spam placement, domain reputation, alerts) - $19-$49/month"
+          
+    time_to_first_revenue: "7-14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'Newsletter Deliverability Rescue Checklist' (15-point audit) → Sell for $49"
+      - "Week 3-4: Offer 'Deliverability Quick Fix' service (1-hour Zoom) → $297"
+      - "Month 2: Build SPF/DKIM/DMARC Template Pack → $29"
+      
+    monitoring:
+      keywords:
+        - "newsletter deliverability"
+        - "email spam folder"
+        - "newsletter spam"
+        - "email deliverability"
+        - "SPF DKIM DMARC"
+        - "newsletter inbox"
+        - "email open rates"
+        - "substack deliverability"
+        - "beehiiv deliverability"
+        
+      subreddits:
+        - "r/EmailMarketing"
+        - "r/newsletters"
+        - "r/Entrepreneur"
+        - "r/SaaS"
+        - "r/juststart"
+        - "r/Substack"
+        - "r/contentcreation"
+        
+      github_topics:
+        - "email-deliverability"
+        - "smtp"
+        - "newsletter"
+        - "email-marketing"
+        
+      github_search_queries:
+        - "newsletter deliverability issues"
+        - "email spam folder"
+        - "improve email deliverability"
+        - "newsletter platform"
+
+  # =============================================================================
+  # NICHE 3: Etsy Handmade Pricing Strategy
+  # =============================================================================
+  # High pain (90/100), highest solo-fit (95/100)
+  # Pain: 90/100 | Opportunity: 85/100 | Solo-Fit: 95/100
+  - id: "etsy-handmade-pricing"
+    name: "Etsy Handmade Sellers Pricing Strategy"
+    
+    overview:
+      title: "Etsy Handmade Sellers Fighting 'Race to the Bottom' Pricing"
+      description: |
+        Etsy artisans struggling to compete against mass-produced goods and price 
+        their handmade items profitably without losing to drop-shippers. Need tools 
+        to calculate true costs and position premium handmade products.
+      pain_score: 90
+      opportunity_score: 85
+      solo_founder_fit: 95
+      estimated_market_size: "100,000+ struggling sellers"
+      growth_trend: "stable"
+      
+    pain_points:
+      primary: "Handmade sellers can't compete on price with mass-produced items flooding Etsy"
+      secondary: "Sellers underprice their work (e.g., $1.50 profit for 30-40 minutes of labor)"
+      tertiary: "Don't know how to position handmade as premium vs cheap alternatives"
+      
+    revenue_opportunities:
+      - model: "Tools & Calculators"
+        price_range: "$29-$79"
+        examples:
+          - "Etsy Pricing Calculator (labor, materials, fees, profit margins) - $29-$79"
+          - "True Cost Calculator Spreadsheet - $29"
+      - model: "Guides & Playbooks"
+        price_range: "$47-$97"
+        examples:
+          - "Premium Positioning Playbook (differentiate handmade vs mass-produced) - $47-$97"
+          - "Etsy Pricing Strategy Guide - $49"
+      - model: "Consulting & Audits"
+        price_range: "$197-$497"
+        examples:
+          - "Shop Pricing Audit (review strategy, competitive analysis) - $197-$497"
+          - "1:1 Pricing Strategy Session - $297"
+      - model: "Templates"
+        price_range: "$39"
+        examples:
+          - "Etsy Shop Optimization Templates (listing templates emphasizing handmade value) - $39"
+          
+    time_to_first_revenue: "7-14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'Etsy Pricing Calculator' (Google Sheets) → Sell for $29"
+      - "Week 3-4: Write 'Premium Positioning Playbook' → Sell for $47-$97"
+      - "Month 2: Offer 'Shop Pricing Audits' → $197-$497"
+      
+    monitoring:
+      keywords:
+        - "etsy pricing strategy"
+        - "handmade pricing"
+        - "etsy undercutting"
+        - "race to bottom"
+        - "etsy profit margins"
+        - "how to price etsy items"
+        - "etsy pricing calculator"
+        - "etsy fees"
+        
+      subreddits:
+        - "r/Etsy"
+        - "r/EtsySellers"
+        - "r/smallbusiness"
+        - "r/handmade"
+        - "r/craftit"
+        
+      github_topics:
+        - "etsy-api"
+        - "pricing"
+        - "ecommerce"
+        
+      github_search_queries:
+        - "etsy pricing"
+        - "etsy calculator"
+        - "etsy tools"
+
+  # =============================================================================
+  # NICHE 4: Teachers Pay Teachers Copyright Protection
+  # =============================================================================
+  # Recommended as starter niche - fastest to revenue
+  # Pain: 85/100 | Opportunity: 82/100 | Solo-Fit: 92/100
+  - id: "tpt-copyright-protection"
+    name: "Teachers Pay Teachers Copyright Protection"
+    
+    overview:
+      title: "TPT Sellers Protecting Against Resource Theft"
+      description: |
+        Teachers Pay Teachers (TPT) seller-authors struggling to protect their 
+        digital resources from copyright infringement and design theft. Need simple 
+        tools and templates to prevent theft and enforce copyright.
+      pain_score: 85
+      opportunity_score: 82
+      solo_founder_fit: 92
+      estimated_market_size: "50,000+ sellers concerned about theft"
+      growth_trend: "stable"
+      
+    pain_points:
+      primary: "Sellers fear getting resources stolen and sold by other sellers"
+      secondary: "TPT has widespread copyright infringement problem - passages lifted verbatim, pages copied"
+      tertiary: "Don't know how to protect digital resources or report infringement effectively"
+      
+    revenue_opportunities:
+      - model: "Checklists & Templates"
+        price_range: "$29-$49"
+        examples:
+          - "Copyright Protection Checklist (watermarking, tracking, reporting) - $29-$49"
+          - "DMCA Takedown Templates (pre-written notices) - $39"
+      - model: "Monitoring Services"
+        price_range: "$19-$39/month"
+        examples:
+          - "TPT Monitoring Service (alert sellers when similar resources appear) - $19-$39/month"
+      - model: "Courses & Guides"
+        price_range: "$97"
+        examples:
+          - "Resource Security Course (design theft-resistant templates) - $97"
+          - "TPT Copyright Protection Guide - $49"
+      - model: "Tools"
+        price_range: "$29"
+        examples:
+          - "Watermark Template Pack - $29"
+          
+    time_to_first_revenue: "7-14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'TPT Copyright Protection Checklist' → Sell for $29-$49"
+      - "Week 3-4: Build 'DMCA Takedown Template Pack' → Sell for $39"
+      - "Month 2: Launch simple manual monitoring service (MVP) → $19/month"
+      
+    monitoring:
+      keywords:
+        - "TPT copyright"
+        - "resource theft"
+        - "TPT infringement"
+        - "protect TPT resources"
+        - "teachers pay teachers copyright"
+        - "TPT stolen resources"
+        - "TPT watermark"
+        - "TPT DMCA"
+        
+      subreddits:
+        - "r/Teachers"
+        - "r/TeachersPayTeachers"
+        - "r/education"
+        - "r/teaching"
+        
+      github_topics:
+        - "education"
+        - "copyright"
+        - "dmca"
+        
+      github_search_queries:
+        - "TPT tools"
+        - "copyright protection"
+        - "watermark tools"
+
+  # =============================================================================
+  # NICHE 5: Podcast Transcription SEO Workflow
+  # =============================================================================
+  # Non-technical, clear ROI, growing market
+  # Pain: 83/100 | Opportunity: 80/100 | Solo-Fit: 90/100
+  - id: "podcast-transcription-seo"
+    name: "Podcast Transcription SEO Workflow"
+    
+    overview:
+      title: "Podcast Hosts SEO-Optimized Transcription Workflow"
+      description: |
+        Podcasters struggling to create and publish SEO-friendly transcripts and 
+        show notes efficiently. Google can't index audio, so transcripts are 
+        essential for discovery, but current solutions are expensive ($120-360/month).
+      pain_score: 83
+      opportunity_score: 80
+      solo_founder_fit: 90
+      estimated_market_size: "500,000+ podcasters actively trying SEO"
+      growth_trend: "growing"
+      
+    pain_points:
+      primary: "Google can't index audio - need transcripts for SEO but it's expensive ($1-3/minute = $120-360/month)"
+      secondary: "Don't know how to convert transcripts into SEO-optimized blog posts"
+      tertiary: "Manual transcript editing and show notes creation is time-consuming"
+      
+    revenue_opportunities:
+      - model: "Templates"
+        price_range: "$29-$79"
+        examples:
+          - "Transcript-to-Blog Template Pack (convert transcripts to SEO blog posts) - $39-$79"
+          - "Show Notes Templates (pre-formatted with H1/H2 tags, keyword spots) - $29"
+      - model: "Guides & Workflows"
+        price_range: "$49"
+        examples:
+          - "Automated Workflow Guide (use AI tools to create show notes from transcripts) - $49"
+          - "Podcast SEO Playbook - $49"
+      - model: "Audits & Consulting"
+        price_range: "$197-$397"
+        examples:
+          - "SEO Podcast Audit (review current SEO strategy, provide roadmap) - $197-$397"
+          - "Transcript SEO Optimization Session - $297"
+      - model: "Tools"
+        price_range: "$29"
+        examples:
+          - "Podcast SEO Checklist - $29"
+          
+    time_to_first_revenue: "7-14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'Transcript-to-Blog Template Pack' → Sell for $39-$79"
+      - "Week 3-4: Write 'Automated Workflow Guide' (AI + no-code tools) → Sell for $49"
+      - "Month 2: Offer 'SEO Podcast Audits' → $197-$397"
+      
+    monitoring:
+      keywords:
+        - "podcast SEO"
+        - "show notes transcription"
+        - "podcast google ranking"
+        - "podcast transcription"
+        - "podcast discoverability"
+        - "podcast transcript cost"
+        - "automated show notes"
+        - "podcast workflow"
+        
+      subreddits:
+        - "r/podcasting"
+        - "r/podcasts"
+        - "r/PodcastGuestExchange"
+        - "r/SEO"
+        - "r/content_marketing"
+        
+      github_topics:
+        - "podcast"
+        - "transcription"
+        - "seo"
+        - "automation"
+        
+      github_search_queries:
+        - "podcast transcription"
+        - "podcast seo"
+        - "automated show notes"
+        - "podcast tools"
+
+# =============================================================================
+# Global Monitoring Configuration
+# =============================================================================
+monitoring_settings:
+  enabled: true
+  frequency: "daily"
+  
+  # Features to use for monitoring
+  active_features:
+    - "mining-drill"           # GitHub trending repos
+    - "reddit-pain-points"     # Reddit discussions
+    - "stargazer-analysis"     # GitHub stars & engagement
+    - "fork-evolution"         # GitHub forks
+    - "goldmine-detector"      # High-value opportunities
+    
+  # Output configuration
+  output:
+    format: "markdown"
+    directory: "data/reports"
+    naming_convention: "{feature}-{niche_id}-{date}.md"
+    
+  # Alert thresholds
+  alerts:
+    high_pain_threshold: 85
+    trending_stars_min: 100
+    reddit_upvotes_min: 50
+    
+# =============================================================================
+# Ruthless Judge Configuration
+# =============================================================================
+ruthless_judge:
+  enabled: true
+  frequency: "weekly"
+  
+  consolidation:
+    min_reports_required: 5
+    output_format: "markdown"
+    output_directory: "data/judge-reports"
+    
+  synthesis_rules:
+    - "Identify top 3 opportunities per niche"
+    - "Flag dying trends or saturated markets"
+    - "Highlight revenue model conflicts"
+    - "Recommend immediate actions"
+    
+# =============================================================================
+# Council Configuration
+# =============================================================================
+council:
+  enabled: true
+  frequency: "weekly"
+  
+  analysis:
+    input_source: "ruthless_judge_reports"
+    output_directory: "data/council-decisions"
+    
+  decision_framework:
+    - "Rank opportunities by: (1) Time to revenue, (2) Solo-founder fit, (3) Market size"
+    - "Recommend top 1 niche to focus on THIS WEEK"
+    - "Provide specific action plan (3-5 steps)"
+    - "Estimate revenue potential (30/60/90 days)"
+    
+# =============================================================================
+# Execution Tracking
+# =============================================================================
+execution:
+  current_phase: "Phase 0 - Niche Discovery"
+  
+  phases:
+    - phase: 0
+      name: "Niche Discovery"
+      status: "complete"
+      deliverable: "config/target-niches.yaml"
+      
+    - phase: 1
+      name: "Fix Core Features"
+      status: "not_started"
+      deliverable: "5 features generating 25+ reports/week"
+      estimated_duration: "4-6 weeks"
+      
+    - phase: 2
+      name: "Weekly Intelligence"
+      status: "not_started"
+      deliverable: "Ruthless Judge + Council producing actionable decisions"
+      estimated_duration: "2-3 weeks"
+      
+    - phase: 3
+      name: "Execute & Cash Flow"
+      status: "not_started"
+      deliverable: "First revenue from top opportunity"
+      estimated_duration: "2-4 weeks"

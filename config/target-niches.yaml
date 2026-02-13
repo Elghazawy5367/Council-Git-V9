@@ -1,0 +1,228 @@
+# Target Niches Configuration
+# Used by Council's intelligence systems (Scout, Self-Improve, Daily Brief)
+# to analyze GitHub repositories and extract market insights
+
+# Default niche used when none specified
+default: developer-tools
+
+# Available niches for market intelligence scanning
+niches:
+  # Development Tools & Infrastructure
+  - id: developer-tools
+    name: Developer Tools
+    description: Tools and utilities for software developers
+    keywords:
+      - cli
+      - devtools
+      - productivity
+      - automation
+    minStars: 1000
+    
+  - id: ai-tools
+    name: AI & Machine Learning Tools
+    description: AI-powered development tools and frameworks
+    keywords:
+      - ai
+      - machine-learning
+      - llm
+      - gpt
+      - openai
+    minStars: 500
+    
+  - id: react
+    name: React Ecosystem
+    description: React libraries, components, and frameworks
+    keywords:
+      - react
+      - nextjs
+      - remix
+      - component-library
+    minStars: 1000
+    
+  - id: typescript
+    name: TypeScript Tools
+    description: TypeScript utilities and type-safe libraries
+    keywords:
+      - typescript
+      - type-safety
+      - types
+    minStars: 800
+    
+  # Mobile Development
+  - id: react-native
+    name: React Native
+    description: Cross-platform mobile development tools
+    keywords:
+      - react-native
+      - mobile
+      - ios
+      - android
+    minStars: 500
+    
+  # Backend & APIs
+  - id: nodejs
+    name: Node.js Backend
+    description: Server-side JavaScript frameworks and tools
+    keywords:
+      - nodejs
+      - express
+      - fastify
+      - backend
+    minStars: 1000
+    
+  - id: api-tools
+    name: API Development
+    description: API design, testing, and documentation tools
+    keywords:
+      - api
+      - rest
+      - graphql
+      - swagger
+    minStars: 500
+    
+  # Data & Analytics
+  - id: data-visualization
+    name: Data Visualization
+    description: Charting libraries and data visualization tools
+    keywords:
+      - charts
+      - visualization
+      - d3
+      - dashboard
+    minStars: 500
+    
+  - id: database-tools
+    name: Database Tools
+    description: Database management and ORM libraries
+    keywords:
+      - database
+      - orm
+      - sql
+      - postgres
+    minStars: 800
+    
+  # DevOps & Cloud
+  - id: devops
+    name: DevOps Tools
+    description: CI/CD, deployment, and infrastructure tools
+    keywords:
+      - devops
+      - cicd
+      - deployment
+      - kubernetes
+      - docker
+    minStars: 1000
+    
+  - id: monitoring
+    name: Monitoring & Observability
+    description: Application monitoring and logging tools
+    keywords:
+      - monitoring
+      - logging
+      - observability
+      - metrics
+    minStars: 500
+    
+  # Security
+  - id: security-tools
+    name: Security Tools
+    description: Security scanning and vulnerability detection
+    keywords:
+      - security
+      - vulnerability
+      - authentication
+      - encryption
+    minStars: 500
+    
+  # Testing
+  - id: testing
+    name: Testing Frameworks
+    description: Testing libraries and quality assurance tools
+    keywords:
+      - testing
+      - test-framework
+      - e2e
+      - unit-testing
+    minStars: 1000
+    
+  # Web Frameworks
+  - id: web-frameworks
+    name: Web Frameworks
+    description: Full-stack and frontend frameworks
+    keywords:
+      - framework
+      - web
+      - frontend
+      - fullstack
+    minStars: 1000
+    
+  # Design Systems
+  - id: design-systems
+    name: Design Systems
+    description: UI component libraries and design tokens
+    keywords:
+      - design-system
+      - ui-components
+      - design-tokens
+      - accessibility
+    minStars: 500
+
+# Niche groups for batch analysis
+groups:
+  frontend:
+    - react
+    - typescript
+    - web-frameworks
+    - design-systems
+    
+  backend:
+    - nodejs
+    - api-tools
+    - database-tools
+    
+  mobile:
+    - react-native
+    
+  infrastructure:
+    - devops
+    - monitoring
+    - security-tools
+    
+  ai:
+    - ai-tools
+    
+  quality:
+    - testing
+    - security-tools
+
+# Automation settings per niche
+automation:
+  # Frequency settings for scheduled scans
+  daily:
+    - developer-tools
+    - ai-tools
+    - react
+    
+  weekly:
+    - nodejs
+    - api-tools
+    - testing
+    - devops
+    
+  monthly:
+    - data-visualization
+    - database-tools
+    - monitoring
+    - security-tools
+    - web-frameworks
+    - design-systems
+    - typescript
+    - react-native
+
+# Priority order for Blue Ocean opportunity detection
+priority:
+  - ai-tools
+  - developer-tools
+  - react
+  - nodejs
+  - devops

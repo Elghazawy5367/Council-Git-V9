@@ -1,0 +1,35 @@
+name: Mining Drill - Daily Intelligence
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  mining-drill:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Mining Drill
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx scripts/run-mining-drill.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "Mining Drill Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/mining-drill-*.md
+          git commit -m "🔨 Mining Drill: Daily intelligence report" || echo "No changes"
+          git push

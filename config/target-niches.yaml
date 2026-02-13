@@ -1,0 +1,120 @@
+niches:
+  - id: freelancer-scope-creep
+    name: "Freelancer Scope Creep Prevention"
+    enabled: true
+    keywords:
+      - scope creep
+      - client boundaries
+      - contract management
+      - change requests
+      - additional features
+      - out of scope
+    github_search_queries:
+      - "scope creep freelance in:title,body"
+      - "client keeps asking for more in:title,body"
+      - "contract scope changes in:title,body"
+      - "how to handle scope creep in:title,body"
+    github_topics:
+      - freelancing
+      - project-management
+      - contract-management
+    subreddits:
+      - freelance
+      - forhire
+      - entrepreneur
+
+  - id: newsletter-deliverability
+    name: "Newsletter Deliverability Issues"
+    enabled: true
+    keywords:
+      - email deliverability
+      - spam folder
+      - inbox placement
+      - email reputation
+      - bounce rate
+      - unsubscribe rate
+    github_search_queries:
+      - "email deliverability issues in:title,body"
+      - "newsletter spam folder in:title,body"
+      - "email not reaching inbox in:title,body"
+      - "improve email deliverability in:title,body"
+    github_topics:
+      - email
+      - newsletter
+      - email-marketing
+    subreddits:
+      - EmailMarketing
+      - entrepreneur
+      - SaaS
+
+  - id: etsy-handmade-pricing
+    name: "Etsy/Handmade Product Pricing"
+    enabled: true
+    keywords:
+      - pricing strategy
+      - undercharging
+      - profit margin
+      - cost calculation
+      - material costs
+      - labor costs
+    github_search_queries:
+      - "etsy pricing calculator in:title,body"
+      - "handmade product pricing in:title,body"
+      - "how to price handmade items in:title,body"
+      - "craft pricing tool in:title,body"
+    github_topics:
+      - ecommerce
+      - etsy
+      - pricing
+    subreddits:
+      - Etsy
+      - EtsySellers
+      - crafts
+
+  - id: tpt-copyright-protection
+    name: "Teachers Pay Teachers Copyright Protection"
+    enabled: true
+    keywords:
+      - copyright infringement
+      - stolen content
+      - DMCA takedown
+      - intellectual property
+      - content theft
+      - piracy
+    github_search_queries:
+      - "copyright protection digital products in:title,body"
+      - "DMCA takedown tool in:title,body"
+      - "detect stolen content in:title,body"
+      - "intellectual property monitoring in:title,body"
+    github_topics:
+      - copyright
+      - intellectual-property
+      - content-protection
+    subreddits:
+      - teacherspayteachers
+      - Teachers
+      - education
+
+  - id: podcast-transcription-seo
+    name: "Podcast Transcription for SEO"
+    enabled: true
+    keywords:
+      - podcast transcription
+      - audio to text
+      - SEO optimization
+      - search visibility
+      - show notes
+      - podcast discovery
+    github_search_queries:
+      - "podcast transcription tool in:title,body"
+      - "audio transcription API in:title,body"
+      - "podcast SEO optimization in:title,body"
+      - "automated show notes in:title,body"
+    github_topics:
+      - podcast
+      - transcription
+      - seo
+    subreddits:
+      - podcasting
+      - podcasts
+      - SEO

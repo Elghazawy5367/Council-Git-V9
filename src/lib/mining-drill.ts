@@ -35,11 +35,15 @@ export interface PainPoint {
 }
 
 const FRUSTRATION_KEYWORDS = [
-  'frustrated', 'impossible', 'broken', "doesn't work", "doesn't work",
+  'frustrated', 'impossible', 'broken', "doesn't work",
   'terrible', 'awful', 'painful', 'annoying', 'hate',
   'nightmare', 'struggling', 'waste of time', 'crashes',
   'useless', 'not working', 'horrible'
 ];
+
+interface YamlConfig {
+  niches: NicheConfig[];
+}
 
 /**
  * Load niche configuration from YAML
@@ -48,8 +52,8 @@ function loadNicheConfig(): NicheConfig[] {
   try {
     const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
     const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as any;
-    return config.niches.filter((n: any) => n.enabled !== false);
+    const config = yaml.load(fileContent) as YamlConfig;
+    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
   } catch (error) {
     console.error('Failed to load niche config:', error);
     throw error;
@@ -101,7 +105,9 @@ async function searchGitHubIssues(query: string, githubToken?: string): Promise<
  * Score pain point from 1-10 based on multiple factors
  */
 function scorePainPoint(issue: any): number {
-  let score = 5; // baseline
+  // Start at 5 (neutral) - indicates a legitimate pain point worth investigating
+  // Scores below 5 indicate low engagement, above 5 indicate high value opportunities
+  let score = 5;
   
   // More comments = higher pain
   if (issue.comments > 20) score += 3;

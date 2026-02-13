@@ -1,18 +1,37 @@
-name: Fork Evolution
+name: Fork Evolution - Repository Modifications
+
 on:
   schedule:
-    - cron: '0 12 * * *'
-  workflow_dispatch:
+    - cron: '0 12 * * 2,4'  # Tuesday, Thursday at 12 PM UTC
+  workflow_dispatch:  # Manual trigger
+
 jobs:
-  track:
+  fork-evolution:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to push reports to repository
+    
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-      - name: Run Fork Evolution Tracking
-        run: npm install && node scripts/track-forks.js
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Fork Evolution
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx scripts/track-forks.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "Fork Evolution Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/fork-evolution-*.md
+          git commit -m "🍴 Fork Evolution: Repository modification patterns" || echo "No changes"
+          git push

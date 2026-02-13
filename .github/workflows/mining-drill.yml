@@ -8,6 +8,8 @@ on:
 jobs:
   mining-drill:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to push reports to repository
     
     steps:
       - name: Checkout code

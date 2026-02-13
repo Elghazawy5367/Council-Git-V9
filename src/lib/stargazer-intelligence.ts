@@ -15,9 +15,15 @@ import { Octokit } from '@octokit/rest';
 interface NicheConfig {
   id: string;
   name: string;
-  keywords: string[];
-  github_topics: string[];
-  github_search_queries: string[];
+  monitoring?: {
+    keywords: string[];
+    github_topics: string[];
+    github_search_queries: string[];
+    subreddits?: string[];
+  };
+  keywords?: string[];
+  github_topics?: string[];
+  github_search_queries?: string[];
   enabled?: boolean;
 }
 
@@ -67,10 +73,13 @@ function loadNicheConfig(): NicheConfig[] {
 
 async function searchRepositoriesByTopic(
   octokit: Octokit,
-  topics: string[],
-  keywords: string[]
+  niche: NicheConfig
 ): Promise<any[]> {
   const repos: any[] = [];
+  
+  // Handle both direct and nested monitoring structure
+  const topics = niche.monitoring?.github_topics || niche.github_topics || [];
+  const keywords = niche.monitoring?.keywords || niche.keywords || [];
   
   for (const topic of topics) {
     try {
@@ -342,13 +351,12 @@ export async function runStargazerAnalysis(): Promise<void> {
   for (const niche of niches) {
     console.log(`⭐ Analyzing: ${niche.id}`);
     
+    // Get topics for display
+    const topics = niche.monitoring?.github_topics || niche.github_topics || [];
+    
     // Search repositories by topics
-    console.log(`  → Searching GitHub topics: ${niche.github_topics.join(', ')}`);
-    const repos = await searchRepositoriesByTopic(
-      octokit,
-      niche.github_topics,
-      niche.keywords
-    );
+    console.log(`  → Searching GitHub topics: ${topics.join(', ')}`);
+    const repos = await searchRepositoriesByTopic(octokit, niche);
     
     console.log(`  → Found ${repos.length} repositories`);
     

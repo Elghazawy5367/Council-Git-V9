@@ -1,258 +1,606 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Abandoned Goldmine Detector
- * Filters high-ROI opportunities from Blue Ocean scans
+ * Finds high-value abandoned repositories across multiple niches
+ * using multi-niche configuration from config/target-niches.yaml
  */
 
-export interface Opportunity {
+import * as yaml from 'js-yaml';
+import * as fs from 'fs';
+import * as path from 'path';
+import { Octokit } from '@octokit/rest';
+
+export interface NicheConfig {
+  id: string;
+  name: string;
+  keywords?: string[];
+  github_topics?: string[];
+  github_search_queries?: string[];
+  enabled?: boolean;
+  monitoring?: {
+    keywords?: string[];
+    github_topics?: string[];
+    github_search_queries?: string[];
+    subreddits?: string[];
+  };
+}
+
+export interface Goldmine {
   owner: string;
   name: string;
+  full_name: string;
   stars: number;
   forks: number;
   openIssues: number;
   lastUpdate: string;
   daysSinceUpdate: number;
   url: string;
+  description: string | null;
+  language: string | null;
+  goldmineScore: number;
+  valueScore: number;
+  abandonmentScore: number;
+  demandScore: number;
+  license: string | null;
+  hasWiki: boolean;
+  hasPages: boolean;
+  topics: string[];
+  created_at: string;
+}
+
+export interface RebuildOpportunity {
+  type: 'direct-modernization' | 'improved-alternative' | 'saas-version' | 'niche-focus';
   description: string;
-  language: string;
-  blueOceanScore?: number;
-  forkRatio?: number;
+  techStack: string[];
+  timeEstimate: string;
+  difficultyLevel: 'easy' | 'medium' | 'hard';
 }
 
-export interface GoldmineMetrics {
-  estimatedRevenueLow: number;
-  estimatedRevenueHigh: number;
-  estimatedPrice: number;
-  potentialCustomers: number;
-  competitionLevel: 'low' | 'medium' | 'high';
-  timeToMarket: 'fast' | 'medium' | 'slow';
+export interface MonetizationStrategy {
+  model: string;
+  priceRange: string;
+  estimatedMRR: string;
+  targetCustomers: string;
+}
+
+interface YamlConfig {
+  niches: NicheConfig[];
 }
 
 /**
- * Filter for high-ROI abandoned goldmines
+ * Load niche configuration from YAML
  */
-export function findGoldmines(opportunities: Opportunity[]): Opportunity[] {
-  return opportunities
-    .filter(repo => {
-      const forkRatio = repo.forkRatio ?? (repo.forks / repo.stars);
+function loadNicheConfig(): NicheConfig[] {
+  try {
+    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
+    const fileContent = fs.readFileSync(configPath, 'utf8');
+    const config = yaml.load(fileContent) as YamlConfig;
+    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
+  } catch (error) {
+    console.error('Failed to load niche config:', error);
+    throw error;
+  }
+}
+
+/**
+ * Calculate days since a date
+ */
+function calculateDaysSince(dateString: string): number {
+  const then = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - then.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+
+/**
+ * Calculate goldmine score (0-100)
+ * - Value score (0-40): Stars, documentation, past activity
+ * - Abandonment score (0-30): Days abandoned, no responses
+ * - Demand score (0-30): Active forks, recent issues, recent stars
+ */
+function calculateGoldmineScore(repo: any, commits: any[], issues: any[]): {
+  total: number;
+  valueScore: number;
+  abandonmentScore: number;
+  demandScore: number;
+} {
+  let valueScore = 0;
+  let abandonmentScore = 0;
+  let demandScore = 0;
+
+  // VALUE SCORE (0-40)
+  // Stars indicate proven demand
+  if (repo.stargazers_count > 10000) valueScore += 20;
+  else if (repo.stargazers_count > 5000) valueScore += 15;
+  else if (repo.stargazers_count > 2000) valueScore += 10;
+  else valueScore += 5;
+
+  // Documentation indicates quality
+  if (repo.has_wiki || repo.has_pages) valueScore += 5;
+  if (repo.description && repo.description.length > 50) valueScore += 5;
+
+  // Past activity indicates maturity
+  const daysSinceCreation = calculateDaysSince(repo.created_at);
+  if (daysSinceCreation > 365 * 2) valueScore += 10; // Mature project
+  else if (daysSinceCreation > 365) valueScore += 5;
+
+  // ABANDONMENT SCORE (0-30)
+  const daysSinceUpdate = calculateDaysSince(repo.updated_at);
+  if (daysSinceUpdate > 730) abandonmentScore += 30; // 2+ years
+  else if (daysSinceUpdate > 365) abandonmentScore += 20; // 1-2 years
+  else if (daysSinceUpdate > 180) abandonmentScore += 10; // 6-12 months
+
+  // No recent commits
+  const recentCommits = commits.filter((c: any) => {
+    const commitDate = new Date(c.commit.author.date);
+    const monthsAgo = (Date.now() - commitDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+    return monthsAgo < 6;
+  });
+  if (recentCommits.length === 0) abandonmentScore += 0; // Already counted in update time
+
+  // DEMAND SCORE (0-30)
+  // Active forks indicate ongoing demand
+  if (repo.forks_count > 500) demandScore += 10;
+  else if (repo.forks_count > 200) demandScore += 7;
+  else if (repo.forks_count > 50) demandScore += 5;
+  else demandScore += 2;
+
+  // Open issues indicate unmet needs
+  if (repo.open_issues_count > 100) demandScore += 10;
+  else if (repo.open_issues_count > 50) demandScore += 7;
+  else if (repo.open_issues_count > 20) demandScore += 5;
+
+  // Recent issues indicate current demand
+  const recentIssues = issues.filter((issue: any) => {
+    const issueDate = new Date(issue.created_at);
+    const monthsAgo = (Date.now() - issueDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+    return monthsAgo < 6;
+  });
+  if (recentIssues.length > 10) demandScore += 10;
+  else if (recentIssues.length > 5) demandScore += 5;
+
+  const total = Math.min(100, valueScore + abandonmentScore + demandScore);
+  
+  return { total, valueScore, abandonmentScore, demandScore };
+}
+
+/**
+ * Search for abandoned repositories
+ */
+async function searchAbandonedRepos(
+  octokit: Octokit,
+  topics: string[],
+  keywords: string[]
+): Promise<any[]> {
+  const repos: any[] = [];
+  const oneYearAgo = new Date();
+  oneYearAgo.setDate(oneYearAgo.getDate() - 365);
+  const dateStr = oneYearAgo.toISOString().split('T')[0];
+
+  // Search by topics
+  for (const topic of topics.slice(0, 3)) { // Limit to 3 topics to avoid rate limits
+    try {
+      console.log(`    → Searching topic: ${topic}`);
+      const { data } = await octokit.search.repos({
+        q: `topic:${topic} stars:>1000 pushed:<${dateStr}`,
+        sort: 'stars',
+        order: 'desc',
+        per_page: 30
+      });
+      repos.push(...data.items);
       
-      return (
-        repo.stars > 1000 &&           // Proven demand
-        repo.daysSinceUpdate > 365 &&  // 1+ year abandoned
-        repo.openIssues > 20 &&        // Users still need it
-        forkRatio < 0.2                // Low competition
-      );
-    })
-    .sort((a, b) => {
-      const scoreA = a.blueOceanScore ?? calculateBlueOceanScore(a);
-      const scoreB = b.blueOceanScore ?? calculateBlueOceanScore(b);
-      return scoreB - scoreA;
+      // Rate limiting: 1 second between searches
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error: any) {
+      console.error(`    ⚠️ Error searching topic ${topic}:`, error.message);
+      if (error.status === 403) {
+        console.log('    Rate limited. Waiting 60 seconds...');
+        await new Promise(resolve => setTimeout(resolve, 60000));
+      }
+    }
+  }
+
+  // Deduplicate by repository ID
+  const uniqueRepos = Array.from(
+    new Map(repos.map(r => [r.id, r])).values()
+  );
+
+  return uniqueRepos;
+}
+
+/**
+ * Analyze repository for goldmine potential
+ */
+async function analyzeGoldmine(
+  octokit: Octokit,
+  repo: any
+): Promise<Goldmine | null> {
+  try {
+    const [owner, name] = repo.full_name.split('/');
+    
+    // Get recent commits
+    let commits: any[] = [];
+    try {
+      const { data: commitData } = await octokit.repos.listCommits({
+        owner,
+        repo: name,
+        per_page: 100
+      });
+      commits = commitData;
+    } catch (error: any) {
+      console.error(`      ⚠️ Could not fetch commits: ${error.message}`);
+    }
+
+    // Get recent issues
+    let issues: any[] = [];
+    try {
+      const { data: issueData } = await octokit.issues.listForRepo({
+        owner,
+        repo: name,
+        state: 'open',
+        sort: 'created',
+        direction: 'desc',
+        per_page: 100
+      });
+      issues = issueData.filter((i: any) => !i.pull_request);
+    } catch (error: any) {
+      console.error(`      ⚠️ Could not fetch issues: ${error.message}`);
+    }
+
+    // Rate limiting between repo analyses
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const daysSinceUpdate = calculateDaysSince(repo.updated_at || repo.pushed_at);
+    
+    // Filter: Must be abandoned for >180 days
+    if (daysSinceUpdate < 180) {
+      return null;
+    }
+
+    // Calculate goldmine score
+    const scores = calculateGoldmineScore(repo, commits, issues);
+
+    const goldmine: Goldmine = {
+      owner,
+      name,
+      full_name: repo.full_name,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      openIssues: repo.open_issues_count,
+      lastUpdate: repo.updated_at || repo.pushed_at,
+      daysSinceUpdate,
+      url: repo.html_url,
+      description: repo.description,
+      language: repo.language,
+      goldmineScore: scores.total,
+      valueScore: scores.valueScore,
+      abandonmentScore: scores.abandonmentScore,
+      demandScore: scores.demandScore,
+      license: repo.license?.spdx_id || null,
+      hasWiki: repo.has_wiki,
+      hasPages: repo.has_pages,
+      topics: repo.topics || [],
+      created_at: repo.created_at
+    };
+
+    return goldmine;
+  } catch (error: any) {
+    console.error(`    ⚠️ Error analyzing ${repo.full_name}:`, error.message);
+    return null;
+  }
+}
+
+/**
+ * Extract top unmet needs from issues
+ */
+async function extractUnmetNeeds(
+  octokit: Octokit,
+  owner: string,
+  repo: string
+): Promise<string[]> {
+  try {
+    const { data: issues } = await octokit.issues.listForRepo({
+      owner,
+      repo,
+      state: 'open',
+      sort: 'comments',
+      direction: 'desc',
+      per_page: 20
     });
+
+    const needs = issues
+      .filter((i: any) => !i.pull_request)
+      .slice(0, 10)
+      .map((i: any) => `${i.title} (${i.comments} comments)`);
+
+    return needs;
+  } catch (error: any) {
+    console.error(`    ⚠️ Could not extract needs: ${error.message}`);
+    return [];
+  }
 }
 
 /**
- * Calculate Blue Ocean Score if not already present
+ * Generate rebuild opportunity
  */
-function calculateBlueOceanScore(repo: Opportunity): number {
-  let score = 0;
+function generateRebuildOpportunity(goldmine: Goldmine): RebuildOpportunity {
+  const language = goldmine.language || 'Unknown';
   
-  // Star multiplier (max 40 points)
-  score += Math.min(40, (repo.stars / 100));
-  
-  // Abandonment multiplier (max 30 points)
-  const yearsAbandoned = repo.daysSinceUpdate / 365;
-  score += Math.min(30, yearsAbandoned * 10);
-  
-  // Issue demand (max 20 points)
-  score += Math.min(20, repo.openIssues / 5);
-  
-  // Low competition bonus (max 10 points)
-  const forkRatio = repo.forkRatio ?? (repo.forks / repo.stars);
-  if (forkRatio < 0.1) score += 10;
-  else if (forkRatio < 0.2) score += 5;
-  
-  return Math.min(100, Math.round(score));
+  let type: RebuildOpportunity['type'] = 'direct-modernization';
+  let description = '';
+  let techStack: string[] = [];
+  let timeEstimate = '';
+  let difficultyLevel: RebuildOpportunity['difficultyLevel'] = 'medium';
+
+  // Determine rebuild type based on characteristics
+  if (goldmine.stars > 5000 && goldmine.openIssues > 50) {
+    type = 'improved-alternative';
+    description = `Build improved version with modern tech stack addressing top ${Math.min(goldmine.openIssues, 20)} feature requests`;
+    timeEstimate = '8-12 weeks';
+    difficultyLevel = 'hard';
+  } else if (goldmine.stars > 2000) {
+    type = 'saas-version';
+    description = 'Convert to hosted SaaS version with managed infrastructure and support';
+    timeEstimate = '6-10 weeks';
+    difficultyLevel = 'medium';
+  } else {
+    type = 'direct-modernization';
+    description = 'Modernize dependencies, fix security issues, and add requested features';
+    timeEstimate = '4-6 weeks';
+    difficultyLevel = 'easy';
+  }
+
+  // Suggest modern tech stack
+  if (language === 'JavaScript' || language === 'TypeScript') {
+    techStack = ['TypeScript', 'Vite', 'React', 'Tailwind CSS'];
+  } else if (language === 'Python') {
+    techStack = ['Python 3.11+', 'FastAPI', 'PostgreSQL', 'Docker'];
+  } else if (language === 'Go') {
+    techStack = ['Go 1.21+', 'Chi Router', 'PostgreSQL', 'Docker'];
+  } else if (language === 'Ruby') {
+    techStack = ['Ruby 3.2+', 'Rails 7', 'PostgreSQL', 'Tailwind CSS'];
+  } else {
+    techStack = ['Modern framework', 'Docker', 'PostgreSQL'];
+  }
+
+  return { type, description, techStack, timeEstimate, difficultyLevel };
 }
 
 /**
- * Calculate metrics for a goldmine opportunity
+ * Generate monetization strategy
  */
-export function calculateGoldmineMetrics(repo: Opportunity): GoldmineMetrics {
-  const potentialCustomers = Math.round(repo.stars * 0.01); // 1% conversion
-  const price = estimatePrice(repo);
-  const low = potentialCustomers * price * 0.5;
-  const high = potentialCustomers * price;
-  
-  const forkRatio = repo.forkRatio ?? (repo.forks / repo.stars);
-  const competitionLevel = 
-    forkRatio < 0.1 ? 'low' :
-    forkRatio < 0.2 ? 'medium' : 'high';
-  
-  const timeToMarket =
-    repo.stars < 2000 && repo.openIssues < 50 ? 'fast' :
-    repo.stars < 5000 && repo.openIssues < 100 ? 'medium' : 'slow';
-  
-  return {
-    estimatedRevenueLow: low,
-    estimatedRevenueHigh: high,
-    estimatedPrice: price,
-    potentialCustomers,
-    competitionLevel,
-    timeToMarket,
-  };
+function generateMonetizationStrategy(goldmine: Goldmine): MonetizationStrategy[] {
+  const strategies: MonetizationStrategy[] = [];
+
+  // Freemium SaaS
+  const freemiumMRR = Math.round(goldmine.stars * 0.01 * 29); // 1% conversion at $29/mo
+  strategies.push({
+    model: 'Freemium SaaS',
+    priceRange: '$29-99/month',
+    estimatedMRR: `$${freemiumMRR.toLocaleString()}-${(freemiumMRR * 3).toLocaleString()}`,
+    targetCustomers: `${Math.round(goldmine.stars * 0.01)} paying users (1% of stargazers)`
+  });
+
+  // One-time license
+  const licenseMRR = Math.round(goldmine.stars * 0.005 * 149); // 0.5% conversion at $149 one-time
+  strategies.push({
+    model: 'One-time License',
+    priceRange: '$149-499 lifetime',
+    estimatedMRR: `$${Math.round(licenseMRR / 12).toLocaleString()}/month (amortized)`,
+    targetCustomers: `${Math.round(goldmine.stars * 0.005)} buyers`
+  });
+
+  // Enterprise support
+  if (goldmine.stars > 5000) {
+    strategies.push({
+      model: 'Enterprise Support',
+      priceRange: '$999-4,999/month',
+      estimatedMRR: '$3,000-15,000',
+      targetCustomers: '3-5 enterprise customers'
+    });
+  }
+
+  return strategies;
 }
 
 /**
- * Estimate pricing based on star count
+ * Generate markdown report for a niche
  */
-function estimatePrice(repo: Opportunity): number {
-  if (repo.stars > 10000) return 499;
-  if (repo.stars > 5000) return 299;
-  if (repo.stars > 2000) return 199;
-  if (repo.stars > 1000) return 149;
-  return 99;
-}
-
-/**
- * Estimate revenue range
- */
-function estimateRevenue(repo: Opportunity): string {
-  const metrics = calculateGoldmineMetrics(repo);
-  return `${metrics.estimatedRevenueLow.toLocaleString()}-${metrics.estimatedRevenueHigh.toLocaleString()}`;
-}
-
-/**
- * Generate a comprehensive goldmine report
- */
-export function generateGoldmineReport(goldmines: Opportunity[]): string {
-  let report = '# 💰 ABANDONED GOLDMINES REPORT\n\n';
-  report += `Date: ${new Date().toISOString().split('T')[0]}\n`;
-  report += `Found: ${goldmines.length} goldmines\n\n`;
+function generateReport(
+  nicheId: string,
+  nicheName: string,
+  goldmines: Goldmine[],
+  unmetNeeds: Map<string, string[]>
+): string {
+  const date = new Date().toISOString().split('T')[0];
+  
+  let markdown = `# Goldmine Detector Report: ${nicheName}\n\n`;
+  markdown += `**Date:** ${date}\n`;
+  markdown += `**Niche:** ${nicheId}\n`;
+  markdown += `**Goldmines Found:** ${goldmines.length}\n\n`;
   
   if (goldmines.length === 0) {
-    report += 'No goldmines found matching criteria.\n';
-    report += '\n**Criteria:**\n';
-    report += '- Stars > 1,000 (proven demand)\n';
-    report += '- Abandoned > 1 year\n';
-    report += '- Open Issues > 20 (active user need)\n';
-    report += '- Fork Ratio < 0.2 (low competition)\n';
-    return report;
+    markdown += `## No Goldmines Found\n\n`;
+    markdown += `No abandoned repositories matching goldmine criteria were found in this niche.\n\n`;
+    markdown += `**Goldmine Criteria:**\n`;
+    markdown += `- Stars > 1,000 (proven demand)\n`;
+    markdown += `- Abandoned > 180 days (no competition)\n`;
+    markdown += `- Open Issues > 20 (unmet needs)\n`;
+    markdown += `- Permissive license (can rebuild)\n\n`;
+    return markdown;
   }
-  
-  goldmines.slice(0, 10).forEach((repo, i) => {
-    const metrics = calculateGoldmineMetrics(repo);
-    const blueOceanScore = repo.blueOceanScore ?? calculateBlueOceanScore(repo);
-    
-    report += `## ${i + 1}. ${repo.owner}/${repo.name}\n\n`;
-    report += `${repo.description || 'No description available'}\n\n`;
-    report += `**Metrics:**\n`;
-    report += `- ⭐ Stars: ${repo.stars.toLocaleString()}\n`;
-    report += `- 📅 Last Update: ${repo.lastUpdate} (${repo.daysSinceUpdate} days ago)\n`;
-    report += `- 🐛 Open Issues: ${repo.openIssues}\n`;
-    report += `- 🍴 Fork Ratio: ${((repo.forkRatio ?? (repo.forks / repo.stars)) * 100).toFixed(1)}%\n`;
-    report += `- 📊 Blue Ocean Score: ${blueOceanScore}/100\n`;
-    report += `- 💻 Language: ${repo.language || 'Unknown'}\n\n`;
-    
-    report += `**Business Potential:**\n`;
-    report += `- 💰 Estimated Revenue: $${estimateRevenue(repo)}/month\n`;
-    report += `- 💵 Suggested Price: $${metrics.estimatedPrice}/year\n`;
-    report += `- 👥 Potential Customers: ~${metrics.potentialCustomers}\n`;
-    report += `- 🎯 Competition: ${metrics.competitionLevel}\n`;
-    report += `- ⚡ Time to Market: ${metrics.timeToMarket}\n\n`;
-    
-    report += `**Quick Win Strategy:**\n`;
-    report += `1. Fork the repo: \`git clone ${repo.url}\`\n`;
-    report += `2. Update dependencies and fix security issues\n`;
-    report += `3. Fix top 5-10 most commented issues\n`;
-    report += `4. Add modern UI/UX improvements\n`;
-    report += `5. Launch as SaaS for $${metrics.estimatedPrice}/year\n`;
-    report += `6. Market to existing ${repo.stars.toLocaleString()} stargazers\n\n`;
-    
-    report += `**Marketing Angles:**\n`;
-    report += `- "The ${repo.name} revival - maintained and improved"\n`;
-    report += `- "Enterprise-ready ${repo.name} with support"\n`;
-    report += `- "Modern ${repo.name} - ${repo.daysSinceUpdate} days of updates in one release"\n\n`;
-    
-    report += `🔗 **URL:** ${repo.url}\n\n`;
-    report += `---\n\n`;
-  });
-  
-  // Summary section
-  report += `## 📈 Summary\n\n`;
-  
-  const totalRevenueLow = goldmines
-    .slice(0, 10)
-    .reduce((sum, repo) => sum + calculateGoldmineMetrics(repo).estimatedRevenueLow, 0);
-  
-  const totalRevenueHigh = goldmines
-    .slice(0, 10)
-    .reduce((sum, repo) => sum + calculateGoldmineMetrics(repo).estimatedRevenueHigh, 0);
-  
-  report += `**Portfolio Potential (Top 10):**\n`;
-  report += `- Combined Revenue Range: $${totalRevenueLow.toLocaleString()}-$${totalRevenueHigh.toLocaleString()}/month\n`;
-  report += `- Average Blue Ocean Score: ${Math.round(goldmines.slice(0, 10).reduce((sum, r) => sum + (r.blueOceanScore ?? calculateBlueOceanScore(r)), 0) / Math.min(10, goldmines.length))}/100\n`;
-  report += `- Total Potential Customers: ${goldmines.slice(0, 10).reduce((sum, r) => sum + calculateGoldmineMetrics(r).potentialCustomers, 0).toLocaleString()}\n\n`;
-  
-  report += `**Recommended Action Plan:**\n`;
-  report += `1. Start with top 3 goldmines (fastest time-to-market)\n`;
-  report += `2. Validate demand by posting in original repo issues\n`;
-  report += `3. Build MVP in 2-4 weeks per project\n`;
-  report += `4. Launch with "maintained fork" positioning\n`;
-  report += `5. Convert 1-2% of stargazers = sustainable revenue\n\n`;
-  
-  report += `---\n\n`;
-  report += `*Generated by Council Goldmine Detector*\n`;
-  
-  return report;
-}
 
-/**
- * Categorize goldmines by difficulty
- */
-export function categorizeGoldmines(goldmines: Opportunity[]): {
-  easyWins: Opportunity[];
-  mediumEffort: Opportunity[];
-  highEffort: Opportunity[];
-} {
-  const easyWins: Opportunity[] = [];
-  const mediumEffort: Opportunity[] = [];
-  const highEffort: Opportunity[] = [];
-  
-  goldmines.forEach(repo => {
-    const metrics = calculateGoldmineMetrics(repo);
+  markdown += `---\n\n`;
+
+  // Top 15 goldmines
+  goldmines.slice(0, 15).forEach((goldmine, index) => {
+    const rebuildOpp = generateRebuildOpportunity(goldmine);
+    const monetization = generateMonetizationStrategy(goldmine);
+    const needs = unmetNeeds.get(goldmine.full_name) || [];
+
+    // Goldmine header
+    markdown += `## ${index + 1}. ${goldmine.full_name}\n\n`;
     
-    if (metrics.timeToMarket === 'fast' && repo.stars < 3000) {
-      easyWins.push(repo);
-    } else if (metrics.timeToMarket === 'medium' || repo.stars < 5000) {
-      mediumEffort.push(repo);
-    } else {
-      highEffort.push(repo);
+    // Score with emojis
+    const scoreEmoji = goldmine.goldmineScore >= 80 ? '💎💎💎' : 
+                       goldmine.goldmineScore >= 60 ? '💎💎' : '💎';
+    markdown += `**Goldmine Score:** ${goldmine.goldmineScore}/100 ${scoreEmoji}\n\n`;
+
+    // Description
+    if (goldmine.description) {
+      markdown += `${goldmine.description}\n\n`;
     }
+
+    // Repository Metrics
+    markdown += `**Repository Metrics:**\n`;
+    markdown += `- ⭐ Stars: ${goldmine.stars.toLocaleString()}\n`;
+    markdown += `- 📅 Last Update: ${goldmine.daysSinceUpdate} days ago\n`;
+    markdown += `- 🐛 Open Issues: ${goldmine.openIssues}\n`;
+    markdown += `- 🍴 Active Forks: ${goldmine.forks}\n`;
+    markdown += `- 💻 Language: ${goldmine.language || 'Unknown'}\n`;
+    markdown += `- 📜 License: ${goldmine.license || 'Unknown'}\n\n`;
+
+    // Score Breakdown
+    markdown += `**Score Breakdown:**\n`;
+    markdown += `- Value Score: ${goldmine.valueScore}/40 (stars, docs, maturity)\n`;
+    markdown += `- Abandonment Score: ${goldmine.abandonmentScore}/30 (time inactive)\n`;
+    markdown += `- Demand Score: ${goldmine.demandScore}/30 (forks, issues)\n\n`;
+
+    // Top Unmet Needs
+    if (needs.length > 0) {
+      markdown += `**Top Unmet Needs:**\n`;
+      needs.slice(0, 5).forEach(need => {
+        markdown += `- ${need}\n`;
+      });
+      markdown += `\n`;
+    }
+
+    // Rebuild Opportunity
+    markdown += `**Rebuild Opportunity (${rebuildOpp.type}):**\n`;
+    markdown += `${rebuildOpp.description}\n\n`;
+    markdown += `- **Difficulty:** ${rebuildOpp.difficultyLevel}\n`;
+    markdown += `- **Time Estimate:** ${rebuildOpp.timeEstimate}\n`;
+    markdown += `- **Tech Stack:** ${rebuildOpp.techStack.join(', ')}\n\n`;
+
+    // Monetization
+    markdown += `**Monetization Strategies:**\n`;
+    monetization.forEach(strategy => {
+      markdown += `- **${strategy.model}:** ${strategy.priceRange}\n`;
+      markdown += `  - Estimated MRR: ${strategy.estimatedMRR}\n`;
+      markdown += `  - Target: ${strategy.targetCustomers}\n`;
+    });
+    markdown += `\n`;
+
+    markdown += `🔗 **Repository:** ${goldmine.url}\n\n`;
+    markdown += `---\n\n`;
   });
+
+  // Summary
+  markdown += `## 📊 Summary\n\n`;
+  markdown += `**Top 3 Goldmines:**\n`;
+  goldmines.slice(0, 3).forEach((g, i) => {
+    markdown += `${i + 1}. **${g.full_name}** (Score: ${g.goldmineScore}/100) - ${g.stars.toLocaleString()} stars, ${g.daysSinceUpdate} days abandoned\n`;
+  });
+  markdown += `\n`;
+
+  const avgScore = Math.round(goldmines.reduce((sum, g) => sum + g.goldmineScore, 0) / goldmines.length);
+  markdown += `**Average Goldmine Score:** ${avgScore}/100\n`;
+  markdown += `**Total Stars Represented:** ${goldmines.reduce((sum, g) => sum + g.stars, 0).toLocaleString()}\n`;
+  markdown += `**Total Open Issues:** ${goldmines.reduce((sum, g) => sum + g.openIssues, 0).toLocaleString()}\n\n`;
+
+  markdown += `**Recommended Action:**\n`;
+  markdown += `Start with the top 3 goldmines. They have the highest scores and represent validated demand with clear unmet needs.\n\n`;
+
+  markdown += `---\n\n`;
+  markdown += `*Generated by Council Goldmine Detector*\n`;
   
-  return { easyWins, mediumEffort, highEffort };
+  return markdown;
 }
 
 /**
- * Generate quick action items for a goldmine
+ * Main function to run Goldmine Detector across all niches
  */
-export function generateActionPlan(repo: Opportunity): string[] {
-  const metrics = calculateGoldmineMetrics(repo);
-  const actions: string[] = [];
+export async function runGoldmineDetector(): Promise<void> {
+  console.log('💎 Goldmine Detector - Starting...');
   
-  actions.push(`Clone repository: git clone ${repo.url}`);
-  actions.push('Update all dependencies to latest versions');
-  actions.push('Run security audit and fix vulnerabilities');
-  actions.push(`Review top ${Math.min(10, repo.openIssues)} issues for quick wins`);
-  
-  if (repo.language === 'JavaScript' || repo.language === 'TypeScript') {
-    actions.push('Migrate to TypeScript if not already');
-    actions.push('Add modern build tooling (Vite/esbuild)');
+  try {
+    const niches = loadNicheConfig();
+    console.log(`📂 Found ${niches.length} enabled niches`);
+    
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      throw new Error('GITHUB_TOKEN environment variable is required');
+    }
+
+    const octokit = new Octokit({ auth: githubToken });
+    const results = [];
+
+    for (const niche of niches) {
+      console.log(`\n💎 Processing: ${niche.id}`);
+      
+      // Get topics and keywords from nested monitoring structure or fallback
+      const topics = niche.monitoring?.github_topics || niche.github_topics || [];
+      const keywords = niche.monitoring?.keywords || niche.keywords || [];
+      
+      if (topics.length === 0) {
+        console.log(`  ⚠️ No GitHub topics configured for ${niche.id}, skipping...`);
+        continue;
+      }
+
+      // Search for abandoned repositories
+      const repos = await searchAbandonedRepos(octokit, topics, keywords);
+      console.log(`  → Found ${repos.length} potentially abandoned repos`);
+
+      // Analyze each repository
+      const goldmines: Goldmine[] = [];
+      const unmetNeeds = new Map<string, string[]>();
+
+      for (const repo of repos.slice(0, 30)) { // Limit to 30 to avoid rate limits
+        console.log(`    Analyzing: ${repo.full_name}`);
+        const goldmine = await analyzeGoldmine(octokit, repo);
+        
+        if (goldmine && goldmine.goldmineScore >= 50) {
+          goldmines.push(goldmine);
+          
+          // Extract unmet needs from issues
+          const needs = await extractUnmetNeeds(octokit, goldmine.owner, goldmine.name);
+          unmetNeeds.set(goldmine.full_name, needs);
+        }
+      }
+
+      // Sort by goldmine score
+      goldmines.sort((a, b) => b.goldmineScore - a.goldmineScore);
+
+      console.log(`  ✅ Found ${goldmines.length} goldmines (score >= 50)`);
+
+      // Generate report
+      const report = generateReport(niche.id, niche.name, goldmines, unmetNeeds);
+
+      // Save report
+      const date = new Date().toISOString().split('T')[0];
+      const reportsDir = path.join(process.cwd(), 'data', 'reports');
+      fs.mkdirSync(reportsDir, { recursive: true });
+
+      const filename = path.join(reportsDir, `goldmine-${niche.id}-${date}.md`);
+      fs.writeFileSync(filename, report);
+
+      console.log(`  📄 Report saved: data/reports/goldmine-${niche.id}-${date}.md`);
+
+      results.push({
+        niche: niche.id,
+        goldmines: goldmines.length,
+        file: `data/reports/goldmine-${niche.id}-${date}.md`
+      });
+    }
+
+    console.log('\n✅ Goldmine Detector Complete!');
+    console.log(`Generated ${results.length} reports:`);
+    results.forEach(r => {
+      console.log(`  - ${r.niche}: ${r.goldmines} goldmines`);
+    });
+  } catch (error) {
+    console.error('❌ Goldmine Detector failed:', error);
+    throw error;
   }
-  
-  actions.push('Add comprehensive documentation');
-  actions.push('Create landing page highlighting improvements');
-  actions.push(`Set pricing at $${metrics.estimatedPrice}/year`);
-  actions.push('Email all stargazers about maintained version');
-  
-  return actions;
 }

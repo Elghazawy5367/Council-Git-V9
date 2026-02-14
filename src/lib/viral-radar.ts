@@ -13,12 +13,13 @@ import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 
 // Configuration constants
-const RATE_LIMIT_DELAY_MS = 2000; // 2 seconds between API requests
+const API_REQUEST_DELAY_MS = 2000; // Delay between consecutive API requests (rate limiting)
 const MAX_SUBREDDITS_PER_NICHE = 3; // Limit subreddits to scan per niche
 const MIN_SCORE_REDDIT_ALL = 500; // Minimum score for r/all posts
 const MIN_SCORE_REDDIT_NICHE = 100; // Minimum score for niche subreddit posts
 const MIN_SCORE_HACKERNEWS = 50; // Minimum score for HackerNews stories
 const MIN_VIRAL_SCORE = 40; // Minimum viral score for report inclusion
+const MIN_KEYWORD_LENGTH = 4; // Minimum word length for cross-platform matching
 
 interface NicheConfig {
   id: string;
@@ -128,7 +129,7 @@ async function scanRedditTrending(
     console.log(`    ✓ Found ${viralContent.length} items from r/all`);
     
     // Rate limit protection
-    await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY_MS));
+    await new Promise(resolve => setTimeout(resolve, API_REQUEST_DELAY_MS));
     
     // Scan niche-specific subreddits
     for (const subreddit of subreddits.slice(0, MAX_SUBREDDITS_PER_NICHE)) {
@@ -176,7 +177,7 @@ async function scanRedditTrending(
       }
       
       // Rate limit protection
-      await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY_MS));
+      await new Promise(resolve => setTimeout(resolve, API_REQUEST_DELAY_MS));
     }
     
   } catch (error: any) {
@@ -296,7 +297,7 @@ function analyzeVirality(
   
   // CROSS-PLATFORM SCORE (0-10)
   // Check if similar topic on other platforms
-  const titleWords = content.title.toLowerCase().split(' ').filter(w => w.length > 4);
+  const titleWords = content.title.toLowerCase().split(' ').filter(w => w.length > MIN_KEYWORD_LENGTH);
   const similarContent = allContent.filter(other =>
     other.platform !== content.platform &&
     titleWords.some(word => other.title.toLowerCase().includes(word))

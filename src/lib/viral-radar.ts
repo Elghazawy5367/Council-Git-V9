@@ -12,6 +12,14 @@
 import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 
+// Configuration constants
+const RATE_LIMIT_DELAY_MS = 2000; // 2 seconds between API requests
+const MAX_SUBREDDITS_PER_NICHE = 3; // Limit subreddits to scan per niche
+const MIN_SCORE_REDDIT_ALL = 500; // Minimum score for r/all posts
+const MIN_SCORE_REDDIT_NICHE = 100; // Minimum score for niche subreddit posts
+const MIN_SCORE_HACKERNEWS = 50; // Minimum score for HackerNews stories
+const MIN_VIRAL_SCORE = 40; // Minimum viral score for report inclusion
+
 interface NicheConfig {
   id: string;
   name: string;
@@ -98,7 +106,7 @@ async function scanRedditTrending(
           selftextLower.includes(keyword.toLowerCase())
         );
         
-        if (matchesKeywords && post.score > 500) {
+        if (matchesKeywords && post.score > MIN_SCORE_REDDIT_ALL) {
           const ageHours = (Date.now() / 1000 - post.created_utc) / 3600;
           const growthRate = post.score / Math.max(ageHours, 1);
           
@@ -120,10 +128,10 @@ async function scanRedditTrending(
     console.log(`    ✓ Found ${viralContent.length} items from r/all`);
     
     // Rate limit protection
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY_MS));
     
     // Scan niche-specific subreddits
-    for (const subreddit of subreddits.slice(0, 3)) {
+    for (const subreddit of subreddits.slice(0, MAX_SUBREDDITS_PER_NICHE)) {
       const cleanSubreddit = subreddit.replace(/^r\//, '');
       console.log(`    → Checking r/${cleanSubreddit}...`);
       
@@ -149,7 +157,7 @@ async function scanRedditTrending(
           const growthRate = post.score / Math.max(ageHours, 1);
           
           // Only include if posted in last 24 hours and has good engagement
-          if (ageHours < 24 && post.score > 100) {
+          if (ageHours < 24 && post.score > MIN_SCORE_REDDIT_NICHE) {
             viralContent.push({
               platform: 'Reddit',
               title: post.title,
@@ -168,7 +176,7 @@ async function scanRedditTrending(
       }
       
       // Rate limit protection
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY_MS));
     }
     
   } catch (error: any) {
@@ -207,7 +215,7 @@ async function scanHackerNewsTrending(
           titleLower.includes(keyword.toLowerCase())
         );
         
-        if (matchesKeywords && hit.points > 50) {
+        if (matchesKeywords && hit.points > MIN_SCORE_HACKERNEWS) {
           const created = new Date(hit.created_at).getTime() / 1000;
           const ageHours = (Date.now() / 1000 - created) / 3600;
           const growthRate = hit.points / Math.max(ageHours, 1);
@@ -482,7 +490,7 @@ export async function runViralRadar(): Promise<void> {
       const analysis = analyzeVirality(content, allContent);
       
       // Only include if has meaningful viral score
-      if (analysis.viralScore >= 40) {
+      if (analysis.viralScore >= MIN_VIRAL_SCORE) {
         analyses.push(analysis);
       }
     }

@@ -1,0 +1,36 @@
+name: Quality Pipeline - Intelligence Filtering
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # Daily at 10 PM UTC (after all other features)
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  quality-pipeline:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Required for git push
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Quality Pipeline
+        run: npm run quality-pipeline
+      
+      - name: Commit intelligence
+        run: |
+          git config user.name "Quality Pipeline Bot"
+          git config user.email "bot@council-app.com"
+          git add data/intelligence/quality-pipeline-*.md
+          git commit -m "🔍 Quality Pipeline: High-quality intelligence filter" || echo "No changes"
+          git push

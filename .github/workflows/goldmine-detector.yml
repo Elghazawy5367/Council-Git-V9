@@ -1,0 +1,37 @@
+name: Goldmine Detector - Abandoned Repositories
+
+on:
+  schedule:
+    - cron: '0 14 * * 3'  # Weekly on Wednesday at 2 PM UTC
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  goldmine-detector:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to push reports to repository
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Goldmine Detector
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx scripts/detect-goldmines.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "Goldmine Detector Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/goldmine-*.md
+          git commit -m "💎 Goldmine Detector: Weekly abandoned repository scan" || echo "No changes"
+          git push

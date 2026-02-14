@@ -1,392 +1,529 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Viral Radar - Social Media Trend Scanner
+ * Viral Radar - Trending Content Scanner
  * 
- * Scans X (Twitter) and Instagram for viral content via Google Search.
- * No API keys required - uses Google Search as a backdoor.
+ * Scans Reddit and HackerNews for viral content trending RIGHT NOW.
+ * Uses public APIs - no authentication required.
  * 
- * Priority: NEW
- * Effort: High
+ * Priority: HIGH
+ * Effort: Medium
  */
 
 import * as fs from 'fs';
-import * as path from 'path';
-export interface ViralPost {
-  platform: 'twitter' | 'instagram' | 'google-trends';
+import * as yaml from 'js-yaml';
+
+// Configuration constants
+const API_REQUEST_DELAY_MS = 2000; // Delay between consecutive API requests (rate limiting)
+const MAX_SUBREDDITS_PER_NICHE = 3; // Limit subreddits to scan per niche
+const MIN_SCORE_REDDIT_ALL = 500; // Minimum score for r/all posts
+const MIN_SCORE_REDDIT_NICHE = 100; // Minimum score for niche subreddit posts
+const MIN_SCORE_HACKERNEWS = 50; // Minimum score for HackerNews stories
+const MIN_VIRAL_SCORE = 40; // Minimum viral score for report inclusion
+const MIN_KEYWORD_LENGTH = 4; // Minimum word length for cross-platform matching
+
+interface NicheConfig {
+  id: string;
+  name: string;
+  monitoring: {
+    keywords: string[];
+    subreddits: string[];
+  };
+  enabled?: boolean;
+}
+
+interface YamlConfig {
+  niches: NicheConfig[];
+}
+
+interface ViralContent {
+  platform: string;
   title: string;
   url: string;
-  source?: string;
-  traffic?: string;
-  snippet?: string;
-  trend?: string;
-  category?: string;
-}
-export interface ViralRadarConfig {
-  niche: string;
-  platforms?: Array<'twitter' | 'instagram' | 'trends'>;
-  maxResults?: number;
-}
-export interface ViralRadarReport {
-  niche: string;
-  timestamp: Date;
-  posts: ViralPost[];
-  topTrends: string[];
-  opportunities: string[];
+  score: number;
+  comments: number;
+  created: number;
+  age_hours: number;
+  growth_rate: number;
+  source: string;
 }
 
-/**
- * Search Google for viral Twitter threads
- */
-async function scanTwitter(niche: string, maxResults: number = 10): Promise<ViralPost[]> {
-  // Strategy: Use Google to find Twitter threads (no Twitter API needed)
-  const query = `site:twitter.com OR site:x.com "${niche}" "thread"`;
-  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}&tbs=qdr:w&num=${maxResults}`;
-  try {
-    const response = await fetch(searchUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
-    });
-    if (!response.ok) {
-      return [];
-    }
-    const html = await response.text();
-    const posts: ViralPost[] = [];
-
-    // Parse search results (basic extraction)
-    // Note: Google's HTML structure changes frequently
-    const titleRegex = /<h3[^>]*>([^<]+)<\/h3>/g;
-    const linkRegex = /https?:\/\/(twitter\.com|x\.com)\/[^\s"'>]+/g;
-    const titles = Array.from(html.matchAll(titleRegex)).map(m => m[1]);
-    const links = Array.from(html.matchAll(linkRegex)).map(m => m[0]);
-    for (let i = 0; i < Math.min(titles.length, links.length); i++) {
-      posts.push({
-        platform: 'twitter',
-        title: titles[i].replace(/&[^;]+;/g, ''),
-        url: links[i],
-        source: 'Twitter Viral Thread'
-      });
-    }
-    return posts;
-  } catch (error) {
-    console.error('Failed to scan Twitter:', error);
-    return [];
-  }
+interface ViralAnalysis {
+  content: ViralContent;
+  viralScore: number;
+  growthScore: number;
+  engagementScore: number;
+  recencyScore: number;
+  crossPlatformScore: number;
+  opportunity: string;
+  contentIdeas: string[];
 }
 
 /**
- * Search Google for viral Instagram reels
+ * Load niche configuration from YAML
  */
-async function scanInstagram(niche: string, maxResults: number = 10): Promise<ViralPost[]> {
-  const query = `site:instagram.com/reel "${niche}"`;
-  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}&tbs=qdr:m&num=${maxResults}`;
-  try {
-    const response = await fetch(searchUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
-    });
-    if (!response.ok) {
-      return [];
-    }
-    const html = await response.text();
-    const posts: ViralPost[] = [];
-    const titleRegex = /<h3[^>]*>([^<]+)<\/h3>/g;
-    const linkRegex = /https?:\/\/www\.instagram\.com\/reel\/[^\s"'>]+/g;
-    const titles = Array.from(html.matchAll(titleRegex)).map(m => m[1]);
-    const links = Array.from(html.matchAll(linkRegex)).map(m => m[0]);
-    for (let i = 0; i < Math.min(titles.length, links.length); i++) {
-      posts.push({
-        platform: 'instagram',
-        title: titles[i].replace(/&[^;]+;/g, ''),
-        url: links[i],
-        source: 'Instagram Trending Reel'
-      });
-    }
-    return posts;
-  } catch (error) {
-    console.error('Failed to scan Instagram:', error);
-    return [];
-  }
+function loadNicheConfig(): NicheConfig[] {
+  const configPath = 'config/target-niches.yaml';
+  const fileContent = fs.readFileSync(configPath, 'utf8');
+  const config = yaml.load(fileContent) as YamlConfig;
+  return config.niches.filter((n) => n.enabled !== false);
 }
 
 /**
- * Fetch Google Trends (RSS feed - free and open)
+ * Scan Reddit for trending content
  */
-async function scanGoogleTrends(niche?: string): Promise<ViralPost[]> {
-  try {
-    const rssUrl = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=US';
-    const response = await fetch(rssUrl);
-    if (!response.ok) {
-      return [];
-    }
-    const xml = await response.text();
-    const posts: ViralPost[] = [];
-
-    // Parse RSS XML (basic parsing)
-    const itemRegex = /<item>[\s\S]*?<title>([^<]+)<\/title>[\s\S]*?<ht:approx_traffic>([^<]+)<\/ht:approx_traffic>[\s\S]*?<link>([^<]+)<\/link>[\s\S]*?<\/item>/g;
-    const matches = Array.from(xml.matchAll(itemRegex));
-    for (const match of matches) {
-      const title = match[1].trim();
-      const traffic = match[2].trim();
-      const url = match[3].trim();
-
-      // Filter by niche if provided
-      if (!niche || title.toLowerCase().includes(niche.toLowerCase())) {
-        posts.push({
-          platform: 'google-trends',
-          title,
-          url,
-          traffic,
-          source: 'Google Daily Trend',
-          trend: 'Rising'
-        });
-      }
-    }
-    return posts;
-  } catch (error) {
-    console.error('Failed to scan Google Trends:', error);
-    return [];
-  }
-}
-
-/* Reserved for future implementation
-async function _scanGoogleTrendsWeb(geo: string = 'US'): Promise<ViralPost[]> {
-  ...`);
+async function scanRedditTrending(
+  keywords: string[],
+  subreddits: string[]
+): Promise<ViralContent[]> {
+  const viralContent: ViralContent[] = [];
   
   try {
-    const url = `https://trends.google.com/trends/trendingsearches/daily?geo=${geo}`;
-    const response = await fetch(url, {
+    // Scan r/all hot posts
+    console.log('    → Checking r/all hot...');
+    const allUrl = 'https://www.reddit.com/r/all/hot.json?limit=100';
+    const allResponse = await fetch(allUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Council-App/1.0 (Viral Radar)'
       }
     });
     
-    if (!response.ok) {
-      return scanGoogleTrends(); // Fallback to RSS
+    if (!allResponse.ok) {
+      console.error('    ✗ Reddit API error:', allResponse.status);
+      return viralContent;
     }
     
-    const html = await response.text();
-    const posts: ViralPost[] = [];
+    const allData = await allResponse.json();
     
-    // Extract trending searches from HTML
-    const trendRegex = /"title":"([^"]+)"/g;
-    const trafficRegex = /"formattedTraffic":"([^"]+)"/g;
+    // Filter for niche keywords
+    if (allData?.data?.children) {
+      for (const child of allData.data.children) {
+        const post = child.data;
+        const titleLower = post.title.toLowerCase();
+        const selftextLower = (post.selftext || '').toLowerCase();
+        
+        // Check if contains niche keywords
+        const matchesKeywords = keywords.some(keyword =>
+          titleLower.includes(keyword.toLowerCase()) ||
+          selftextLower.includes(keyword.toLowerCase())
+        );
+        
+        if (matchesKeywords && post.score > MIN_SCORE_REDDIT_ALL) {
+          const ageHours = (Date.now() / 1000 - post.created_utc) / 3600;
+          const growthRate = post.score / Math.max(ageHours, 1);
+          
+          viralContent.push({
+            platform: 'Reddit',
+            title: post.title,
+            url: `https://reddit.com${post.permalink}`,
+            score: post.score,
+            comments: post.num_comments,
+            created: post.created_utc,
+            age_hours: ageHours,
+            growth_rate: growthRate,
+            source: `r/${post.subreddit}`
+          });
+        }
+      }
+    }
     
-    const titles = Array.from(html.matchAll(trendRegex)).map(m => m[1]);
-    const traffic = Array.from(html.matchAll(trafficRegex)).map(m => m[1]);
+    console.log(`    ✓ Found ${viralContent.length} items from r/all`);
     
-    for (let i = 0; i < Math.min(titles.length, 20); i++) {
-      posts.push({
-        platform: 'google-trends',
-        title: titles[i],
-        url: `https://trends.google.com/trends/explore?q=${encodeURIComponent(titles[i])}`,
-        traffic: traffic[i] || 'N/A',
-        source: 'Google Trending Search',
-        trend: 'Rising'
+    // Rate limit protection
+    await new Promise(resolve => setTimeout(resolve, API_REQUEST_DELAY_MS));
+    
+    // Scan niche-specific subreddits
+    for (const subreddit of subreddits.slice(0, MAX_SUBREDDITS_PER_NICHE)) {
+      const cleanSubreddit = subreddit.replace(/^r\//, '');
+      console.log(`    → Checking r/${cleanSubreddit}...`);
+      
+      const subUrl = `https://www.reddit.com/r/${cleanSubreddit}/top.json?t=day&limit=50`;
+      const subResponse = await fetch(subUrl, {
+        headers: {
+          'User-Agent': 'Council-App/1.0 (Viral Radar)'
+        }
       });
+      
+      if (!subResponse.ok) {
+        console.log(`    ✗ Skipped r/${cleanSubreddit}`);
+        continue;
+      }
+      
+      const subData = await subResponse.json();
+      
+      if (subData?.data?.children) {
+        let subredditCount = 0;
+        for (const child of subData.data.children) {
+          const post = child.data;
+          const ageHours = (Date.now() / 1000 - post.created_utc) / 3600;
+          const growthRate = post.score / Math.max(ageHours, 1);
+          
+          // Only include if posted in last 24 hours and has good engagement
+          if (ageHours < 24 && post.score > MIN_SCORE_REDDIT_NICHE) {
+            viralContent.push({
+              platform: 'Reddit',
+              title: post.title,
+              url: `https://reddit.com${post.permalink}`,
+              score: post.score,
+              comments: post.num_comments,
+              created: post.created_utc,
+              age_hours: ageHours,
+              growth_rate: growthRate,
+              source: `r/${post.subreddit}`
+            });
+            subredditCount++;
+          }
+        }
+        console.log(`    ✓ Found ${subredditCount} items from r/${cleanSubreddit}`);
+      }
+      
+      // Rate limit protection
+      await new Promise(resolve => setTimeout(resolve, API_REQUEST_DELAY_MS));
     }
     
+  } catch (error: any) {
+    console.error('    ✗ Error scanning Reddit:', error.message);
+  }
+  
+  return viralContent;
+}
+
+/**
+ * Scan HackerNews for trending content
+ */
+async function scanHackerNewsTrending(
+  keywords: string[]
+): Promise<ViralContent[]> {
+  const viralContent: ViralContent[] = [];
+  
+  try {
+    console.log('    → Checking HackerNews front page...');
+    const url = 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30';
+    const response = await fetch(url);
     
-    return posts;
-  } catch (error) {
-    console.error('Failed to scan Google Trends web:', error);
-    return scanGoogleTrends(); // Fallback to RSS
-  }
-}
-*/
-
-/**
- * Detect opportunities from viral content
- */
-function detectOpportunities(posts: ViralPost[], niche: string): string[] {
-  const opportunities: string[] = [];
-
-  // Count platform distribution
-  const platforms = posts.reduce((acc, post) => {
-    acc[post.platform] = (acc[post.platform] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-  if (platforms.twitter && platforms.twitter > 5) {
-    opportunities.push(`High Twitter activity for "${niche}" - consider Twitter marketing`);
-  }
-  if (platforms.instagram && platforms.instagram > 3) {
-    opportunities.push(`Instagram reels trending - create visual content`);
-  }
-
-  // Analyze trends
-  const trendsCount = posts.filter(p => p.platform === 'google-trends').length;
-  if (trendsCount > 0) {
-    opportunities.push(`${trendsCount} Google trends detected - rising interest`);
-  }
-
-  // High traffic signals
-  const highTraffic = posts.filter(p => p.traffic && (p.traffic.includes('K+') || p.traffic.includes('M+')));
-  if (highTraffic.length > 0) {
-    opportunities.push(`${highTraffic.length} high-traffic trends - massive audience`);
-  }
-  return opportunities;
-}
-
-/**
- * Extract top trends
- */
-function extractTopTrends(posts: ViralPost[]): string[] {
-  // Extract keywords from titles
-  const words = new Map<string, number>();
-  for (const post of posts) {
-    const title = post.title.toLowerCase();
-    const tokens = title.split(/\s+/).filter(t => t.length > 3);
-    for (const token of tokens) {
-      words.set(token, (words.get(token) || 0) + 1);
+    if (!response.ok) {
+      console.error('    ✗ HN API error:', response.status);
+      return viralContent;
     }
+    
+    const data = await response.json();
+    
+    if (data?.hits) {
+      for (const hit of data.hits) {
+        const titleLower = (hit.title || '').toLowerCase();
+        
+        // Check if contains niche keywords
+        const matchesKeywords = keywords.some(keyword =>
+          titleLower.includes(keyword.toLowerCase())
+        );
+        
+        if (matchesKeywords && hit.points > MIN_SCORE_HACKERNEWS) {
+          const created = new Date(hit.created_at).getTime() / 1000;
+          const ageHours = (Date.now() / 1000 - created) / 3600;
+          const growthRate = hit.points / Math.max(ageHours, 1);
+          
+          viralContent.push({
+            platform: 'HackerNews',
+            title: hit.title,
+            url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
+            score: hit.points,
+            comments: hit.num_comments || 0,
+            created,
+            age_hours: ageHours,
+            growth_rate: growthRate,
+            source: 'HN Front Page'
+          });
+        }
+      }
+    }
+    
+    console.log(`    ✓ Found ${viralContent.length} items from HN`);
+    
+  } catch (error: any) {
+    console.error('    ✗ Error scanning HackerNews:', error.message);
   }
-
-  // Sort by frequency
-  return Array.from(words.entries()).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([word, count]) => `${word} (${count}x)`);
+  
+  return viralContent;
 }
 
 /**
- * Run Viral Radar
+ * Analyze virality of content
  */
-export async function runViralRadar(config: ViralRadarConfig): Promise<ViralRadarReport> {
-  const {
-    niche,
-    platforms = ['twitter', 'instagram', 'trends'],
-    maxResults = 10
-  } = config;
-  const allPosts: ViralPost[] = [];
-
-  // Scan each platform
-  if (platforms.includes('twitter')) {
-    const twitterPosts = await scanTwitter(niche, maxResults);
-    allPosts.push(...twitterPosts);
-  }
-  if (platforms.includes('instagram')) {
-    const instaPosts = await scanInstagram(niche, maxResults);
-    allPosts.push(...instaPosts);
-  }
-  if (platforms.includes('trends')) {
-    const trendPosts = await scanGoogleTrends(niche);
-    allPosts.push(...trendPosts.slice(0, 10));
-  }
-
-  // Analyze results
-  const topTrends = extractTopTrends(allPosts);
-  const opportunities = detectOpportunities(allPosts, niche);
-  const report: ViralRadarReport = {
-    niche,
-    timestamp: new Date(),
-    posts: allPosts,
-    topTrends,
-    opportunities
+function analyzeVirality(
+  content: ViralContent,
+  allContent: ViralContent[]
+): ViralAnalysis {
+  const analysis: ViralAnalysis = {
+    content,
+    viralScore: 0,
+    growthScore: 0,
+    engagementScore: 0,
+    recencyScore: 0,
+    crossPlatformScore: 0,
+    opportunity: '',
+    contentIdeas: []
   };
+  
+  // GROWTH RATE SCORE (0-40)
+  if (content.growth_rate > 1000) {
+    analysis.growthScore = 40;
+  } else if (content.growth_rate > 500) {
+    analysis.growthScore = 30;
+  } else if (content.growth_rate > 100) {
+    analysis.growthScore = 20;
+  } else if (content.growth_rate > 50) {
+    analysis.growthScore = 10;
+  }
+  
+  // ENGAGEMENT SCORE (0-30)
+  const engagementRatio = content.comments / Math.max(content.score, 1);
+  if (engagementRatio > 0.3) {
+    analysis.engagementScore = 30;
+  } else if (engagementRatio > 0.2) {
+    analysis.engagementScore = 20;
+  } else if (engagementRatio > 0.1) {
+    analysis.engagementScore = 10;
+  }
+  
+  // RECENCY SCORE (0-20)
+  if (content.age_hours < 3) {
+    analysis.recencyScore = 20;
+  } else if (content.age_hours < 6) {
+    analysis.recencyScore = 15;
+  } else if (content.age_hours < 12) {
+    analysis.recencyScore = 10;
+  } else if (content.age_hours < 24) {
+    analysis.recencyScore = 5;
+  }
+  
+  // CROSS-PLATFORM SCORE (0-10)
+  // Check if similar topic on other platforms
+  const titleWords = content.title.toLowerCase().split(' ').filter(w => w.length > MIN_KEYWORD_LENGTH);
+  const similarContent = allContent.filter(other =>
+    other.platform !== content.platform &&
+    titleWords.some(word => other.title.toLowerCase().includes(word))
+  );
+  
+  if (similarContent.length >= 2) {
+    analysis.crossPlatformScore = 10;
+  } else if (similarContent.length >= 1) {
+    analysis.crossPlatformScore = 7;
+  } else {
+    analysis.crossPlatformScore = 3;
+  }
+  
+  // TOTAL SCORE
+  analysis.viralScore = analysis.growthScore + 
+                       analysis.engagementScore + 
+                       analysis.recencyScore + 
+                       analysis.crossPlatformScore;
+  
+  // Generate opportunity
+  analysis.opportunity = generateOpportunity(content, analysis);
+  
+  // Generate content ideas
+  analysis.contentIdeas = generateContentIdeas(content);
+  
+  return analysis;
+}
 
-  // Save results
-  const outputPath = path.join(process.cwd(), 'data', 'viral-radar.json');
-  fs.mkdirSync(path.dirname(outputPath), {
-    recursive: true
-  });
-  fs.writeFileSync(outputPath, JSON.stringify(report, null, 2));
-  // Generate report
-  generateViralReport(report);
-  return report;
+function generateOpportunity(content: ViralContent, analysis: ViralAnalysis): string {
+  const opportunities = [];
+  
+  if (analysis.viralScore >= 80) {
+    opportunities.push('🔥 EXTREMELY VIRAL: Create content NOW while trending');
+  } else if (analysis.viralScore >= 60) {
+    opportunities.push('📈 TRENDING: Good opportunity to ride the wave');
+  }
+  
+  if (analysis.recencyScore >= 15) {
+    opportunities.push('⚡ FRESH: Still early, maximum reach potential');
+  }
+  
+  if (analysis.crossPlatformScore >= 7) {
+    opportunities.push('🌐 CROSS-PLATFORM: Topic trending on multiple sites');
+  }
+  
+  if (content.growth_rate > 500) {
+    opportunities.push('🚀 RAPID GROWTH: Exponential engagement happening');
+  }
+  
+  return opportunities.length > 0
+    ? opportunities.join('\n')
+    : 'Monitor for continued growth';
+}
+
+function generateContentIdeas(content: ViralContent): string[] {
+  const ideas = [];
+  
+  // Based on what's going viral, suggest content to create
+  ideas.push(`Create response/commentary on: "${content.title}"`);
+  ideas.push(`Write tutorial based on viral topic`);
+  ideas.push(`Create tool/solution mentioned in discussion`);
+  
+  if (content.platform === 'Reddit') {
+    ideas.push(`Reply to top comments with your solution`);
+    ideas.push(`Create similar content in your niche subreddits`);
+  }
+  
+  if (content.platform === 'HackerNews') {
+    ideas.push(`Build on the idea with technical implementation`);
+    ideas.push(`Create "Show HN" with similar concept`);
+  }
+  
+  return ideas;
 }
 
 /**
- * Generate human-readable report
+ * Generate markdown report
  */
-function generateViralReport(report: ViralRadarReport): void {
-  let markdown = `# 📡 Viral Radar Report\n\n`;
-  markdown += `**Niche:** ${report.niche}\n`;
-  markdown += `**Scanned:** ${new Date().toISOString()}\n`;
-  markdown += `**Total Posts:** ${report.posts.length}\n\n`;
-
-  // Platform breakdown
-  markdown += `## 📊 Platform Distribution\n\n`;
-  const platforms = report.posts.reduce((acc, post) => {
-    acc[post.platform] = (acc[post.platform] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-  for (const [platform, count] of Object.entries(platforms)) {
-    markdown += `- **${platform}**: ${count} posts\n`;
-  }
-
-  // Top trends
-  markdown += `\n## 🔥 Top Trending Keywords\n\n`;
-  for (const trend of report.topTrends) {
-    markdown += `- ${trend}\n`;
-  }
-
-  // Opportunities
-  markdown += `\n## 💡 Opportunities\n\n`;
-  for (const opportunity of report.opportunities) {
-    markdown += `- ${opportunity}\n`;
-  }
-
-  // Twitter threads
-  const twitterPosts = report.posts.filter(p => p.platform === 'twitter');
-  if (twitterPosts.length > 0) {
-    markdown += `\n## 🐦 Viral Twitter Threads\n\n`;
-    for (let i = 0; i < Math.min(twitterPosts.length, 10); i++) {
-      const post = twitterPosts[i];
-      markdown += `### ${i + 1}. ${post.title}\n\n`;
-      markdown += `**URL:** ${post.url}\n\n`;
-    }
-  }
-
-  // Instagram reels
-  const instaPosts = report.posts.filter(p => p.platform === 'instagram');
-  if (instaPosts.length > 0) {
-    markdown += `\n## 📸 Viral Instagram Reels\n\n`;
-    for (let i = 0; i < Math.min(instaPosts.length, 10); i++) {
-      const post = instaPosts[i];
-      markdown += `### ${i + 1}. ${post.title}\n\n`;
-      markdown += `**URL:** ${post.url}\n\n`;
-    }
-  }
-
-  // Google trends
-  const trendPosts = report.posts.filter(p => p.platform === 'google-trends');
-  if (trendPosts.length > 0) {
-    markdown += `\n## 🌍 Google Trending Searches\n\n`;
-    for (let i = 0; i < Math.min(trendPosts.length, 10); i++) {
-      const post = trendPosts[i];
-      markdown += `### ${i + 1}. ${post.title}\n\n`;
-      markdown += `**Traffic:** ${post.traffic || 'N/A'}\n`;
-      markdown += `**URL:** ${post.url}\n\n`;
-    }
-  }
-  const reportPath = path.join(process.cwd(), 'data', 'reports', 'viral-radar.md');
-  fs.mkdirSync(path.dirname(reportPath), {
-    recursive: true
+function generateReport(
+  nicheId: string,
+  nicheName: string,
+  analyses: ViralAnalysis[]
+): string {
+  const date = new Date().toISOString().split('T')[0];
+  
+  let markdown = `# Viral Radar Report: ${nicheName}\n\n`;
+  markdown += `**Date:** ${date}\n`;
+  markdown += `**Niche:** ${nicheId}\n`;
+  markdown += `**Viral Content Found:** ${analyses.length}\n\n`;
+  markdown += `---\n\n`;
+  
+  markdown += `## 📡 What is Viral Content?\n\n`;
+  markdown += `Content experiencing rapid, exponential growth in engagement.\n`;
+  markdown += `Capitalize on viral trends for 10-100x organic reach.\n\n`;
+  markdown += `**Viral Scoring:**\n`;
+  markdown += `- 80-100: 🔥🔥🔥 Extremely viral - act NOW\n`;
+  markdown += `- 60-79: 🔥🔥 Trending - good opportunity\n`;
+  markdown += `- 40-59: 🔥 Growing - monitor\n\n`;
+  markdown += `---\n\n`;
+  
+  // Sort by viral score
+  const sorted = analyses.sort((a, b) => b.viralScore - a.viralScore);
+  
+  sorted.slice(0, 20).forEach((item, index) => {
+    const { content, viralScore } = item;
+    
+    markdown += `## ${index + 1}. ${content.title}\n\n`;
+    
+    markdown += `**Viral Score:** ${viralScore}/100 `;
+    if (viralScore >= 80) markdown += '🔥🔥🔥';
+    else if (viralScore >= 60) markdown += '🔥🔥';
+    else if (viralScore >= 40) markdown += '🔥';
+    markdown += '\n\n';
+    
+    markdown += `**Platform:** ${content.platform}\n`;
+    markdown += `**Source:** ${content.source}\n`;
+    markdown += `**Score:** ${content.score.toLocaleString()}\n`;
+    markdown += `**Comments:** ${content.comments}\n`;
+    markdown += `**Age:** ${content.age_hours.toFixed(1)} hours\n`;
+    markdown += `**Growth Rate:** ${Math.round(content.growth_rate)} points/hour\n\n`;
+    
+    markdown += `**Viral Metrics:**\n`;
+    markdown += `- Growth Score: ${item.growthScore}/40\n`;
+    markdown += `- Engagement Score: ${item.engagementScore}/30\n`;
+    markdown += `- Recency Score: ${item.recencyScore}/20\n`;
+    markdown += `- Cross-Platform Score: ${item.crossPlatformScore}/10\n\n`;
+    
+    markdown += `**🎯 Opportunity:**\n`;
+    markdown += `${item.opportunity}\n\n`;
+    
+    markdown += `**💡 Content Ideas:**\n`;
+    item.contentIdeas.slice(0, 5).forEach(idea => {
+      markdown += `  - ${idea}\n`;
+    });
+    markdown += '\n';
+    
+    markdown += `**🔗 Link:** ${content.url}\n\n`;
+    markdown += `---\n\n`;
   });
-  fs.writeFileSync(reportPath, markdown);
+  
+  // Summary
+  markdown += `## 📊 Summary\n\n`;
+  const extremelyViral = analyses.filter(a => a.viralScore >= 80).length;
+  const trending = analyses.filter(a => a.viralScore >= 60 && a.viralScore < 80).length;
+  const crossPlatform = analyses.filter(a => a.crossPlatformScore >= 7).length;
+  
+  markdown += `**Extremely Viral (80+):** ${extremelyViral}\n`;
+  markdown += `**Trending (60-79):** ${trending}\n`;
+  markdown += `**Cross-Platform:** ${crossPlatform}\n\n`;
+  
+  if (extremelyViral > 0) {
+    markdown += `⚡ **Urgent Action:** Create content on ${extremelyViral} extremely viral topics NOW\n`;
+  }
+  
+  return markdown;
 }
 
 /**
- * CLI interface
+ * Main function - Run Viral Radar
  */
-export async function runViralRadarCLI(): Promise<void> {
-  const args = process.argv.slice(2);
-  if (args.includes('--help') || args.includes('-h')) {
-    return;
+export async function runViralRadar(): Promise<void> {
+  console.log('📡 Viral Radar - Starting...');
+  
+  const niches = loadNicheConfig();
+  console.log(`📂 Found ${niches.length} enabled niches`);
+  
+  const results = [];
+  
+  for (const niche of niches) {
+    console.log(`\n📡 Scanning viral content: ${niche.id}`);
+    
+    // Scan Reddit
+    console.log(`  → Scanning Reddit...`);
+    const redditContent = await scanRedditTrending(
+      niche.monitoring.keywords,
+      niche.monitoring.subreddits
+    );
+    console.log(`  ✓ Total Reddit items: ${redditContent.length}`);
+    
+    // Scan HackerNews
+    console.log(`  → Scanning HackerNews...`);
+    const hnContent = await scanHackerNewsTrending(niche.monitoring.keywords);
+    console.log(`  ✓ Total HN items: ${hnContent.length}`);
+    
+    // Combine all content
+    const allContent = [...redditContent, ...hnContent];
+    
+    // Analyze virality
+    const analyses: ViralAnalysis[] = [];
+    for (const content of allContent) {
+      const analysis = analyzeVirality(content, allContent);
+      
+      // Only include if has meaningful viral score
+      if (analysis.viralScore >= MIN_VIRAL_SCORE) {
+        analyses.push(analysis);
+      }
+    }
+    
+    console.log(`  ✓ Found ${analyses.length} viral items (score ≥ 40)`);
+    
+    // Generate report
+    const report = generateReport(niche.id, niche.name, analyses);
+    
+    // Save report
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `data/reports/viral-radar-${niche.id}-${date}.md`;
+    fs.mkdirSync('data/reports', { recursive: true });
+    fs.writeFileSync(filename, report);
+    
+    console.log(`  ✓ Report saved: ${filename}`);
+    
+    const extremelyViral = analyses.filter(a => a.viralScore >= 80).length;
+    
+    results.push({
+      niche: niche.id,
+      items: analyses.length,
+      extremelyViral,
+      file: filename
+    });
   }
-  const niche = args[0];
-  if (!niche) {
-    console.error('❌ Error: Provide a niche to scan');
-    return;
-  }
-  const platformsIndex = args.indexOf('--platforms');
-  const maxIndex = args.indexOf('--max');
-  const config: ViralRadarConfig = {
-    niche,
-    platforms: platformsIndex !== -1 ? args[platformsIndex + 1].split(',') as Array<'twitter' | 'instagram' | 'trends'> : undefined,
-    maxResults: maxIndex !== -1 ? parseInt(args[maxIndex + 1]) : undefined
-  };
-  await runViralRadar(config);
-}
-
-// Run if called directly
-if (require.main === module) {
-  runViralRadarCLI().catch(console.error);
+  
+  console.log('\n✅ Viral Radar Complete!');
+  console.log(`📊 Generated ${results.length} reports`);
+  
+  // Summary
+  results.forEach(r => {
+    console.log(`  - ${r.niche}: ${r.items} viral items (${r.extremelyViral} extremely viral)`);
+  });
 }

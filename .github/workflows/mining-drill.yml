@@ -1,37 +1,37 @@
-name: Fork Evolution - Repository Modifications
+name: Mining Drill - Daily Intelligence
 
 on:
   schedule:
-    - cron: '0 12 * * 2,4'  # Tuesday, Thursday at 12 PM UTC
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
   workflow_dispatch:  # Manual trigger
 
 jobs:
-  fork-evolution:
+  mining-drill:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Needed to push reports to repository
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
       
       - name: Install dependencies
         run: npm ci
       
-      - name: Run Fork Evolution
+      - name: Run Mining Drill
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx scripts/track-forks.ts
+        run: npx tsx scripts/run-mining-drill.ts
       
       - name: Commit reports
         run: |
-          git config user.name "Fork Evolution Bot"
+          git config user.name "Mining Drill Bot"
           git config user.email "bot@council-app.com"
-          git add data/reports/fork-evolution-*.md
-          git commit -m "🍴 Fork Evolution: Repository modification patterns" || echo "No changes"
+          git add data/reports/mining-drill-*.md
+          git commit -m "🔨 Mining Drill: Daily intelligence report" || echo "No changes"
           git push

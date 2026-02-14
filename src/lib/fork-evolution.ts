@@ -1,383 +1,472 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Fork Evolution - Feature Discovery System
- * 
- * Scans forks of a repository to find user-added features.
- * Reveals what features users desperately want but maintainer ignores.
- * 
- * Priority: 10/10
- * Effort: High
+ * Fork Evolution - Repository Modification Pattern Detection
+ * Analyzes how forks modify/improve original repositories to detect
+ * product gaps, validated demand, and business opportunities across multiple niches.
  */
 
+import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import * as path from 'path';
-export interface ForkFeature {
-  forkOwner: string;
-  forkName: string;
-  forkUrl: string;
-  stars: number;
-  description: string;
+import { Octokit } from '@octokit/rest';
 
-  // Evolution analysis
-  newFiles: string[];
-  modifiedFiles: string[];
-  newFeatures: string[];
-  linesAdded: number;
-  linesRemoved: number;
-
-  // Popularity signals
-  hasDocs: boolean;
-  hasTests: boolean;
-  hasCI: boolean;
-  commitCount: number;
-  lastUpdate: Date;
+export interface NicheConfig {
+  id: string;
+  name: string;
+  keywords?: string[];
+  github_topics?: string[];
+  github_search_queries?: string[];
+  enabled?: boolean;
+  monitoring?: {
+    keywords?: string[];
+    github_topics?: string[];
+    github_search_queries?: string[];
+    subreddits?: string[];
+  };
 }
-export interface ForkEvolutionReport {
-  originalRepo: string;
+
+export interface ForkAnalysis {
   totalForks: number;
-  analyzedForks: number;
-  timestamp: Date;
-  topFeatures: string[];
-  topForks: ForkFeature[];
-  patterns: string[];
-  opportunities: string[];
-}
-export interface ForkAnalysisConfig {
-  owner: string;
-  repo: string;
-  minStars?: number;
-  maxForks?: number;
-  githubToken?: string;
+  activeForks: number;
+  successfulForks: any[]; // Forks with more stars than original
+  topForks: any[];
+  commonModifications: string[];
+  divergentPatterns: string[];
+  opportunityScore: number;
 }
 
-/**
- * Fetch forks from GitHub API
- */
-async function fetchForks(owner: string, repo: string, githubToken?: string): Promise<any[]> {
-  const headers: Record<string, string> = {
-    'Accept': 'application/vnd.github.v3+json',
-    'User-Agent': 'Council-Fork-Evolution'
-  };
-  if (githubToken) {
-    headers['Authorization'] = `token ${githubToken}`;
-  }
-  const forks: any[] = [];
-  let page = 1;
-  const perPage = 100;
-  while (true) {
-    const url = `https://api.github.com/repos/${owner}/${repo}/forks?sort=stargazers&per_page=${perPage}&page=${page}`;
-    try {
-      const response = await fetch(url, {
-        headers
-      });
-      if (!response.ok) {
-        if (response.status === 403) // eslint-disable-next-line no-empty
-          {}break;
-      }
-      const data = await response.json();
-      if (data.length === 0) break;
-      forks.push(...data);
-      page++;
+interface RepoData {
+  id: number;
+  full_name: string;
+  name: string;
+  owner: { login: string };
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+  default_branch: string;
+}
 
-      // Add delay to respect rate limits
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    } catch (error) {
-      console.error('Failed to fetch forks:', error);
-      break;
-    }
-  }
-  return forks;
+interface YamlConfig {
+  niches: NicheConfig[];
 }
 
 /**
- * Compare fork with original to detect new features
+ * Load niche configuration from YAML
  */
-async function analyzeFork(originalOwner: string, originalRepo: string, forkData: any, githubToken?: string): Promise<ForkFeature | null> {
-  const headers: Record<string, string> = {
-    'Accept': 'application/vnd.github.v3+json',
-    'User-Agent': 'Council-Fork-Evolution'
-  };
-  if (githubToken) {
-    headers['Authorization'] = `token ${githubToken}`;
-  }
+function loadNicheConfig(): NicheConfig[] {
   try {
-    // Get comparison between fork and original
-    const compareUrl = `https://api.github.com/repos/${originalOwner}/${originalRepo}/compare/${originalOwner}:${forkData.default_branch}...${forkData.owner.login}:${forkData.default_branch}`;
-    const response = await fetch(compareUrl, {
-      headers
-    });
-    if (!response.ok) {
-      return null;
-    }
-    const comparison = await response.json();
-
-    // Extract file changes
-    const newFiles: string[] = [];
-    const modifiedFiles: string[] = [];
-    for (const file of comparison.files || []) {
-      if (file.status === 'added') {
-        newFiles.push(file.filename);
-      } else if (file.status === 'modified') {
-        modifiedFiles.push(file.filename);
-      }
-    }
-
-    // Detect features from commit messages and files
-    const newFeatures = detectFeatures(comparison.commits || [], newFiles, modifiedFiles);
-
-    // Check for documentation
-    const hasDocs = newFiles.some((f) => f.toLowerCase().includes('readme') || f.toLowerCase().includes('doc') || f.startsWith('docs/'));
-    const hasTests = newFiles.some((f) => f.includes('test') || f.includes('spec') || f.startsWith('tests/') || f.startsWith('__tests__/'));
-    const hasCI = newFiles.some((f) => f.startsWith('.github/workflows/') || f === '.gitlab-ci.yml' || f === '.travis.yml');
-    const feature: ForkFeature = {
-      forkOwner: forkData.owner.login,
-      forkName: forkData.name,
-      forkUrl: forkData.html_url,
-      stars: forkData.stargazers_count,
-      description: forkData.description || '',
-      newFiles,
-      modifiedFiles,
-      newFeatures,
-      linesAdded: comparison.ahead_by || 0,
-      linesRemoved: comparison.behind_by || 0,
-      hasDocs,
-      hasTests,
-      hasCI,
-      commitCount: comparison.commits?.length || 0,
-      lastUpdate: new Date(forkData.updated_at)
-    };
-    return feature;
+    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
+    const fileContent = fs.readFileSync(configPath, 'utf8');
+    const config = yaml.load(fileContent) as YamlConfig;
+    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
   } catch (error) {
-    return null;
+    console.error('Failed to load niche config:', error);
+    throw error;
   }
 }
 
 /**
- * Detect features from commits and file changes
+ * Search for fork-worthy repositories
  */
-function detectFeatures(commits: any[], newFiles: string[], _modifiedFiles: string[]): string[] {
-  const features = new Set<string>();
+async function searchForkWorthyRepos(
+  octokit: Octokit,
+  topics: string[],
+  keywords: string[]
+): Promise<RepoData[]> {
+  const repos: RepoData[] = [];
+  
+  for (const topic of topics) {
+    try {
+      console.log(`    → Searching topic: ${topic}`);
+      const { data } = await octokit.search.repos({
+        q: `topic:${topic} stars:>1000 forks:>100`,
+        sort: 'forks',
+        order: 'desc',
+        per_page: 20
+      });
+      repos.push(...data.items as RepoData[]);
+      
+      // Rate limiting: 1 second between searches
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error: any) {
+      console.error(`    ⚠️ Error searching topic ${topic}:`, error.message);
+    }
+  }
+  
+  // Deduplicate by repository ID
+  const uniqueRepos = Array.from(
+    new Map(repos.map(r => [r.id, r])).values()
+  );
+  
+  return uniqueRepos;
+}
 
-  // Analyze commit messages
+/**
+ * Extract features from commit messages
+ */
+function extractFeaturesFromCommits(commits: any[], originalRepo: any): string[] {
+  const features: string[] = [];
+  const featureKeywords = [
+    'add', 'added', 'feature', 'support for', 'implement',
+    'new', 'introduce', 'enable', 'allow'
+  ];
+  
   for (const commit of commits) {
     const message = commit.commit.message.toLowerCase();
-
-    // Feature keywords
-    if (message.includes('add') || message.includes('new')) {
-      const words = message.split(/\s+/);
-      const addIndex = words.findIndex((w: string) => w === 'add' || w === 'adds' || w === 'added');
-      if (addIndex !== -1 && addIndex < words.length - 1) {
-        features.add(words.slice(addIndex + 1, addIndex + 4).join(' '));
-      }
-    }
-    if (message.includes('feature:') || message.includes('feat:')) {
-      const feature = message.split(/feature:|feat:/)[1]?.trim().split('\n')[0];
-      if (feature) features.add(feature);
-    }
-    if (message.includes('implement')) {
-      const feature = message.split('implement')[1]?.trim().split('\n')[0];
-      if (feature) features.add(feature);
-    }
-  }
-
-  // Analyze new files (component/feature names)
-  for (const file of newFiles) {
-    const basename = path.basename(file, path.extname(file));
-
-    // Skip test files
-    if (basename.includes('test') || basename.includes('spec')) continue;
-
-    // Extract meaningful names
-    if (basename.length > 3 && basename.length < 50) {
-      const readable = basename.replace(/([A-Z])/g, ' $1').replace(/[-_]/g, ' ').trim().toLowerCase();
-      if (!readable.includes('index') && !readable.includes('util')) {
-        features.add(readable);
+    
+    // Skip merge commits and version bumps
+    if (message.includes('merge') || message.includes('version') || message.includes('bump')) continue;
+    
+    // Look for feature additions
+    for (const keyword of featureKeywords) {
+      if (message.includes(keyword)) {
+        // Extract the feature being added
+        const parts = message.split(keyword);
+        if (parts.length > 1) {
+          const feature = parts[1].trim().split('\n')[0].split('.')[0];
+          if (feature && feature.length > 3 && feature.length < 100) {
+            features.push(feature);
+          }
+        }
+        break;
       }
     }
   }
-  return Array.from(features).slice(0, 10); // Top 10
+  
+  return features;
 }
 
 /**
- * Run Fork Evolution Analysis
+ * Find common patterns across modifications
  */
-export async function analyzeForkEvolution(config: ForkAnalysisConfig): Promise<ForkEvolutionReport> {
-  const {
-    owner,
-    repo,
-    minStars = 5,
-    maxForks = 50,
-    githubToken
-  } = config;
-
-  // Fetch forks
-
-  const allForks = await fetchForks(owner, repo, githubToken);
-  // Filter by stars
-  const popularForks = allForks.filter((f) => f.stargazers_count >= minStars).slice(0, maxForks);
-
-  // Analyze each fork
-
-  const analyzedForks: ForkFeature[] = [];
-  for (let i = 0; i < popularForks.length; i++) {
-    const fork = popularForks[i];
-    const feature = await analyzeFork(owner, repo, fork, githubToken);
-    if (feature && feature.newFeatures.length > 0) {
-      analyzedForks.push(feature);
-    }
-
-    // Rate limit protection
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+function findCommonPatterns(modifications: string[]): string[] {
+  // Count frequency of each modification
+  const counts = new Map<string, number>();
+  
+  for (const mod of modifications) {
+    const normalized = mod.toLowerCase().trim();
+    counts.set(normalized, (counts.get(normalized) || 0) + 1);
   }
-  // Extract patterns
-  const allFeatures: string[] = [];
-  for (const fork of analyzedForks) {
-    allFeatures.push(...fork.newFeatures);
-  }
+  
+  // Return modifications that appear in 2+ forks
+  const common = Array.from(counts.entries())
+    .filter(([_, count]) => count >= 2)
+    .sort((a, b) => b[1] - a[1])
+    .map(([mod, count]) => `${mod} (${count} forks)`);
+  
+  return common;
+}
 
-  // Count feature frequency
-  const featureCounts = new Map<string, number>();
-  for (const feature of allFeatures) {
-    featureCounts.set(feature, (featureCounts.get(feature) || 0) + 1);
-  }
-  const topFeatures = Array.from(featureCounts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([feature, count]) => `${feature} (${count} forks)`);
-
-  // Detect patterns
-  const patterns: string[] = [];
-  const fileTypes = new Map<string, number>();
-  for (const fork of analyzedForks) {
-    for (const file of fork.newFiles) {
-      const ext = path.extname(file);
-      if (ext) {
-        fileTypes.set(ext, (fileTypes.get(ext) || 0) + 1);
-      }
-    }
-    if (fork.hasDocs && fork.hasTests && fork.hasCI) {
-      patterns.push('Professional fork with docs + tests + CI');
-    }
-  }
-
-  // Generate opportunities
-  const opportunities: string[] = [];
-  if (topFeatures.length > 0) {
-    opportunities.push(`Most requested: ${topFeatures[0].split('(')[0].trim()}`);
-  }
-  const avgStars = analyzedForks.reduce((sum, f) => sum + f.stars, 0) / analyzedForks.length;
-  if (avgStars > 20) {
-    opportunities.push('High community interest - consider merging popular features');
-  }
-  if (patterns.length > 3) {
-    opportunities.push('Multiple professional implementations exist - study their approaches');
-  }
-  const report: ForkEvolutionReport = {
-    originalRepo: `${owner}/${repo}`,
-    totalForks: allForks.length,
-    analyzedForks: analyzedForks.length,
-    timestamp: new Date(),
-    topFeatures,
-    topForks: analyzedForks.sort((a, b) => b.stars - a.stars).slice(0, 10),
-    patterns: Array.from(new Set(patterns)),
-    opportunities
+/**
+ * Analyze fork ecosystem for a repository
+ */
+async function analyzeForkEcosystem(
+  octokit: Octokit,
+  repo: RepoData
+): Promise<ForkAnalysis> {
+  const analysis: ForkAnalysis = {
+    totalForks: repo.forks_count,
+    activeForks: 0,
+    successfulForks: [],
+    topForks: [],
+    commonModifications: [],
+    divergentPatterns: [],
+    opportunityScore: 0
   };
-
-  // Save results
-  const outputPath = path.join(process.cwd(), 'data', 'fork-evolution.json');
-  fs.mkdirSync(path.dirname(outputPath), {
-    recursive: true
-  });
-  fs.writeFileSync(outputPath, JSON.stringify(report, null, 2));
-  // Generate report
-  generateForkReport(report);
-  return report;
+  
+  try {
+    // Get top 20 forks sorted by stars
+    const { data: forks } = await octokit.repos.listForks({
+      owner: repo.owner.login,
+      repo: repo.name,
+      sort: 'stargazers',
+      per_page: 20
+    });
+    
+    analysis.topForks = forks;
+    
+    // Analyze each fork
+    for (const fork of forks) {
+      // Check if active (commits in last 90 days)
+      const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+      
+      if (new Date(fork.updated_at) > ninetyDaysAgo) {
+        analysis.activeForks++;
+      }
+      
+      // Check if successful (more stars than original)
+      if (fork.stargazers_count > repo.stargazers_count) {
+        analysis.successfulForks.push(fork);
+      }
+      
+      // Analyze commit messages to find modifications
+      try {
+        const { data: commits } = await octokit.repos.listCommits({
+          owner: fork.owner.login,
+          repo: fork.name,
+          per_page: 50
+        });
+        
+        // Extract features from commit messages
+        const features = extractFeaturesFromCommits(commits, repo);
+        if (features.length > 0) {
+          analysis.commonModifications.push(...features);
+        }
+        
+        // Rate limit protection
+        await new Promise(resolve => setTimeout(resolve, 500));
+      } catch (error) {
+        // Silent fail - not all forks will be accessible
+      }
+    }
+    
+    // Find common patterns
+    analysis.commonModifications = findCommonPatterns(analysis.commonModifications);
+    
+    // Calculate opportunity score (0-100)
+    let score = 0;
+    
+    // High fork count (max 30 points)
+    score += Math.min(repo.forks_count / 100 * 30, 30);
+    
+    // Active fork ecosystem (max 25 points)
+    score += Math.min(analysis.activeForks / 5 * 25, 25);
+    
+    // Successful forks exist (max 25 points)
+    score += Math.min(analysis.successfulForks.length * 15, 25);
+    
+    // Common modifications (max 20 points)
+    score += Math.min(analysis.commonModifications.length * 5, 20);
+    
+    analysis.opportunityScore = Math.round(Math.min(score, 100));
+    
+  } catch (error: any) {
+    console.error(`      ⚠️ Error analyzing forks:`, error.message);
+  }
+  
+  return analysis;
 }
 
 /**
- * Generate human-readable report
+ * Analyze business opportunities from fork patterns
  */
-function generateForkReport(report: ForkEvolutionReport): void {
-  let markdown = `# 🍴 Fork Evolution Report\n\n`;
-  markdown += `**Repository:** ${report.originalRepo}\n`;
-  markdown += `**Analyzed:** ${new Date().toISOString()}\n`;
-  markdown += `**Total Forks:** ${report.totalForks}\n`;
-  markdown += `**With New Features:** ${report.analyzedForks}\n\n`;
-  markdown += `## 🔥 Top Requested Features\n\n`;
-  for (const feature of report.topFeatures) {
-    markdown += `- ${feature}\n`;
+function analyzeBusinessOpportunity(
+  repo: RepoData,
+  analysis: ForkAnalysis
+): string {
+  const opportunities: string[] = [];
+  
+  // Pattern 1: Common modifications = validated demand
+  if (analysis.commonModifications.length > 0) {
+    opportunities.push('🎯 VALIDATED DEMAND:');
+    opportunities.push(`Multiple forks independently added similar features:`);
+    analysis.commonModifications.slice(0, 5).forEach(mod => {
+      opportunities.push(`  - ${mod}`);
+    });
+    opportunities.push(`💡 Opportunity: Build version with these features built-in`);
   }
-  markdown += `\n## ⭐ Top 10 Popular Forks\n\n`;
-  for (let i = 0; i < report.topForks.length; i++) {
-    const fork = report.topForks[i];
-    markdown += `### ${i + 1}. ${fork.forkOwner}/${fork.forkName} (${fork.stars}⭐)\n\n`;
-    markdown += `**URL:** ${fork.forkUrl}\n\n`;
-    if (fork.description) {
-      markdown += `**Description:** ${fork.description}\n\n`;
-    }
-    markdown += `**Stats:**\n`;
-    markdown += `- Commits: ${fork.commitCount}\n`;
-    markdown += `- New Files: ${fork.newFiles.length}\n`;
-    markdown += `- Modified Files: ${fork.modifiedFiles.length}\n`;
-    markdown += `- Last Update: ${fork.lastUpdate.toLocaleDateString()}\n\n`;
-    markdown += `**New Features:**\n`;
-    for (const feature of fork.newFeatures) {
-      markdown += `- ${feature}\n`;
-    }
-    markdown += '\n';
-    if (fork.hasDocs || fork.hasTests || fork.hasCI) {
-      markdown += `**Quality Signals:**\n`;
-      if (fork.hasDocs) markdown += `- ✅ Documentation\n`;
-      if (fork.hasTests) markdown += `- ✅ Tests\n`;
-      if (fork.hasCI) markdown += `- ✅ CI/CD\n`;
+  
+  // Pattern 2: Successful fork exists
+  if (analysis.successfulForks.length > 0) {
+    opportunities.push('\n🏆 PROVEN BETTER APPROACH:');
+    analysis.successfulForks.forEach(fork => {
+      opportunities.push(`  - ${fork.full_name}: ${fork.stargazers_count} stars (${fork.stargazers_count - repo.stargazers_count} more than original)`);
+    });
+    opportunities.push(`💡 Opportunity: Study what made these forks more successful`);
+  }
+  
+  // Pattern 3: High fork rate but low original activity
+  const daysSinceUpdate = (Date.now() - new Date(repo.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+  if (analysis.activeForks > 10 && daysSinceUpdate > 90) {
+    opportunities.push('\n💰 ABANDONED + ACTIVE ECOSYSTEM:');
+    opportunities.push(`  - Original repo: ${Math.round(daysSinceUpdate)} days since last update`);
+    opportunities.push(`  - Active forks: ${analysis.activeForks} still being maintained`);
+    opportunities.push(`💡 Opportunity: Build maintained alternative with community's improvements`);
+  }
+  
+  // Pattern 4: High opportunity score
+  if (analysis.opportunityScore >= 70) {
+    opportunities.push('\n✨ HIGH OPPORTUNITY SCORE:');
+    opportunities.push(`  - Score: ${analysis.opportunityScore}/100`);
+    opportunities.push(`  - Strong signals: High forks, active ecosystem, clear modifications`);
+    opportunities.push(`💡 Opportunity: This is a hot area with proven demand`);
+  }
+  
+  return opportunities.length > 0
+    ? opportunities.join('\n')
+    : 'Monitor for emerging patterns';
+}
+
+/**
+ * Generate markdown report for a niche
+ */
+function generateReport(
+  nicheId: string,
+  nicheName: string,
+  repositories: Array<{repo: RepoData, analysis: ForkAnalysis}>
+): string {
+  const date = new Date().toISOString().split('T')[0];
+  
+  let markdown = `# Fork Evolution Report: ${nicheName}\n\n`;
+  markdown += `**Date:** ${date}\n`;
+  markdown += `**Niche:** ${nicheId}\n`;
+  markdown += `**Fork-Worthy Repositories:** ${repositories.length}\n\n`;
+  markdown += `---\n\n`;
+  
+  if (repositories.length === 0) {
+    markdown += `No fork-worthy repositories found for this niche.\n`;
+    return markdown;
+  }
+  
+  // Sort by opportunity score
+  const sorted = repositories.sort((a, b) => b.analysis.opportunityScore - a.analysis.opportunityScore);
+  
+  sorted.slice(0, 15).forEach((item, index) => {
+    const { repo, analysis } = item;
+    
+    markdown += `## ${index + 1}. ${repo.full_name}\n\n`;
+    markdown += `**Description:** ${repo.description || 'No description'}\n\n`;
+    markdown += `**Opportunity Score:** ${analysis.opportunityScore}/100 `;
+    if (analysis.opportunityScore >= 80) markdown += '🔥';
+    else if (analysis.opportunityScore >= 60) markdown += '⭐';
+    markdown += '\n\n';
+    
+    markdown += `**Repository Metrics:**\n`;
+    markdown += `- Stars: ${repo.stargazers_count.toLocaleString()}\n`;
+    markdown += `- Total Forks: ${analysis.totalForks.toLocaleString()}\n`;
+    markdown += `- Active Forks (90d): ${analysis.activeForks}\n`;
+    markdown += `- Successful Forks: ${analysis.successfulForks.length}\n`;
+    markdown += `- Last Updated: ${new Date(repo.updated_at).toLocaleDateString()}\n\n`;
+    
+    if (analysis.successfulForks.length > 0) {
+      markdown += `**🏆 More Popular Forks:**\n`;
+      analysis.successfulForks.slice(0, 3).forEach(fork => {
+        markdown += `  - [${fork.full_name}](${fork.html_url}) - ${fork.stargazers_count} stars\n`;
+      });
       markdown += '\n';
     }
-  }
-  if (report.patterns.length > 0) {
-    markdown += `## 📊 Patterns Detected\n\n`;
-    for (const pattern of report.patterns) {
-      markdown += `- ${pattern}\n`;
+    
+    if (analysis.commonModifications.length > 0) {
+      markdown += `**🎯 Common Modifications Across Forks:**\n`;
+      analysis.commonModifications.slice(0, 8).forEach(mod => {
+        markdown += `  - ${mod}\n`;
+      });
+      markdown += '\n';
+    }
+    
+    markdown += `**Business Opportunity Analysis:**\n`;
+    markdown += analyzeBusinessOpportunity(repo, analysis);
+    markdown += '\n\n';
+    
+    markdown += `**Links:**\n`;
+    markdown += `- Original: ${repo.html_url}\n`;
+    markdown += `- Network Graph: ${repo.html_url}/network\n`;
+    if (analysis.topForks.length > 0) {
+      markdown += `- Top Fork: ${analysis.topForks[0].html_url}\n`;
     }
     markdown += '\n';
-  }
-  if (report.opportunities.length > 0) {
-    markdown += `## 💡 Opportunities\n\n`;
-    for (const opportunity of report.opportunities) {
-      markdown += `- ${opportunity}\n`;
-    }
-  }
-  const reportPath = path.join(process.cwd(), 'data', 'reports', 'fork-evolution.md');
-  fs.mkdirSync(path.dirname(reportPath), {
-    recursive: true
+    
+    markdown += `---\n\n`;
   });
-  fs.writeFileSync(reportPath, markdown);
+  
+  return markdown;
 }
 
 /**
- * CLI interface
+ * Main function to run Fork Evolution across all niches
  */
 export async function runForkEvolution(): Promise<void> {
-  const args = process.argv.slice(2);
-  if (args.includes('--help') || args.includes('-h')) {
-    return;
+  console.log('🍴 Fork Evolution - Starting...');
+  
+  const githubToken = process.env.GITHUB_TOKEN;
+  if (!githubToken) {
+    console.warn('⚠️  Warning: No GITHUB_TOKEN found. Rate limits will be lower.');
   }
-  const repoArg = args[0];
-  if (!repoArg || !repoArg.includes('/')) {
-    console.error('❌ Error: Provide repository as owner/repo');
-    return;
+  
+  const octokit = new Octokit({
+    auth: githubToken
+  });
+  
+  try {
+    const niches = loadNicheConfig();
+    console.log(`📂 Found ${niches.length} enabled niches`);
+    
+    const results = [];
+    
+    for (const niche of niches) {
+      console.log(`\n🍴 Analyzing: ${niche.id}`);
+      
+      // Get topics from nested monitoring structure or top-level
+      const topics = niche.monitoring?.github_topics || niche.github_topics || [];
+      const keywords = niche.monitoring?.keywords || niche.keywords || [];
+      
+      if (topics.length === 0) {
+        console.log(`  ⚠️ No GitHub topics defined for ${niche.id}, skipping...`);
+        continue;
+      }
+      
+      // Search fork-worthy repositories
+      console.log(`  → Searching repositories with high fork counts...`);
+      const repos = await searchForkWorthyRepos(
+        octokit,
+        topics,
+        keywords
+      );
+      
+      console.log(`  → Found ${repos.length} fork-worthy repositories`);
+      
+      // Analyze fork ecosystem for each repo (limit to 15 to avoid rate limits)
+      const analyzed: Array<{repo: RepoData, analysis: ForkAnalysis}> = [];
+      const reposToAnalyze = repos.slice(0, 15);
+      
+      for (let i = 0; i < reposToAnalyze.length; i++) {
+        const repo = reposToAnalyze[i];
+        try {
+          console.log(`  → Analyzing forks ${i + 1}/${reposToAnalyze.length}: ${repo.full_name}...`);
+          const analysis = await analyzeForkEcosystem(octokit, repo);
+          analyzed.push({ repo, analysis });
+          
+          // Rate limit protection: 2 seconds between fork analyses
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } catch (error: any) {
+          console.error(`  ⚠️ Error analyzing ${repo.full_name}:`, error.message);
+        }
+      }
+      
+      console.log(`  ✅ Analyzed ${analyzed.length} fork ecosystems`);
+      
+      // Generate report
+      const report = generateReport(niche.id, niche.name, analyzed);
+      
+      // Save report
+      const date = new Date().toISOString().split('T')[0];
+      const reportsDir = path.join(process.cwd(), 'data', 'reports');
+      fs.mkdirSync(reportsDir, { recursive: true });
+      
+      const filename = path.join(reportsDir, `fork-evolution-${niche.id}-${date}.md`);
+      fs.writeFileSync(filename, report);
+      
+      console.log(`  ✅ Report saved: data/reports/fork-evolution-${niche.id}-${date}.md`);
+      
+      results.push({
+        niche: niche.id,
+        repositories: analyzed.length,
+        file: `data/reports/fork-evolution-${niche.id}-${date}.md`
+      });
+    }
+    
+    console.log('\n✅ Complete!');
+    console.log(`Generated ${results.length} reports`);
+    
+    // Summary
+    results.forEach(r => {
+      console.log(`  - ${r.niche}: ${r.repositories} repos analyzed`);
+    });
+  } catch (error) {
+    console.error('❌ Fork Evolution failed:', error);
+    throw error;
   }
-  const [owner, repo] = repoArg.split('/');
-  const starsIndex = args.indexOf('--stars');
-  const maxIndex = args.indexOf('--max');
-  const tokenIndex = args.indexOf('--token');
-  const config: ForkAnalysisConfig = {
-    owner,
-    repo,
-    minStars: starsIndex !== -1 ? parseInt(args[starsIndex + 1]) : undefined,
-    maxForks: maxIndex !== -1 ? parseInt(args[maxIndex + 1]) : undefined,
-    githubToken: tokenIndex !== -1 ? args[tokenIndex + 1] : process.env.GITHUB_TOKEN
-  };
-  await analyzeForkEvolution(config);
-}
-
-// Run if called directly
-if (require.main === module) {
-  runForkEvolution().catch(console.error);
 }

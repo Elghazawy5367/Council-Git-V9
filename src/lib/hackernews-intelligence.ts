@@ -134,17 +134,17 @@ async function fetchStoryComments(storyId: string): Promise<HNComment[]> {
     
     const comments: HNComment[] = [];
     
-    function extractComments(item: any): void {
-      if (item.text) {
+    function extractComments(commentNode: any): void {
+      if (commentNode.text) {
         comments.push({
-          text: item.text,
-          author: item.author,
-          points: item.points
+          text: commentNode.text,
+          author: commentNode.author,
+          points: commentNode.points
         });
       }
       
-      if (item.children) {
-        item.children.forEach((child: any) => extractComments(child));
+      if (commentNode.children) {
+        commentNode.children.forEach((child: any) => extractComments(child));
       }
     }
     
@@ -157,6 +157,15 @@ async function fetchStoryComments(storyId: string): Promise<HNComment[]> {
     console.error(`Error fetching comments for ${storyId}:`, error.message);
     return [];
   }
+}
+
+/**
+ * Helper to strip HTML and split into sentences
+ */
+function stripHtmlAndSplit(text: string): { cleanText: string; sentences: string[] } {
+  const cleanText = text.replace(/<[^>]*>/g, ' ');
+  const sentences = cleanText.split(/[.!?]/);
+  return { cleanText, sentences };
 }
 
 /**
@@ -190,14 +199,13 @@ function extractSignals(comments: HNComment[]): ExtractedSignals {
   ];
   
   for (const comment of comments) {
-    // Strip HTML tags for text analysis
-    const text = comment.text.replace(/<[^>]*>/g, ' ').toLowerCase();
+    // Strip HTML once and reuse
+    const { cleanText, sentences } = stripHtmlAndSplit(comment.text);
+    const lowerText = cleanText.toLowerCase();
     
     // Extract pain points
     for (const keyword of painKeywords) {
-      if (text.includes(keyword)) {
-        // Extract sentence containing keyword
-        const sentences = comment.text.replace(/<[^>]*>/g, ' ').split(/[.!?]/);
+      if (lowerText.includes(keyword)) {
         const matching = sentences.find(s => 
           s.toLowerCase().includes(keyword)
         );
@@ -210,8 +218,7 @@ function extractSignals(comments: HNComment[]): ExtractedSignals {
     
     // Extract buying signals
     for (const keyword of buyingKeywords) {
-      if (text.includes(keyword)) {
-        const sentences = comment.text.replace(/<[^>]*>/g, ' ').split(/[.!?]/);
+      if (lowerText.includes(keyword)) {
         const matching = sentences.find(s => 
           s.toLowerCase().includes(keyword)
         );
@@ -224,8 +231,7 @@ function extractSignals(comments: HNComment[]): ExtractedSignals {
     
     // Extract validations
     for (const keyword of validationKeywords) {
-      if (text.includes(keyword)) {
-        const sentences = comment.text.replace(/<[^>]*>/g, ' ').split(/[.!?]/);
+      if (lowerText.includes(keyword)) {
         const matching = sentences.find(s => 
           s.toLowerCase().includes(keyword)
         );

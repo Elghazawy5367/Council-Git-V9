@@ -82,7 +82,9 @@ const requiredFunctions = [
 
 let allFunctionsPresent = true;
 requiredFunctions.forEach(funcName => {
-  if (implContent.includes(`function ${funcName}`) || implContent.includes(`async function ${funcName}`)) {
+  // Use word boundary regex to avoid false positives in comments
+  const functionRegex = new RegExp(`\\b(async )?function ${funcName}\\b`, 'm');
+  if (functionRegex.test(implContent)) {
     console.log(`  ✓ Function ${funcName} implemented`);
   } else {
     console.error(`  ✗ Function ${funcName} NOT found`);

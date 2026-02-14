@@ -413,7 +413,8 @@ function generateReport(
   sorted.slice(0, 20).forEach((item, index) => {
     const { pain } = item;
     
-    markdown += `## ${index + 1}. ${pain.pain.substring(0, 100)}...\n\n`;
+    const painText = pain.pain.length > 100 ? `${pain.pain.substring(0, 100)}...` : pain.pain;
+    markdown += `## ${index + 1}. ${painText}\n\n`;
     
     markdown += `**Pain Score:** ${item.totalScore}/100 `;
     if (item.totalScore >= 80) markdown += '🔥🔥🔥';
@@ -459,8 +460,9 @@ function generateReport(
   
   for (const [category, count] of categories) {
     const topInCategory = sorted.find(p => p.pain.category === category);
-    const topIssue = topInCategory?.pain.pain.substring(0, 50) || 'N/A';
-    markdown += `| ${category.replace('_', ' ')} | ${count} | ${topIssue}... |\n`;
+    const topPain = topInCategory?.pain.pain || 'N/A';
+    const topIssue = topPain.length > 50 ? `${topPain.substring(0, 50)}...` : topPain;
+    markdown += `| ${category.replace('_', ' ')} | ${count} | ${topIssue} |\n`;
   }
   
   markdown += '\n';
@@ -469,7 +471,8 @@ function generateReport(
   markdown += `## 🔥 Top 3 Product Opportunities\n\n`;
   sorted.slice(0, 3).forEach((item, i) => {
     markdown += `**${i + 1}. ${item.pain.category.replace('_', ' ').toUpperCase()}**\n`;
-    markdown += `- Pain: ${item.pain.pain.substring(0, 100)}...\n`;
+    const painText = item.pain.pain.length > 100 ? `${item.pain.pain.substring(0, 100)}...` : item.pain.pain;
+    markdown += `- Pain: ${painText}\n`;
     markdown += `- Mentions: ${item.pain.source_posts.length}\n`;
     markdown += `- Score: ${item.totalScore}/100\n`;
     markdown += `- Action: ${item.opportunity.split('\n')[0]}\n\n`;

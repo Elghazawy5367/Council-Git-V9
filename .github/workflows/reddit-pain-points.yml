@@ -9,6 +9,9 @@ jobs:
   reddit-pain-points:
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: write  # Need write permission to commit reports
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

@@ -1,0 +1,35 @@
+name: HackerNews Intelligence - Tech Trends
+
+on:
+  schedule:
+    - cron: '0 16 * * 1,4'  # Monday, Thursday at 4 PM UTC
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  hackernews-intelligence:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to push reports to repository
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run HackerNews Intelligence
+        run: npx tsx scripts/scan-hackernews.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "HackerNews Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/hackernews-*.md
+          git commit -m "🗞️ HackerNews Intelligence: Tech trends report" || echo "No changes"
+          git push

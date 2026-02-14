@@ -9,6 +9,9 @@ jobs:
   quality-pipeline:
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: write  # Required for git push
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

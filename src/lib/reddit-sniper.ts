@@ -80,11 +80,14 @@ async function searchReddit(
 ): Promise<RedditPost[]> {
   const posts: RedditPost[] = [];
   
+  // Remove 'r/' prefix if present
+  const cleanSubreddit = subreddit.replace(/^r\//, '');
+  
   try {
     // Search using top 3 keywords to avoid rate limiting
     for (const keyword of keywords.slice(0, 3)) {
       const query = `${keyword} (looking OR need OR recommend OR best)`;
-      const url = `https://www.reddit.com/r/${subreddit}/search.json?` +
+      const url = `https://www.reddit.com/r/${cleanSubreddit}/search.json?` +
         `q=${encodeURIComponent(query)}` +
         `&restrict_sr=1` +
         `&sort=new` +
@@ -133,7 +136,7 @@ async function searchReddit(
     return uniquePosts;
     
   } catch (error: any) {
-    console.error(`Error searching r/${subreddit}:`, error.message);
+    console.error(`Error searching r/${cleanSubreddit}:`, error.message);
     return [];
   }
 }
@@ -412,7 +415,8 @@ export async function runRedditSniper(): Promise<void> {
     
     // Search each subreddit
     for (const subreddit of subreddits) {
-      console.log(`  → Searching r/${subreddit}...`);
+      const cleanSubreddit = subreddit.replace(/^r\//, '');
+      console.log(`  → Searching r/${cleanSubreddit}...`);
       
       const posts = await searchReddit(subreddit, keywords);
       console.log(`  → Found ${posts.length} posts`);

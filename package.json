@@ -36,6 +36,7 @@
     "fork-evolution": "tsx scripts/track-forks.ts",
     "twin": "tsx src/lib/twin-mimicry.ts",
     "viral": "tsx src/lib/viral-radar.ts",
+    "viral-radar": "tsx scripts/scan-viral.ts",
     "mining-drill": "tsx scripts/run-mining-drill.ts",
     "stargazer": "tsx scripts/analyze-stargazers.ts",
     "goldmine": "tsx scripts/detect-goldmines.ts",

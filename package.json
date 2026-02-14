@@ -32,6 +32,7 @@
     "studio": "tsx src/lib/google-studio-hack.ts",
     "sniper": "tsx src/lib/reddit-sniper.ts",
     "reddit-sniper": "tsx scripts/snipe-reddit.ts",
+    "reddit-pain-points": "tsx scripts/extract-reddit-pain.ts",
     "forks": "tsx src/lib/fork-evolution.ts",
     "fork-evolution": "tsx scripts/track-forks.ts",
     "twin": "tsx src/lib/twin-mimicry.ts",

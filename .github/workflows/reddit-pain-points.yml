@@ -1,0 +1,36 @@
+name: Reddit Pain Points - Market Gap Analysis
+
+on:
+  schedule:
+    - cron: '0 18 * * 0'  # Sunday at 6 PM UTC (weekly)
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  reddit-pain-points:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Need write permission to commit reports
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Reddit Pain Points
+        run: npx tsx scripts/extract-reddit-pain.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "Pain Points Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/reddit-pain-points-*.md
+          git commit -m "💬 Reddit Pain Points: Market gap patterns" || echo "No changes"
+          git push

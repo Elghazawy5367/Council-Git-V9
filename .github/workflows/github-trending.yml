@@ -1,18 +1,35 @@
-name: GitHub Trending
+name: GitHub Trending - Early Trend Detection
+
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 */12 * * *'  # Every 12 hours
+  workflow_dispatch:  # Manual trigger
+
 jobs:
-  scan:
+  github-trending:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-      - name: Run Trending Scan
-        run: npm install && node scripts/scan-trending.js
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run GitHub Trending
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx scripts/scan-github-trending.ts
+      
+      - name: Commit reports
+        run: |
+          git config user.name "Trending Bot"
+          git config user.email "bot@council-app.com"
+          git add data/reports/github-trending-*.md
+          git commit -m "📈 GitHub Trending: Early trend detection" || echo "No changes"
+          git push

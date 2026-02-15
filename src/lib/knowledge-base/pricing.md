@@ -1,6 +1,6 @@
 # Pricing & Monetization
 
-*Last updated: 2/8/2026, 4:35:29 AM*
+*Last updated: 2/15/2026, 4:25:28 AM*
 *Learned from: developer-tools (20 repositories)*
 
 ## Key Patterns

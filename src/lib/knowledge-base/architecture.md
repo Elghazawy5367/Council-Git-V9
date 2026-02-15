@@ -1,6 +1,6 @@
 # Architecture Patterns
 
-*Last updated: 2/8/2026, 4:35:29 AM*
+*Last updated: 2/15/2026, 4:25:28 AM*
 *Learned from: developer-tools (20 repositories)*
 
 ## Key Patterns
@@ -18,8 +18,8 @@
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 - [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands)
 - [localstack/localstack](https://github.com/localstack/localstack)
-- [GitHubDaily/GitHubDaily](https://github.com/GitHubDaily/GitHubDaily)
 - [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
+- [GitHubDaily/GitHubDaily](https://github.com/GitHubDaily/GitHubDaily)
 
 ### 2. Monorepo for managing multiple packages
 
@@ -27,13 +27,13 @@
 
 **Evidence:**
 - hoppscotch/hoppscotch
-- GitHubDaily/GitHubDaily
 - affaan-m/everything-claude-code
+- GitHubDaily/GitHubDaily
 
 **Learned from:**
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
-- [GitHubDaily/GitHubDaily](https://github.com/GitHubDaily/GitHubDaily)
 - [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
+- [GitHubDaily/GitHubDaily](https://github.com/GitHubDaily/GitHubDaily)
 - [koalaman/shellcheck](https://github.com/koalaman/shellcheck)
 - [freeCodeCamp/devdocs](https://github.com/freeCodeCamp/devdocs)
 

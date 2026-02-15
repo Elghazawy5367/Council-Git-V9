@@ -9,19 +9,11 @@
  */
 
 import { Octokit } from '@octokit/rest';
+import type { NicheConfig } from './types';
 
 // ============================================================================
 // SHARED TYPES - Used by both browser and Node.js code
 // ============================================================================
-
-export interface NicheConfig {
-  id: string;
-  name: string;
-  keywords: string[];
-  github_search_queries: string[];
-  github_topics: string[];
-  enabled: boolean;
-}
 
 /**
  * Browser-compatible PainPoint interface (used by UI components)
@@ -340,41 +332,7 @@ function extractPainKeywords(text: string): string[] {
 // NODE.JS CLI FUNCTIONS (for intelligence workflows)
 // ============================================================================
 
-// These imports are only used in Node.js environment
-// They will be tree-shaken out in browser builds
-let yaml: any;
-let fs: any;
-let path: any;
-
-// Dynamic imports for Node.js-only modules
-async function loadNodeModules(): Promise<void> {
-  if (typeof window === 'undefined') {
-    yaml = await import('js-yaml');
-    fs = await import('fs');
-    path = await import('path');
-  }
-}
-
-interface YamlConfig {
-  niches: NicheConfig[];
-}
-
-/**
- * Load niche configuration from YAML (Node.js only)
- */
-async function loadNicheConfig(): Promise<NicheConfig[]> {
-  await loadNodeModules();
-  
-  try {
-    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-    const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
-    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
-  } catch (error) {
-    console.error('Failed to load niche config:', error);
-    throw error;
-  }
-}
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 /**
  * Search GitHub issues using Octokit
@@ -529,12 +487,11 @@ function generateReport(
  * Main function to run Mining Drill across all niches (Node.js only)
  */
 export async function runMiningDrill(): Promise<void> {
-  await loadNodeModules();
-  
   console.log('🔨 Mining Drill - Starting...');
   
   try {
-    const niches = await loadNicheConfig();
+    const allNiches = await loadNicheConfig();
+    const niches = getEnabledNiches(allNiches);
     console.log(`📂 Found ${niches.length} enabled niches`);
     
     const results = [];
@@ -550,7 +507,8 @@ export async function runMiningDrill(): Promise<void> {
       const allIssues: any[] = [];
       
       // Search using each query for this niche
-      for (const query of niche.github_search_queries) {
+      const queries = niche.github_search_queries || [];
+      for (const query of queries) {
         try {
           const issues = await searchGitHubIssues(query, githubToken);
           allIssues.push(...issues);

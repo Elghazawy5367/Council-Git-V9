@@ -5,22 +5,8 @@
  * using multi-niche configuration from config/target-niches.yaml
  */
 
-import * as yaml from 'js-yaml';
-import * as fs from 'fs';
-import * as path from 'path';
-
-export interface NicheConfig {
-  id: string;
-  name: string;
-  keywords?: string[];
-  enabled?: boolean;
-  monitoring?: {
-    keywords?: string[];
-    subreddits?: string[];
-    github_topics?: string[];
-    github_search_queries?: string[];
-  };
-}
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 export interface HNStory {
   objectID: string;
@@ -52,25 +38,6 @@ export interface StoryAnalysis {
   signalScore: number;
   totalScore: number;
   signals: ExtractedSignals;
-}
-
-interface YamlConfig {
-  niches: NicheConfig[];
-}
-
-/**
- * Load niche configuration from YAML
- */
-function loadNicheConfig(): NicheConfig[] {
-  try {
-    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-    const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
-    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
-  } catch (error) {
-    console.error('Failed to load niche config:', error);
-    throw error;
-  }
 }
 
 /**
@@ -417,7 +384,8 @@ function generateReport(
 export async function runHackerNewsIntelligence(): Promise<void> {
   console.log('🗞️ HackerNews Intelligence - Starting...');
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const results = [];

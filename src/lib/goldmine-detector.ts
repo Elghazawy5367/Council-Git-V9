@@ -3,12 +3,26 @@
  * Abandoned Goldmine Detector
  * Finds high-value abandoned repositories across multiple niches
  * using multi-niche configuration from config/target-niches.yaml
+ * 
+ * This file contains both:
+ * 1. Browser-safe functions for UI components (findGoldmines, calculateGoldmineMetrics, etc.)
+ * 2. Node.js CLI functions for intelligence workflows (runGoldmineDetector)
  */
 
-import * as yaml from 'js-yaml';
-import * as fs from 'fs';
-import * as path from 'path';
 import { Octokit } from '@octokit/rest';
+
+// Dynamic imports for Node.js-only modules
+let yaml: any;
+let fs: any;
+let path: any;
+
+async function loadNodeModules(): Promise<void> {
+  if (typeof window === 'undefined') {
+    yaml = await import('js-yaml');
+    fs = await import('fs');
+    path = await import('path');
+  }
+}
 
 export interface NicheConfig {
   id: string;
@@ -48,6 +62,9 @@ export interface Goldmine {
   created_at: string;
 }
 
+// Type alias for browser compatibility
+export type Opportunity = Goldmine;
+
 export interface RebuildOpportunity {
   type: 'direct-modernization' | 'improved-alternative' | 'saas-version' | 'niche-focus';
   description: string;
@@ -63,24 +80,193 @@ export interface MonetizationStrategy {
   targetCustomers: string;
 }
 
-interface YamlConfig {
-  niches: NicheConfig[];
+// ============================================================================
+// BROWSER-SAFE FUNCTIONS (for UI components)
+// ============================================================================
+
+/**
+ * Find goldmines from a list of repositories (browser-safe)
+ * Simple scoring without API calls
+ */
+export function findGoldmines(repositories: Opportunity[]): Opportunity[] {
+  return repositories
+    .filter(repo => repo.goldmineScore >= 50)
+    .sort((a, b) => b.goldmineScore - a.goldmineScore);
 }
 
 /**
- * Load niche configuration from YAML
+ * Calculate goldmine metrics for a repository (browser-safe)
  */
-function loadNicheConfig(): NicheConfig[] {
-  try {
-    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-    const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
-    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
-  } catch (error) {
-    console.error('Failed to load niche config:', error);
-    throw error;
-  }
+export function calculateGoldmineMetrics(repo: Opportunity): {
+  goldmineScore: number;
+  valueScore: number;
+  abandonmentScore: number;
+  demandScore: number;
+  estimatedPrice: number;
+  effort: 'easy' | 'medium' | 'hard';
+} {
+  // Value score (0-40): Based on stars and documentation
+  let valueScore = 0;
+  if (repo.stars > 10000) valueScore += 20;
+  else if (repo.stars > 5000) valueScore += 15;
+  else if (repo.stars > 2000) valueScore += 10;
+  else valueScore += 5;
+  
+  if (repo.hasWiki || repo.hasPages) valueScore += 5;
+  if (repo.description && repo.description.length > 50) valueScore += 5;
+  
+  const daysSinceCreation = calculateDaysSince(repo.created_at);
+  if (daysSinceCreation > 365 * 2) valueScore += 10;
+  else if (daysSinceCreation > 365) valueScore += 5;
+  
+  // Abandonment score (0-30)
+  let abandonmentScore = 0;
+  if (repo.daysSinceUpdate > 730) abandonmentScore += 30;
+  else if (repo.daysSinceUpdate > 365) abandonmentScore += 20;
+  else if (repo.daysSinceUpdate > 180) abandonmentScore += 10;
+  
+  // Demand score (0-30)
+  let demandScore = 0;
+  if (repo.forks > 500) demandScore += 10;
+  else if (repo.forks > 200) demandScore += 7;
+  else if (repo.forks > 50) demandScore += 5;
+  else demandScore += 2;
+  
+  if (repo.openIssues > 100) demandScore += 10;
+  else if (repo.openIssues > 50) demandScore += 7;
+  else if (repo.openIssues > 20) demandScore += 5;
+  
+  // Calculate total
+  const goldmineScore = Math.min(100, valueScore + abandonmentScore + demandScore);
+  
+  // Estimate pricing based on stars
+  let estimatedPrice = 0;
+  if (repo.stars > 10000) estimatedPrice = 97;
+  else if (repo.stars > 5000) estimatedPrice = 49;
+  else if (repo.stars > 2000) estimatedPrice = 29;
+  else estimatedPrice = 9;
+  
+  // Estimate effort
+  let effort: 'easy' | 'medium' | 'hard' = 'medium';
+  if (repo.stars < 2000) effort = 'easy';
+  else if (repo.stars > 10000) effort = 'hard';
+  
+  return {
+    goldmineScore,
+    valueScore,
+    abandonmentScore,
+    demandScore,
+    estimatedPrice,
+    effort,
+  };
 }
+
+/**
+ * Categorize goldmines by effort level (browser-safe)
+ */
+export function categorizeGoldmines(goldmines: Opportunity[]): {
+  easyWins: Opportunity[];
+  mediumEffort: Opportunity[];
+  highEffort: Opportunity[];
+} {
+  const easyWins: Opportunity[] = [];
+  const mediumEffort: Opportunity[] = [];
+  const highEffort: Opportunity[] = [];
+  
+  goldmines.forEach(goldmine => {
+    const metrics = calculateGoldmineMetrics(goldmine);
+    if (metrics.effort === 'easy') {
+      easyWins.push(goldmine);
+    } else if (metrics.effort === 'medium') {
+      mediumEffort.push(goldmine);
+    } else {
+      highEffort.push(goldmine);
+    }
+  });
+  
+  return { easyWins, mediumEffort, highEffort };
+}
+
+/**
+ * Generate action plan for goldmines (browser-safe)
+ */
+export function generateActionPlan(goldmine: Opportunity): string {
+  const metrics = calculateGoldmineMetrics(goldmine);
+  
+  let plan = `# Action Plan: ${goldmine.full_name}\n\n`;
+  plan += `**Goldmine Score:** ${metrics.goldmineScore}/100\n`;
+  plan += `**Estimated Price Point:** $${metrics.estimatedPrice}\n`;
+  plan += `**Effort Level:** ${metrics.effort}\n\n`;
+  
+  plan += `## Quick Stats\n`;
+  plan += `- ⭐ ${goldmine.stars.toLocaleString()} stars\n`;
+  plan += `- 🍴 ${goldmine.forks.toLocaleString()} forks\n`;
+  plan += `- 🐛 ${goldmine.openIssues} open issues\n`;
+  plan += `- 📅 Last update: ${goldmine.daysSinceUpdate} days ago\n\n`;
+  
+  plan += `## Opportunity\n`;
+  plan += `This abandoned project has proven demand (${goldmine.stars.toLocaleString()} stars) `;
+  plan += `but hasn't been updated in ${goldmine.daysSinceUpdate} days. `;
+  plan += `The ${goldmine.openIssues} open issues represent unmet needs.\n\n`;
+  
+  plan += `## Recommended Approach\n`;
+  if (metrics.effort === 'easy') {
+    plan += `- Fork and modernize the codebase\n`;
+    plan += `- Fix critical issues from the backlog\n`;
+    plan += `- Add basic documentation and examples\n`;
+    plan += `- Launch as open source to build trust\n`;
+  } else if (metrics.effort === 'medium') {
+    plan += `- Study the codebase architecture\n`;
+    plan += `- Identify key pain points from issues\n`;
+    plan += `- Build improved alternative with modern stack\n`;
+    plan += `- Offer migration guide for existing users\n`;
+  } else {
+    plan += `- Conduct deep user research\n`;
+    plan += `- Design comprehensive solution\n`;
+    plan += `- Build SaaS version with better UX\n`;
+    plan += `- Target enterprise customers\n`;
+  }
+  
+  return plan;
+}
+
+/**
+ * Generate goldmine report (browser-safe)
+ */
+export function generateGoldmineReport(goldmines: Opportunity[]): string {
+  let report = `# Goldmine Detector Report\n\n`;
+  report += `**Date:** ${new Date().toISOString().split('T')[0]}\n`;
+  report += `**Goldmines Found:** ${goldmines.length}\n\n`;
+  report += `---\n\n`;
+  
+  if (goldmines.length === 0) {
+    report += `No goldmines found.\n`;
+    return report;
+  }
+  
+  goldmines.slice(0, 10).forEach((goldmine, index) => {
+    const metrics = calculateGoldmineMetrics(goldmine);
+    report += `## ${index + 1}. ${goldmine.full_name}\n\n`;
+    report += `**Goldmine Score:** ${metrics.goldmineScore}/100\n`;
+    report += `**Stars:** ${goldmine.stars.toLocaleString()}\n`;
+    report += `**Forks:** ${goldmine.forks.toLocaleString()}\n`;
+    report += `**Open Issues:** ${goldmine.openIssues}\n`;
+    report += `**Days Since Update:** ${goldmine.daysSinceUpdate}\n`;
+    report += `**Estimated Price:** $${metrics.estimatedPrice}\n`;
+    report += `**Effort:** ${metrics.effort}\n`;
+    report += `**URL:** ${goldmine.url}\n\n`;
+    if (goldmine.description) {
+      report += `**Description:** ${goldmine.description}\n\n`;
+    }
+    report += `---\n\n`;
+  });
+  
+  return report;
+}
+
+// ============================================================================
+// SHARED HELPER FUNCTIONS
+// ============================================================================
 
 /**
  * Calculate days since a date
@@ -91,6 +277,30 @@ function calculateDaysSince(dateString: string): number {
   const diffTime = Math.abs(now.getTime() - then.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
+}
+
+// ============================================================================
+// NODE.JS CLI FUNCTIONS (for intelligence workflows)
+// ============================================================================
+
+interface YamlConfig {
+  niches: NicheConfig[];
+}
+
+/**
+ * Load niche configuration from YAML (Node.js only)
+ */
+async function loadNicheConfig(): Promise<NicheConfig[]> {
+  await loadNodeModules();
+  try {
+    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
+    const fileContent = fs.readFileSync(configPath, 'utf8');
+    const config = yaml.load(fileContent) as YamlConfig;
+    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
+  } catch (error) {
+    console.error('Failed to load niche config:', error);
+    throw error;
+  }
 }
 
 /**
@@ -522,10 +732,11 @@ function generateReport(
  * Main function to run Goldmine Detector across all niches
  */
 export async function runGoldmineDetector(): Promise<void> {
+  await loadNodeModules();
   console.log('💎 Goldmine Detector - Starting...');
   
   try {
-    const niches = loadNicheConfig();
+    const niches = await loadNicheConfig();
     console.log(`📂 Found ${niches.length} enabled niches`);
     
     const githubToken = process.env.GITHUB_TOKEN;

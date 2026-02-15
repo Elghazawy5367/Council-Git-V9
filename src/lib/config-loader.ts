@@ -44,8 +44,9 @@ export async function loadNicheConfig(): Promise<NicheConfig[]> {
     const config = yaml.load(fileContent) as YamlConfig;
     return config.niches || [];
   } catch (error: any) {
-    console.error('Failed to load niche config:', error);
-    return [];
+    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
+    console.error(`Failed to load niche config from ${configPath}:`, error.message);
+    throw new Error(`Configuration loading failed: ${error.message}. Ensure ${configPath} exists and is valid YAML.`);
   }
 }
 

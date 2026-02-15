@@ -1,0 +1,24 @@
+name: Market Gap Identifier - Cross-Platform Analysis
+
+on:
+  schedule:
+    - cron: '0 20 * * 0'  # Sunday 8 PM UTC (weekly)
+  workflow_dispatch:
+
+jobs:
+  market-gap-identifier:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npx tsx scripts/analyze-market-gaps.ts
+      - run: |
+          git config user.name "Market Gap Bot"
+          git config user.email "bot@council-app.com"
+          git add data/intelligence/market-gaps-*.md
+          git commit -m "🎯 Market Gap: Cross-platform intelligence" || echo "No changes"
+          git push

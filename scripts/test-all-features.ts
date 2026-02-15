@@ -4,6 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const execAsync = promisify(exec);
+const FEATURE_TIMEOUT_MS = 300000;
+const EXEC_MAX_BUFFER = 1024 * 1024 * 50;
 
 interface FeatureTestDefinition {
   feature: string;
@@ -108,8 +110,8 @@ async function testAllFeatures(): Promise<void> {
       console.log('⏱️  Starting execution...');
 
       const { stdout, stderr } = await execAsync(resolved.command, {
-        timeout: 300000,
-        maxBuffer: 1024 * 1024 * 50
+        timeout: FEATURE_TIMEOUT_MS,
+        maxBuffer: EXEC_MAX_BUFFER
       });
 
       result.executionTime = (Date.now() - startTime) / 1000;

@@ -12,27 +12,13 @@
  * - Detects hot trends requiring immediate action
  */
 
-import * as yaml from 'js-yaml';
-import * as fs from 'fs';
 import { Octokit } from '@octokit/rest';
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 // ============================================================================
 // TYPE DEFINITIONS
 // ============================================================================
-
-interface NicheConfig {
-  id: string;
-  name: string;
-  monitoring: {
-    keywords: string[];
-    github_topics: string[];
-  };
-  enabled?: boolean;
-}
-
-interface YamlConfig {
-  niches: NicheConfig[];
-}
 
 interface TrendingRepo {
   name: string;
@@ -57,20 +43,6 @@ interface TrendAnalysis {
   trendScore: number;
   opportunityType: string;
   recommendedAction: string;
-}
-
-// ============================================================================
-// CONFIG LOADER
-// ============================================================================
-
-/**
- * Load niche configuration from YAML
- */
-function loadNicheConfig(): NicheConfig[] {
-  const configPath = 'config/target-niches.yaml';
-  const fileContent = fs.readFileSync(configPath, 'utf8');
-  const config = yaml.load(fileContent) as YamlConfig;
-  return config.niches.filter((n) => n.enabled !== false);
 }
 
 // ============================================================================
@@ -451,7 +423,8 @@ export async function runGitHubTrending(): Promise<void> {
     auth: process.env.GITHUB_TOKEN
   });
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const results = [];

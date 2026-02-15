@@ -1,427 +1,459 @@
 # Council App - Target Niches Configuration
-# Created: February 13, 2026
+# Created: February 15, 2026
 # Purpose: Multi-niche monitoring for passive income opportunities
 # Profile: Solo non-technical founder, low budget, seeking cash flow
 
-version: "1.0"
+version: "2.0"
 
 # Niche Selection Criteria Applied:
 # - Pain Score: 85+ / 100
-# - Solo-Founder Fit: 90+ / 100  
+# - Solo-Founder Fit: 92+ / 100  
 # - Non-technical: Templates, reports, guides (NO coding required)
-# - Fast to revenue: 1-4 weeks to first dollar
-# - Market size: 1,000+ potential customers
+# - Fast to revenue: 7-14 days to first dollar
+# - Market size: Large, growing markets
 # - Multiple revenue models: Reports, templates, consulting, products
 
 niches:
   # =============================================================================
-  # NICHE 1: Freelancer Scope Creep Prevention
+  # NICHE 1: Maritime Professionals & Operations
   # =============================================================================
-  # Recommended as #1 starter by research
-  # Pain: 90/100 | Opportunity: 87/100 | Solo-Fit: 92/100
-  - id: "freelancer-scope-creep"
-    name: "Freelancer Scope Creep Prevention Tools"
+  # Pain: 88/100 | Opportunity: 85/100 | Solo-Fit: 92/100
+  - id: "maritime-professionals"
+    name: "Maritime Professionals & Operations"
     
     overview:
-      title: "Scope Creep Prevention & Contract Management for Freelancers"
+      title: "Maritime Industry Professionals - Operations, Compliance & Career Management"
       description: |
-        Freelancers losing thousands of dollars annually to scope creep - clients 
-        requesting additional work beyond the original agreement. They need simple 
-        tools and templates to define, track, and enforce project boundaries.
-      pain_score: 90
-      opportunity_score: 87
+        Maritime professionals including seafarers, officers, engineers, port workers, 
+        ship managers, and logistics coordinators dealing with certifications, compliance, 
+        crew management, documentation, and operational challenges. Regulated industry with 
+        recurring compliance needs and career advancement requirements.
+      pain_score: 88
+      opportunity_score: 85
       solo_founder_fit: 92
-      estimated_market_size: "75,000-150,000 freelancers (US)"
+      estimated_market_size: "2M+ maritime professionals globally"
+      growth_trend: "stable"
+      
+    pain_points:
+      primary: "Complex certification and compliance tracking across multiple regulatory frameworks (STCW, flag state, company requirements)"
+      secondary: "Crew scheduling, documentation burden, and inspection preparation consuming excessive time"
+      tertiary: "Career advancement tracking (sea time, required certifications, license upgrades) poorly managed"
+      
+    revenue_opportunities:
+      - model: "Templates & Checklists"
+        price_range: "$49-$149"
+        examples:
+          - "Maritime Compliance Checklist Library (STCW, ISM, ISPS) - $79-$149"
+          - "Certification Tracking Templates (Excel/Notion) - $49-$79"
+          - "Vessel Inspection Prep Checklists - $49"
+      - model: "Tools & Calculators"
+        price_range: "$29-$97"
+        examples:
+          - "Sea Time Calculator (track time towards license upgrades) - $39-$79"
+          - "Crew Schedule Optimizer (spreadsheet) - $29-$49"
+          - "Maritime Document Organizer - $49-$97"
+      - model: "Consulting & Training"
+        price_range: "$297-$997"
+        examples:
+          - "Compliance Audit Package (vessel/company audit + recommendations) - $497-$997"
+          - "Career Advancement Consulting (license upgrade roadmap) - $297"
+      - model: "SaaS Tools"
+        price_range: "$29-$79/month"
+        examples:
+          - "Maritime Certification Tracker (alerts, renewals, compliance dashboard) - $49-$79/month"
+          - "Crew Management Dashboard - $39-$69/month"
+          
+    time_to_first_revenue: "14 days"
+    first_action_plan:
+      - "Week 1-2: Create 'STCW Compliance Checklist Bundle' → Sell for $79"
+      - "Week 3-4: Build 'Sea Time Calculator' (Excel/Sheets) → Sell for $49"
+      - "Month 2: Offer 'License Upgrade Consulting' sessions → $297/hour"
+      
+    monitoring:
+      keywords:
+        - "maritime career"
+        - "seafarer certification"
+        - "stcw"
+        - "license upgrade"
+        - "marine officer"
+        - "deck officer"
+        - "marine engineer"
+        - "chief mate"
+        - "master mariner"
+        - "chief engineer"
+        - "sea time"
+        - "maritime compliance"
+        - "ship management"
+        - "vessel operations"
+        - "crew management"
+        - "maritime logistics"
+        - "port operations"
+        - "fleet management"
+        - "maritime safety"
+        - "vessel documentation"
+        - "crew records"
+        - "maritime inspection"
+        - "shipping compliance"
+        - "merchant marine"
+        - "commercial shipping"
+        
+      subreddits:
+        - "r/maritime"
+        - "r/navy"
+        - "r/sailing"
+        - "r/MerchantMarine"
+        - "r/seamanship"
+        - "r/shipping"
+        - "r/logistics"
+        - "r/supplychain"
+        - "r/engineering"
+        - "r/Transportation"
+        
+      github_topics:
+        - "maritime"
+        - "shipping"
+        - "marine"
+        - "navigation"
+        - "vessel"
+        - "logistics"
+        - "fleet-management"
+        - "compliance"
+        - "certification"
+        
+      github_search_queries:
+        - "maritime management"
+        - "vessel tracking"
+        - "crew management"
+        - "maritime certification"
+        - "fleet operations"
+        - "shipping compliance"
+        - "maritime software"
+
+  # =============================================================================
+  # NICHE 2: Freelancers & Independent Consultants
+  # =============================================================================
+  # Pain: 90/100 | Opportunity: 89/100 | Solo-Fit: 96/100
+  - id: "freelancers-consultants"
+    name: "Freelancers & Independent Consultants"
+    
+    overview:
+      title: "Service-Based Freelancers - Client Management, Projects & Business Operations"
+      description: |
+        Independent service providers including developers, designers, writers, marketers, 
+        and consultants managing clients, projects, invoicing, contracts, and business operations. 
+        Dealing with scope creep, payment issues, time tracking, pricing, and client acquisition 
+        across platforms like Upwork, Fiverr, and direct clients.
+      pain_score: 90
+      opportunity_score: 89
+      solo_founder_fit: 96
+      estimated_market_size: "75M+ freelancers globally, 59M in US"
       growth_trend: "growing"
       
     pain_points:
-      primary: "Clients constantly request additional work beyond original scope, eating into profit margins and time"
-      secondary: "Freelancers don't know how to say no without damaging client relationships"
-      tertiary: "No clear way to track scope changes and communicate costs for additional work"
+      primary: "Scope creep and unpaid work - clients requesting additional work beyond original agreements, eating into margins"
+      secondary: "Late payments and invoice management - tracking billable time, sending invoices, following up on unpaid invoices"
+      tertiary: "Contract and boundary issues - saying no to clients without damaging relationships, unclear project scopes"
       
     revenue_opportunities:
       - model: "Templates & Scripts"
         price_range: "$39-$149"
         examples:
-          - "Scope Creep Email Script Library (25 templates) - $39"
-          - "Anti-Scope-Creep Contract Bundle (10 templates) - $97"
-          - "Scope Change Calculator (spreadsheet) - $49"
+          - "Scope Creep Email Script Library (25 templates) - $39-$79"
+          - "Freelance Contract Bundle (10 templates) - $97-$149"
+          - "Invoice & Payment Terms Templates - $49"
+      - model: "Tools & Calculators"
+        price_range: "$29-$79"
+        examples:
+          - "Scope Change Calculator (track changes, calculate costs) - $49-$79"
+          - "Project Profitability Calculator - $29-$49"
+          - "Hourly Rate Calculator - $29"
       - model: "Consulting & Coaching"
         price_range: "$297-$1,497"
         examples:
-          - "Freelance Boundary Coaching (3 sessions) - $497-$1,497"
-          - "Contract Audit + Fixes (1-hour) - $297"
-      - model: "Reports & Guides"
-        price_range: "$39-$97"
+          - "Freelance Business Audit (contracts, pricing, processes) - $497-$997"
+          - "Boundary & Pricing Coaching (3 sessions) - $897-$1,497"
+          - "Contract Review Session - $297"
+      - model: "SaaS Tools"
+        price_range: "$29-$79/month"
         examples:
-          - "Scope Creep Survival Guide (scripts, templates, calculators) - $39-$97"
-      - model: "Simple Tools"
-        price_range: "$15-$39/month"
-        examples:
-          - "Scope Tracker SaaS (log scope, track changes, generate invoices) - $29/month"
+          - "Scope Tracker (log changes, generate invoices for extra work) - $49-$79/month"
+          - "Freelance CRM & Project Manager - $39-$69/month"
           
-    time_to_first_revenue: "7-14 days"
+    time_to_first_revenue: "7 days"
     first_action_plan:
-      - "Week 1-2: Create 'Scope Creep Email Script Library' (25 templates) → Sell for $39"
-      - "Week 3-4: Package 'Anti-Scope-Creep Contract Bundle' → Sell for $97"
-      - "Month 2: Offer 'Scope Boundary Coaching' (1-hour calls) → $297/session"
+      - "Week 1: Create 'Scope Creep Email Script Library' → Sell for $39-$79"
+      - "Week 2: Package 'Freelance Contract Bundle' → Sell for $97"
+      - "Week 3-4: Offer 'Contract Review Sessions' → $297/hour"
       
     monitoring:
       keywords:
+        - "freelance"
         - "scope creep"
-        - "freelance scope"
-        - "client requesting more work"
-        - "freelance contracts"
-        - "project boundaries"
-        - "unpaid freelance work"
-        - "scope creep prevention"
-        - "freelance pricing"
+        - "client management"
+        - "project scope"
+        - "freelance invoicing"
+        - "unpaid work"
+        - "freelance contract"
+        - "time tracking"
+        - "billable hours"
+        - "project pricing"
+        - "late payment"
+        - "client requests"
+        - "freelance boundaries"
+        - "upwork"
+        - "fiverr"
+        - "consultant"
+        - "independent contractor"
+        - "solopreneur"
+        - "freelance accounting"
+        - "proposal writing"
         
       subreddits:
         - "r/freelance"
         - "r/Upwork"
         - "r/Fiverr"
+        - "r/freelance_forhire"
+        - "r/consulting"
+        - "r/entrepreneur"
+        - "r/smallbusiness"
         - "r/freelanceWriters"
-        - "r/graphic_design"
         - "r/webdev"
-        - "r/forhire"
+        - "r/designjobs"
         
       github_topics:
-        - "freelance"
-        - "project-management"
+        - "freelancing"
         - "invoicing"
-        - "contracts"
+        - "time-tracking"
+        - "project-management"
+        - "client-management"
+        - "billing"
+        - "contract-management"
         
       github_search_queries:
+        - "freelance invoice"
+        - "time tracking"
+        - "project scope tracking"
+        - "client management"
         - "freelance contract"
-        - "scope management"
-        - "project tracking"
-        - "freelance tools"
+        - "project billing"
 
   # =============================================================================
-  # NICHE 2: Newsletter Deliverability for Solo Creators
+  # NICHE 3: Etsy Sellers & Shop Owners
   # =============================================================================
-  # Highest solo-founder fit (95/100)
-  # Pain: 88/100 | Opportunity: 85/100 | Solo-Fit: 95/100
-  - id: "newsletter-deliverability"
-    name: "Newsletter Deliverability Solutions for Solo Creators"
+  # Pain: 88/100 | Opportunity: 87/100 | Solo-Fit: 94/100
+  - id: "etsy-sellers"
+    name: "Etsy Sellers & Shop Owners"
     
     overview:
-      title: "Newsletter Deliverability Optimization for Independent Creators"
+      title: "Etsy Sellers - SEO, Pricing, Analytics & Shop Optimization"
       description: |
-        Solo newsletter creators struggling with emails landing in spam, low open 
-        rates, and deliverability issues. They need simple, affordable solutions 
-        to fix technical setup and improve inbox placement without becoming email experts.
+        Etsy shop owners across all categories (handmade, vintage, supplies, digital products, 
+        print-on-demand) struggling with search visibility, pricing strategy, competition, 
+        analytics, shipping, and marketing. 5M+ active sellers dealing with algorithm changes, 
+        SEO optimization, and profitability challenges.
       pain_score: 88
-      opportunity_score: 85
-      solo_founder_fit: 95
-      estimated_market_size: "50,000-100,000+ creators"
+      opportunity_score: 87
+      solo_founder_fit: 94
+      estimated_market_size: "5M+ active Etsy sellers"
       growth_trend: "growing"
       
     pain_points:
-      primary: "30%+ of newsletter emails going to spam even with proper SPF/DKIM/DMARC setup"
-      secondary: "Newsletter creators don't understand technical requirements and can't diagnose why emails aren't delivering"
-      tertiary: "Deliverability tools and services are expensive or require technical expertise"
-      
-    revenue_opportunities:
-      - model: "Reports & Checklists"
-        price_range: "$49-$149"
-        examples:
-          - "Newsletter Deliverability Audit Checklist (15-point diagnostic) - $49"
-          - "Deliverability Rescue Guide (step-by-step fixes) - $79-$149"
-      - model: "Templates & Tools"
-        price_range: "$29-$79"
-        examples:
-          - "SPF/DKIM/DMARC Setup Template Pack (all major platforms + videos) - $29-$79"
-          - "Email Setup Checklist - $29"
-      - model: "Consulting & Audits"
-        price_range: "$297-$997"
-        examples:
-          - "Deliverability Rescue Package (1-hour audit + fixes + 30-day monitoring) - $297-$997"
-          - "Quick Fix Session (1-hour Zoom) - $297"
-      - model: "SaaS Tools"
-        price_range: "$19-$49/month"
-        examples:
-          - "Deliverability Dashboard (monitor spam placement, domain reputation, alerts) - $19-$49/month"
-          
-    time_to_first_revenue: "7-14 days"
-    first_action_plan:
-      - "Week 1-2: Create 'Newsletter Deliverability Rescue Checklist' (15-point audit) → Sell for $49"
-      - "Week 3-4: Offer 'Deliverability Quick Fix' service (1-hour Zoom) → $297"
-      - "Month 2: Build SPF/DKIM/DMARC Template Pack → $29"
-      
-    monitoring:
-      keywords:
-        - "newsletter deliverability"
-        - "email spam folder"
-        - "newsletter spam"
-        - "email deliverability"
-        - "SPF DKIM DMARC"
-        - "newsletter inbox"
-        - "email open rates"
-        - "substack deliverability"
-        - "beehiiv deliverability"
-        
-      subreddits:
-        - "r/EmailMarketing"
-        - "r/newsletters"
-        - "r/Entrepreneur"
-        - "r/SaaS"
-        - "r/juststart"
-        - "r/Substack"
-        - "r/contentcreation"
-        
-      github_topics:
-        - "email-deliverability"
-        - "smtp"
-        - "newsletter"
-        - "email-marketing"
-        
-      github_search_queries:
-        - "newsletter deliverability issues"
-        - "email spam folder"
-        - "improve email deliverability"
-        - "newsletter platform"
-
-  # =============================================================================
-  # NICHE 3: Etsy Handmade Pricing Strategy
-  # =============================================================================
-  # High pain (90/100), highest solo-fit (95/100)
-  # Pain: 90/100 | Opportunity: 85/100 | Solo-Fit: 95/100
-  - id: "etsy-handmade-pricing"
-    name: "Etsy Handmade Sellers Pricing Strategy"
-    
-    overview:
-      title: "Etsy Handmade Sellers Fighting 'Race to the Bottom' Pricing"
-      description: |
-        Etsy artisans struggling to compete against mass-produced goods and price 
-        their handmade items profitably without losing to drop-shippers. Need tools 
-        to calculate true costs and position premium handmade products.
-      pain_score: 90
-      opportunity_score: 85
-      solo_founder_fit: 95
-      estimated_market_size: "100,000+ struggling sellers"
-      growth_trend: "stable"
-      
-    pain_points:
-      primary: "Handmade sellers can't compete on price with mass-produced items flooding Etsy"
-      secondary: "Sellers underprice their work (e.g., $1.50 profit for 30-40 minutes of labor)"
-      tertiary: "Don't know how to position handmade as premium vs cheap alternatives"
+      primary: "Poor search visibility and SEO - listings not ranking, low traffic despite good products, algorithm changes affecting sales"
+      secondary: "Pricing struggles - underpricing handmade items, can't compete with mass-produced, don't account for true costs"
+      tertiary: "Analytics and competition tracking - don't know what's working, can't track competitors, unclear what to optimize"
       
     revenue_opportunities:
       - model: "Tools & Calculators"
+        price_range: "$29-$97"
+        examples:
+          - "Etsy Pricing Calculator (materials, time, fees, profit margin) - $39-$79"
+          - "SEO Keyword Research Tool - $49-$97"
+          - "Competition Tracker - $49"
+      - model: "Templates & Checklists"
         price_range: "$29-$79"
         examples:
-          - "Etsy Pricing Calculator (labor, materials, fees, profit margins) - $29-$79"
-          - "True Cost Calculator Spreadsheet - $29"
-      - model: "Guides & Playbooks"
-        price_range: "$47-$97"
+          - "Etsy SEO Optimization Checklist (tags, titles, descriptions) - $29-$49"
+          - "Listing Optimization Templates - $39-$79"
+          - "Product Photography Guide & Templates - $49"
+      - model: "Guides & Courses"
+        price_range: "$49-$197"
         examples:
-          - "Premium Positioning Playbook (differentiate handmade vs mass-produced) - $47-$97"
-          - "Etsy Pricing Strategy Guide - $49"
-      - model: "Consulting & Audits"
-        price_range: "$197-$497"
+          - "Etsy SEO Mastery Guide (keyword research, optimization) - $79-$149"
+          - "Profitable Pricing Strategy Guide - $49-$97"
+          - "Etsy Analytics Deep Dive Course - $97-$197"
+      - model: "SaaS Tools"
+        price_range: "$19-$69/month"
         examples:
-          - "Shop Pricing Audit (review strategy, competitive analysis) - $197-$497"
-          - "1:1 Pricing Strategy Session - $297"
-      - model: "Templates"
-        price_range: "$39"
-        examples:
-          - "Etsy Shop Optimization Templates (listing templates emphasizing handmade value) - $39"
+          - "Etsy SEO Dashboard (keyword tracking, ranking monitor) - $29-$49/month"
+          - "Shop Analytics & Insights - $19-$39/month"
+          - "Competitor Monitoring Tool - $39-$69/month"
           
-    time_to_first_revenue: "7-14 days"
+    time_to_first_revenue: "7 days"
     first_action_plan:
-      - "Week 1-2: Create 'Etsy Pricing Calculator' (Google Sheets) → Sell for $29"
-      - "Week 3-4: Write 'Premium Positioning Playbook' → Sell for $47-$97"
-      - "Month 2: Offer 'Shop Pricing Audits' → $197-$497"
+      - "Week 1: Create 'Etsy Pricing Calculator' (Excel/Sheets) → Sell for $39"
+      - "Week 2: Build 'Etsy SEO Optimization Checklist' → Sell for $29-$49"
+      - "Week 3-4: Write 'Profitable Pricing Strategy Guide' → Sell for $49-$97"
       
     monitoring:
       keywords:
-        - "etsy pricing strategy"
-        - "handmade pricing"
-        - "etsy undercutting"
-        - "race to bottom"
-        - "etsy profit margins"
-        - "how to price etsy items"
-        - "etsy pricing calculator"
+        - "etsy seo"
+        - "etsy pricing"
+        - "etsy tags"
+        - "etsy ranking"
+        - "etsy sales"
+        - "etsy keywords"
+        - "etsy algorithm"
+        - "etsy visibility"
+        - "etsy shop"
+        - "etsy seller"
+        - "etsy analytics"
+        - "etsy competition"
+        - "etsy shipping"
         - "etsy fees"
+        - "etsy marketing"
+        - "etsy handmade"
+        - "etsy digital"
+        - "print on demand"
+        - "etsy listings"
+        - "etsy optimization"
         
       subreddits:
         - "r/Etsy"
         - "r/EtsySellers"
+        - "r/etsypromos"
+        - "r/ArtisanGifts"
+        - "r/crafts"
         - "r/smallbusiness"
+        - "r/ecommerce"
+        - "r/Entrepreneur"
         - "r/handmade"
-        - "r/craftit"
+        - "r/printondemand"
         
       github_topics:
-        - "etsy-api"
-        - "pricing"
+        - "etsy"
         - "ecommerce"
+        - "marketplace"
+        - "seo"
+        - "pricing"
+        - "analytics"
         
       github_search_queries:
+        - "etsy seo"
+        - "etsy analytics"
         - "etsy pricing"
-        - "etsy calculator"
-        - "etsy tools"
+        - "etsy keyword research"
+        - "etsy listing optimizer"
+        - "etsy automation"
 
   # =============================================================================
-  # NICHE 4: Teachers Pay Teachers Copyright Protection
+  # NICHE 4: Digital Educators & Course Creators
   # =============================================================================
-  # Recommended as starter niche - fastest to revenue
-  # Pain: 85/100 | Opportunity: 82/100 | Solo-Fit: 92/100
-  - id: "tpt-copyright-protection"
-    name: "Teachers Pay Teachers Copyright Protection"
+  # Pain: 89/100 | Opportunity: 88/100 | Solo-Fit: 95/100
+  - id: "digital-educators"
+    name: "Digital Educators & Course Creators"
     
     overview:
-      title: "TPT Sellers Protecting Against Resource Theft"
+      title: "Digital Educators & Course Creators - Multi-Platform Content Management"
       description: |
-        Teachers Pay Teachers (TPT) seller-authors struggling to protect their 
-        digital resources from copyright infringement and design theft. Need simple 
-        tools and templates to prevent theft and enforce copyright.
-      pain_score: 85
-      opportunity_score: 82
-      solo_founder_fit: 92
-      estimated_market_size: "50,000+ sellers concerned about theft"
-      growth_trend: "stable"
+        Educators creating and selling digital products and courses across platforms 
+        (Teachers Pay Teachers, Gumroad, Teachable, Udemy, Coursera, Thinkific, Podia) 
+        dealing with copyright protection, pricing strategy, marketing, SEO, analytics, 
+        and student engagement. Growing $300B+ online education market.
+      pain_score: 89
+      opportunity_score: 88
+      solo_founder_fit: 95
+      estimated_market_size: "10M+ educators selling digital products/courses"
+      growth_trend: "growing"
       
     pain_points:
-      primary: "Sellers fear getting resources stolen and sold by other sellers"
-      secondary: "TPT has widespread copyright infringement problem - passages lifted verbatim, pages copied"
-      tertiary: "Don't know how to protect digital resources or report infringement effectively"
+      primary: "Copyright theft and content piracy - educational resources stolen, shared without permission, unauthorized distribution"
+      secondary: "Marketing and visibility struggles - hard to stand out, low sales despite quality content, unclear marketing strategy"
+      tertiary: "Pricing confusion and student engagement - don't know what to charge, low completion rates, retention challenges"
       
     revenue_opportunities:
-      - model: "Checklists & Templates"
-        price_range: "$29-$49"
+      - model: "Templates & Checklists"
+        price_range: "$29-$149"
         examples:
-          - "Copyright Protection Checklist (watermarking, tracking, reporting) - $29-$49"
-          - "DMCA Takedown Templates (pre-written notices) - $39"
-      - model: "Monitoring Services"
-        price_range: "$19-$39/month"
+          - "Copyright Protection Checklist (DMCA, watermarking, monitoring) - $49-$79"
+          - "Course Marketing Templates (email sequences, launch checklists) - $79-$149"
+          - "Pricing Strategy Calculator - $39-$79"
+      - model: "Tools & Resources"
+        price_range: "$29-$97"
         examples:
-          - "TPT Monitoring Service (alert sellers when similar resources appear) - $19-$39/month"
-      - model: "Courses & Guides"
-        price_range: "$97"
+          - "Watermarking Tool/Templates - $29-$49"
+          - "TPT SEO Optimization Guide - $49-$79"
+          - "Course Launch Checklist Bundle - $49-$97"
+      - model: "Guides & Courses"
+        price_range: "$79-$297"
         examples:
-          - "Resource Security Course (design theft-resistant templates) - $97"
-          - "TPT Copyright Protection Guide - $49"
-      - model: "Tools"
-        price_range: "$29"
+          - "Digital Product Marketing Masterclass - $149-$297"
+          - "Copyright Protection Guide (monitoring, enforcement) - $79-$149"
+          - "Student Engagement Playbook - $97-$197"
+      - model: "SaaS Tools"
+        price_range: "$29-$79/month"
         examples:
-          - "Watermark Template Pack - $29"
+          - "Copyright Monitoring Service (alerts for stolen content) - $39-$79/month"
+          - "Course Analytics Dashboard - $29-$49/month"
+          - "Marketing Automation Tool - $49-$69/month"
           
-    time_to_first_revenue: "7-14 days"
+    time_to_first_revenue: "7 days"
     first_action_plan:
-      - "Week 1-2: Create 'TPT Copyright Protection Checklist' → Sell for $29-$49"
-      - "Week 3-4: Build 'DMCA Takedown Template Pack' → Sell for $39"
-      - "Month 2: Launch simple manual monitoring service (MVP) → $19/month"
+      - "Week 1: Create 'TPT Copyright Protection Checklist' → Sell for $49"
+      - "Week 2: Build 'Course Pricing Calculator' → Sell for $39-$79"
+      - "Week 3-4: Write 'Digital Product Marketing Guide' → Sell for $79-$149"
       
     monitoring:
       keywords:
-        - "TPT copyright"
-        - "resource theft"
-        - "TPT infringement"
-        - "protect TPT resources"
-        - "teachers pay teachers copyright"
-        - "TPT stolen resources"
-        - "TPT watermark"
-        - "TPT DMCA"
+        - "teachers pay teachers"
+        - "tpt"
+        - "gumroad"
+        - "teachable"
+        - "udemy"
+        - "course creator"
+        - "copyright protection"
+        - "content theft"
+        - "digital products"
+        - "course pricing"
+        - "course marketing"
+        - "student engagement"
+        - "tpt seo"
+        - "online course"
+        - "educational resources"
+        - "lesson plans"
+        - "course analytics"
+        - "digital piracy"
+        - "dmca"
+        - "watermarking"
         
       subreddits:
         - "r/Teachers"
         - "r/TeachersPayTeachers"
-        - "r/education"
         - "r/teaching"
+        - "r/education"
+        - "r/elearning"
+        - "r/onlinecourses"
+        - "r/entrepreneur"
+        - "r/digitalnomad"
+        - "r/passiveincome"
+        - "r/Teachable"
+        - "r/Udemy"
         
       github_topics:
         - "education"
+        - "elearning"
+        - "online-courses"
+        - "digital-products"
         - "copyright"
-        - "dmca"
+        - "content-protection"
+        - "lms"
         
       github_search_queries:
-        - "TPT tools"
+        - "course platform"
         - "copyright protection"
-        - "watermark tools"
-
-  # =============================================================================
-  # NICHE 5: Podcast Transcription SEO Workflow
-  # =============================================================================
-  # Non-technical, clear ROI, growing market
-  # Pain: 83/100 | Opportunity: 80/100 | Solo-Fit: 90/100
-  - id: "podcast-transcription-seo"
-    name: "Podcast Transcription SEO Workflow"
-    
-    overview:
-      title: "Podcast Hosts SEO-Optimized Transcription Workflow"
-      description: |
-        Podcasters struggling to create and publish SEO-friendly transcripts and 
-        show notes efficiently. Google can't index audio, so transcripts are 
-        essential for discovery, but current solutions are expensive ($120-360/month).
-      pain_score: 83
-      opportunity_score: 80
-      solo_founder_fit: 90
-      estimated_market_size: "500,000+ podcasters actively trying SEO"
-      growth_trend: "growing"
-      
-    pain_points:
-      primary: "Google can't index audio - need transcripts for SEO but it's expensive ($1-3/minute = $120-360/month)"
-      secondary: "Don't know how to convert transcripts into SEO-optimized blog posts"
-      tertiary: "Manual transcript editing and show notes creation is time-consuming"
-      
-    revenue_opportunities:
-      - model: "Templates"
-        price_range: "$29-$79"
-        examples:
-          - "Transcript-to-Blog Template Pack (convert transcripts to SEO blog posts) - $39-$79"
-          - "Show Notes Templates (pre-formatted with H1/H2 tags, keyword spots) - $29"
-      - model: "Guides & Workflows"
-        price_range: "$49"
-        examples:
-          - "Automated Workflow Guide (use AI tools to create show notes from transcripts) - $49"
-          - "Podcast SEO Playbook - $49"
-      - model: "Audits & Consulting"
-        price_range: "$197-$397"
-        examples:
-          - "SEO Podcast Audit (review current SEO strategy, provide roadmap) - $197-$397"
-          - "Transcript SEO Optimization Session - $297"
-      - model: "Tools"
-        price_range: "$29"
-        examples:
-          - "Podcast SEO Checklist - $29"
-          
-    time_to_first_revenue: "7-14 days"
-    first_action_plan:
-      - "Week 1-2: Create 'Transcript-to-Blog Template Pack' → Sell for $39-$79"
-      - "Week 3-4: Write 'Automated Workflow Guide' (AI + no-code tools) → Sell for $49"
-      - "Month 2: Offer 'SEO Podcast Audits' → $197-$397"
-      
-    monitoring:
-      keywords:
-        - "podcast SEO"
-        - "show notes transcription"
-        - "podcast google ranking"
-        - "podcast transcription"
-        - "podcast discoverability"
-        - "podcast transcript cost"
-        - "automated show notes"
-        - "podcast workflow"
-        
-      subreddits:
-        - "r/podcasting"
-        - "r/podcasts"
-        - "r/PodcastGuestExchange"
-        - "r/SEO"
-        - "r/content_marketing"
-        
-      github_topics:
-        - "podcast"
-        - "transcription"
-        - "seo"
-        - "automation"
-        
-      github_search_queries:
-        - "podcast transcription"
-        - "podcast seo"
-        - "automated show notes"
-        - "podcast tools"
+        - "student engagement"
+        - "course analytics"
+        - "educational content"
+        - "tpt tools"
 
 # =============================================================================
 # Global Monitoring Configuration
@@ -432,11 +464,18 @@ monitoring_settings:
   
   # Features to use for monitoring
   active_features:
-    - "mining-drill"           # GitHub trending repos
-    - "reddit-pain-points"     # Reddit discussions
-    - "stargazer-analysis"     # GitHub stars & engagement
-    - "fork-evolution"         # GitHub forks
-    - "goldmine-detector"      # High-value opportunities
+    - "mining-drill"
+    - "stargazer-intelligence"
+    - "fork-evolution"
+    - "goldmine-detector"
+    - "hackernews-intelligence"
+    - "reddit-sniper"
+    - "viral-radar"
+    - "reddit-pain-points"
+    - "market-gap-identifier"
+    - "github-trending"
+    - "quality-pipeline"
+    - "phantom-scout"
     
   # Output configuration
   output:
@@ -449,7 +488,41 @@ monitoring_settings:
     high_pain_threshold: 85
     trending_stars_min: 100
     reddit_upvotes_min: 50
+    blue_ocean_opportunity_min: 80
+
+# =============================================================================
+# Quality Pipeline Configuration
+# =============================================================================
+quality_pipeline:
+  enabled: true
+  frequency: "daily"
+  
+  filtering:
+    min_quality_score: 70
+    max_items_per_report: 20
     
+  output:
+    directory: "data/intelligence"
+    naming_convention: "quality-pipeline-{niche_id}-{date}.md"
+
+# =============================================================================
+# Market Gap Identifier Configuration
+# =============================================================================
+market_gap_identifier:
+  enabled: true
+  frequency: "weekly"
+  
+  analysis:
+    days_back: 7
+    min_demand_score: 40
+    blue_ocean_demand_min: 80
+    blue_ocean_supply_max: 20
+    
+  output:
+    directory: "data/intelligence"
+    individual_reports: true
+    consolidated_report: true
+
 # =============================================================================
 # Ruthless Judge Configuration
 # =============================================================================
@@ -467,7 +540,7 @@ ruthless_judge:
     - "Flag dying trends or saturated markets"
     - "Highlight revenue model conflicts"
     - "Recommend immediate actions"
-    
+
 # =============================================================================
 # Council Configuration
 # =============================================================================
@@ -476,41 +549,66 @@ council:
   frequency: "weekly"
   
   analysis:
-    input_source: "ruthless_judge_reports"
+    input_source: "market_gap_identifier"
     output_directory: "data/council-decisions"
     
   decision_framework:
-    - "Rank opportunities by: (1) Time to revenue, (2) Solo-founder fit, (3) Market size"
-    - "Recommend top 1 niche to focus on THIS WEEK"
+    - "Rank opportunities by: (1) Opportunity score, (2) Time to revenue, (3) Solo-founder fit"
+    - "Recommend top Blue Ocean opportunity"
     - "Provide specific action plan (3-5 steps)"
     - "Estimate revenue potential (30/60/90 days)"
-    
+
 # =============================================================================
 # Execution Tracking
 # =============================================================================
 execution:
-  current_phase: "Phase 0 - Niche Discovery"
+  current_phase: "Phase 1 - Intelligence Generation"
   
   phases:
     - phase: 0
-      name: "Niche Discovery"
+      name: "Niche Refinement"
       status: "complete"
       deliverable: "config/target-niches.yaml"
       
     - phase: 1
-      name: "Fix Core Features"
-      status: "not_started"
-      deliverable: "5 features generating 25+ reports/week"
-      estimated_duration: "4-6 weeks"
+      name: "Intelligence Generation"
+      status: "in_progress"
+      deliverable: "13 features generating 52+ reports daily"
+      estimated_duration: "ongoing"
       
     - phase: 2
-      name: "Weekly Intelligence"
-      status: "not_started"
-      deliverable: "Ruthless Judge + Council producing actionable decisions"
-      estimated_duration: "2-3 weeks"
+      name: "Gap Analysis"
+      status: "in_progress"
+      deliverable: "Market Gap Identifier finding Blue Oceans weekly"
+      estimated_duration: "ongoing"
       
     - phase: 3
-      name: "Execute & Cash Flow"
-      status: "not_started"
-      deliverable: "First revenue from top opportunity"
+      name: "Product Development"
+      status: "pending"
+      deliverable: "Build top Blue Ocean opportunity"
       estimated_duration: "2-4 weeks"
+      
+    - phase: 4
+      name: "Revenue Generation"
+      status: "pending"
+      deliverable: "First paying customers"
+      estimated_duration: "1-2 weeks post-launch"
+
+# =============================================================================
+# Notes
+# =============================================================================
+notes: |
+  Selection Criteria Used:
+  - All niches have 92+ Solo-Founder Fit scores
+  - All are NON-TECHNICAL (templates, reports, guides, coaching)
+  - All have multiple revenue models
+  - All have fast path to first dollar (7-14 days)
+  - All have clear, validated pain points
+  - Strategic breadth: Multiple pain points per niche allow data-driven focus
+  
+  Next Steps:
+  1. All 13 features operational and generating reports
+  2. Quality Pipeline filtering to top 20 items daily
+  3. Market Gap Identifier identifying Blue Oceans weekly
+  4. Council recommends highest-scoring opportunity
+  5. Build validated product with 70-80% success rate

@@ -720,8 +720,12 @@ function generateMarkdownSummary(report: ScoutReport): string {
  * Print summary to console
  */
 function printSummary(report: ScoutReport): void {
-  report.topOpportunities.slice(0, 3).forEach((opp, idx) => // eslint-disable-next-line no-empty
-  {});report.trendsDetected.slice(0, 3).forEach((trend) => undefined);
+  report.topOpportunities.slice(0, 3).forEach((opp, idx) => {
+    console.log(`${idx + 1}. ${opp.solution} (${opp.confidence * 100}% confidence)`);
+  });
+  report.trendsDetected.slice(0, 3).forEach((trend) => {
+    console.log(`Trend: ${trend}`);
+  });
 }
 
 // Helper functions

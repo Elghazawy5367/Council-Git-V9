@@ -44,6 +44,7 @@
     "hackernews": "tsx scripts/scan-hackernews.ts",
     "github-trending": "tsx scripts/scan-github-trending.ts",
     "quality-pipeline": "tsx scripts/run-quality-pipeline-intelligence.ts",
+    "market-gaps": "tsx scripts/analyze-market-gaps.ts",
     "verify-deploy": "bash scripts/verify-deployments.sh",
     "deploy:firebase": "firebase deploy",
     "deploy:github": "npm run deploy"
@@ -101,6 +102,7 @@
     "dompurify": "^3.3.1",
     "embla-carousel-react": "^8.6.0",
     "file-saver": "^2.0.5",
+    "glob": "^13.0.3",
     "husky": "^9.1.7",
     "idb": "^8.0.1",
     "idb-keyval": "^6.2.2",

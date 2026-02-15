@@ -50,15 +50,13 @@ interface SupplySignals {
 
 interface MarketGap {
   niche: string;
-  nicheName: string;
-  demandScore: number;
-  supplyScore: number;
-  gapScore: number;
-  opportunityScore: number;
-  category: 'Blue Ocean' | 'Underserved' | 'Growing' | 'Saturated' | 'No Opportunity';
   demandSignals: DemandSignals;
   supplySignals: SupplySignals;
-  recommendedAction: string;
+  gapScore: number;
+  opportunityScore: number;
+  category: 'blue_ocean' | 'underserved' | 'growing' | 'saturated' | 'no_opportunity';
+  recommendation: string;
+  businessModels: string[];
 }
 
 // ============================================================================
@@ -283,55 +281,96 @@ function extractSupplySignals(reports: ReportData[]): SupplySignals {
 // GAP ANALYSIS
 // ============================================================================
 
-function analyzeMarketGap(
-  niche: NicheConfig,
-  demandSignals: DemandSignals,
-  supplySignals: SupplySignals
-): MarketGap {
-  const demandScore = demandSignals.totalDemandScore;
-  const supplyScore = supplySignals.totalSupplyScore;
+function analyzeMarketGap(nicheId: string, nicheName: string, reports: ReportData[]): MarketGap {
+  const demandSignals = extractDemandSignals(reports);
+  const supplySignals = extractSupplySignals(reports);
   
-  // Gap Score: Demand - Supply (can be negative if oversaturated)
-  const gapScore = Math.max(0, demandScore - supplyScore);
+  const gapScore = demandSignals.totalDemandScore - supplySignals.totalSupplyScore;
+  const opportunityScore = Math.round((gapScore * 0.6) + (demandSignals.totalDemandScore * 0.4));
   
-  // Opportunity Score: Weighted combination
-  // - Gap matters more (60%)
-  // - Raw demand also matters (40%)
-  const opportunityScore = Math.round((gapScore * 0.6) + (demandScore * 0.4));
-  
-  // Categorize market gap
   let category: MarketGap['category'];
-  let recommendedAction: string;
-  
-  if (demandScore >= 80 && supplyScore <= 20) {
-    category = 'Blue Ocean';
-    recommendedAction = '🚀 BUILD IMMEDIATELY - Massive demand, almost zero competition!';
-  } else if (demandScore >= 60 && supplyScore <= 40) {
-    category = 'Underserved';
-    recommendedAction = '✅ STRONG OPPORTUNITY - High demand, low competition. Build with differentiation.';
-  } else if (demandScore >= 40 && supplyScore <= 40) {
-    category = 'Growing';
-    recommendedAction = '📈 MONITOR CLOSELY - Emerging opportunity. Wait for demand signals to strengthen.';
-  } else if (demandScore >= 60 && supplyScore >= 60) {
-    category = 'Saturated';
-    recommendedAction = '⚠️ CROWDED MARKET - High competition. Only enter with unique angle or superior execution.';
+  if (demandSignals.totalDemandScore >= 80 && supplySignals.totalSupplyScore <= 20) {
+    category = 'blue_ocean';
+  } else if (demandSignals.totalDemandScore >= 60 && supplySignals.totalSupplyScore <= 40) {
+    category = 'underserved';
+  } else if (demandSignals.totalDemandScore >= 40 && supplySignals.totalSupplyScore <= 40) {
+    category = 'growing';
+  } else if (demandSignals.totalDemandScore >= 60 && supplySignals.totalSupplyScore >= 60) {
+    category = 'saturated';
   } else {
-    category = 'No Opportunity';
-    recommendedAction = '❌ SKIP - Insufficient demand signals. Focus on other niches.';
+    category = 'no_opportunity';
   }
   
   return {
-    niche: niche.id,
-    nicheName: niche.name,
-    demandScore,
-    supplyScore,
+    niche: nicheName,
+    demandSignals,
+    supplySignals,
     gapScore,
     opportunityScore,
     category,
-    demandSignals,
-    supplySignals,
-    recommendedAction
+    recommendation: generateRecommendation(category, demandSignals, supplySignals),
+    businessModels: generateBusinessModels(category, nicheName)
   };
+}
+
+function generateRecommendation(
+  category: MarketGap['category'],
+  demand: DemandSignals,
+  supply: SupplySignals
+): string {
+  const recommendations = [];
+  
+  if (category === 'blue_ocean') {
+    recommendations.push('🔥🔥🔥 BLUE OCEAN OPPORTUNITY');
+    recommendations.push('High demand + zero competition = BUILD IMMEDIATELY');
+    recommendations.push('This is a rare, validated, underserved market');
+    recommendations.push('Expected success rate: 70-80%');
+  } else if (category === 'underserved') {
+    recommendations.push('🔥🔥 UNDERSERVED MARKET');
+    recommendations.push('Strong demand + low competition = STRONG OPPORTUNITY');
+    recommendations.push('Some solutions exist but market still has room');
+    recommendations.push('Expected success rate: 50-60%');
+  } else if (category === 'growing') {
+    recommendations.push('🔥 GROWING MARKET');
+    recommendations.push('Moderate demand + low competition = WORTH EXPLORING');
+    recommendations.push('Early stage market, could grow significantly');
+    recommendations.push('Expected success rate: 30-40%');
+  } else if (category === 'saturated') {
+    recommendations.push('⚠️ SATURATED MARKET');
+    recommendations.push('High demand BUT high competition = DIFFICULT');
+    recommendations.push('Only enter if you have unique differentiation');
+    recommendations.push('Expected success rate: 10-20%');
+  } else {
+    recommendations.push('❌ NO CLEAR OPPORTUNITY');
+    recommendations.push('Low demand signals = NOT RECOMMENDED');
+    recommendations.push('Focus on other niches with stronger signals');
+  }
+  
+  return recommendations.join('\n');
+}
+
+function generateBusinessModels(category: MarketGap['category'], nicheName: string): string[] {
+  if (category === 'no_opportunity') {
+    return ['Not applicable - insufficient demand'];
+  }
+  
+  const models = [
+    '💰 SaaS: Monthly subscription ($29-99/month)',
+    '💰 One-time: Lifetime access ($97-297)',
+    '💰 Freemium: Free tier + paid features ($49-199/month)'
+  ];
+  
+  if (category === 'blue_ocean') {
+    models.push('💰 Premium Pricing: First-mover advantage ($199-499/month)');
+    models.push('💰 Enterprise: White-glove service ($1,000-5,000/month)');
+  }
+  
+  if (category === 'underserved') {
+    models.push('💰 Templates: Sell pre-built solutions ($29-79 each)');
+    models.push('💰 Consulting: Help implement ($500-2,000 per project)');
+  }
+  
+  return models;
 }
 
 // ============================================================================
@@ -340,175 +379,176 @@ function analyzeMarketGap(
 
 function generateReport(gaps: MarketGap[]): string {
   const date = new Date().toISOString().split('T')[0];
+  let markdown = `# Market Gap Analysis Report\n\n`;
+  markdown += `**Date:** ${date}\n`;
+  markdown += `**Niches Analyzed:** ${gaps.length}\n\n`;
+  markdown += `---\n\n`;
   
-  let report = `# Market Gap Analysis Report\n\n`;
-  report += `**Date:** ${date}\n`;
-  report += `**Niches Analyzed:** ${gaps.length}\n\n`;
-  report += `---\n\n`;
+  markdown += `## 🎯 What is Market Gap Analysis?\n\n`;
+  markdown += `Cross-platform intelligence synthesis to identify underserved markets.\n\n`;
+  markdown += `**Gap Categories:**\n`;
+  markdown += `- **Blue Ocean:** High demand (80+) + Zero supply (0-20) = Best!\n`;
+  markdown += `- **Underserved:** High demand (60+) + Low supply (20-40) = Strong\n`;
+  markdown += `- **Growing:** Medium demand (40+) + Low supply = Worth exploring\n`;
+  markdown += `- **Saturated:** High demand + High supply = Difficult\n\n`;
+  markdown += `---\n\n`;
   
-  report += `## 📊 What is Market Gap Analysis?\n\n`;
-  report += `Market Gap Identifier is a META-FEATURE that synthesizes intelligence from ALL other features:\n`;
-  report += `- **Demand Signals:** Mining Drill, Reddit Sniper, Pain Points, HackerNews\n`;
-  report += `- **Supply Signals:** Goldmine, Fork Evolution, Stargazer, GitHub Trending\n\n`;
-  report += `It identifies opportunities where demand EXCEEDS supply = underserved markets.\n\n`;
+  const sorted = gaps.sort((a, b) => b.opportunityScore - a.opportunityScore);
+  const blueOceans = sorted.filter(g => g.category === 'blue_ocean');
+  const underserved = sorted.filter(g => g.category === 'underserved');
   
-  report += `**Gap Categories:**\n`;
-  report += `- 🌊 **Blue Ocean:** Demand 80+, Supply 0-20 (BEST!)\n`;
-  report += `- ✅ **Underserved:** Demand 60+, Supply 20-40\n`;
-  report += `- 📈 **Growing:** Demand 40+, Supply 0-40\n`;
-  report += `- ⚠️ **Saturated:** Demand 60+, Supply 60+\n`;
-  report += `- ❌ **No Opportunity:** Demand <40\n\n`;
+  if (blueOceans.length > 0) {
+    markdown += `## 🌊 BLUE OCEAN OPPORTUNITIES\n\n`;
+    blueOceans.forEach((gap, index) => {
+      markdown += formatGapReport(gap, index + 1);
+    });
+  }
   
-  report += `---\n\n`;
+  if (underserved.length > 0) {
+    markdown += `## 📈 UNDERSERVED MARKETS\n\n`;
+    underserved.forEach((gap, index) => {
+      markdown += formatGapReport(gap, index + 1);
+    });
+  }
   
-  // Sort by opportunity score descending
-  const sortedGaps = [...gaps].sort((a, b) => b.opportunityScore - a.opportunityScore);
+  markdown += `## 📊 Summary\n\n`;
+  markdown += `| Category | Count | Avg Opportunity Score |\n`;
+  markdown += `|----------|-------|-----------------------|\n`;
   
-  report += `## 🎯 Top Opportunities\n\n`;
-  const topGaps = sortedGaps.slice(0, 3);
-  topGaps.forEach((gap, index) => {
-    const emoji = gap.category === 'Blue Ocean' ? '🌊' : 
-                  gap.category === 'Underserved' ? '✅' :
-                  gap.category === 'Growing' ? '📈' : 
-                  gap.category === 'Saturated' ? '⚠️' : '❌';
-    
-    report += `### ${index + 1}. ${emoji} ${gap.nicheName}\n\n`;
-    report += `**Category:** ${gap.category}\n`;
-    report += `**Opportunity Score:** ${gap.opportunityScore}/100\n\n`;
-    report += `| Metric | Score |\n`;
-    report += `|--------|-------|\n`;
-    report += `| Demand | ${gap.demandScore}/100 |\n`;
-    report += `| Supply | ${gap.supplyScore}/100 |\n`;
-    report += `| Gap | ${gap.gapScore}/100 |\n\n`;
-    report += `**Action:** ${gap.recommendedAction}\n\n`;
-  });
-  
-  report += `---\n\n`;
-  
-  // Full analysis for all niches
-  report += `## 📋 Complete Analysis\n\n`;
-  sortedGaps.forEach((gap, index) => {
-    const emoji = gap.category === 'Blue Ocean' ? '🌊' : 
-                  gap.category === 'Underserved' ? '✅' :
-                  gap.category === 'Growing' ? '📈' : 
-                  gap.category === 'Saturated' ? '⚠️' : '❌';
-    
-    report += `### ${index + 1}. ${emoji} ${gap.nicheName}\n\n`;
-    report += `**Niche ID:** ${gap.niche}\n`;
-    report += `**Category:** ${gap.category}\n`;
-    report += `**Opportunity Score:** ${gap.opportunityScore}/100\n\n`;
-    
-    report += `#### Scores\n\n`;
-    report += `| Metric | Score |\n`;
-    report += `|--------|-------|\n`;
-    report += `| Demand | ${gap.demandScore}/100 |\n`;
-    report += `| Supply | ${gap.supplyScore}/100 |\n`;
-    report += `| Gap | ${gap.gapScore}/100 |\n\n`;
-    
-    report += `#### Demand Signals\n\n`;
-    report += `- Mining Drill Pain Points: ${gap.demandSignals.miningDrillPainPoints}\n`;
-    report += `- Reddit Sniper High Intent: ${gap.demandSignals.redditSniperHighIntent}\n`;
-    report += `- Reddit Pain Patterns: ${gap.demandSignals.redditPainPatterns}\n`;
-    report += `- HackerNews Buying Signals: ${gap.demandSignals.hackerNewsBuyingSignals}\n\n`;
-    
-    if (gap.demandSignals.evidenceLinks.length > 0) {
-      report += `**Evidence:**\n`;
-      gap.demandSignals.evidenceLinks.forEach(link => {
-        report += `- ${link}\n`;
-      });
-      report += `\n`;
+  const categories = ['blue_ocean', 'underserved', 'growing', 'saturated', 'no_opportunity'];
+  for (const cat of categories) {
+    const matching = gaps.filter(g => g.category === cat);
+    if (matching.length > 0) {
+      const avgScore = Math.round(matching.reduce((sum, g) => sum + g.opportunityScore, 0) / matching.length);
+      markdown += `| ${cat.replace('_', ' ')} | ${matching.length} | ${avgScore}/100 |\n`;
     }
-    
-    report += `#### Supply Signals\n\n`;
-    report += `- Goldmine Active Tools: ${gap.supplySignals.goldmineActiveTools}\n`;
-    report += `- Fork Evolution Active Forks: ${gap.supplySignals.forkEvolutionActiveForks}\n`;
-    report += `- Stargazer Quality Repos: ${gap.supplySignals.stargazerQualityRepos}\n`;
-    report += `- GitHub Trending New Tools: ${gap.supplySignals.trendingNewTools}\n\n`;
-    
-    if (gap.supplySignals.existingTools.length > 0) {
-      report += `**Existing Tools:**\n`;
-      gap.supplySignals.existingTools.slice(0, 5).forEach(tool => {
-        report += `- ${tool}\n`;
-      });
-      if (gap.supplySignals.existingTools.length > 5) {
-        report += `- ... and ${gap.supplySignals.existingTools.length - 5} more\n`;
-      }
-      report += `\n`;
-    }
-    
-    report += `**Recommended Action:** ${gap.recommendedAction}\n\n`;
-    report += `---\n\n`;
+  }
+  
+  markdown += '\n';
+  
+  if (blueOceans.length > 0) {
+    markdown += `## 🏆 TOP RECOMMENDATION\n\n`;
+    markdown += `**Niche:** ${blueOceans[0].niche}\n`;
+    markdown += `**Category:** Blue Ocean\n`;
+    markdown += `**Opportunity Score:** ${blueOceans[0].opportunityScore}/100\n`;
+    markdown += `**Gap Score:** ${blueOceans[0].gapScore}\n\n`;
+    markdown += `**Why This is Your Best Bet:**\n`;
+    markdown += `- Demand Score: ${blueOceans[0].demandSignals.totalDemandScore}/100 (validated need)\n`;
+    markdown += `- Supply Score: ${blueOceans[0].supplySignals.totalSupplyScore}/100 (low competition)\n`;
+    markdown += `- Success Probability: 70-80%\n\n`;
+    markdown += `**Immediate Action:**\n`;
+    markdown += `1. Review demand evidence in detail\n`;
+    markdown += `2. Validate with 10-20 customer interviews\n`;
+    markdown += `3. Build MVP in 2-4 weeks\n`;
+    markdown += `4. Launch to early demand signals (Reddit Sniper posts)\n`;
+    markdown += `5. Target: First paying customer within 30 days\n\n`;
+  }
+  
+  return markdown;
+}
+
+function formatGapReport(gap: MarketGap, index: number): string {
+  let markdown = `### ${index}. ${gap.niche}\n\n`;
+  
+  markdown += `**Opportunity Score:** ${gap.opportunityScore}/100 `;
+  if (gap.opportunityScore >= 90) markdown += '🔥🔥🔥';
+  else if (gap.opportunityScore >= 70) markdown += '🔥🔥';
+  else if (gap.opportunityScore >= 50) markdown += '🔥';
+  markdown += '\n\n';
+  
+  markdown += `**Gap Analysis:**\n`;
+  markdown += `- Demand Score: ${gap.demandSignals.totalDemandScore}/100\n`;
+  markdown += `- Supply Score: ${gap.supplySignals.totalSupplyScore}/100\n`;
+  markdown += `- Gap Score: ${gap.gapScore}\n`;
+  markdown += `- Category: ${gap.category.replace('_', ' ').toUpperCase()}\n\n`;
+  
+  markdown += `**Demand Evidence:**\n`;
+  gap.demandSignals.evidenceLinks.forEach(link => {
+    markdown += `  - ${link}\n`;
   });
+  markdown += '\n';
   
-  report += `## 💡 How to Use This Report\n\n`;
-  report += `1. **Focus on Blue Ocean & Underserved** - These are validated opportunities\n`;
-  report += `2. **Check Evidence Links** - Review source reports for context\n`;
-  report += `3. **Cross-Reference Supply** - Understand competitive landscape\n`;
-  report += `4. **Act on Top 3** - Build MVPs or validate with target audience\n\n`;
+  if (gap.supplySignals.existingTools.length > 0) {
+    markdown += `**Existing Tools:**\n`;
+    gap.supplySignals.existingTools.slice(0, 5).forEach(tool => {
+      markdown += `  - ${tool}\n`;
+    });
+    markdown += '\n';
+  } else {
+    markdown += `**Existing Tools:** None found (BLUE OCEAN!)\n\n`;
+  }
   
-  report += `---\n\n`;
-  report += `*Report generated by Market Gap Identifier META-FEATURE*\n`;
-  report += `*Data sources: ${gaps[0]?.demandSignals.evidenceLinks.length || 0}+ intelligence reports analyzed*\n`;
+  markdown += `**Recommendation:**\n${gap.recommendation}\n\n`;
   
-  return report;
+  markdown += `**Business Models:**\n`;
+  gap.businessModels.forEach(model => {
+    markdown += `  - ${model}\n`;
+  });
+  markdown += '\n---\n\n';
+  
+  return markdown;
 }
 
 // ============================================================================
 // MAIN FUNCTION
 // ============================================================================
 
-export async function analyzeMarketGaps(): Promise<void> {
-  console.log('🔍 Market Gap Identifier - Starting Analysis...\n');
+export async function runMarketGapIdentifier(): Promise<void> {
+  console.log('🎯 Market Gap Identifier - Starting...');
   
-  // Load niche configuration
   const niches = loadNicheConfig();
-  console.log(`📋 Found ${niches.length} enabled niches\n`);
+  console.log(`📂 Found ${niches.length} enabled niches`);
   
   const gaps: MarketGap[] = [];
   
-  // Analyze each niche
   for (const niche of niches) {
-    console.log(`🎯 Analyzing: ${niche.name}`);
-    console.log(`   Niche ID: ${niche.id}`);
+    console.log(`\n🎯 Analyzing market gap: ${niche.id}`);
+    console.log(`  → Loading reports from last 7 days...`);
     
-    // Load recent reports (last 7 days)
     const reports = await loadRecentReports(niche.id, 7);
-    console.log(`   📄 Loaded ${reports.length} reports from last 7 days`);
+    console.log(`  → Found ${reports.length} recent reports`);
     
-    // Extract signals
-    const demandSignals = extractDemandSignals(reports);
-    const supplySignals = extractSupplySignals(reports);
+    if (reports.length === 0) {
+      console.log(`  ⚠️ No reports found - run other features first`);
+      continue;
+    }
     
-    console.log(`   📈 Demand Score: ${demandSignals.totalDemandScore}/100`);
-    console.log(`   📊 Supply Score: ${supplySignals.totalSupplyScore}/100`);
+    console.log(`  → Analyzing demand vs supply...`);
+    const gap = analyzeMarketGap(niche.id, niche.name, reports);
     
-    // Analyze gap
-    const gap = analyzeMarketGap(niche, demandSignals, supplySignals);
+    console.log(`  → Category: ${gap.category}`);
+    console.log(`  → Opportunity Score: ${gap.opportunityScore}/100`);
+    
     gaps.push(gap);
     
-    console.log(`   ${gap.category === 'Blue Ocean' ? '🌊' : 
-                    gap.category === 'Underserved' ? '✅' :
-                    gap.category === 'Growing' ? '📈' : 
-                    gap.category === 'Saturated' ? '⚠️' : '❌'} Category: ${gap.category}`);
-    console.log(`   💯 Opportunity Score: ${gap.opportunityScore}/100\n`);
+    const date = new Date().toISOString().split('T')[0];
+    const nicheReport = formatGapReport(gap, 1);
+    const filename = `data/intelligence/market-gaps-${niche.id}-${date}.md`;
+    fs.mkdirSync('data/intelligence', { recursive: true });
+    fs.writeFileSync(filename, nicheReport);
+    
+    console.log(`  → Saved: ${filename}`);
   }
   
-  // Generate report
-  console.log('📝 Generating market gap report...');
-  const report = generateReport(gaps);
+  console.log('\n📊 Generating consolidated report...');
+  const consolidatedReport = generateReport(gaps);
   
-  // Save report
   const date = new Date().toISOString().split('T')[0];
-  const outputDir = path.join(process.cwd(), 'data', 'intelligence');
+  const filename = `data/intelligence/market-gaps-consolidated-${date}.md`;
+  fs.writeFileSync(filename, consolidatedReport);
   
-  // Ensure directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  console.log(`✅ Consolidated report: ${filename}`);
+  
+  const blueOceans = gaps.filter(g => g.category === 'blue_ocean').length;
+  const underserved = gaps.filter(g => g.category === 'underserved').length;
+  
+  console.log('\n🎯 SUMMARY:');
+  console.log(`  - Blue Ocean Opportunities: ${blueOceans}`);
+  console.log(`  - Underserved Markets: ${underserved}`);
+  console.log(`  - Total Gaps Analyzed: ${gaps.length}`);
+  
+  if (blueOceans > 0) {
+    console.log('\n🔥 ACTION REQUIRED: Blue Ocean opportunities found!');
+    console.log('   Review consolidated report for top recommendation.');
   }
-  
-  const outputPath = path.join(outputDir, `market-gaps-${date}.md`);
-  fs.writeFileSync(outputPath, report, 'utf8');
-  
-  console.log(`✅ Report saved to: ${outputPath}`);
-  console.log(`\n🎯 Top Opportunity: ${gaps.sort((a, b) => b.opportunityScore - a.opportunityScore)[0]?.nicheName || 'None'}`);
 }

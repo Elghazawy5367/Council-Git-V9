@@ -134,7 +134,7 @@ async function fetchStoryComments(storyId: string): Promise<HNComment[]> {
     
     const comments: HNComment[] = [];
     
-    function extractComments(commentNode: any): void {
+    const extractComments = (commentNode: any): void => {
       if (commentNode.text) {
         comments.push({
           text: commentNode.text,
@@ -146,7 +146,7 @@ async function fetchStoryComments(storyId: string): Promise<HNComment[]> {
       if (commentNode.children) {
         commentNode.children.forEach((child: any) => extractComments(child));
       }
-    }
+    };
     
     if (data.children) {
       data.children.forEach((child: any) => extractComments(child));

@@ -198,7 +198,7 @@ async function analyzeForkEcosystem(
       }
       
       // Check if successful (more stars than original)
-      if (fork.stargazers_count && fork.stargazers_count > repo.stargazers_count) {
+      if (fork.stargazers_count != null && fork.stargazers_count > repo.stargazers_count) {
         analysis.successfulForks.push(fork);
       }
       

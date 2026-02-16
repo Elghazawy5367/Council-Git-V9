@@ -176,10 +176,10 @@ async function analyzeStargazers(
     });
     
     // Analyze stargazers for institutional backing
-    // Note: listStargazersForRepo returns minimal user data without company field
+    // Note: listStargazersForRepo returns user objects (minimal data without company field)
     // For production use, consider fetching full user details for top stargazers
-    for (const user of stargazers) {
-      if (!user) continue;
+    for (const stargazer of stargazers) {
+      if (!stargazer) continue;
       
       // The basic stargazer endpoint doesn't include company info
       // We're primarily relying on star count and velocity for quality signals

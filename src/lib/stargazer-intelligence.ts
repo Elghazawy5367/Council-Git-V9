@@ -71,7 +71,7 @@ async function searchRepositoriesByTopic(
   id: number;
   full_name: string;
   name: string;
-  owner: { login: string };
+  owner: { login: string } | null;
   description: string | null;
   stargazers_count: number;
   forks_count: number;
@@ -83,7 +83,7 @@ async function searchRepositoriesByTopic(
     id: number;
     full_name: string;
     name: string;
-    owner: { login: string };
+    owner: { login: string } | null;
     description: string | null;
     stargazers_count: number;
     forks_count: number;
@@ -122,7 +122,7 @@ interface RepoData {
   id: number;
   full_name: string;
   name: string;
-  owner: { login: string };
+  owner: { login: string } | null;
   description: string | null;
   stargazers_count: number;
   forks_count: number;
@@ -164,6 +164,11 @@ async function analyzeStargazers(
   
   // Get sample of stargazers (first 100)
   try {
+    if (!repo.owner) {
+      console.error(`      ⚠️ Repository has no owner`);
+      return analysis;
+    }
+    
     const { data: stargazers } = await octokit.activity.listStargazersForRepo({
       owner: repo.owner.login,
       repo: repo.name,
@@ -173,9 +178,7 @@ async function analyzeStargazers(
     // Analyze stargazers for institutional backing
     // Note: listStargazersForRepo returns minimal user data without company field
     // For production use, consider fetching full user details for top stargazers
-    for (const stargazer of stargazers) {
-      // Use optional chaining for safety since user may be undefined
-      const user = stargazer.user;
+    for (const user of stargazers) {
       if (!user) continue;
       
       // The basic stargazer endpoint doesn't include company info

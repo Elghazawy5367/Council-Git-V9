@@ -193,12 +193,12 @@ async function analyzeForkEcosystem(
       // Check if active (commits in last 90 days)
       const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
       
-      if (new Date(fork.updated_at) > ninetyDaysAgo) {
+      if (fork.updated_at && new Date(fork.updated_at) > ninetyDaysAgo) {
         analysis.activeForks++;
       }
       
       // Check if successful (more stars than original)
-      if (fork.stargazers_count > repo.stargazers_count) {
+      if (fork.stargazers_count != null && fork.stargazers_count > repo.stargazers_count) {
         analysis.successfulForks.push(fork);
       }
       

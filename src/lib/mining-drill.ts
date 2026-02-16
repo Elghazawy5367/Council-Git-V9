@@ -554,12 +554,9 @@ export async function runMiningDrill(): Promise<void> {
     for (const niche of niches) {
       console.log(`\n⛏️  Processing: ${niche.id}`);
       
-      // Guard all config arrays with defaults
+      // Guard config array with defaults
       // Support both nested monitoring structure and flat structure
-      const keywords = niche.monitoring?.keywords || niche.keywords || [];
-      const githubTopics = niche.monitoring?.github_topics || niche.github_topics || [];
       const githubSearchQueries = niche.monitoring?.github_search_queries || niche.github_search_queries || [];
-      const subreddits = niche.monitoring?.subreddits || niche.subreddits || [];
       
       // Ensure githubSearchQueries is a valid array (defensive check for non-array types)
       const validGithubSearchQueries = Array.isArray(githubSearchQueries) ? githubSearchQueries : [];

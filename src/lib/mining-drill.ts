@@ -17,10 +17,17 @@ import { Octokit } from '@octokit/rest';
 export interface NicheConfig {
   id: string;
   name: string;
-  keywords: string[];
-  github_search_queries: string[];
-  github_topics: string[];
+  keywords?: string[];
+  github_search_queries?: string[];
+  github_topics?: string[];
+  subreddits?: string[];
   enabled: boolean;
+  monitoring?: {
+    keywords?: string[];
+    github_search_queries?: string[];
+    github_topics?: string[];
+    subreddits?: string[];
+  };
 }
 
 /**
@@ -547,10 +554,43 @@ export async function runMiningDrill(): Promise<void> {
     for (const niche of niches) {
       console.log(`\n⛏️  Processing: ${niche.id}`);
       
+      // Guard all config arrays with defaults
+      // Support both nested monitoring structure and flat structure
+      const keywords = niche.monitoring?.keywords || niche.keywords || [];
+      const githubTopics = niche.monitoring?.github_topics || niche.github_topics || [];
+      const githubSearchQueries = niche.monitoring?.github_search_queries || niche.github_search_queries || [];
+      const subreddits = niche.monitoring?.subreddits || niche.subreddits || [];
+      
+      // Validate they're arrays
+      if (!Array.isArray(keywords)) {
+        console.log(`  ⚠️  keywords is not an array for ${niche.id}, using empty array`);
+      }
+      
+      if (!Array.isArray(githubSearchQueries)) {
+        console.log(`  ⚠️  github_search_queries is not an array for ${niche.id}, using empty array`);
+      }
+      
+      if (!Array.isArray(githubTopics)) {
+        console.log(`  ⚠️  github_topics is not an array for ${niche.id}, using empty array`);
+      }
+      
+      if (!Array.isArray(subreddits)) {
+        console.log(`  ⚠️  subreddits is not an array for ${niche.id}, using empty array`);
+      }
+      
+      // Ensure githubSearchQueries is a valid array for iteration
+      const validGithubSearchQueries = Array.isArray(githubSearchQueries) ? githubSearchQueries : [];
+      
+      // Check if we have any search queries to process
+      if (validGithubSearchQueries.length === 0) {
+        console.log(`  ⚠️  No github_search_queries found for ${niche.id}, skipping`);
+        continue;
+      }
+      
       const allIssues: any[] = [];
       
       // Search using each query for this niche
-      for (const query of niche.github_search_queries) {
+      for (const query of validGithubSearchQueries) {
         try {
           const issues = await searchGitHubIssues(query, githubToken);
           allIssues.push(...issues);

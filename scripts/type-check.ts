@@ -80,19 +80,8 @@ async function runTypeCheck(): Promise<boolean> {
       continue;
     }
 
-    // Create a temporary tsconfig for this specific file
-    const tempConfigPath = path.join(process.cwd(), '.temp-tsconfig.json');
-    const tempConfig = {
-      extends: './tsconfig.json',
-      include: [feature.resolvedFile],
-      compilerOptions: {
-        noEmit: true
-      }
-    };
-    
     try {
-      fs.writeFileSync(tempConfigPath, JSON.stringify(tempConfig, null, 2));
-      await execAsync(`tsc --project ${tempConfigPath}`);
+      await execAsync(`npx tsc --noEmit ${feature.resolvedFile}`);
       results.push({
         feature: feature.feature,
         requestedFile: feature.requestedFile,
@@ -118,11 +107,6 @@ async function runTypeCheck(): Promise<boolean> {
       });
 
       console.log(`   ❌ ${errorCount} type error(s)`);
-    } finally {
-      // Clean up temp config
-      if (fs.existsSync(tempConfigPath)) {
-        fs.unlinkSync(tempConfigPath);
-      }
     }
   }
 

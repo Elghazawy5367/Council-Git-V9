@@ -16,7 +16,6 @@ dist-ssr
 *.tsbuildinfo
 vite.config.d.ts
 vite.config.js
-.temp-tsconfig.json
 
 # Environment variables
 .env

@@ -561,24 +561,7 @@ export async function runMiningDrill(): Promise<void> {
       const githubSearchQueries = niche.monitoring?.github_search_queries || niche.github_search_queries || [];
       const subreddits = niche.monitoring?.subreddits || niche.subreddits || [];
       
-      // Validate they're arrays
-      if (!Array.isArray(keywords)) {
-        console.log(`  ⚠️  keywords is not an array for ${niche.id}, using empty array`);
-      }
-      
-      if (!Array.isArray(githubSearchQueries)) {
-        console.log(`  ⚠️  github_search_queries is not an array for ${niche.id}, using empty array`);
-      }
-      
-      if (!Array.isArray(githubTopics)) {
-        console.log(`  ⚠️  github_topics is not an array for ${niche.id}, using empty array`);
-      }
-      
-      if (!Array.isArray(subreddits)) {
-        console.log(`  ⚠️  subreddits is not an array for ${niche.id}, using empty array`);
-      }
-      
-      // Ensure githubSearchQueries is a valid array for iteration
+      // Ensure githubSearchQueries is a valid array (defensive check for non-array types)
       const validGithubSearchQueries = Array.isArray(githubSearchQueries) ? githubSearchQueries : [];
       
       // Check if we have any search queries to process

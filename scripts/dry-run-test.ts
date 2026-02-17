@@ -18,14 +18,20 @@ type FeatureDef = {
 };
 
 const mockedFetch: typeof fetch = async (input) => {
-  const url =
+  const requestUrl =
     typeof input === 'string'
       ? input
       : input instanceof URL
         ? input.toString()
         : input.url;
+  let parsedUrl: URL | null = null;
+  try {
+    parsedUrl = new URL(requestUrl);
+  } catch {
+    parsedUrl = null;
+  }
 
-  if (url.includes('raw.githubusercontent.com')) {
+  if (parsedUrl?.hostname === 'raw.githubusercontent.com') {
     return new Response('mock-content', {
       status: 200,
       headers: { 'Content-Type': 'text/plain' }
@@ -34,11 +40,11 @@ const mockedFetch: typeof fetch = async (input) => {
 
   let payload: unknown = {};
 
-  if (url.includes('/search/repositories')) {
+  if (parsedUrl?.pathname.includes('/search/repositories')) {
     payload = { items: [], total_count: 0 };
-  } else if (url.includes('/issues')) {
+  } else if (parsedUrl?.pathname.includes('/issues')) {
     payload = [];
-  } else if (url.includes('/rate_limit')) {
+  } else if (parsedUrl?.pathname.includes('/rate_limit')) {
     payload = { rate: { limit: 5000, remaining: 4999, reset: Math.floor(Date.now() / 1000) + 3600 } };
   }
 

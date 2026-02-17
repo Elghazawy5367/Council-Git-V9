@@ -61,7 +61,7 @@ async function testFeature(feature: { name: string; script: string }): Promise<F
 
 async function main(): Promise<void> {
   console.log('🔍 Testing All Intelligence Features\n');
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   
   const results: FeatureTest[] = [];
   

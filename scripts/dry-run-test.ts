@@ -91,8 +91,18 @@ const mockRedditPost = {
   author: 'testuser'
 };
 
-void mockGitHubIssue;
-void mockRedditPost;
+const mockIssueLooksValid =
+  typeof mockGitHubIssue.title === 'string' &&
+  typeof mockGitHubIssue.body === 'string' &&
+  typeof mockGitHubIssue.comments === 'number';
+
+const mockRedditLooksValid =
+  typeof mockRedditPost.title === 'string' &&
+  typeof mockRedditPost.selftext === 'string' &&
+  typeof mockRedditPost.score === 'number';
+
+console.log(`🧩 Mock GitHub issue shape: ${mockIssueLooksValid ? 'valid' : 'invalid'}`);
+console.log(`🧩 Mock Reddit post shape: ${mockRedditLooksValid ? 'valid' : 'invalid'}\n`);
 
 const features: FeatureDef[] = [
   { name: 'Mining Drill', file: 'mining-drill' },

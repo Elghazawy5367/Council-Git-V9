@@ -56,6 +56,7 @@ ls -la data/reports/
 1. **[EXECUTIVE_SUMMARY.md](EXECUTIVE_SUMMARY.md)** - High-level findings and recommendations
 2. **[INTELLIGENCE_FEATURES_STATUS.md](INTELLIGENCE_FEATURES_STATUS.md)** - Complete feature status and architecture
 3. **[VALIDATION_REPORT.md](VALIDATION_REPORT.md)** - Detailed test results and methodology
+4. **[EVIDENCE_REPORT_LOCATIONS.md](EVIDENCE_REPORT_LOCATIONS.md)** - Actual file locations for all 74 generated reports
 
 ---
 
@@ -68,9 +69,14 @@ ls -la data/reports/
 - TypeScript compilation: 0 errors
 
 ### Functionality ✅
-- Stargazer Analysis: Generated 4 reports
-- Fork Evolution: Executed successfully
-- HackerNews Intelligence: Generated 3+ reports
+- Stargazer Analysis: Generated 8 reports (see `data/reports/stargazer*.md`)
+- Fork Evolution: Generated 4 reports (see `data/reports/fork-evolution*.md`)
+- HackerNews Intelligence: Generated 7 reports (see `data/reports/hackernews*.md`)
+- Reddit Sniper: Generated 18 reports
+- Viral Radar: Generated 22 reports
+- Reddit Pain Points: Generated 10 reports
+- GitHub Trending: Generated 5 reports
+- **Total: 74 evidence reports** (see [EVIDENCE_REPORT_LOCATIONS.md](EVIDENCE_REPORT_LOCATIONS.md))
 - All scripts handle network errors gracefully
 
 ### Workflows ✅

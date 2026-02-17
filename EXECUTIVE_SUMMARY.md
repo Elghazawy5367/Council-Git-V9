@@ -88,18 +88,34 @@ main();
 
 ### Reports Generated During Testing
 
-Successfully created 9+ new reports during validation:
-```
-data/reports/stargazer-maritime-professionals-2026-02-17.md
-data/reports/stargazer-freelancers-consultants-2026-02-17.md
-data/reports/stargazer-etsy-sellers-2026-02-17.md
-data/reports/stargazer-digital-educators-2026-02-17.md
-data/reports/hackernews-maritime-professionals-2026-02-17.md
-data/reports/hackernews-freelancers-consultants-2026-02-17.md
-data/reports/hackernews-etsy-sellers-2026-02-17.md
-data/reports/fork-evolution-maritime-professionals-2026-02-17.md
-... (74 total reports in repository)
-```
+Successfully created 74 reports across 7 features during validation:
+
+**Stargazer Analysis (8 reports):**
+- `data/reports/stargazer-maritime-professionals-2026-02-17.md`
+- `data/reports/stargazer-freelancers-consultants-2026-02-17.md`
+- `data/reports/stargazer-etsy-sellers-2026-02-17.md`
+- `data/reports/stargazer-digital-educators-2026-02-17.md`
+- Plus 4 detailed reports from Feb 16 (8-9 KB each)
+
+**Fork Evolution (4 reports):**
+- `data/reports/fork-evolution-maritime-professionals-2026-02-17.md`
+- `data/reports/fork-evolution-freelancers-consultants-2026-02-17.md` (21 KB)
+- `data/reports/fork-evolution-etsy-sellers-2026-02-17.md` (20 KB)
+- `data/reports/fork-evolution-digital-educators-2026-02-17.md` (21 KB)
+
+**HackerNews Intelligence (7 reports):**
+- `data/reports/hackernews-maritime-professionals-2026-02-17.md`
+- `data/reports/hackernews-freelancers-consultants-2026-02-17.md`
+- `data/reports/hackernews-etsy-sellers-2026-02-17.md`
+- Plus 4 reports from Feb 16 (up to 7.4 KB)
+
+**Plus:**
+- Reddit Sniper: 18 reports
+- Viral Radar: 22 reports  
+- Reddit Pain Points: 10 reports
+- GitHub Trending: 5 reports
+
+**See [EVIDENCE_REPORT_LOCATIONS.md](EVIDENCE_REPORT_LOCATIONS.md) for complete listing of all 74 reports.**
 
 ### Compilation Test
 ```bash

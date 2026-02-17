@@ -118,8 +118,8 @@ console.log('='.repeat(60));
 const successResults = results.filter((r) => r.status === 'SUCCESS');
 const failedResults = results.filter((r) => r.status === 'FAILED');
 
-console.log(`\n✅ Successful: ${successResults.length}/12`);
-console.log(`❌ Failed: ${failedResults.length}/12`);
+console.log(`\n✅ Successful: ${successResults.length}/${features.length}`);
+console.log(`❌ Failed: ${failedResults.length}/${features.length}`);
 
 if (successResults.length > 0) {
   console.log('\n⏱️  Execution Times (successful only):');

@@ -1,0 +1,50 @@
+name: Archive Old Reports
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: write  # Needed to commit archived reports
+
+jobs:
+  archive-reports:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for proper file dating
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Archive old reports
+        run: npx tsx scripts/archive-old-reports.ts
+      
+      - name: Update registry
+        run: npx tsx scripts/generate-report-registry.ts
+      
+      - name: Commit archived reports
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          
+          # Check if there are changes
+          if [[ -n $(git status --porcelain) ]]; then
+            git add data/archive/ data/registry/
+            git commit -m "chore: Archive reports older than 60 days [skip ci]"
+            git push
+            echo "✅ Archived reports committed"
+          else
+            echo "✨ No reports to archive"
+          fi

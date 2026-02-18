@@ -47,7 +47,12 @@
     "market-gaps": "tsx scripts/analyze-market-gaps.ts",
     "verify-deploy": "bash scripts/verify-deployments.sh",
     "deploy:firebase": "firebase deploy",
-    "deploy:github": "npm run deploy"
+    "deploy:github": "npm run deploy",
+    "reports:organize": "tsx scripts/organize-reports.ts",
+    "reports:organize:dry-run": "tsx scripts/organize-reports.ts --dry-run",
+    "reports:archive": "tsx scripts/archive-old-reports.ts",
+    "reports:archive:dry-run": "tsx scripts/archive-old-reports.ts --dry-run",
+    "reports:registry": "tsx scripts/generate-report-registry.ts"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

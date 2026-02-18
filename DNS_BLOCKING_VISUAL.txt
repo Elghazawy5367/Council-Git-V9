@@ -5,6 +5,16 @@
 ║                                                                           ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
 
+⚠️  IMPORTANT CORRECTION ADDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This analysis is accurate for DNS blocking, but maritime niche has an 
+ADDITIONAL issue: Topic "navigation" returns software libs, not maritime repos.
+
+See INVESTIGATION_CORRECTION_SUMMARY.md for complete corrected analysis.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 📅 TIMELINE VIEW
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -14,8 +24,10 @@ February 16, 2026              February 17, 2026           February 18, 2026
        │                            │                             │
        │                            │                             │
        ├─ ⭐ Stargazer runs         ├─ ⭐ Stargazer runs          │
-       │  ✅ SUCCESS                │  ❌ BLOCKED                 │
+       │  ✅ SUCCESS (API works)    │  ❌ BLOCKED                 │
        │  30 repos found            │  0 repos found              │
+       │  ⚠️  Maritime: Wrong repos!│                             │
+       │     (React Navigation)     │                             │
        │                            │                             │
        │                            ├─ 🍴 Fork Evolution runs    │
        │                            │  ✅ 3 SUCCESS               │
@@ -50,7 +62,8 @@ February 16, 2026              February 17, 2026           February 18, 2026
 Feature            Has Reports?    Why?
 ────────────────────────────────────────────────────────────────────────────
 ⭐ Stargazer       ✅ YES (8)      Ran on Feb 16 before block
-                                  Generated successful reports
+                                  Generated reports (but maritime had 
+                                  irrelevant repos due to topic mismatch)
 
 🍴 Fork Evolution  ✅ YES (4)      Ran on Feb 17 during intermittent block
                                   Got 3 successful, 1 blocked
@@ -87,7 +100,7 @@ Conclusion: NO DIFFERENCES IN IMPLEMENTATION
 ✅ THE ANSWER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   They DON'T work differently!
+   They DON'T work differently (from DNS blocking perspective)!
 
    1. ALL 4 features use identical GitHub API implementation
    2. ALL 4 features use same authentication
@@ -105,11 +118,16 @@ Conclusion: NO DIFFERENCES IN IMPLEMENTATION
    │                                                             │
    └─────────────────────────────────────────────────────────────┘
 
+   ⚠️  ADDITIONAL ISSUE: Maritime niche also has topic config problem
+   (Topic "navigation" = software libs, not maritime repos)
+   This is separate from DNS blocking.
+
 
 🚀 WHAT TO DO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   ✅ NO CODE CHANGES NEEDED
+   ✅ NO CODE CHANGES NEEDED (for DNS blocking)
+   ⚠️  FIX MARITIME TOPIC CONFIGURATION (separate issue)
 
    All features work correctly. To verify:
 
@@ -118,11 +136,15 @@ Conclusion: NO DIFFERENCES IN IMPLEMENTATION
    3. Observe they all succeed or all fail together
    4. Confirms no code differences
 
+   For maritime: Remove "navigation" topic, add maritime-specific topics
+   (See INVESTIGATION_CORRECTION_SUMMARY.md for details)
+
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
                       Investigation Complete ✅
                    Timing Issue - Not Code Issue
+                   + Maritime Topic Config Issue
                    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

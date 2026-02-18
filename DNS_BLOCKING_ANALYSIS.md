@@ -6,11 +6,28 @@
 
 ---
 
+## ⚠️ IMPORTANT CORRECTION (Added Later)
+
+**This investigation was partially incomplete. See [INVESTIGATION_CORRECTION_SUMMARY.md](INVESTIGATION_CORRECTION_SUMMARY.md) for full details.**
+
+**Key correction:** Maritime niche has an **additional** topic configuration issue beyond DNS blocking:
+- The GitHub topic "navigation" matches software navigation frameworks (React, Android) instead of maritime systems
+- Maritime Feb 16 report had 30 repos but **0% were maritime-related** (all were software libraries)
+- DNS blocking analysis below is still valid, but maritime niche also needs config fixes
+
+**What changed:**
+- DNS blocking affects all features equally ✅ (Still true)
+- Maritime "success" on Feb 16 was actually irrelevant repos ❌ (Correction needed)
+
+---
+
 ## Executive Summary
 
 **CONCLUSION:** All 4 features are equally affected by DNS blocking. The perception that some "work" and others don't is due to **timing**, not feature differences.
 
-- **Stargazer & Fork Evolution:** Generated successful reports on Feb 16 BEFORE DNS block
+**ADDITIONAL FINDING:** Maritime niche also has a topic configuration mismatch that causes irrelevant results even when API works.
+
+- **Stargazer & Fork Evolution:** Generated reports on Feb 16 BEFORE DNS block (but maritime had irrelevant repos)
 - **Mining Drill & Goldmine:** Never tested before DNS block, only failed attempts exist
 - **Current Status:** ALL 4 features are now DNS blocked
 
@@ -20,12 +37,16 @@
 
 ### Stargazer Analysis ⭐
 
-**Feb 16, 2026 - SUCCESS:**
+**Feb 16, 2026 - API ACCESSIBLE (but maritime repos were irrelevant):**
 ```
 File: stargazer-maritime-professionals-2026-02-16.md
 Size: 9,151 bytes
 Content: 30 repositories analyzed with full data
 Sample: react-navigation/react-navigation, alibaba/ARouter, organicmaps/organicmaps
+
+⚠️ CORRECTION: These are SOFTWARE navigation libraries, not maritime repos!
+Maritime relevance: 0% (topic "navigation" matches wrong content)
+See INVESTIGATION_CORRECTION_SUMMARY.md for details.
 ```
 
 **Feb 17, 2026 - DNS BLOCKED:**

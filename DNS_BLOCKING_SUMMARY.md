@@ -6,11 +6,25 @@
 
 ---
 
+## ⚠️ IMPORTANT CORRECTION
+
+**See [INVESTIGATION_CORRECTION_SUMMARY.md](INVESTIGATION_CORRECTION_SUMMARY.md) for complete corrected analysis.**
+
+**Key Finding:** Maritime niche has TWO separate issues:
+1. **DNS blocking** (affects all niches equally when active)
+2. **Topic mismatch** (maritime-specific config issue - "navigation" = software libs)
+
+The Feb 16 maritime "success" actually contained irrelevant repos (React Navigation, Android routing). This is separate from DNS blocking.
+
+---
+
 ## TL;DR
 
-**All 4 features work identically.** The difference is **when** they ran, not **how** they work.
+**All 4 features work identically from a DNS blocking perspective.** The difference is **when** they ran, not **how** they work.
 
-- ✅ Stargazer: Ran Feb 16 before DNS block → has successful reports
+**PLUS: Maritime has an additional topic configuration problem** that causes irrelevant results even when API is accessible.
+
+- ✅ Stargazer: Ran Feb 16 before DNS block → has reports (but maritime repos irrelevant)
 - ✅ Fork Evolution: Ran Feb 17 during intermittent block → has some successful reports
 - ❌ Mining Drill: Only ran after block started → no reports
 - ❌ Goldmine: Only ran after block started → no reports
@@ -22,10 +36,15 @@
 ### February 16, 2026 - Before DNS Block
 ```
 ⭐ Stargazer Analysis
-   ✅ 4 successful reports generated
+   ✅ 4 reports generated
    ✅ 8-9 KB each
    ✅ 30 repositories analyzed per report
    Status: GitHub API fully accessible
+   
+   ⚠️ CORRECTION: Maritime repos were irrelevant!
+   Maritime found: React Navigation, Android routing (0% maritime relevance)
+   Other niches: E-commerce, CRM tools (100% relevant)
+   Issue: Topic "navigation" matches software libs
 ```
 
 ### February 17, 2026 - Intermittent DNS Block
@@ -188,12 +207,15 @@ All features are correctly implemented. To verify they all work equally:
 3. ✅ All 4 features have proper error handling
 4. ⚠️  DNS blocking is external environment issue
 5. 📅 Difference is timing, not implementation
+6. ⚠️  **Maritime has additional topic mismatch issue** (separate from DNS blocking)
 
-**Status:** Investigation Complete  
-**Finding:** No code issues - timing-based DNS blocking  
-**Action:** None required (environment issue)
+**Status:** Investigation Complete (with correction)  
+**Finding:** No code issues - timing-based DNS blocking + maritime topic mismatch  
+**Action:** Fix maritime topic configuration (remove "navigation", add maritime-specific topics)  
+**See:** INVESTIGATION_CORRECTION_SUMMARY.md for complete corrected analysis
 
 ---
 
 **Investigated:** February 18, 2026  
-**Conclusion:** All features work identically - DNS blocking is timing-dependent
+**Corrected:** February 18, 2026  
+**Conclusion:** All features work identically for DNS blocking - Maritime also has config issue

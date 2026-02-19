@@ -1,14 +1,14 @@
-name: Daily Phantom Scout
+name: Phantom Scout - Multi-Niche Intelligence
 on:
   schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+    - cron: '0 */8 * * *'  # Every 8 hours
+  workflow_dispatch:  # Manual trigger
 
 permissions:
   contents: write
 
 jobs:
-  scout:
+  phantom-scout:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,13 +20,16 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         
-      - name: Run Phantom Scout
-        run: npx tsx src/lib/scout.ts > data/intelligence/blue-ocean-$(date +%Y-%m-%d).md
+      - name: Run Phantom Scout (Multi-Niche)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run phantom-scout
         
-      - name: Commit results
+      - name: Commit intelligence reports
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "🔍 Daily Scout Report"
-          file_pattern: 'data/intelligence/*.md'
+          commit_message: "👻 Phantom Scout: Multi-niche intelligence update"
+          file_pattern: 'data/reports/phantom-scout-*.md data/reports/phantom-scout-*.json data/opportunities/*.json data/intelligence/blue-ocean-*.md'
+

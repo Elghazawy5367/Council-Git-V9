@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-19T19:10:39.774Z",
-  "total_reports": 99,
+  "generated_at": "2026-02-19T19:35:07.308Z",
+  "total_reports": 159,
   "by_feature": {
     "fork-evolution": {
       "digital-educators": [
@@ -13,7 +13,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.753Z"
         },
         {
           "feature": "fork-evolution",
@@ -24,7 +24,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.753Z"
         }
       ],
       "etsy-sellers": [
@@ -37,7 +37,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.753Z"
         },
         {
           "feature": "fork-evolution",
@@ -48,7 +48,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.753Z"
         }
       ],
       "freelancers-consultants": [
@@ -61,7 +61,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.753Z"
         },
         {
           "feature": "fork-evolution",
@@ -72,7 +72,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "maritime-professionals": [
@@ -85,7 +85,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         },
         {
           "feature": "fork-evolution",
@@ -96,7 +96,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ]
     },
@@ -111,7 +111,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -124,7 +124,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "newsletter-deliverability": [
@@ -137,7 +137,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -150,7 +150,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -163,7 +163,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ]
     },
@@ -178,7 +178,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "etsy-sellers": [
@@ -191,7 +191,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "freelancers-consultants": [
@@ -204,7 +204,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "maritime-professionals": [
@@ -217,7 +217,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ]
     },
@@ -232,7 +232,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-19T19:07:46.704Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         },
         {
           "feature": "hackernews",
@@ -243,7 +243,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "etsy-sellers": [
@@ -256,7 +256,7 @@
           "quality_score": 72,
           "items_found": 9,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         },
         {
           "feature": "hackernews",
@@ -267,7 +267,7 @@
           "quality_score": 72,
           "items_found": 9,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "freelancers-consultants": [
@@ -280,7 +280,7 @@
           "quality_score": 13,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         },
         {
           "feature": "hackernews",
@@ -291,7 +291,7 @@
           "quality_score": 13,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         }
       ],
       "maritime-professionals": [
@@ -304,7 +304,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
         },
         {
           "feature": "hackernews",
@@ -315,7 +315,338 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.754Z"
+        }
+      ]
+    },
+    "market-gaps": {
+      "consolidated": [
+        {
+          "feature": "market-gaps",
+          "niche": "consolidated",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/consolidated/2026-02-15.md",
+          "size_bytes": 608,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "etsy-handmade-pricing": [
+        {
+          "feature": "market-gaps",
+          "niche": "etsy-handmade-pricing",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/etsy-handmade-pricing/2026-02-15.md",
+          "size_bytes": 446,
+          "quality_score": 4,
+          "items_found": 0,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "freelancer-scope-creep": [
+        {
+          "feature": "market-gaps",
+          "niche": "freelancer-scope-creep",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/freelancer-scope-creep/2026-02-15.md",
+          "size_bytes": 447,
+          "quality_score": 4,
+          "items_found": 0,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "newsletter-deliverability": [
+        {
+          "feature": "market-gaps",
+          "niche": "newsletter-deliverability",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/newsletter-deliverability/2026-02-15.md",
+          "size_bytes": 461,
+          "quality_score": 4,
+          "items_found": 0,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "podcast-transcription-seo": [
+        {
+          "feature": "market-gaps",
+          "niche": "podcast-transcription-seo",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/podcast-transcription-seo/2026-02-15.md",
+          "size_bytes": 442,
+          "quality_score": 4,
+          "items_found": 0,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "tpt-copyright-protection": [
+        {
+          "feature": "market-gaps",
+          "niche": "tpt-copyright-protection",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/tpt-copyright-protection/2026-02-15.md",
+          "size_bytes": 450,
+          "quality_score": 4,
+          "items_found": 0,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ]
+    },
+    "quality-pipeline": {
+      "digital-educators": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "digital-educators",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-15.md",
+          "size_bytes": 684,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "digital-educators",
+          "date": "2026-02-16",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-16.md",
+          "size_bytes": 686,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "digital-educators",
+          "date": "2026-02-17",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-17.md",
+          "size_bytes": 1538,
+          "quality_score": 23,
+          "items_found": 4,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "digital-educators",
+          "date": "2026-02-18",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-18.md",
+          "size_bytes": 1541,
+          "quality_score": 23,
+          "items_found": 4,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "etsy-handmade-pricing": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-handmade-pricing",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-handmade-pricing/2026-02-14.md",
+          "size_bytes": 691,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "etsy-sellers": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-sellers",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-15.md",
+          "size_bytes": 670,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-sellers",
+          "date": "2026-02-16",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-16.md",
+          "size_bytes": 2706,
+          "quality_score": 36,
+          "items_found": 5,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-sellers",
+          "date": "2026-02-17",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-17.md",
+          "size_bytes": 2111,
+          "quality_score": 28,
+          "items_found": 4,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-sellers",
+          "date": "2026-02-18",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-18.md",
+          "size_bytes": 2111,
+          "quality_score": 28,
+          "items_found": 4,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "freelancer-scope-creep": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancer-scope-creep",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancer-scope-creep/2026-02-14.md",
+          "size_bytes": 693,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "freelancers-consultants": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-15.md",
+          "size_bytes": 692,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-16",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-16.md",
+          "size_bytes": 694,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-17",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-17.md",
+          "size_bytes": 2106,
+          "quality_score": 28,
+          "items_found": 4,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-18",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-18.md",
+          "size_bytes": 694,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "maritime-professionals": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "maritime-professionals",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-15.md",
+          "size_bytes": 689,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "maritime-professionals",
+          "date": "2026-02-16",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-16.md",
+          "size_bytes": 691,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "maritime-professionals",
+          "date": "2026-02-17",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-17.md",
+          "size_bytes": 691,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "maritime-professionals",
+          "date": "2026-02-18",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-18.md",
+          "size_bytes": 691,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "newsletter-deliverability": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "newsletter-deliverability",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/newsletter-deliverability/2026-02-14.md",
+          "size_bytes": 710,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "podcast-transcription-seo": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "podcast-transcription-seo",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/podcast-transcription-seo/2026-02-14.md",
+          "size_bytes": 691,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        }
+      ],
+      "tpt-copyright-protection": [
+        {
+          "feature": "quality-pipeline",
+          "niche": "tpt-copyright-protection",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/tpt-copyright-protection/2026-02-14.md",
+          "size_bytes": 698,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-19T19:31:53.752Z"
         }
       ]
     },
@@ -330,7 +661,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -341,7 +672,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -354,7 +685,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -365,7 +696,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "newsletter-deliverability": [
@@ -378,7 +709,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -389,7 +720,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -402,7 +733,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -413,7 +744,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -426,7 +757,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -437,7 +768,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ]
     },
@@ -452,7 +783,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -463,7 +794,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -474,7 +805,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -485,7 +816,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -498,7 +829,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -509,7 +840,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "etsy-sellers": [
@@ -522,7 +853,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -533,7 +864,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -544,7 +875,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -555,7 +886,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.705Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -568,7 +899,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -579,7 +910,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "freelancers-consultants": [
@@ -592,7 +923,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -603,7 +934,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -614,7 +945,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -625,7 +956,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "maritime-professionals": [
@@ -638,7 +969,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -649,7 +980,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -660,7 +991,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -671,7 +1002,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "newsletter-deliverability": [
@@ -684,7 +1015,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -695,7 +1026,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -708,7 +1039,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -719,7 +1050,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -732,7 +1063,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
         },
         {
           "feature": "reddit-sniper",
@@ -743,7 +1074,374 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.755Z"
+        }
+      ]
+    },
+    "scout": {
+      "blue-ocean": [
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-07",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-07.md",
+          "size_bytes": 4797,
+          "quality_score": 42,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-08",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-08.md",
+          "size_bytes": 4938,
+          "quality_score": 42,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-20",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-20.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-21",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-21.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-22",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-22.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-23",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-23.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-24",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-24.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-25",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-25.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-26",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-26.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-27.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-28.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-29",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-29.md",
+          "size_bytes": 2535,
+          "quality_score": 5,
+          "items_found": 0,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-30",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-30.md",
+          "size_bytes": 0,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-01-31",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-31.md",
+          "size_bytes": 0,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-01",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-01.md",
+          "size_bytes": 0,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-02",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-02.md",
+          "size_bytes": 0,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-03",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-03.md",
+          "size_bytes": 0,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-04",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-04.md",
+          "size_bytes": 5569,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-05",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-05.md",
+          "size_bytes": 5568,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.751Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-06",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-06.md",
+          "size_bytes": 5568,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-07",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-07.md",
+          "size_bytes": 5568,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-08",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-08.md",
+          "size_bytes": 5568,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-09",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-09.md",
+          "size_bytes": 5568,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-10",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-10.md",
+          "size_bytes": 5572,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-11",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-11.md",
+          "size_bytes": 5576,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-12",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-12.md",
+          "size_bytes": 5577,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-13",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-13.md",
+          "size_bytes": 5577,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-14",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-14.md",
+          "size_bytes": 5578,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-15",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-15.md",
+          "size_bytes": 5578,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-16",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-16.md",
+          "size_bytes": 5580,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-17",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-17.md",
+          "size_bytes": 5580,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-18",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-18.md",
+          "size_bytes": 5580,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
+        },
+        {
+          "feature": "scout",
+          "niche": "blue-ocean",
+          "date": "2026-02-19",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-19.md",
+          "size_bytes": 5580,
+          "quality_score": 44,
+          "items_found": 1,
+          "status": "complete",
+          "last_modified": "2026-02-19T19:31:53.752Z"
         }
       ]
     },
@@ -758,7 +1456,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "stargazer",
@@ -769,7 +1467,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.706Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "etsy-sellers": [
@@ -782,7 +1480,7 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "stargazer",
@@ -793,7 +1491,7 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "freelancers-consultants": [
@@ -806,7 +1504,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "stargazer",
@@ -817,7 +1515,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "maritime-professionals": [
@@ -830,7 +1528,7 @@
           "quality_score": 78,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "stargazer",
@@ -841,7 +1539,7 @@
           "quality_score": 78,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ]
     },
@@ -856,7 +1554,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -867,7 +1565,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -878,7 +1576,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -889,7 +1587,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -900,7 +1598,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -913,7 +1611,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -924,7 +1622,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "etsy-sellers": [
@@ -937,7 +1635,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -948,7 +1646,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -959,7 +1657,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -970,7 +1668,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -981,7 +1679,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -994,7 +1692,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1005,7 +1703,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "freelancers-consultants": [
@@ -1018,7 +1716,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1029,7 +1727,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1040,7 +1738,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.707Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1051,7 +1749,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1062,7 +1760,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "maritime-professionals": [
@@ -1075,7 +1773,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1086,7 +1784,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1097,7 +1795,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1108,7 +1806,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1119,7 +1817,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "newsletter-deliverability": [
@@ -1132,7 +1830,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         },
         {
           "feature": "viral-radar",
@@ -1143,7 +1841,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.756Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -1156,7 +1854,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.757Z"
         },
         {
           "feature": "viral-radar",
@@ -1167,7 +1865,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.757Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -1180,7 +1878,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.757Z"
         },
         {
           "feature": "viral-radar",
@@ -1191,7 +1889,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-19T19:07:46.708Z"
+          "last_modified": "2026-02-19T19:31:53.757Z"
         }
       ]
     }
@@ -1206,7 +1904,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.753Z"
     },
     {
       "feature": "fork-evolution",
@@ -1217,7 +1915,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.753Z"
     },
     {
       "feature": "fork-evolution",
@@ -1228,7 +1926,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "fork-evolution",
@@ -1239,7 +1937,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1250,7 +1948,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1261,7 +1959,7 @@
       "quality_score": 72,
       "items_found": 9,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1272,7 +1970,7 @@
       "quality_score": 13,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1283,7 +1981,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1294,7 +1992,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1305,7 +2003,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1316,7 +2014,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1327,7 +2025,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-19",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-19.md",
+      "size_bytes": 5580,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "viral-radar",
@@ -1338,7 +2047,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1349,7 +2058,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1360,7 +2069,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1371,7 +2080,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "goldmine",
@@ -1382,7 +2091,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "goldmine",
@@ -1393,7 +2102,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "goldmine",
@@ -1404,7 +2113,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "goldmine",
@@ -1415,7 +2124,51 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "digital-educators",
+      "date": "2026-02-18",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-18.md",
+      "size_bytes": 1541,
+      "quality_score": 23,
+      "items_found": 4,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-sellers",
+      "date": "2026-02-18",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-18.md",
+      "size_bytes": 2111,
+      "quality_score": 28,
+      "items_found": 4,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-18",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-18.md",
+      "size_bytes": 694,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "maritime-professionals",
+      "date": "2026-02-18",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-18.md",
+      "size_bytes": 691,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1426,7 +2179,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1437,7 +2190,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1448,7 +2201,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1459,7 +2212,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-18",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-18.md",
+      "size_bytes": 5580,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "stargazer",
@@ -1470,7 +2234,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1481,7 +2245,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1492,7 +2256,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1503,7 +2267,7 @@
       "quality_score": 78,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1514,7 +2278,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1525,7 +2289,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1536,7 +2300,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1547,7 +2311,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "fork-evolution",
@@ -1558,7 +2322,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.753Z"
     },
     {
       "feature": "fork-evolution",
@@ -1569,7 +2333,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.753Z"
     },
     {
       "feature": "fork-evolution",
@@ -1580,7 +2344,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.753Z"
     },
     {
       "feature": "fork-evolution",
@@ -1591,7 +2355,51 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "digital-educators",
+      "date": "2026-02-17",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-17.md",
+      "size_bytes": 1538,
+      "quality_score": 23,
+      "items_found": 4,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-sellers",
+      "date": "2026-02-17",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-17.md",
+      "size_bytes": 2111,
+      "quality_score": 28,
+      "items_found": 4,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-17",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-17.md",
+      "size_bytes": 2106,
+      "quality_score": 28,
+      "items_found": 4,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "maritime-professionals",
+      "date": "2026-02-17",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-17.md",
+      "size_bytes": 691,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1602,7 +2410,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1613,7 +2421,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1624,7 +2432,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1635,7 +2443,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-17",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-17.md",
+      "size_bytes": 5580,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "viral-radar",
@@ -1646,7 +2465,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1657,7 +2476,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1668,7 +2487,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1679,7 +2498,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "hackernews",
@@ -1690,7 +2509,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1701,7 +2520,7 @@
       "quality_score": 72,
       "items_found": 9,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1712,7 +2531,7 @@
       "quality_score": 13,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "hackernews",
@@ -1723,7 +2542,51 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "digital-educators",
+      "date": "2026-02-16",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-16.md",
+      "size_bytes": 686,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-sellers",
+      "date": "2026-02-16",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-16.md",
+      "size_bytes": 2706,
+      "quality_score": 36,
+      "items_found": 5,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-16",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-16.md",
+      "size_bytes": 694,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "maritime-professionals",
+      "date": "2026-02-16",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-16.md",
+      "size_bytes": 691,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1734,7 +2597,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1745,7 +2608,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1756,7 +2619,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1767,7 +2630,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-16",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-16.md",
+      "size_bytes": 5580,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "stargazer",
@@ -1778,7 +2652,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1789,7 +2663,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1800,7 +2674,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "stargazer",
@@ -1811,7 +2685,7 @@
       "quality_score": 78,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1822,7 +2696,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1833,7 +2707,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1844,7 +2718,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1855,7 +2729,117 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "consolidated",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/consolidated/2026-02-15.md",
+      "size_bytes": 608,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "etsy-handmade-pricing",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/etsy-handmade-pricing/2026-02-15.md",
+      "size_bytes": 446,
+      "quality_score": 4,
+      "items_found": 0,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "freelancer-scope-creep",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/freelancer-scope-creep/2026-02-15.md",
+      "size_bytes": 447,
+      "quality_score": 4,
+      "items_found": 0,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "newsletter-deliverability",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/newsletter-deliverability/2026-02-15.md",
+      "size_bytes": 461,
+      "quality_score": 4,
+      "items_found": 0,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "podcast-transcription-seo",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/podcast-transcription-seo/2026-02-15.md",
+      "size_bytes": 442,
+      "quality_score": 4,
+      "items_found": 0,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "market-gaps",
+      "niche": "tpt-copyright-protection",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/market-gaps/tpt-copyright-protection/2026-02-15.md",
+      "size_bytes": 450,
+      "quality_score": 4,
+      "items_found": 0,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "digital-educators",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-15.md",
+      "size_bytes": 684,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-sellers",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-15.md",
+      "size_bytes": 670,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-15.md",
+      "size_bytes": 692,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "maritime-professionals",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/maritime-professionals/2026-02-15.md",
+      "size_bytes": 689,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -1866,7 +2850,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -1877,7 +2861,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -1888,7 +2872,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -1899,7 +2883,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -1910,7 +2894,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1921,7 +2905,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1932,7 +2916,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1943,7 +2927,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1954,7 +2938,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -1965,7 +2949,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-15",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-15.md",
+      "size_bytes": 5578,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "viral-radar",
@@ -1976,7 +2971,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1987,7 +2982,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -1998,7 +2993,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2009,7 +3004,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2020,7 +3015,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2031,7 +3026,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2042,7 +3037,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2053,7 +3048,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.757Z"
     },
     {
       "feature": "viral-radar",
@@ -2064,7 +3059,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.757Z"
     },
     {
       "feature": "github-trending",
@@ -2075,7 +3070,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "github-trending",
@@ -2086,7 +3081,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "github-trending",
@@ -2097,7 +3092,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "github-trending",
@@ -2108,7 +3103,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
     },
     {
       "feature": "github-trending",
@@ -2119,7 +3114,62 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.704Z"
+      "last_modified": "2026-02-19T19:31:53.754Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-handmade-pricing",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-handmade-pricing/2026-02-14.md",
+      "size_bytes": 691,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancer-scope-creep",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancer-scope-creep/2026-02-14.md",
+      "size_bytes": 693,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "newsletter-deliverability",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/newsletter-deliverability/2026-02-14.md",
+      "size_bytes": 710,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "podcast-transcription-seo",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/podcast-transcription-seo/2026-02-14.md",
+      "size_bytes": 691,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "tpt-copyright-protection",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/tpt-copyright-protection/2026-02-14.md",
+      "size_bytes": 698,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -2130,7 +3180,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -2141,7 +3191,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -2152,7 +3202,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -2163,7 +3213,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -2174,7 +3224,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -2185,7 +3235,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.705Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -2196,7 +3246,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -2207,7 +3257,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -2218,7 +3268,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
     },
     {
       "feature": "reddit-sniper",
@@ -2229,7 +3279,18 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.706Z"
+      "last_modified": "2026-02-19T19:31:53.755Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-14",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-14.md",
+      "size_bytes": 5578,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
     },
     {
       "feature": "viral-radar",
@@ -2240,7 +3301,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2251,7 +3312,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.707Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2262,7 +3323,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.756Z"
     },
     {
       "feature": "viral-radar",
@@ -2273,7 +3334,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.757Z"
     },
     {
       "feature": "viral-radar",
@@ -2284,7 +3345,304 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-19T19:07:46.708Z"
+      "last_modified": "2026-02-19T19:31:53.757Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-13",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-13.md",
+      "size_bytes": 5577,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-12",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-12.md",
+      "size_bytes": 5577,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-11",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-11.md",
+      "size_bytes": 5576,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-10",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-10.md",
+      "size_bytes": 5572,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-09",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-09.md",
+      "size_bytes": 5568,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-08",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-08.md",
+      "size_bytes": 5568,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-07",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-07.md",
+      "size_bytes": 5568,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-06",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-06.md",
+      "size_bytes": 5568,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.752Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-05",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-05.md",
+      "size_bytes": 5568,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-04",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-04.md",
+      "size_bytes": 5569,
+      "quality_score": 44,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-03",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-03.md",
+      "size_bytes": 0,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-02",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-02.md",
+      "size_bytes": 0,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-02-01",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-02-01.md",
+      "size_bytes": 0,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-31",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-31.md",
+      "size_bytes": 0,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-30",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-30.md",
+      "size_bytes": 0,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-29",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-29.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-28.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-27.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-26",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-26.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-25",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-25.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-24",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-24.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-23",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-23.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-22",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-22.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-21",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-21.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-20",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-20.md",
+      "size_bytes": 2535,
+      "quality_score": 5,
+      "items_found": 0,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-08",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-08.md",
+      "size_bytes": 4938,
+      "quality_score": 42,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
+    },
+    {
+      "feature": "scout",
+      "niche": "blue-ocean",
+      "date": "2026-01-07",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/scout/blue-ocean/2026-01-07.md",
+      "size_bytes": 4797,
+      "quality_score": 42,
+      "items_found": 1,
+      "status": "complete",
+      "last_modified": "2026-02-19T19:31:53.751Z"
     }
   ]
 }

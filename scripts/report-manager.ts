@@ -55,6 +55,7 @@ interface ArchiveIndex {
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const REPORTS_DIR = path.join(ROOT, 'data', 'reports');
+const INTELLIGENCE_DIR = path.join(ROOT, 'data', 'intelligence');
 const ARCHIVE_DIR = path.join(ROOT, 'data', 'archive');
 const REGISTRY_DIR = path.join(ROOT, 'data', 'registry');
 
@@ -114,6 +115,42 @@ function parseReportFilename(filename: string): { feature: string; niche: string
 
   if (!niche) return null;
   return { feature, niche, date };
+}
+
+/**
+ * Parse a filename from data/intelligence/ into feature/niche/date.
+ * Supported patterns:
+ *   blue-ocean-{YYYY-MM-DD}.md                  → scout / blue-ocean / date
+ *   market-gaps-consolidated-{YYYY-MM-DD}.md     → market-gaps / consolidated / date
+ *   market-gaps-{niche}-{YYYY-MM-DD}.md          → market-gaps / niche / date
+ *   quality-pipeline-{niche}-{YYYY-MM-DD}.md     → quality-pipeline / niche / date
+ */
+function parseIntelligenceFilename(filename: string): { feature: string; niche: string; date: string } | null {
+  const base = filename.replace(/\.md$/, '');
+  const dateMatch = base.match(/^(.+)-(\d{4}-\d{2}-\d{2})$/);
+  if (!dateMatch) return null;
+
+  const date = dateMatch[2];
+  const rest = dateMatch[1];
+
+  // Scout: blue-ocean (no niche, just the date)
+  if (rest === 'blue-ocean') {
+    return { feature: 'scout', niche: 'blue-ocean', date };
+  }
+
+  // Market-gap-identifier: market-gaps-{niche}
+  if (rest.startsWith('market-gaps-')) {
+    const niche = rest.slice('market-gaps-'.length);
+    return { feature: 'market-gaps', niche, date };
+  }
+
+  // Quality pipeline: quality-pipeline-{niche}
+  if (rest.startsWith('quality-pipeline-')) {
+    const niche = rest.slice('quality-pipeline-'.length);
+    return { feature: 'quality-pipeline', niche, date };
+  }
+
+  return null;
 }
 
 /**
@@ -260,6 +297,71 @@ export async function organizeReports(dryRun = false): Promise<void> {
     if (!dryRun) {
       ensureDir(destDir);
       fs.renameSync(srcPath, destPath);
+    }
+    moved++;
+  }
+
+  console.log(`\n  ✅ Moved: ${moved}  Skipped: ${skipped}`);
+}
+
+/**
+ * OrganizeIntelligenceReports: migrate Scout, Market-gap, and Quality-pipeline
+ * files from data/intelligence/ into data/reports/{feature}/{niche}/YYYY-MM-DD.md.
+ *
+ * Only processes known patterns; other files (e.g. latest.md) are skipped.
+ */
+export async function organizeIntelligenceReports(dryRun = false): Promise<void> {
+  console.log('\n🧠 Organizing intelligence reports (scout / market-gaps / quality-pipeline)...');
+  if (dryRun) console.log('   (dry-run mode – no changes will be made)\n');
+
+  if (!fs.existsSync(INTELLIGENCE_DIR)) {
+    console.log('  ℹ️  data/intelligence/ not found, skipping.');
+    return;
+  }
+
+  const entries = fs.readdirSync(INTELLIGENCE_DIR, { withFileTypes: true });
+  const flatFiles = entries.filter(
+    (e) => e.isFile() && e.name.endsWith('.md') && !e.name.startsWith('.')
+  );
+
+  let moved = 0;
+  let skipped = 0;
+
+  for (const entry of flatFiles) {
+    // Skip existing symlinks (e.g. latest.md)
+    const fullPath = path.join(INTELLIGENCE_DIR, entry.name);
+    try {
+      if (fs.lstatSync(fullPath).isSymbolicLink()) {
+        skipped++;
+        continue;
+      }
+    } catch {
+      skipped++;
+      continue;
+    }
+
+    const parsed = parseIntelligenceFilename(entry.name);
+    if (!parsed) {
+      console.log(`  ⚠️  Skipped (unrecognised pattern): ${entry.name}`);
+      skipped++;
+      continue;
+    }
+
+    const { feature, niche, date } = parsed;
+    const destDir = path.join(REPORTS_DIR, feature, niche);
+    const destPath = path.join(destDir, `${date}.md`);
+
+    if (fs.existsSync(destPath)) {
+      skipped++;
+      continue;
+    }
+
+    console.log(`  📄 intelligence/${entry.name}`);
+    console.log(`     → ${path.relative(ROOT, destPath)}`);
+
+    if (!dryRun) {
+      ensureDir(destDir);
+      fs.renameSync(fullPath, destPath);
     }
     moved++;
   }
@@ -578,11 +680,16 @@ Usage:
   npx tsx scripts/report-manager.ts [command] [options]
 
 Commands:
-  organize    Migrate flat reports to feature/niche/date hierarchy
+  organize    Migrate flat reports (data/reports/ + data/intelligence/) to hierarchy
   archive     Archive reports older than --days (default: 60)
   registry    Generate JSON registry indexes
   stats       Show report statistics
   all         Run organize + archive + registry (default)
+
+Features handled:
+  data/reports/   → stargazer, fork-evolution, hackernews, reddit-sniper,
+                    reddit-pain-points, viral-radar, goldmine, github-trending
+  data/intelligence/ → scout (blue-ocean), market-gaps, quality-pipeline
 
 Options:
   --dry-run   Show what would happen without making changes
@@ -609,6 +716,7 @@ NPM scripts:
 
     if (runOrganize || runAll) {
       await organizeReports(dryRun);
+      await organizeIntelligenceReports(dryRun);
     }
     if (runArchive || runAll) {
       await archiveOldReports(daysOld, dryRun);

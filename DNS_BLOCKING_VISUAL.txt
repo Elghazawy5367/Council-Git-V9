@@ -1,0 +1,150 @@
+
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║              WHY 2 FEATURES "WORK" AND 2 ARE "BLOCKED"                    ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+⚠️  IMPORTANT CORRECTION ADDED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This analysis is accurate for DNS blocking, but maritime niche has an 
+ADDITIONAL issue: Topic "navigation" returns software libs, not maritime repos.
+
+See INVESTIGATION_CORRECTION_SUMMARY.md for complete corrected analysis.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+📅 TIMELINE VIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+February 16, 2026              February 17, 2026           February 18, 2026
+   (API Open)               (API Intermittent)               (API Blocked)
+       │                            │                             │
+       │                            │                             │
+       ├─ ⭐ Stargazer runs         ├─ ⭐ Stargazer runs          │
+       │  ✅ SUCCESS (API works)    │  ❌ BLOCKED                 │
+       │  30 repos found            │  0 repos found              │
+       │  ⚠️  Maritime: Wrong repos!│                             │
+       │     (React Navigation)     │                             │
+       │                            │                             │
+       │                            ├─ 🍴 Fork Evolution runs    │
+       │                            │  ✅ 3 SUCCESS               │
+       │                            │  ❌ 1 BLOCKED               │
+       │                            │                             │
+       │                            │                             ├─ 💎 Goldmine tries
+       │                            │                             │  ❌ BLOCKED
+       │                            │                             │  (first attempt)
+       │                            │                             │
+       │                            │                             ├─ ⛏️  Mining Drill tries
+       │                            │                             │  ❌ BLOCKED
+       │                            │                             │  (first attempt)
+       ▼                            ▼                             ▼
+
+
+🎯 THE KEY INSIGHT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ┌────────────────────────────────────────────────────────────────┐
+   │                                                                │
+   │  "Working" = Ran BEFORE or DURING accessible periods          │
+   │  "Blocked" = Only ran AFTER blocking started                  │
+   │                                                                │
+   │  ALL features use identical code and authentication           │
+   │                                                                │
+   └────────────────────────────────────────────────────────────────┘
+
+
+📊 EVIDENCE COMPARISON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Feature            Has Reports?    Why?
+────────────────────────────────────────────────────────────────────────────
+⭐ Stargazer       ✅ YES (8)      Ran on Feb 16 before block
+                                  Generated reports (but maritime had 
+                                  irrelevant repos due to topic mismatch)
+
+🍴 Fork Evolution  ✅ YES (4)      Ran on Feb 17 during intermittent block
+                                  Got 3 successful, 1 blocked
+
+💎 Goldmine        ❌ NO (0)       Only attempted after Feb 17
+                                  Always blocked, no historical data
+
+⛏️  Mining Drill   ❌ NO (0)       Only attempted after Feb 17
+                                  Always blocked, no historical data
+
+
+🔬 TECHNICAL PROOF - ALL 4 ARE IDENTICAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Component                ⭐ Stargazer    🍴 Fork    💎 Goldmine    ⛏️  Mining
+────────────────────────────────────────────────────────────────────────────
+Authentication           GITHUB_TOKEN   Same       Same          Same
+API Library              Octokit        Same       Same          Same
+Rate Limiting            1 sec delay    Same       Same          Same
+Error Handling           try-catch      Same       Same          Same
+API Version              REST API v3    Same       Same          Same
+────────────────────────────────────────────────────────────────────────────
+Conclusion: NO DIFFERENCES IN IMPLEMENTATION
+
+
+❓ THE QUESTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   "Why do Stargazer/Fork Evolution work (generating reports) while 
+    Mining Drill/Goldmine Detector are DNS blocked, when all 4 are 
+    GitHub-based features?"
+
+
+✅ THE ANSWER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   They DON'T work differently (from DNS blocking perspective)!
+
+   1. ALL 4 features use identical GitHub API implementation
+   2. ALL 4 features use same authentication
+   3. ALL 4 features have proper error handling
+   4. DNS blocking affects ALL features equally when active
+
+   The ONLY difference:
+   
+   ┌─────────────────────────────────────────────────────────────┐
+   │                                                             │
+   │  Stargazer & Fork Evolution ran BEFORE/DURING the block    │
+   │  Mining Drill & Goldmine only ran AFTER the block          │
+   │                                                             │
+   │  It's about TIMING, not CODE                               │
+   │                                                             │
+   └─────────────────────────────────────────────────────────────┘
+
+   ⚠️  ADDITIONAL ISSUE: Maritime niche also has topic config problem
+   (Topic "navigation" = software libs, not maritime repos)
+   This is separate from DNS blocking.
+
+
+🚀 WHAT TO DO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ✅ NO CODE CHANGES NEEDED (for DNS blocking)
+   ⚠️  FIX MARITIME TOPIC CONFIGURATION (separate issue)
+
+   All features work correctly. To verify:
+
+   1. Run all 4 features at the same time
+   2. In environment without DNS proxy (e.g., GitHub Actions)
+   3. Observe they all succeed or all fail together
+   4. Confirms no code differences
+
+   For maritime: Remove "navigation" topic, add maritime-specific topics
+   (See INVESTIGATION_CORRECTION_SUMMARY.md for details)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                      Investigation Complete ✅
+                   Timing Issue - Not Code Issue
+                   + Maritime Topic Config Issue
+                   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

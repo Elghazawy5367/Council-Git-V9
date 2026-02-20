@@ -396,7 +396,7 @@ function getConfig(): ScoutConfig {
     scanDepth: depth,
     maxRepos: settings.maxRepos,
     maxIssues: settings.maxIssues,
-    cacheExpiry: 24 // hours
+    cacheExpiry: 12 // hours
   };
 }
 

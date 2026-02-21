@@ -1,6 +1,6 @@
 # Council Intelligence Report
 
-**Generated:** 2/20/2026, 6:47:20 AM
+**Generated:** 2/21/2026, 6:34:58 AM
 **Niche:** developer tools
 **Scan Depth:** normal
 
@@ -54,35 +54,35 @@
 - **Pain Point:** Unsure how to resolve `Missing field while writing result` error when using subscriptions
 - **Impact:** high | **Effort:** low
 - **Confidence:** 100%
-- **Competition:** weak
+- **Competition:** moderate
 
 ### 2. Tool to solve: fix(i18n): Make rest of the tools translatable and translate them to German
 
 - **Pain Point:** fix(i18n): Make rest of the tools translatable and translate them to German
 - **Impact:** high | **Effort:** low
 - **Confidence:** 100%
-- **Competition:** none
+- **Competition:** weak
 
 ### 3. Add missing feature as standalone tool
 
 - **Pain Point:** Need assistance in using mailpit in our app
 - **Impact:** high | **Effort:** low
 - **Confidence:** 81%
-- **Competition:** moderate
+- **Competition:** weak
 
 ### 4. Tool to solve: [NEW TOOL] Extending the "Text to NATO" spelling tool with other alphabets
 
 - **Pain Point:** [NEW TOOL] Extending the "Text to NATO" spelling tool with other alphabets
 - **Impact:** high | **Effort:** low
 - **Confidence:** 78%
-- **Competition:** moderate
+- **Competition:** none
 
 ### 5. Tool to solve: feat(new tool): Regex Tester (and Cheatsheet)
 
 - **Pain Point:** feat(new tool): Regex Tester (and Cheatsheet)
 - **Impact:** high | **Effort:** low
 - **Confidence:** 69%
-- **Competition:** strong
+- **Competition:** weak
 
 ## Emerging Trends
 

@@ -1,13 +1,13 @@
 # Feature Priorities
 
-*Last updated: 2/15/2026, 4:25:28 AM*
+*Last updated: 2/22/2026, 4:22:04 AM*
 *Learned from: developer-tools (20 repositories)*
 
 ## Key Patterns
 
 ### 1. Interactive examples/playground
 
-**Confidence:** 60%
+**Confidence:** 50%
 
 **Evidence:**
 - puppeteer/puppeteer

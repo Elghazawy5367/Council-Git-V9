@@ -1,18 +1,20 @@
 /**
- * The Scout - GitHub Intelligence Extraction System
+ * The Scout - GitHub Intelligence Extraction System (Phantom Scout)
  * 
- * Analyzes GitHub data to extract market intelligence.
+ * Analyzes GitHub data to extract market intelligence across multiple niches.
  * Contains unique algorithms for:
  * - Blue Ocean opportunity detection
  * - Pain point clustering
  * - Trend analysis
  * - Opportunity scoring
  * 
+ * Multi-niche configuration support via config/target-niches.yaml
  * NOTE: API calls extracted to src/services/github.service.ts
  */
 
 import * as fs from "fs";
 import * as path from "path";
+import * as yaml from 'js-yaml';
 import { GITHUB_OWNER, GITHUB_REPO } from './config';
 import type { GitHubRawRepo, ScoutIssue } from './types';
 import { getGitHubService } from '@/services/github.service';
@@ -43,6 +45,30 @@ export async function getEngineeredPrompt(promptPath: string): Promise<string | 
     return null;
   }
 }
+
+// ============================================================================
+// NICHE CONFIG INTERFACES
+// ============================================================================
+
+interface NicheConfig {
+  id: string;
+  name: string;
+  monitoring?: {
+    keywords?: string[];
+    github_topics?: string[];
+    github_search_queries?: string[];
+  };
+  enabled?: boolean;
+}
+
+interface YamlConfig {
+  niches: NicheConfig[];
+}
+
+// ============================================================================
+// SCOUT CONFIG
+// ============================================================================
+
 interface ScoutConfig {
   targetNiche: string;
   scanDepth: "shallow" | "normal" | "deep";
@@ -120,9 +146,24 @@ function getDateXDaysAgo(days: number): string {
 }
 
 /**
+ * Load niche configuration from YAML
+ */
+function loadNicheConfig(): NicheConfig[] {
+  try {
+    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
+    const fileContent = fs.readFileSync(configPath, 'utf8');
+    const config = yaml.load(fileContent) as YamlConfig;
+    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
+  } catch (error) {
+    console.error('Failed to load niche config:', error);
+    throw error;
+  }
+}
+
+/**
  * Scan for Blue Ocean opportunities (abandoned goldmines)
  */
-export async function scanBlueOcean(topic: string): Promise<Opportunity[]> {
+export async function scanBlueOcean(topic: string, nicheId: string = 'default'): Promise<Opportunity[]> {
   const githubService = getGitHubService();
   const opportunities: Opportunity[] = [];
   
@@ -160,8 +201,8 @@ export async function scanBlueOcean(topic: string): Promise<Opportunity[]> {
     new Map(opportunities.map((o) => [o.url, o])).values()
   ).sort((a, b) => b.blueOceanScore - a.blueOceanScore);
 
-  // Save to file
-  await saveBlueOceanReport(unique, topic);
+  // Save to file with niche ID
+  await saveBlueOceanReport(unique, topic, nicheId);
 
   return unique;
 }
@@ -234,13 +275,13 @@ function calculateBlueOceanScore(repo: {
 /**
  * Save Blue Ocean report
  */
-async function saveBlueOceanReport(opportunities: Opportunity[], topic: string): Promise<void> {
+async function saveBlueOceanReport(opportunities: Opportunity[], topic: string, nicheId: string = 'default'): Promise<void> {
   const today = new Date().toISOString().split("T")[0];
-  const filename = `opportunities-${topic.replace(/\s+/g, "-")}-${today}.json`;
+  const filename = `opportunities-${nicheId}-${today}.json`;
   const filepath = path.join(process.cwd(), "data", filename);
   fs.writeFileSync(filepath, JSON.stringify(opportunities, null, 2));
   // Also save markdown summary
-  const mdPath = path.join(process.cwd(), "data", "intelligence", `blue-ocean-${today}.md`);
+  const mdPath = path.join(process.cwd(), "data", "intelligence", `blue-ocean-${nicheId}-${today}.md`);
   fs.writeFileSync(mdPath, generateBlueOceanMarkdown(opportunities, topic));
 }
 
@@ -347,7 +388,7 @@ export async function runScout(): Promise<ScoutReport> {
 
   // Step 6: Blue Ocean scan
 
-  const blueOceanOpps = await scanBlueOcean(config.targetNiche);
+  const blueOceanOpps = await scanBlueOcean(config.targetNiche, 'default');
   // Generate report
   const report: ScoutReport = {
     timestamp: new Date().toISOString(),
@@ -364,7 +405,7 @@ export async function runScout(): Promise<ScoutReport> {
   };
 
   // Save results
-  await saveIntelligence(report);
+  await saveIntelligence(report, 'default');
 
   // Print summary
   printSummary(report);
@@ -610,25 +651,26 @@ function generateNextActions(opportunities: ProductOpportunity[], trends: string
 /**
  * Save intelligence to files
  */
-async function saveIntelligence(report: ScoutReport): Promise<void> {
+async function saveIntelligence(report: ScoutReport, nicheId: string = 'default'): Promise<void> {
   const dataDir = path.join(process.cwd(), "data");
+  const today = new Date().toISOString().split("T")[0];
 
-  // Save full report
-  const reportPath = path.join(dataDir, "reports", `scout-${Date.now()}.json`);
+  // Save full report with niche ID
+  const reportPath = path.join(dataDir, "reports", `phantom-scout-${nicheId}-${today}.json`);
   fs.mkdirSync(path.dirname(reportPath), {
     recursive: true
   });
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
-  // Save opportunities
-  const oppPath = path.join(dataDir, "opportunities", "latest.json");
+  // Save opportunities with niche ID
+  const oppPath = path.join(dataDir, "opportunities", `phantom-scout-${nicheId}-${today}.json`);
   fs.mkdirSync(path.dirname(oppPath), {
     recursive: true
   });
   fs.writeFileSync(oppPath, JSON.stringify(report.topOpportunities, null, 2));
 
-  // Save markdown summary
-  const summaryPath = path.join(dataDir, "intelligence", "latest.md");
+  // Save markdown summary with niche ID
+  const summaryPath = path.join(dataDir, "reports", `phantom-scout-${nicheId}-${today}.md`);
   fs.mkdirSync(path.dirname(summaryPath), {
     recursive: true
   });
@@ -639,15 +681,15 @@ async function saveIntelligence(report: ScoutReport): Promise<void> {
  * Generate markdown summary
  */
 function generateMarkdownSummary(report: ScoutReport): string {
-  let md = `# Council Intelligence Report\n\n`;
+  let md = `# 👻 Phantom Scout Intelligence Report\n\n`;
   md += `**Generated:** ${new Date(report.timestamp).toLocaleString()}\n`;
   md += `**Niche:** ${report.niche}\n`;
   md += `**Scan Depth:** ${report.scanDepth}\n\n`;
-  md += `## Summary\n\n`;
+  md += `## 📊 Summary\n\n`;
   md += `- Repositories Scanned: ${report.repositoriesScanned}\n`;
   md += `- Pain Points Found: ${report.painPointsFound}\n`;
   md += `- Opportunities Identified: ${report.opportunitiesIdentified}\n\n`;
-  md += `## Top Pain Points\n\n`;
+  md += `## 🔥 Top Pain Points\n\n`;
   report.topPainPoints.slice(0, 5).forEach((point, idx) => {
     md += `### ${idx + 1}. ${point.title}\n\n`;
     md += `- **Severity:** ${point.severity}\n`;
@@ -678,8 +720,12 @@ function generateMarkdownSummary(report: ScoutReport): string {
  * Print summary to console
  */
 function printSummary(report: ScoutReport): void {
-  report.topOpportunities.slice(0, 3).forEach((opp, idx) => // eslint-disable-next-line no-empty
-  {});report.trendsDetected.slice(0, 3).forEach((trend) => undefined);
+  report.topOpportunities.slice(0, 3).forEach((opp, idx) => {
+    console.log(`${idx + 1}. ${opp.solution} (${opp.confidence * 100}% confidence)`);
+  });
+  report.trendsDetected.slice(0, 3).forEach((trend) => {
+    console.log(`Trend: ${trend}`);
+  });
 }
 
 // Helper functions
@@ -829,6 +875,111 @@ function generateMockPainPoints(): PainPoint[] {
     lastSeen: new Date().toISOString(),
     urls: ["https://github.com/user/project-2/issues/5"]
   }];
+}
+
+/**
+ * Run Phantom Scout for all configured niches
+ * Main multi-niche execution function
+ */
+export async function runPhantomScout(): Promise<void> {
+  console.log('👻 Phantom Scout - Starting Multi-Niche Scan...');
+  console.log('=' .repeat(60));
+  
+  const niches = loadNicheConfig();
+  console.log(`📂 Found ${niches.length} enabled niches\n`);
+  
+  const results = [];
+  
+  for (const niche of niches) {
+    console.log(`\n👻 Scouting: ${niche.name}`);
+    console.log(`   Niche ID: ${niche.id}`);
+    console.log('-'.repeat(60));
+    
+    try {
+      // Build search topics from niche config
+      const topics = niche.monitoring?.github_topics || [];
+      const searchQueries = niche.monitoring?.github_search_queries || [];
+      
+      // Use first topic or search query, fallback to niche name
+      const searchTopic = topics[0] || searchQueries[0] || niche.name;
+      
+      // Run Blue Ocean scan for this niche
+      console.log(`   🔍 Scanning Blue Ocean opportunities for: ${searchTopic}`);
+      const opportunities = await scanBlueOcean(searchTopic, niche.id);
+      
+      // Run full scout analysis (reusing existing logic)
+      const config: ScoutConfig = {
+        targetNiche: niche.name,
+        scanDepth: 'normal',
+        maxRepos: 25,
+        maxIssues: 100,
+        cacheExpiry: 24
+      };
+      
+      const repos = await findTrendingRepos(config);
+      const painPoints = await extractPainPoints(repos, config);
+      const clusteredPainPoints = await clusterPainPoints(painPoints);
+      const productOpportunities = await identifyOpportunities(clusteredPainPoints);
+      const trends = await detectTrends(painPoints);
+      
+      const report: ScoutReport = {
+        timestamp: new Date().toISOString(),
+        niche: niche.name,
+        scanDepth: 'normal',
+        repositoriesScanned: repos.length,
+        issuesAnalyzed: painPoints.length,
+        painPointsFound: clusteredPainPoints.length,
+        opportunitiesIdentified: productOpportunities.length,
+        topPainPoints: clusteredPainPoints.slice(0, 10),
+        topOpportunities: productOpportunities.slice(0, 10),
+        trendsDetected: trends,
+        nextActions: generateNextActions(productOpportunities, trends)
+      };
+      
+      // Save with niche-specific filename
+      await saveIntelligence(report, niche.id);
+      
+      console.log(`   ✅ Scan complete!`);
+      console.log(`   📊 Repos: ${repos.length} | Pain Points: ${clusteredPainPoints.length} | Opportunities: ${productOpportunities.length}`);
+      
+      const today = new Date().toISOString().split('T')[0];
+      results.push({
+        niche: niche.id,
+        name: niche.name,
+        blueOceanOpps: opportunities.length,
+        painPoints: clusteredPainPoints.length,
+        opportunities: productOpportunities.length,
+        reportFile: `data/reports/phantom-scout-${niche.id}-${today}.md`
+      });
+    } catch (error) {
+      console.error(`   ❌ Failed to scan ${niche.id}:`, error);
+      results.push({
+        niche: niche.id,
+        name: niche.name,
+        error: String(error)
+      });
+    }
+  }
+  
+  // Print final summary
+  console.log('\n' + '='.repeat(60));
+  console.log('👻 Phantom Scout - Mission Complete!');
+  console.log('='.repeat(60));
+  console.log(`\n📁 Generated ${results.filter(r => !r.error).length} intelligence reports:\n`);
+  
+  results.forEach(r => {
+    if (r.error) {
+      console.log(`❌ ${r.niche}: Failed - ${r.error}`);
+    } else {
+      console.log(`✅ ${r.niche}:`);
+      console.log(`   Blue Ocean: ${r.blueOceanOpps} goldmines`);
+      console.log(`   Pain Points: ${r.painPoints} patterns`);
+      console.log(`   Opportunities: ${r.opportunities} products`);
+      console.log(`   Report: ${r.reportFile}`);
+    }
+  });
+  
+  console.log(`\n👻 Phantom Scout signing off. Happy hunting! 🎯\n`);
 }
 
 // Main execution

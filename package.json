@@ -24,6 +24,7 @@
     "scout": "npx tsx src/lib/scout.ts",
     "scout:report": "npx tsx src/lib/report-generator.ts",
     "scout:blue-ocean": "npx tsx -e \"import('./src/lib/scout.ts').then(m => m.scanBlueOcean(process.env.TOPIC || 'developer-tools'))\"",
+    "phantom-scout": "npx tsx scripts/run-phantom-scout.ts",
     "brief": "tsx scripts/daily-brief.ts",
     "brief:help": "tsx scripts/daily-brief.ts --help",
     "heist": "tsx scripts/heist-prompts.ts",

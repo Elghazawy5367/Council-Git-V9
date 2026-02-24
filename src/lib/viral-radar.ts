@@ -9,8 +9,8 @@
  * Effort: Medium
  */
 
-import * as fs from 'fs';
-import * as yaml from 'js-yaml';
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 // Configuration constants
 const API_REQUEST_DELAY_MS = 2000; // Delay between consecutive API requests (rate limiting)
@@ -56,16 +56,6 @@ interface ViralAnalysis {
   crossPlatformScore: number;
   opportunity: string;
   contentIdeas: string[];
-}
-
-/**
- * Load niche configuration from YAML
- */
-function loadNicheConfig(): NicheConfig[] {
-  const configPath = 'config/target-niches.yaml';
-  const fileContent = fs.readFileSync(configPath, 'utf8');
-  const config = yaml.load(fileContent) as YamlConfig;
-  return config.niches.filter((n) => n.enabled !== false);
 }
 
 /**
@@ -461,7 +451,8 @@ function generateReport(
 export async function runViralRadar(): Promise<void> {
   console.log('📡 Viral Radar - Starting...');
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const results = [];

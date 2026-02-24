@@ -8,20 +8,15 @@
  * This is NOT a direct platform scanner. It SYNTHESIZES existing reports to find GAPS.
  */
 
-import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import * as path from 'path';
 import { glob } from 'glob';
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
-
-interface NicheConfig {
-  id: string;
-  name: string;
-  enabled: boolean;
-}
 
 interface ReportData {
   feature: string;
@@ -57,17 +52,6 @@ interface MarketGap {
   category: 'blue_ocean' | 'underserved' | 'growing' | 'saturated' | 'no_opportunity';
   recommendation: string;
   businessModels: string[];
-}
-
-// ============================================================================
-// CONFIG LOADER
-// ============================================================================
-
-function loadNicheConfig(): NicheConfig[] {
-  const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-  const fileContent = fs.readFileSync(configPath, 'utf8');
-  const config = yaml.load(fileContent) as any;
-  return config.niches.filter((n: any) => n.enabled !== false);
 }
 
 // ============================================================================
@@ -496,7 +480,8 @@ function formatGapReport(gap: MarketGap, index: number): string {
 export async function runMarketGapIdentifier(): Promise<void> {
   console.log('🎯 Market Gap Identifier - Starting...');
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const gaps: MarketGap[] = [];

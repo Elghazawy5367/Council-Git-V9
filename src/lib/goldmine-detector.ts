@@ -10,34 +10,11 @@
  */
 
 import { Octokit } from '@octokit/rest';
+import type { NicheConfig } from './types';
 
-// Dynamic imports for Node.js-only modules
-let yaml: any;
-let fs: any;
-let path: any;
-
-async function loadNodeModules(): Promise<void> {
-  if (typeof window === 'undefined') {
-    yaml = await import('js-yaml');
-    fs = await import('fs');
-    path = await import('path');
-  }
-}
-
-export interface NicheConfig {
-  id: string;
-  name: string;
-  keywords?: string[];
-  github_topics?: string[];
-  github_search_queries?: string[];
-  enabled?: boolean;
-  monitoring?: {
-    keywords?: string[];
-    github_topics?: string[];
-    github_search_queries?: string[];
-    subreddits?: string[];
-  };
-}
+// ============================================================================
+// SHARED TYPES - Used by both browser and Node.js code
+// ============================================================================
 
 export interface Goldmine {
   owner: string;
@@ -283,25 +260,7 @@ function calculateDaysSince(dateString: string): number {
 // NODE.JS CLI FUNCTIONS (for intelligence workflows)
 // ============================================================================
 
-interface YamlConfig {
-  niches: NicheConfig[];
-}
-
-/**
- * Load niche configuration from YAML (Node.js only)
- */
-async function loadNicheConfig(): Promise<NicheConfig[]> {
-  await loadNodeModules();
-  try {
-    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-    const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
-    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
-  } catch (error) {
-    console.error('Failed to load niche config:', error);
-    throw error;
-  }
-}
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 /**
  * Calculate goldmine score (0-100)
@@ -732,11 +691,11 @@ function generateReport(
  * Main function to run Goldmine Detector across all niches
  */
 export async function runGoldmineDetector(): Promise<void> {
-  await loadNodeModules();
   console.log('💎 Goldmine Detector - Starting...');
   
   try {
-    const niches = await loadNicheConfig();
+    const allNiches = await loadNicheConfig();
+    const niches = getEnabledNiches(allNiches);
     console.log(`📂 Found ${niches.length} enabled niches`);
     
     const githubToken = process.env.GITHUB_TOKEN;

@@ -7,29 +7,12 @@
  * Multi-niche configuration support via config/target-niches.yaml
  */
 
-import * as yaml from 'js-yaml';
-import * as fs from 'fs';
-import * as path from 'path';
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
-
-interface NicheConfig {
-  id: string;
-  name: string;
-  monitoring?: {
-    keywords?: string[];
-    subreddits?: string[];
-  };
-  keywords?: string[];
-  subreddits?: string[];
-  enabled?: boolean;
-}
-
-interface YamlConfig {
-  niches: NicheConfig[];
-}
 
 interface RedditPost {
   id: string;
@@ -52,22 +35,6 @@ interface IntentAnalysis {
   timeframe: string | null;
   currentSolution: string | null;
   recommendedAction: string;
-}
-
-// ============================================================================
-// CONFIG LOADER
-// ============================================================================
-
-function loadNicheConfig(): NicheConfig[] {
-  try {
-    const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-    const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
-    return config.niches.filter((n: NicheConfig) => n.enabled !== false);
-  } catch (error) {
-    console.error('Failed to load niche config:', error);
-    throw error;
-  }
 }
 
 // ============================================================================
@@ -399,7 +366,8 @@ function generateReport(
 export async function runRedditSniper(): Promise<void> {
   console.log('🎯 Reddit Sniper - Starting...');
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const results = [];

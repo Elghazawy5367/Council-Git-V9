@@ -172,3 +172,33 @@ export interface HackerNewsSearchFilters {
 // Scout-specific Types (reuse GitHubIssue for better type coverage)
 // Note: ScoutIssue is an alias to GitHubIssue for backward compatibility
 export type ScoutIssue = GitHubIssue;
+
+// ============================================================================
+// Intelligence Feature Configuration Types
+// ============================================================================
+
+/**
+ * Niche configuration for intelligence features
+ * Used by all intelligence modules (mining-drill, reddit-sniper, etc.)
+ */
+export interface NicheConfig {
+  id: string;
+  name: string;
+  keywords?: string[];
+  github_topics?: string[];
+  github_search_queries?: string[];
+  enabled?: boolean;
+  monitoring?: {
+    keywords?: string[];
+    github_topics?: string[];
+    github_search_queries?: string[];
+    subreddits?: string[];
+  };
+}
+
+/**
+ * YAML configuration file structure
+ */
+export interface YamlConfig {
+  niches: NicheConfig[];
+}

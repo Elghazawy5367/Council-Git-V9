@@ -8,24 +8,15 @@
  * Purpose: Transform 50+ daily reports into actionable top 10-20 opportunities
  */
 
-import * as yaml from 'js-yaml';
 import * as fs from 'fs';
 import * as path from 'path';
 import { glob } from 'glob';
+import type { NicheConfig } from './types';
+import { loadNicheConfig, getEnabledNiches } from './config-loader';
 
 // ============================================================================
 // TYPES
 // ============================================================================
-
-interface NicheConfig {
-  id: string;
-  name: string;
-  enabled?: boolean;
-}
-
-interface YamlConfig {
-  niches: NicheConfig[];
-}
 
 interface ReportItem {
   feature: string;
@@ -45,17 +36,6 @@ interface QualityAnalysis {
   totalQuality: number;
   tier: 'platinum' | 'gold' | 'silver' | 'bronze';
   reasoning: string[];
-}
-
-// ============================================================================
-// CONFIG LOADER
-// ============================================================================
-
-function loadNicheConfig(): NicheConfig[] {
-  const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
-  const fileContent = fs.readFileSync(configPath, 'utf8');
-  const config = yaml.load(fileContent) as YamlConfig;
-  return config.niches.filter((n: NicheConfig) => n.enabled !== false);
 }
 
 // ============================================================================
@@ -457,7 +437,8 @@ function avgQuality(items: QualityAnalysis[]): number {
 export async function runQualityPipeline(): Promise<void> {
   console.log('🔍 Quality Pipeline - Starting...');
   
-  const niches = loadNicheConfig();
+  const allNiches = await loadNicheConfig();
+  const niches = getEnabledNiches(allNiches);
   console.log(`📂 Found ${niches.length} enabled niches`);
   
   const results = [];

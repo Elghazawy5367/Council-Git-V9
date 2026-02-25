@@ -179,14 +179,14 @@ export const ControlPanel: React.FC = () => {
                 value={[activeExpertCount]}
                 onValueChange={([value]) => setActiveExpertCount(value)}
                 min={1}
-                max={5}
+                max={3}
                 step={1}
                 className="slider-council"
               />
             </div>
             <div className="flex justify-between text-xs text-muted-foreground px-3">
               <span className="font-medium">1</span>
-              <span className="font-medium">5</span>
+              <span className="font-medium">3</span>
             </div>
           </div>
         </div>

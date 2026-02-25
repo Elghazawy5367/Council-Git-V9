@@ -63,7 +63,7 @@ interface CouncilState {
 
 export const useCouncilStore = create<CouncilState>((set, get) => ({
   // Expert Management
-  experts: [],
+  experts: [...DEFAULT_EXPERTS], // Initialize with default experts on app load
   setExperts: (experts) => set({ experts }),
   updateExpert: (index, expertUpdates) =>
     set((state) => ({
@@ -475,7 +475,7 @@ export const useCouncilStore = create<CouncilState>((set, get) => ({
   setMode: (mode) => set({ mode }),
   judgeMode: 'ruthless-judge', // Default to Ruthless Judge
   setJudgeMode: (mode) => set({ judgeMode: mode }),
-  activeExpertCount: 5,
+  activeExpertCount: 3, // Match DEFAULT_EXPERTS length
   setActiveExpertCount: (count) => set({ activeExpertCount: count }),
   debateRounds: 3,
   setDebateRounds: (rounds) => set({ debateRounds: rounds }),
@@ -551,7 +551,7 @@ export const useCouncilStore = create<CouncilState>((set, get) => ({
   },
 
   resetToDefault: () => {
-    set({ experts: [...DEFAULT_EXPERTS], activeExpertCount: 5, mode: 'synthesis' });
+    set({ experts: [...DEFAULT_EXPERTS], activeExpertCount: 3, mode: 'parallel' }); // Match DEFAULT_EXPERTS length
     toast.success('Reset all experts to defaults');
   },
 }));

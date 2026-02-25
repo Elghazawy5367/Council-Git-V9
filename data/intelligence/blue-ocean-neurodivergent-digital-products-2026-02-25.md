@@ -1,6 +1,6 @@
 # Blue Ocean Opportunities: adhd
 
-**Generated:** 2/25/2026, 8:35:47 AM
+**Generated:** 2/25/2026, 4:57:28 PM
 **Total Found:** 1
 
 ## 🏆 Top 10 Goldmines
@@ -9,15 +9,15 @@
 
 **Leantime is a goals focused project management system for non-project managers. Building with ADHD, Autism, and dyslexia in mind.**
 
-- ⭐ Stars: 9,315
+- ⭐ Stars: 9,318
 - 🍴 Forks: 905 (9.7% ratio)
-- 🐛 Open Issues: 298
+- 🐛 Open Issues: 299
 - 📅 Last Update: 2/25/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **68/100**
 - 🔗 [View on GitHub](https://github.com/Leantime/leantime)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (9315+ stars)
+- ✅ Proven demand (9318+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 

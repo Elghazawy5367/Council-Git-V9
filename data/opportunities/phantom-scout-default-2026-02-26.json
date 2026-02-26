@@ -1,7 +1,7 @@
 [
   {
-    "id": "opp-1772067911382-0gqn92f",
-    "category": "Performance",
+    "id": "opp-1772094832607-1y23py1",
+    "category": "Automation",
     "painPoint": "Unsure how to resolve `Missing field while writing result` error when using subscriptions",
     "solution": "Add missing feature as standalone tool",
     "confidence": 1,
@@ -31,13 +31,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-gingmnc",
-    "category": "Developer Tools",
+    "id": "opp-1772094832608-8npz4yw",
+    "category": "UI/UX",
     "painPoint": "fix(i18n): Make rest of the tools translatable and translate them to German",
     "solution": "Tool to solve: fix(i18n): Make rest of the tools translatable and translate them to German",
     "confidence": 1,
     "marketSize": 1100,
-    "competition": "weak",
+    "competition": "strong",
     "effort": "low",
     "impact": "high",
     "evidence": [
@@ -58,13 +58,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-6nwmtb8",
-    "category": "Developer Tools",
+    "id": "opp-1772094832608-fiy6gdq",
+    "category": "UI/UX",
     "painPoint": "Need assistance in using mailpit in our app",
     "solution": "Add missing feature as standalone tool",
     "confidence": 0.8099999999999999,
     "marketSize": 2100,
-    "competition": "strong",
+    "competition": "moderate",
     "effort": "low",
     "impact": "high",
     "evidence": [
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "id": "opp-1772067911383-tqqvub5",
+    "id": "opp-1772094832608-ikurvus",
     "category": "Automation",
     "painPoint": "[NEW TOOL] Extending the \"Text to NATO\" spelling tool with other alphabets",
     "solution": "Tool to solve: [NEW TOOL] Extending the \"Text to NATO\" spelling tool with other alphabets",
@@ -108,13 +108,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-hh4myl9",
-    "category": "Developer Tools",
+    "id": "opp-1772094832608-xycnvbg",
+    "category": "Automation",
     "painPoint": "feat(new tool): Regex Tester (and Cheatsheet)",
     "solution": "Tool to solve: feat(new tool): Regex Tester (and Cheatsheet)",
     "confidence": 0.6900000000000001,
     "marketSize": 1400,
-    "competition": "weak",
+    "competition": "none",
     "effort": "low",
     "impact": "high",
     "evidence": [
@@ -131,13 +131,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-40lxxdg",
+    "id": "opp-1772094832608-ksqe6ax",
     "category": "Integration",
     "painPoint": "v3.9.2 typings file is missing ",
     "solution": "Add missing feature as standalone tool",
     "confidence": 0.64,
     "marketSize": 900,
-    "competition": "moderate",
+    "competition": "strong",
     "effort": "low",
     "impact": "medium",
     "evidence": [
@@ -154,8 +154,8 @@
     ]
   },
   {
-    "id": "opp-1772067911383-1os5fny",
-    "category": "Integration",
+    "id": "opp-1772094832608-j52gamy",
+    "category": "UI/UX",
     "painPoint": "Hot Module Replacement (HMR) Integration",
     "solution": "Build integration layer/connector",
     "confidence": 0.79,
@@ -177,13 +177,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-8ow9pyy",
-    "category": "Performance",
+    "id": "opp-1772094832608-tku085c",
+    "category": "UI/UX",
     "painPoint": "Uncatchable throws on botbuilder-adapter-webex registerWebhookSubscription Functions",
     "solution": "Tool to solve: Uncatchable throws on botbuilder-adapter-webex registerWebhookSubscription Functions",
     "confidence": 0.7899999999999999,
     "marketSize": 1900,
-    "competition": "weak",
+    "competition": "none",
     "effort": "medium",
     "impact": "high",
     "evidence": [
@@ -203,13 +203,13 @@
     ]
   },
   {
-    "id": "opp-1772067911383-eahlnq8",
-    "category": "Performance",
+    "id": "opp-1772094832608-31zshkn",
+    "category": "Automation",
     "painPoint": "Make this easier to run automate integration tests",
     "solution": "Build integration layer/connector",
     "confidence": 0.74,
     "marketSize": 1900,
-    "competition": "moderate",
+    "competition": "weak",
     "effort": "medium",
     "impact": "high",
     "evidence": [
@@ -228,13 +228,13 @@
     ]
   },
   {
-    "id": "opp-1772067911382-1nu262g",
-    "category": "UI/UX",
+    "id": "opp-1772094832607-x4cp3tm",
+    "category": "Developer Tools",
     "painPoint": "[big refactoring] Audio latency fix for Android. Support to preload effects on Android now.",
     "solution": "Tool to solve: [big refactoring] Audio latency fix for Android. Support to preload effects on Android now.",
     "confidence": 1,
     "marketSize": 20600,
-    "competition": "none",
+    "competition": "moderate",
     "effort": "high",
     "impact": "high",
     "evidence": [

@@ -14,6 +14,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { pathToFileURL } from "node:url";
 import * as yaml from 'js-yaml';
 import { GITHUB_OWNER, GITHUB_REPO } from './config';
 import type { GitHubRawRepo, ScoutIssue } from './types';
@@ -983,7 +984,7 @@ export async function runPhantomScout(): Promise<void> {
 }
 
 // Main execution - only run when invoked directly (not when imported as a module)
-const isDirectExecution = typeof process !== 'undefined' && process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
+const isDirectExecution = typeof process !== 'undefined' && process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isDirectExecution) {
   runScout().then(() => process.exit(0)).catch((error) => {
     console.error("❌ Scout mission failed:", error);

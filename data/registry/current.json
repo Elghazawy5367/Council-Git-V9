@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-27T04:05:41.442Z",
-  "total_reports": 275,
+  "generated_at": "2026-02-28T03:47:18.658Z",
+  "total_reports": 297,
   "by_feature": {
     "fork-evolution": {
       "digital-educators": [
@@ -13,7 +13,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.458Z"
+          "last_modified": "2026-02-28T03:47:00.397Z"
         },
         {
           "feature": "fork-evolution",
@@ -24,7 +24,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.458Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -35,7 +35,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.458Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         }
       ],
       "etsy-sellers": [
@@ -48,7 +48,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.458Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -59,7 +59,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -70,7 +70,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         }
       ],
       "freelancers-consultants": [
@@ -83,7 +83,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -94,7 +94,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -105,7 +105,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         }
       ],
       "maritime-professionals": [
@@ -118,7 +118,7 @@
           "quality_score": 100,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.398Z"
         },
         {
           "feature": "fork-evolution",
@@ -129,7 +129,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         },
         {
           "feature": "fork-evolution",
@@ -140,7 +140,7 @@
           "quality_score": 99,
           "items_found": 15,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.459Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ]
     },
@@ -155,7 +155,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -168,7 +168,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "newsletter-deliverability": [
@@ -181,7 +181,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -194,7 +194,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -207,7 +207,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ]
     },
@@ -222,7 +222,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "etsy-sellers": [
@@ -235,7 +235,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "freelancers-consultants": [
@@ -248,7 +248,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.399Z"
         }
       ],
       "maritime-professionals": [
@@ -261,7 +261,7 @@
           "quality_score": 7,
           "items_found": 1,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ]
     },
@@ -276,7 +276,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.460Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -287,7 +287,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -298,7 +298,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ],
       "etsy-sellers": [
@@ -311,7 +311,7 @@
           "quality_score": 72,
           "items_found": 9,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -322,7 +322,7 @@
           "quality_score": 72,
           "items_found": 9,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -333,7 +333,7 @@
           "quality_score": 73,
           "items_found": 9,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ],
       "freelancers-consultants": [
@@ -346,7 +346,7 @@
           "quality_score": 13,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -357,7 +357,7 @@
           "quality_score": 13,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -368,7 +368,7 @@
           "quality_score": 13,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ],
       "maritime-professionals": [
@@ -381,7 +381,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -392,7 +392,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "hackernews",
@@ -403,7 +403,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ]
     },
@@ -418,7 +418,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         },
         {
           "feature": "market-gaps",
@@ -429,7 +429,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ],
       "digital-educators": [
@@ -442,7 +442,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.400Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -455,7 +455,7 @@
           "quality_score": 4,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "etsy-sellers": [
@@ -468,7 +468,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.461Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -481,7 +481,7 @@
           "quality_score": 4,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "freelancers-consultants": [
@@ -494,7 +494,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "maritime-professionals": [
@@ -507,7 +507,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "newsletter-deliverability": [
@@ -520,7 +520,7 @@
           "quality_score": 4,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -533,7 +533,7 @@
           "quality_score": 4,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -546,7 +546,61 @@
           "quality_score": 4,
           "items_found": 0,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.401Z"
+        }
+      ]
+    },
+    "mining-drill": {
+      "digital-educators": [
+        {
+          "feature": "mining-drill",
+          "niche": "digital-educators",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/digital-educators/2026-02-27.md",
+          "size_bytes": 188,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-28T03:47:00.401Z"
+        }
+      ],
+      "etsy-sellers": [
+        {
+          "feature": "mining-drill",
+          "niche": "etsy-sellers",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/etsy-sellers/2026-02-27.md",
+          "size_bytes": 174,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-28T03:47:00.401Z"
+        }
+      ],
+      "freelancers-consultants": [
+        {
+          "feature": "mining-drill",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/freelancers-consultants/2026-02-27.md",
+          "size_bytes": 196,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-28T03:47:00.401Z"
+        }
+      ],
+      "neurodivergent-digital-products": [
+        {
+          "feature": "mining-drill",
+          "niche": "neurodivergent-digital-products",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/neurodivergent-digital-products/2026-02-27.md",
+          "size_bytes": 217,
+          "quality_score": 0,
+          "items_found": 0,
+          "status": "insufficient_data",
+          "last_modified": "2026-02-28T03:47:00.401Z"
         }
       ]
     },
@@ -561,7 +615,7 @@
           "quality_score": 39,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "phantom",
@@ -572,7 +626,7 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "phantom",
@@ -583,7 +637,7 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "phantom",
@@ -594,7 +648,18 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
+        },
+        {
+          "feature": "phantom",
+          "niche": "scout-default",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/phantom/scout-default/2026-02-28.md",
+          "size_bytes": 3124,
+          "quality_score": 46,
+          "items_found": 5,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.402Z"
         }
       ],
       "scout-neurodivergent-digital-products": [
@@ -607,7 +672,7 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "phantom",
@@ -618,7 +683,7 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "phantom",
@@ -629,7 +694,18 @@
           "quality_score": 46,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.462Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
+        },
+        {
+          "feature": "phantom",
+          "niche": "scout-neurodivergent-digital-products",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/phantom/scout-neurodivergent-digital-products/2026-02-28.md",
+          "size_bytes": 3165,
+          "quality_score": 46,
+          "items_found": 5,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.402Z"
         }
       ]
     },
@@ -644,7 +720,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -655,7 +731,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -666,7 +742,7 @@
           "quality_score": 23,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -677,7 +753,7 @@
           "quality_score": 23,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -688,7 +764,7 @@
           "quality_score": 31,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -699,7 +775,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.402Z"
         },
         {
           "feature": "quality-pipeline",
@@ -710,7 +786,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -721,7 +797,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -732,7 +808,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -743,7 +819,7 @@
           "quality_score": 23,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -754,7 +830,18 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.455Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "digital-educators",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-27.md",
+          "size_bytes": 686,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.395Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -767,7 +854,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         }
       ],
       "etsy-sellers": [
@@ -780,7 +867,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.463Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -791,7 +878,7 @@
           "quality_score": 36,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -802,7 +889,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -813,7 +900,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -824,7 +911,7 @@
           "quality_score": 41,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -835,7 +922,7 @@
           "quality_score": 33,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -846,7 +933,7 @@
           "quality_score": 33,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -857,7 +944,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -868,7 +955,7 @@
           "quality_score": 42,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -879,7 +966,7 @@
           "quality_score": 36,
           "items_found": 5,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -890,7 +977,18 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.455Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "etsy-sellers",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-27.md",
+          "size_bytes": 672,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.395Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -903,7 +1001,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         }
       ],
       "freelancers-consultants": [
@@ -916,7 +1014,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -927,7 +1025,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -938,7 +1036,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -949,7 +1047,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -960,7 +1058,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -971,7 +1069,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -982,7 +1080,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.403Z"
         },
         {
           "feature": "quality-pipeline",
@@ -993,7 +1091,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1004,7 +1102,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1015,7 +1113,7 @@
           "quality_score": 28,
           "items_found": 4,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1026,7 +1124,18 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.455Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-27.md",
+          "size_bytes": 694,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.395Z"
         }
       ],
       "maritime-professionals": [
@@ -1039,7 +1148,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1050,7 +1159,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1061,7 +1170,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1072,7 +1181,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1083,7 +1192,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1094,7 +1203,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1105,7 +1214,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1116,7 +1225,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         },
         {
           "feature": "quality-pipeline",
@@ -1127,7 +1236,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         }
       ],
       "neurodivergent-digital-products": [
@@ -1140,7 +1249,18 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.455Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
+        },
+        {
+          "feature": "quality-pipeline",
+          "niche": "neurodivergent-digital-products",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/neurodivergent-digital-products/2026-02-27.md",
+          "size_bytes": 715,
+          "quality_score": 11,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.395Z"
         }
       ],
       "newsletter-deliverability": [
@@ -1153,7 +1273,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.464Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -1166,7 +1286,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -1179,7 +1299,7 @@
           "quality_score": 11,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         }
       ]
     },
@@ -1194,7 +1314,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.404Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -1207,7 +1327,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -1218,7 +1338,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "etsy-sellers": [
@@ -1231,7 +1351,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -1244,7 +1364,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -1255,7 +1375,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "freelancers-consultants": [
@@ -1268,7 +1388,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "maritime-professionals": [
@@ -1281,7 +1401,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "newsletter-deliverability": [
@@ -1294,7 +1414,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.465Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -1305,7 +1425,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -1318,7 +1438,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -1329,7 +1449,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -1342,7 +1462,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         },
         {
           "feature": "reddit-pain-points",
@@ -1353,7 +1473,7 @@
           "quality_score": 13,
           "items_found": 3,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ]
     },
@@ -1368,7 +1488,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1379,7 +1499,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1390,7 +1510,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1401,7 +1521,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1412,7 +1532,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1423,7 +1543,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1434,7 +1554,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1445,7 +1565,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1456,7 +1576,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1467,7 +1587,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
+        },
+        {
+          "feature": "reddit-sniper",
+          "niche": "digital-educators",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/digital-educators/2026-02-28.md",
+          "size_bytes": 553,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -1480,7 +1611,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1491,7 +1622,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         }
       ],
       "etsy-sellers": [
@@ -1504,7 +1635,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1515,7 +1646,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1526,7 +1657,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1537,7 +1668,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1548,7 +1679,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1559,7 +1690,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1570,7 +1701,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1581,7 +1712,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1592,7 +1723,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1603,7 +1734,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
+        },
+        {
+          "feature": "reddit-sniper",
+          "niche": "etsy-sellers",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/etsy-sellers/2026-02-28.md",
+          "size_bytes": 539,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -1616,7 +1758,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.406Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1627,7 +1769,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         }
       ],
       "freelancers-consultants": [
@@ -1640,7 +1782,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1651,7 +1793,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1662,7 +1804,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1673,7 +1815,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1684,7 +1826,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1695,7 +1837,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1706,7 +1848,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1717,7 +1859,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1728,7 +1870,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1739,7 +1881,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
+        },
+        {
+          "feature": "reddit-sniper",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/freelancers-consultants/2026-02-28.md",
+          "size_bytes": 561,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.405Z"
         }
       ],
       "maritime-professionals": [
@@ -1752,7 +1905,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1763,7 +1916,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1774,7 +1927,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1785,7 +1938,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1796,7 +1949,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1807,7 +1960,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1818,7 +1971,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1829,7 +1982,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1840,7 +1993,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         }
       ],
       "neurodivergent-digital-products": [
@@ -1853,7 +2006,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.466Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
+        },
+        {
+          "feature": "reddit-sniper",
+          "niche": "neurodivergent-digital-products",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/neurodivergent-digital-products/2026-02-28.md",
+          "size_bytes": 582,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.406Z"
         }
       ],
       "newsletter-deliverability": [
@@ -1866,7 +2030,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.467Z"
+          "last_modified": "2026-02-28T03:47:00.407Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1877,7 +2041,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -1890,7 +2054,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1901,7 +2065,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -1914,7 +2078,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "reddit-sniper",
@@ -1925,7 +2089,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         }
       ]
     },
@@ -1940,7 +2104,7 @@
           "quality_score": 42,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -1951,7 +2115,7 @@
           "quality_score": 42,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -1962,7 +2126,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -1973,7 +2137,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -1984,7 +2148,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -1995,7 +2159,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2006,7 +2170,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2017,7 +2181,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2028,7 +2192,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2039,7 +2203,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2050,7 +2214,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2061,7 +2225,7 @@
           "quality_score": 5,
           "items_found": 0,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2072,7 +2236,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2083,7 +2247,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2094,7 +2258,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2105,7 +2269,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2116,7 +2280,7 @@
           "quality_score": 0,
           "items_found": 0,
           "status": "insufficient_data",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.408Z"
         },
         {
           "feature": "scout",
@@ -2127,7 +2291,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2138,7 +2302,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2149,7 +2313,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2160,7 +2324,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2171,7 +2335,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2182,7 +2346,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2193,7 +2357,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2204,7 +2368,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2215,7 +2379,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2226,7 +2390,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2237,7 +2401,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2248,7 +2412,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2259,7 +2423,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2270,7 +2434,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2281,7 +2445,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2292,7 +2456,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2303,7 +2467,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2314,7 +2478,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2325,7 +2489,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2336,7 +2500,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         },
         {
           "feature": "scout",
@@ -2347,7 +2511,7 @@
           "quality_score": 44,
           "items_found": 1,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.468Z"
+          "last_modified": "2026-02-28T03:47:00.409Z"
         }
       ]
     },
@@ -2362,7 +2526,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2373,7 +2537,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2384,7 +2548,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2395,7 +2559,18 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
+        },
+        {
+          "feature": "stargazer",
+          "niche": "digital-educators",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/digital-educators/2026-02-27.md",
+          "size_bytes": 8831,
+          "quality_score": 77,
+          "items_found": 20,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.409Z"
         }
       ],
       "etsy-sellers": [
@@ -2408,7 +2583,7 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2419,7 +2594,7 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2430,7 +2605,7 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2441,7 +2616,18 @@
           "quality_score": 79,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
+        },
+        {
+          "feature": "stargazer",
+          "niche": "etsy-sellers",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/etsy-sellers/2026-02-27.md",
+          "size_bytes": 9560,
+          "quality_score": 79,
+          "items_found": 20,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.409Z"
         }
       ],
       "freelancers-consultants": [
@@ -2454,7 +2640,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.410Z"
         },
         {
           "feature": "stargazer",
@@ -2465,7 +2651,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "stargazer",
@@ -2476,7 +2662,7 @@
           "quality_score": 78,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "stargazer",
@@ -2487,7 +2673,18 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
+        },
+        {
+          "feature": "stargazer",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/freelancers-consultants/2026-02-27.md",
+          "size_bytes": 8902,
+          "quality_score": 77,
+          "items_found": 20,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.410Z"
         }
       ],
       "maritime-professionals": [
@@ -2500,7 +2697,7 @@
           "quality_score": 78,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.470Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "stargazer",
@@ -2511,7 +2708,7 @@
           "quality_score": 78,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "stargazer",
@@ -2522,7 +2719,7 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "stargazer",
@@ -2533,7 +2730,20 @@
           "quality_score": 77,
           "items_found": 20,
           "status": "complete",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
+        }
+      ],
+      "neurodivergent-digital-products": [
+        {
+          "feature": "stargazer",
+          "niche": "neurodivergent-digital-products",
+          "date": "2026-02-27",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/neurodivergent-digital-products/2026-02-27.md",
+          "size_bytes": 9322,
+          "quality_score": 78,
+          "items_found": 20,
+          "status": "complete",
+          "last_modified": "2026-02-28T03:47:00.410Z"
         }
       ]
     },
@@ -2548,7 +2758,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2559,7 +2769,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2570,7 +2780,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2581,7 +2791,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2592,7 +2802,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2603,7 +2813,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2614,7 +2824,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2625,7 +2835,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2636,7 +2846,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2647,7 +2857,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.411Z"
         },
         {
           "feature": "viral-radar",
@@ -2658,7 +2868,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2669,7 +2879,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
+        },
+        {
+          "feature": "viral-radar",
+          "niche": "digital-educators",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/digital-educators/2026-02-28.md",
+          "size_bytes": 536,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.411Z"
         }
       ],
       "etsy-handmade-pricing": [
@@ -2682,7 +2903,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2693,7 +2914,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         }
       ],
       "etsy-sellers": [
@@ -2706,7 +2927,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2717,7 +2938,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2728,7 +2949,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2739,7 +2960,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2750,7 +2971,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2761,7 +2982,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2772,7 +2993,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2783,7 +3004,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2794,7 +3015,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2805,7 +3026,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2816,7 +3037,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2827,7 +3048,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
+        },
+        {
+          "feature": "viral-radar",
+          "niche": "etsy-sellers",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/etsy-sellers/2026-02-28.md",
+          "size_bytes": 522,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.411Z"
         }
       ],
       "freelancer-scope-creep": [
@@ -2840,7 +3072,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2851,7 +3083,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         }
       ],
       "freelancers-consultants": [
@@ -2864,7 +3096,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2875,7 +3107,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2886,7 +3118,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2897,7 +3129,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2908,7 +3140,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2919,7 +3151,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2930,7 +3162,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2941,7 +3173,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2952,7 +3184,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.412Z"
         },
         {
           "feature": "viral-radar",
@@ -2963,7 +3195,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -2974,7 +3206,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -2985,7 +3217,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
+        },
+        {
+          "feature": "viral-radar",
+          "niche": "freelancers-consultants",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/freelancers-consultants/2026-02-28.md",
+          "size_bytes": 544,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.411Z"
         }
       ],
       "maritime-professionals": [
@@ -2998,7 +3241,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.472Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3009,7 +3252,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3020,7 +3263,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3031,7 +3274,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3042,7 +3285,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3053,7 +3296,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3064,7 +3307,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3075,7 +3318,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3086,7 +3329,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3097,7 +3340,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         }
       ],
       "neurodivergent-digital-products": [
@@ -3110,7 +3353,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3121,7 +3364,18 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.471Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
+        },
+        {
+          "feature": "viral-radar",
+          "niche": "neurodivergent-digital-products",
+          "date": "2026-02-28",
+          "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/neurodivergent-digital-products/2026-02-28.md",
+          "size_bytes": 565,
+          "quality_score": 10,
+          "items_found": 2,
+          "status": "partial",
+          "last_modified": "2026-02-28T03:47:00.411Z"
         }
       ],
       "newsletter-deliverability": [
@@ -3134,7 +3388,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3145,7 +3399,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         }
       ],
       "podcast-transcription-seo": [
@@ -3158,7 +3412,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3169,7 +3423,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         }
       ],
       "tpt-copyright-protection": [
@@ -3182,7 +3436,7 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         },
         {
           "feature": "viral-radar",
@@ -3193,12 +3447,166 @@
           "quality_score": 10,
           "items_found": 2,
           "status": "partial",
-          "last_modified": "2026-02-27T04:05:23.473Z"
+          "last_modified": "2026-02-28T03:47:00.413Z"
         }
       ]
     }
   },
   "reports": [
+    {
+      "feature": "phantom",
+      "niche": "scout-default",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/phantom/scout-default/2026-02-28.md",
+      "size_bytes": 3124,
+      "quality_score": 46,
+      "items_found": 5,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.402Z"
+    },
+    {
+      "feature": "phantom",
+      "niche": "scout-neurodivergent-digital-products",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/phantom/scout-neurodivergent-digital-products/2026-02-28.md",
+      "size_bytes": 3165,
+      "quality_score": 46,
+      "items_found": 5,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.402Z"
+    },
+    {
+      "feature": "reddit-sniper",
+      "niche": "digital-educators",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/digital-educators/2026-02-28.md",
+      "size_bytes": 553,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.405Z"
+    },
+    {
+      "feature": "reddit-sniper",
+      "niche": "etsy-sellers",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/etsy-sellers/2026-02-28.md",
+      "size_bytes": 539,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.405Z"
+    },
+    {
+      "feature": "reddit-sniper",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/freelancers-consultants/2026-02-28.md",
+      "size_bytes": 561,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.405Z"
+    },
+    {
+      "feature": "reddit-sniper",
+      "niche": "neurodivergent-digital-products",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/reddit-sniper/neurodivergent-digital-products/2026-02-28.md",
+      "size_bytes": 582,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.406Z"
+    },
+    {
+      "feature": "viral-radar",
+      "niche": "digital-educators",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/digital-educators/2026-02-28.md",
+      "size_bytes": 536,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.411Z"
+    },
+    {
+      "feature": "viral-radar",
+      "niche": "etsy-sellers",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/etsy-sellers/2026-02-28.md",
+      "size_bytes": 522,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.411Z"
+    },
+    {
+      "feature": "viral-radar",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/freelancers-consultants/2026-02-28.md",
+      "size_bytes": 544,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.411Z"
+    },
+    {
+      "feature": "viral-radar",
+      "niche": "neurodivergent-digital-products",
+      "date": "2026-02-28",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/viral-radar/neurodivergent-digital-products/2026-02-28.md",
+      "size_bytes": 565,
+      "quality_score": 10,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.411Z"
+    },
+    {
+      "feature": "mining-drill",
+      "niche": "digital-educators",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/digital-educators/2026-02-27.md",
+      "size_bytes": 188,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-28T03:47:00.401Z"
+    },
+    {
+      "feature": "mining-drill",
+      "niche": "etsy-sellers",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/etsy-sellers/2026-02-27.md",
+      "size_bytes": 174,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-28T03:47:00.401Z"
+    },
+    {
+      "feature": "mining-drill",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/freelancers-consultants/2026-02-27.md",
+      "size_bytes": 196,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-28T03:47:00.401Z"
+    },
+    {
+      "feature": "mining-drill",
+      "niche": "neurodivergent-digital-products",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/mining-drill/neurodivergent-digital-products/2026-02-27.md",
+      "size_bytes": 217,
+      "quality_score": 0,
+      "items_found": 0,
+      "status": "insufficient_data",
+      "last_modified": "2026-02-28T03:47:00.401Z"
+    },
     {
       "feature": "phantom",
       "niche": "scout-default",
@@ -3208,7 +3616,7 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "phantom",
@@ -3219,7 +3627,51 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "digital-educators",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/digital-educators/2026-02-27.md",
+      "size_bytes": 686,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.395Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "etsy-sellers",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/etsy-sellers/2026-02-27.md",
+      "size_bytes": 672,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.395Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/freelancers-consultants/2026-02-27.md",
+      "size_bytes": 694,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.395Z"
+    },
+    {
+      "feature": "quality-pipeline",
+      "niche": "neurodivergent-digital-products",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/quality-pipeline/neurodivergent-digital-products/2026-02-27.md",
+      "size_bytes": 715,
+      "quality_score": 11,
+      "items_found": 2,
+      "status": "partial",
+      "last_modified": "2026-02-28T03:47:00.395Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3230,7 +3682,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3241,7 +3693,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3252,7 +3704,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3263,7 +3715,51 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
+    },
+    {
+      "feature": "stargazer",
+      "niche": "digital-educators",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/digital-educators/2026-02-27.md",
+      "size_bytes": 8831,
+      "quality_score": 77,
+      "items_found": 20,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.409Z"
+    },
+    {
+      "feature": "stargazer",
+      "niche": "etsy-sellers",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/etsy-sellers/2026-02-27.md",
+      "size_bytes": 9560,
+      "quality_score": 79,
+      "items_found": 20,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.409Z"
+    },
+    {
+      "feature": "stargazer",
+      "niche": "freelancers-consultants",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/freelancers-consultants/2026-02-27.md",
+      "size_bytes": 8902,
+      "quality_score": 77,
+      "items_found": 20,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.410Z"
+    },
+    {
+      "feature": "stargazer",
+      "niche": "neurodivergent-digital-products",
+      "date": "2026-02-27",
+      "path": "/home/runner/work/Council-Git-V9/Council-Git-V9/data/reports/stargazer/neurodivergent-digital-products/2026-02-27.md",
+      "size_bytes": 9322,
+      "quality_score": 78,
+      "items_found": 20,
+      "status": "complete",
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "viral-radar",
@@ -3274,7 +3770,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3285,7 +3781,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3296,7 +3792,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -3307,7 +3803,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "phantom",
@@ -3318,7 +3814,7 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "phantom",
@@ -3329,7 +3825,7 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3340,7 +3836,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.455Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3351,7 +3847,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.455Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3362,7 +3858,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.455Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3373,7 +3869,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.455Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "viral-radar",
@@ -3384,7 +3880,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3395,7 +3891,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3406,7 +3902,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -3417,7 +3913,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "phantom",
@@ -3428,7 +3924,7 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "phantom",
@@ -3439,7 +3935,7 @@
       "quality_score": 46,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "fork-evolution",
@@ -3450,7 +3946,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.458Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -3461,7 +3957,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -3472,7 +3968,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -3483,7 +3979,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3494,7 +3990,7 @@
       "quality_score": 23,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3505,7 +4001,7 @@
       "quality_score": 36,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3516,7 +4012,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3527,7 +4023,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3538,7 +4034,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3549,7 +4045,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3560,7 +4056,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -3571,7 +4067,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -3582,7 +4078,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -3593,7 +4089,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3604,7 +4100,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -3615,7 +4111,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "hackernews",
@@ -3626,7 +4122,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -3637,7 +4133,7 @@
       "quality_score": 73,
       "items_found": 9,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -3648,7 +4144,7 @@
       "quality_score": 13,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -3659,7 +4155,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3670,7 +4166,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3681,7 +4177,7 @@
       "quality_score": 42,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3692,7 +4188,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3703,7 +4199,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3714,7 +4210,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3725,7 +4221,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3736,7 +4232,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -3747,7 +4243,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -3758,7 +4254,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "stargazer",
@@ -3769,7 +4265,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -3780,7 +4276,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -3791,7 +4287,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "stargazer",
@@ -3802,7 +4298,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -3813,7 +4309,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -3824,7 +4320,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3835,7 +4331,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -3846,7 +4342,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "market-gaps",
@@ -3857,7 +4353,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "market-gaps",
@@ -3868,7 +4364,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "market-gaps",
@@ -3879,7 +4375,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -3890,7 +4386,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -3901,7 +4397,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3912,7 +4408,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3923,7 +4419,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3934,7 +4430,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "quality-pipeline",
@@ -3945,7 +4441,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -3956,7 +4452,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -3967,7 +4463,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -3978,7 +4474,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -3989,7 +4485,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4000,7 +4496,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4011,7 +4507,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4022,7 +4518,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4033,7 +4529,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -4044,7 +4540,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -4055,7 +4551,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4066,7 +4562,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4077,7 +4573,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4088,7 +4584,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4099,7 +4595,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4110,7 +4606,7 @@
       "quality_score": 33,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4121,7 +4617,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4132,7 +4628,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4143,7 +4639,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4154,7 +4650,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4165,7 +4661,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4176,7 +4672,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -4187,7 +4683,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -4198,7 +4694,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4209,7 +4705,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4220,7 +4716,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4231,7 +4727,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4242,7 +4738,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4253,7 +4749,7 @@
       "quality_score": 33,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4264,7 +4760,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4275,7 +4771,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4286,7 +4782,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4297,7 +4793,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4308,7 +4804,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4319,7 +4815,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -4330,7 +4826,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "stargazer",
@@ -4341,7 +4837,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -4352,7 +4848,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -4363,7 +4859,7 @@
       "quality_score": 78,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "stargazer",
@@ -4374,7 +4870,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4385,7 +4881,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4396,7 +4892,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4407,7 +4903,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4418,7 +4914,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "fork-evolution",
@@ -4429,7 +4925,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.458Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -4440,7 +4936,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -4451,7 +4947,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -4462,7 +4958,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "hackernews",
@@ -4473,7 +4969,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -4484,7 +4980,7 @@
       "quality_score": 72,
       "items_found": 9,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -4495,7 +4991,7 @@
       "quality_score": 13,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -4506,7 +5002,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4517,7 +5013,7 @@
       "quality_score": 31,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4528,7 +5024,7 @@
       "quality_score": 41,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4539,7 +5035,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4550,7 +5046,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4561,7 +5057,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4572,7 +5068,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4583,7 +5079,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4594,7 +5090,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -4605,7 +5101,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -4616,7 +5112,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4627,7 +5123,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4638,7 +5134,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4649,7 +5145,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "goldmine",
@@ -4660,7 +5156,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "goldmine",
@@ -4671,7 +5167,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "goldmine",
@@ -4682,7 +5178,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "goldmine",
@@ -4693,7 +5189,7 @@
       "quality_score": 7,
       "items_found": 1,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4704,7 +5200,7 @@
       "quality_score": 23,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4715,7 +5211,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4726,7 +5222,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4737,7 +5233,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4748,7 +5244,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4759,7 +5255,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4770,7 +5266,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4781,7 +5277,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -4792,7 +5288,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "stargazer",
@@ -4803,7 +5299,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -4814,7 +5310,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -4825,7 +5321,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "stargazer",
@@ -4836,7 +5332,7 @@
       "quality_score": 78,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4847,7 +5343,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -4858,7 +5354,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4869,7 +5365,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -4880,7 +5376,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "fork-evolution",
@@ -4891,7 +5387,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.458Z"
+      "last_modified": "2026-02-28T03:47:00.397Z"
     },
     {
       "feature": "fork-evolution",
@@ -4902,7 +5398,7 @@
       "quality_score": 99,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.458Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -4913,7 +5409,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "fork-evolution",
@@ -4924,7 +5420,7 @@
       "quality_score": 100,
       "items_found": 15,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.459Z"
+      "last_modified": "2026-02-28T03:47:00.398Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4935,7 +5431,7 @@
       "quality_score": 23,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4946,7 +5442,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4957,7 +5453,7 @@
       "quality_score": 28,
       "items_found": 4,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -4968,7 +5464,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4979,7 +5475,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -4990,7 +5486,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5001,7 +5497,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5012,7 +5508,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -5023,7 +5519,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -5034,7 +5530,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -5045,7 +5541,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5056,7 +5552,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5067,7 +5563,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "hackernews",
@@ -5078,7 +5574,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -5089,7 +5585,7 @@
       "quality_score": 72,
       "items_found": 9,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -5100,7 +5596,7 @@
       "quality_score": 13,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "hackernews",
@@ -5111,7 +5607,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5122,7 +5618,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5133,7 +5629,7 @@
       "quality_score": 36,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5144,7 +5640,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5155,7 +5651,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5166,7 +5662,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5177,7 +5673,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5188,7 +5684,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5199,7 +5695,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "scout",
@@ -5210,7 +5706,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "stargazer",
@@ -5221,7 +5717,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -5232,7 +5728,7 @@
       "quality_score": 79,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -5243,7 +5739,7 @@
       "quality_score": 77,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.410Z"
     },
     {
       "feature": "stargazer",
@@ -5254,7 +5750,7 @@
       "quality_score": 78,
       "items_found": 20,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.470Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -5265,7 +5761,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -5276,7 +5772,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5287,7 +5783,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5298,7 +5794,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "market-gaps",
@@ -5309,7 +5805,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.400Z"
     },
     {
       "feature": "market-gaps",
@@ -5320,7 +5816,7 @@
       "quality_score": 4,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.461Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -5331,7 +5827,7 @@
       "quality_score": 4,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -5342,7 +5838,7 @@
       "quality_score": 4,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -5353,7 +5849,7 @@
       "quality_score": 4,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "market-gaps",
@@ -5364,7 +5860,7 @@
       "quality_score": 4,
       "items_found": 0,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.462Z"
+      "last_modified": "2026-02-28T03:47:00.401Z"
     },
     {
       "feature": "phantom",
@@ -5375,7 +5871,7 @@
       "quality_score": 39,
       "items_found": 5,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5386,7 +5882,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.402Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5397,7 +5893,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5408,7 +5904,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5419,7 +5915,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5430,7 +5926,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5441,7 +5937,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5452,7 +5948,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5463,7 +5959,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5474,7 +5970,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5485,7 +5981,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5496,7 +5992,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5507,7 +6003,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5518,7 +6014,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5529,7 +6025,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -5540,7 +6036,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -5551,7 +6047,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.411Z"
     },
     {
       "feature": "viral-radar",
@@ -5562,7 +6058,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5573,7 +6069,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5584,7 +6080,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5595,7 +6091,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5606,7 +6102,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -5617,7 +6113,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -5628,7 +6124,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -5639,7 +6135,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "github-trending",
@@ -5650,7 +6146,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "github-trending",
@@ -5661,7 +6157,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "github-trending",
@@ -5672,7 +6168,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "github-trending",
@@ -5683,7 +6179,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "github-trending",
@@ -5694,7 +6190,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.460Z"
+      "last_modified": "2026-02-28T03:47:00.399Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5705,7 +6201,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.463Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5716,7 +6212,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.403Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5727,7 +6223,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.464Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5738,7 +6234,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "quality-pipeline",
@@ -5749,7 +6245,7 @@
       "quality_score": 11,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.404Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5760,7 +6256,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5771,7 +6267,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5782,7 +6278,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.465Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5793,7 +6289,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-pain-points",
@@ -5804,7 +6300,7 @@
       "quality_score": 13,
       "items_found": 3,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.405Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5815,7 +6311,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.466Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5826,7 +6322,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.406Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5837,7 +6333,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.467Z"
+      "last_modified": "2026-02-28T03:47:00.407Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5848,7 +6344,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "reddit-sniper",
@@ -5859,7 +6355,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -5870,7 +6366,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "viral-radar",
@@ -5881,7 +6377,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.471Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5892,7 +6388,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.472Z"
+      "last_modified": "2026-02-28T03:47:00.412Z"
     },
     {
       "feature": "viral-radar",
@@ -5903,7 +6399,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -5914,7 +6410,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "viral-radar",
@@ -5925,7 +6421,7 @@
       "quality_score": 10,
       "items_found": 2,
       "status": "partial",
-      "last_modified": "2026-02-27T04:05:23.473Z"
+      "last_modified": "2026-02-28T03:47:00.413Z"
     },
     {
       "feature": "scout",
@@ -5936,7 +6432,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -5947,7 +6443,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -5958,7 +6454,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -5969,7 +6465,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -5980,7 +6476,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -5991,7 +6487,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -6002,7 +6498,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -6013,7 +6509,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -6024,7 +6520,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -6035,7 +6531,7 @@
       "quality_score": 44,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.409Z"
     },
     {
       "feature": "scout",
@@ -6046,7 +6542,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6057,7 +6553,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6068,7 +6564,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6079,7 +6575,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6090,7 +6586,7 @@
       "quality_score": 0,
       "items_found": 0,
       "status": "insufficient_data",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6101,7 +6597,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6112,7 +6608,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6123,7 +6619,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6134,7 +6630,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6145,7 +6641,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6156,7 +6652,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6167,7 +6663,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6178,7 +6674,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6189,7 +6685,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6200,7 +6696,7 @@
       "quality_score": 5,
       "items_found": 0,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6211,7 +6707,7 @@
       "quality_score": 42,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     },
     {
       "feature": "scout",
@@ -6222,7 +6718,7 @@
       "quality_score": 42,
       "items_found": 1,
       "status": "complete",
-      "last_modified": "2026-02-27T04:05:23.468Z"
+      "last_modified": "2026-02-28T03:47:00.408Z"
     }
   ]
 }

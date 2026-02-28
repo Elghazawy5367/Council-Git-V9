@@ -53,7 +53,8 @@
     "reports:all": "tsx scripts/report-manager.ts all",
     "verify-deploy": "bash scripts/verify-deployments.sh",
     "deploy:firebase": "firebase deploy",
-    "deploy:github": "npm run deploy"
+    "deploy:github": "npm run deploy",
+    "test": "npm run typecheck"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

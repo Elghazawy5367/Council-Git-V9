@@ -14,6 +14,7 @@ const AutomationDashboard = React.lazy(() => import("@/pages/AutomationDashboard
 const QualityDashboard = React.lazy(() => import("@/pages/QualityDashboard"));
 const ScoutConfig = React.lazy(() => import("@/pages/features/ScoutConfig"));
 const NotFound = React.lazy(() => import("@/pages/NotFound"));
+const CommandPalette = React.lazy(() => import("@/components/CommandPalette"));
 
 const queryClient = new QueryClient();
 
@@ -38,9 +39,11 @@ const App = () => (
           <Toaster />
           <HashRouter>
             <Suspense fallback={<PageLoader />}>
+              <CommandPalette />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/council" element={<CouncilWorkflow />} />
+                <Route path="/automation" element={<AutomationDashboard />} />
                 <Route path="/features" element={<AutomationDashboard />} />
                 <Route path="/quality" element={<QualityDashboard />} />
                 <Route path="/features/scout" element={<ScoutConfig />} />

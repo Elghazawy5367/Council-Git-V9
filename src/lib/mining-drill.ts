@@ -9,7 +9,7 @@
  */
 
 import { Octokit } from '@octokit/rest';
-import * as fs from 'fs';
+import { fsSafe as fs } from './env';
 import * as path from 'path';
 import type { NicheConfig } from './types';
 

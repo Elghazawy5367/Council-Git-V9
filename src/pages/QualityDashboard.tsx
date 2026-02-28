@@ -14,9 +14,21 @@ import {
   Zap,
   BookOpen,
   GitPullRequest,
-  Activity
+  Activity,
+  LineChart as LineChartIcon
 } from "lucide-react";
 import { toast } from 'sonner';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  Area
+} from 'recharts';
 
 
 interface PipelineReport {
@@ -466,31 +478,90 @@ export default function QualityDashboard(): JSX.Element {
 
         {/* History Tab */}
         <TabsContent value="history" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Quality Score History</CardTitle>
-              <CardDescription>Track improvement over time</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {scoreHistory.length > 0 ? (
-                <div className="space-y-4">
-                  {scoreHistory.map((entry, idx) => (
-                    <div key={idx} className="flex items-center gap-4">
-                      <span className="text-sm text-muted-foreground w-24">{entry.date}</span>
-                      <Progress value={entry.score} className="flex-1 h-3" />
-                      <span className={`text-sm font-bold w-12 ${getScoreColor(entry.score)}`}>
-                        {entry.score}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Run the quality pipeline multiple times to see history.
-                </p>
-              )}
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <LineChartIcon className="h-5 w-5 text-primary" />
+                  Quality Progress
+                </CardTitle>
+                <CardDescription>Score trajectory over time</CardDescription>
+              </CardHeader>
+              <CardContent className="h-[300px]">
+                {scoreHistory.length > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={scoreHistory}>
+                      <defs>
+                        <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#88888820" />
+                      <XAxis
+                        dataKey="date"
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        domain={[0, 100]}
+                        fontSize={12}
+                        tickLine={false}
+                        axisLine={false}
+                        tickFormatter={(value) => `${value}`}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'hsl(var(--background))',
+                          borderColor: 'hsl(var(--border))',
+                          borderRadius: '8px'
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="score"
+                        stroke="#8b5cf6"
+                        strokeWidth={2}
+                        fillOpacity={1}
+                        fill="url(#colorScore)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-full flex items-center justify-center text-muted-foreground">
+                    Insufficient data for trend chart
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Score Distribution</CardTitle>
+                <CardDescription>Recent performance breakdown</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {scoreHistory.length > 0 ? (
+                  <div className="space-y-4">
+                    {scoreHistory.map((entry, idx) => (
+                      <div key={idx} className="flex items-center gap-4">
+                        <span className="text-sm text-muted-foreground w-24">{entry.date}</span>
+                        <Progress value={entry.score} className="flex-1 h-3" />
+                        <span className={`text-sm font-bold w-12 ${getScoreColor(entry.score)}`}>
+                          {entry.score}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Run the quality pipeline multiple times to see history.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

@@ -95,14 +95,14 @@ export function FeatureConfigModal({ feature, isOpen, onClose }: FeatureConfigMo
                 </Select>
               </div>
 
-              {config.runMode === 'scheduled' && (
+              {config.runMode === 'scheduled' && config.schedule && (
                 <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
                   <h4 className="font-medium">Schedule Configuration</h4>
                   
                   <div className="space-y-2">
                     <Label>Frequency</Label>
                     <Select
-                      value={config.schedule?.frequency}
+                      value={config.schedule.frequency}
                       onValueChange={(value: 'hourly' | 'daily' | 'weekly' | 'monthly') =>
                         setConfig({
                           ...config,
@@ -127,7 +127,7 @@ export function FeatureConfigModal({ feature, isOpen, onClose }: FeatureConfigMo
                     <Input
                       type="number"
                       min={1}
-                      value={config.schedule?.interval || 1}
+                      value={config.schedule.interval || 1}
                       onChange={(e) =>
                         setConfig({
                           ...config,
@@ -142,51 +142,53 @@ export function FeatureConfigModal({ feature, isOpen, onClose }: FeatureConfigMo
                 </div>
               )}
 
-              <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
-                <h4 className="font-medium">Execution Limits</h4>
-                
-                <div className="space-y-2">
-                  <Label>Max Run Time (seconds)</Label>
-                  <Input
-                    type="number"
-                    value={config.limits.maxRunTime}
-                    onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        limits: { ...config.limits, maxRunTime: parseInt(e.target.value) },
-                      })
-                    }
-                  />
-                </div>
+              {config.limits && (
+                <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
+                  <h4 className="font-medium">Execution Limits</h4>
 
-                <div className="space-y-2">
-                  <Label>Max API Requests</Label>
-                  <Input
-                    type="number"
-                    value={config.limits.maxAPIRequests}
-                    onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        limits: { ...config.limits, maxAPIRequests: parseInt(e.target.value) },
-                      })
-                    }
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <Label>Max Run Time (seconds)</Label>
+                    <Input
+                      type="number"
+                      value={config.limits.maxRunTime}
+                      onChange={(e) =>
+                        setConfig({
+                          ...config,
+                          limits: { ...config.limits, maxRunTime: parseInt(e.target.value) },
+                        })
+                      }
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <Label>Retry Attempts</Label>
-                  <Input
-                    type="number"
-                    value={config.limits.retryAttempts}
-                    onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        limits: { ...config.limits, retryAttempts: parseInt(e.target.value) },
-                      })
-                    }
-                  />
+                  <div className="space-y-2">
+                    <Label>Max API Requests</Label>
+                    <Input
+                      type="number"
+                      value={config.limits.maxAPIRequests}
+                      onChange={(e) =>
+                        setConfig({
+                          ...config,
+                          limits: { ...config.limits, maxAPIRequests: parseInt(e.target.value) },
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Retry Attempts</Label>
+                    <Input
+                      type="number"
+                      value={config.limits.retryAttempts}
+                      onChange={(e) =>
+                        setConfig({
+                          ...config,
+                          limits: { ...config.limits, retryAttempts: parseInt(e.target.value) },
+                        })
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </TabsContent>
 
@@ -415,262 +417,282 @@ export function FeatureConfigModal({ feature, isOpen, onClose }: FeatureConfigMo
 
           {/* Processing Tab */}
           <TabsContent value="processing" className="space-y-4 mt-4">
-            <div className="space-y-4 p-4 border rounded-lg">
-              <h4 className="font-medium">Analysis Settings</h4>
-              
-              <div className="flex items-center justify-between">
-                <Label>Enable Sentiment Analysis</Label>
-                <Switch
-                  checked={config.processing.analysis.enableSentiment}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        analysis: {
-                          ...config.processing.analysis,
-                          enableSentiment: checked,
-                        },
-                      },
-                    })
-                  }
-                />
-              </div>
+            {config.processing.analysis && (
+              <div className="space-y-4 p-4 border rounded-lg">
+                <h4 className="font-medium">Analysis Settings</h4>
 
-              <div className="flex items-center justify-between">
-                <Label>Enable Pain Point Detection</Label>
-                <Switch
-                  checked={config.processing.analysis.enablePainPoints}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        analysis: {
-                          ...config.processing.analysis,
-                          enablePainPoints: checked,
+                <div className="flex items-center justify-between">
+                  <Label>Enable Sentiment Analysis</Label>
+                  <Switch
+                    checked={config.processing.analysis.enableSentiment}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          analysis: {
+                            ...config.processing.analysis!,
+                            enableSentiment: checked,
+                          },
                         },
-                      },
-                    })
-                  }
-                />
-              </div>
+                      })
+                    }
+                  />
+                </div>
 
-              <div className="flex items-center justify-between">
-                <Label>Enable Opportunity Identification</Label>
-                <Switch
-                  checked={config.processing.analysis.enableOpportunities}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        analysis: {
-                          ...config.processing.analysis,
-                          enableOpportunities: checked,
+                <div className="flex items-center justify-between">
+                  <Label>Enable Pain Point Detection</Label>
+                  <Switch
+                    checked={config.processing.analysis.enablePainPoints}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          analysis: {
+                            ...config.processing.analysis!,
+                            enablePainPoints: checked,
+                          },
                         },
-                      },
-                    })
-                  }
-                />
-              </div>
+                      })
+                    }
+                  />
+                </div>
 
-              <div className="flex items-center justify-between">
-                <Label>Deep Analysis (AI-Enhanced)</Label>
-                <Switch
-                  checked={config.processing.analysis.deepAnalysis}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        analysis: {
-                          ...config.processing.analysis,
-                          deepAnalysis: checked,
+                <div className="flex items-center justify-between">
+                  <Label>Enable Opportunity Identification</Label>
+                  <Switch
+                    checked={config.processing.analysis.enableOpportunities}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          analysis: {
+                            ...config.processing.analysis!,
+                            enableOpportunities: checked,
+                          },
                         },
-                      },
-                    })
-                  }
-                />
-              </div>
-            </div>
+                      })
+                    }
+                  />
+                </div>
 
-            <div className="space-y-4 p-4 border rounded-lg">
-              <h4 className="font-medium">Filters</h4>
-              
-              <div className="space-y-2">
-                <Label>Min Quality Score</Label>
-                <Slider
-                  value={[config.processing.filters.minQualityScore || 0.5]}
-                  onValueChange={([value]) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        filters: {
-                          ...config.processing.filters,
-                          minQualityScore: value,
+                <div className="flex items-center justify-between">
+                  <Label>Deep Analysis (AI-Enhanced)</Label>
+                  <Switch
+                    checked={config.processing.analysis.deepAnalysis}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          analysis: {
+                            ...config.processing.analysis!,
+                            deepAnalysis: checked,
+                          },
                         },
-                      },
-                    })
-                  }
-                  min={0}
-                  max={1}
-                  step={0.1}
-                />
-                <p className="text-sm text-muted-foreground">
-                  {config.processing.filters.minQualityScore || 0.5}
-                </p>
+                      })
+                    }
+                  />
+                </div>
               </div>
+            )}
 
-              <div className="space-y-2">
-                <Label>Recency Filter (days)</Label>
-                <Input
-                  type="number"
-                  value={config.processing.filters.recencyFilter || 30}
-                  onChange={(e) =>
-                    setConfig({
-                      ...config,
-                      processing: {
-                        ...config.processing,
-                        filters: {
-                          ...config.processing.filters,
-                          recencyFilter: parseInt(e.target.value),
+            {config.processing.filters && (
+              <div className="space-y-4 p-4 border rounded-lg">
+                <h4 className="font-medium">Filters</h4>
+
+                <div className="space-y-2">
+                  <Label>Min Quality Score</Label>
+                  <Slider
+                    value={[config.processing.filters.minQualityScore || 0.5]}
+                    onValueChange={([value]) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          filters: {
+                            ...config.processing.filters,
+                            minQualityScore: value,
+                          },
                         },
-                      },
-                    })
-                  }
-                />
+                      })
+                    }
+                    min={0}
+                    max={1}
+                    step={0.1}
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    {config.processing.filters.minQualityScore || 0.5}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Recency Filter (days)</Label>
+                  <Input
+                    type="number"
+                    value={config.processing.filters.recencyFilter || 30}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        processing: {
+                          ...config.processing,
+                          filters: {
+                            ...config.processing.filters,
+                            recencyFilter: parseInt(e.target.value),
+                          },
+                        },
+                      })
+                    }
+                  />
+                </div>
               </div>
-            </div>
+            )}
+
+            {!config.processing.analysis && !config.processing.filters && (
+              <div className="p-8 text-center border rounded-lg bg-muted/20">
+                <p className="text-muted-foreground">No processing settings available for this feature</p>
+              </div>
+            )}
           </TabsContent>
 
           {/* Output Tab */}
           <TabsContent value="output" className="space-y-4 mt-4">
-            <div className="space-y-4 p-4 border rounded-lg">
-              <h4 className="font-medium">Report Routing</h4>
-              
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Send to Ruthless Judge</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Validate report before Council
-                  </p>
-                </div>
-                <Switch
-                  checked={config.output.routing.sendToRuthlessJudge}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      output: {
-                        ...config.output,
-                        routing: {
-                          ...config.output.routing,
-                          sendToRuthlessJudge: checked,
-                        },
-                      },
-                    })
-                  }
-                />
-              </div>
+            {config.output?.routing && (
+              <div className="space-y-4 p-4 border rounded-lg">
+                <h4 className="font-medium">Report Routing</h4>
 
-              {config.output.routing.sendToRuthlessJudge && (
-                <div className="space-y-2 pl-4">
-                  <Label>Ruthless Judge Mode</Label>
-                  <Select
-                    value={config.output.routing.ruthlessJudgeMode}
-                    onValueChange={(value: 'quick' | 'balanced' | 'deep') =>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Send to Ruthless Judge</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Validate report before Council
+                    </p>
+                  </div>
+                  <Switch
+                    checked={config.output.routing.sendToRuthlessJudge}
+                    onCheckedChange={(checked) =>
                       setConfig({
                         ...config,
                         output: {
                           ...config.output,
                           routing: {
-                            ...config.output.routing,
-                            ruthlessJudgeMode: value,
+                            ...config.output.routing!,
+                            sendToRuthlessJudge: checked,
                           },
                         },
                       })
                     }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="quick">⚡ Quick</SelectItem>
-                      <SelectItem value="balanced">⚖️ Balanced</SelectItem>
-                      <SelectItem value="deep">🔍 Deep</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  />
                 </div>
-              )}
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Send to Council</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Expert analysis after validation
-                  </p>
+                {config.output.routing.sendToRuthlessJudge && (
+                  <div className="space-y-2 pl-4">
+                    <Label>Ruthless Judge Mode</Label>
+                    <Select
+                      value={config.output.routing.ruthlessJudgeMode}
+                      onValueChange={(value: 'quick' | 'balanced' | 'deep') =>
+                        setConfig({
+                          ...config,
+                          output: {
+                            ...config.output,
+                            routing: {
+                              ...config.output.routing!,
+                              ruthlessJudgeMode: value,
+                            },
+                          },
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="quick">⚡ Quick</SelectItem>
+                        <SelectItem value="balanced">⚖️ Balanced</SelectItem>
+                        <SelectItem value="deep">🔍 Deep</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Send to Council</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Expert analysis after validation
+                    </p>
+                  </div>
+                  <Switch
+                    checked={config.output.routing.sendToCouncil}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        output: {
+                          ...config.output,
+                          routing: {
+                            ...config.output.routing!,
+                            sendToCouncil: checked,
+                          },
+                        },
+                      })
+                    }
+                  />
                 </div>
-                <Switch
-                  checked={config.output.routing.sendToCouncil}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      output: {
-                        ...config.output,
-                        routing: {
-                          ...config.output.routing,
-                          sendToCouncil: checked,
-                        },
-                      },
-                    })
-                  }
-                />
               </div>
-            </div>
+            )}
 
-            <div className="space-y-4 p-4 border rounded-lg">
-              <h4 className="font-medium">Storage</h4>
-              
-              <div className="flex items-center justify-between">
-                <Label>Save to Database</Label>
-                <Switch
-                  checked={config.output.storage.saveToIndexedDB}
-                  onCheckedChange={(checked) =>
-                    setConfig({
-                      ...config,
-                      output: {
-                        ...config.output,
-                        storage: {
-                          ...config.output.storage,
-                          saveToIndexedDB: checked,
-                        },
-                      },
-                    })
-                  }
-                />
-              </div>
+            {config.output?.storage && (
+              <div className="space-y-4 p-4 border rounded-lg">
+                <h4 className="font-medium">Storage</h4>
 
-              <div className="space-y-2">
-                <Label>Retention (days)</Label>
-                <Input
-                  type="number"
-                  value={config.output.storage.retentionDays}
-                  onChange={(e) =>
-                    setConfig({
-                      ...config,
-                      output: {
-                        ...config.output,
-                        storage: {
-                          ...config.output.storage,
-                          retentionDays: parseInt(e.target.value),
+                <div className="flex items-center justify-between">
+                  <Label>Save to Database</Label>
+                  <Switch
+                    checked={config.output.storage.saveToIndexedDB}
+                    onCheckedChange={(checked) =>
+                      setConfig({
+                        ...config,
+                        output: {
+                          ...config.output,
+                          storage: {
+                            ...config.output.storage!,
+                            saveToIndexedDB: checked,
+                          },
                         },
-                      },
-                    })
-                  }
-                />
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Retention (days)</Label>
+                  <Input
+                    type="number"
+                    value={config.output.storage.retentionDays}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        output: {
+                          ...config.output,
+                          storage: {
+                            ...config.output.storage!,
+                            retentionDays: parseInt(e.target.value),
+                          },
+                        },
+                      })
+                    }
+                  />
+                </div>
               </div>
-            </div>
+            )}
+
+            {!config.output?.routing && !config.output?.storage && (
+              <div className="p-8 text-center border rounded-lg bg-muted/20">
+                <p className="text-muted-foreground">No output settings available for this feature</p>
+              </div>
+            )}
           </TabsContent>
         </Tabs>
 

@@ -12,7 +12,7 @@
  * NOTE: API calls extracted to src/services/github.service.ts
  */
 
-import * as fs from "fs";
+import { fsSafe as fs } from "./env";
 import * as path from "path";
 import * as yaml from 'js-yaml';
 import { GITHUB_OWNER, GITHUB_REPO } from './config';

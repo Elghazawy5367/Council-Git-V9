@@ -1,13 +1,13 @@
 # Pricing & Monetization
 
-*Last updated: 2/22/2026, 4:22:04 AM*
+*Last updated: 3/1/2026, 4:25:52 AM*
 *Learned from: developer-tools (20 repositories)*
 
 ## Key Patterns
 
 ### 1. Freemium with clear paid tier value
 
-**Confidence:** 30%
+**Confidence:** 35%
 
 **Evidence:**
 - hoppscotch/hoppscotch
@@ -18,8 +18,8 @@
 - [hoppscotch/hoppscotch](https://github.com/hoppscotch/hoppscotch)
 - [OpenHands/OpenHands](https://github.com/OpenHands/OpenHands)
 - [localstack/localstack](https://github.com/localstack/localstack)
+- [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
 - [usebruno/bruno](https://github.com/usebruno/bruno)
-- [agno-agi/agno](https://github.com/agno-agi/agno)
 
 ### 2. Permissive open source licenses (MIT/Apache)
 

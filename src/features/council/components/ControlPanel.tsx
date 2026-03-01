@@ -140,11 +140,13 @@ export const ControlPanel: React.FC = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [currentAccept, setCurrentAccept] = React.useState(ALL_ACCEPTED_FORMATS);
+  const [currentLabel, setCurrentLabel] = React.useState('context files');
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
+    let successCount = 0;
     for (const file of Array.from(files)) {
       try {
         const content = await file.text();
@@ -153,18 +155,25 @@ export const ControlPanel: React.FC = () => {
           content,
           size: `${(file.size / 1024).toFixed(2)} KB`,
         });
-      } catch {
-        toast.error(`Failed to read "${file.name}"`);
+        successCount++;
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : 'unreadable format';
+        toast.error(`Failed to read "${file.name}": ${reason}`);
       }
     }
-    toast.success(`Added ${files.length} file(s)`);
+    if (successCount > 0) {
+      toast.success(`Added ${successCount} file(s)`);
+    }
     event.target.value = '';
   };
 
-  const triggerFileInput = (accept: string) => {
-    setCurrentAccept(accept);
-    // Use setTimeout to ensure accept attribute is updated before click
-    setTimeout(() => fileInputRef.current?.click(), 0);
+  const triggerFileInput = (accept: string, label: string) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.accept = accept;
+      setCurrentAccept(accept);
+      setCurrentLabel(label);
+      fileInputRef.current.click();
+    }
   };
 
   const handleRemoveAll = () => {
@@ -298,7 +307,7 @@ export const ControlPanel: React.FC = () => {
               </button>
             )}
           </div>
-          <input ref={fileInputRef} type="file" accept={currentAccept} multiple className="hidden" onChange={handleFileUpload} aria-label="Upload context files" />
+          <input ref={fileInputRef} type="file" accept={currentAccept} multiple className="hidden" onChange={handleFileUpload} aria-label={`Upload ${currentLabel}`} />
           
           {/* Attached files list */}
           {fileData.length > 0 && (
@@ -337,7 +346,7 @@ export const ControlPanel: React.FC = () => {
                 return (
                   <DropdownMenuItem
                     key={category.label}
-                    onClick={() => triggerFileInput(category.accept)}
+                    onClick={() => triggerFileInput(category.accept, category.label.toLowerCase())}
                     className="flex items-center gap-3 py-2.5 cursor-pointer"
                   >
                     <Icon className="h-4 w-4 text-primary flex-shrink-0" />
@@ -350,7 +359,7 @@ export const ControlPanel: React.FC = () => {
               })}
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => triggerFileInput(ALL_ACCEPTED_FORMATS)}
+                onClick={() => triggerFileInput(ALL_ACCEPTED_FORMATS, 'files')}
                 className="flex items-center gap-3 py-2.5 cursor-pointer"
               >
                 <Upload className="h-4 w-4 text-muted-foreground flex-shrink-0" />

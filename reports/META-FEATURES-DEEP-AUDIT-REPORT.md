@@ -61,7 +61,7 @@ The Council codebase contains **12 audited systems** spanning meta-features (sel
 
 The script runs end-to-end: parses CLI args, calls `learnFromSuccess()` which searches GitHub API, extracts patterns (positioning, pricing, features, architecture) from repositories, updates knowledge base markdown files, and generates a report.
 
-Falls back to mock data if GitHub API fails at `self-improve.ts:125`. Uses regex-based pattern extraction — **not** LLM-based analysis.
+Falls back to mock data via try-catch at `self-improve.ts:125` (catches GitHub API errors and returns `generateMockRepos()` instead). Uses regex-based pattern extraction — **not** LLM-based analysis.
 
 #### Security Concerns
 
@@ -75,7 +75,7 @@ Falls back to mock data if GitHub API fails at `self-improve.ts:125`. Uses regex
 |-----------|:-----:|-------|
 | Completeness | 7/10 | Full pipeline from search to knowledge base update |
 | Type Safety | 7/10 | No `any` types found |
-| Error Handling | 6/10 | Empty catch blocks at lines 119-120 swallow errors silently |
+| Error Handling | 6/10 | Empty catch blocks in `self-improve.ts` at lines 119-120 swallow errors silently |
 | Integration | 4/10 | CLI-only — no web UI, no API endpoint, no dashboard |
 | 2026 Relevance | 4/10 | Regex-based extraction is obsolete for 2026 |
 
@@ -139,7 +139,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 | Dimension | Score | Notes |
 |-----------|:-----:|-------|
 | Completeness | 6/10 | V1 is feature-complete but broken; V2 has no npm script |
-| Type Safety | 4/10 | `eslint-disable @typescript-eslint/no-explicit-any` present; line 137 uses `any` |
+| Type Safety | 4/10 | `eslint-disable @typescript-eslint/no-explicit-any` present; `twin-mimicry.ts` line 137 uses `any` |
 | Error Handling | 5/10 | Some try-catch but not comprehensive |
 | Integration | 3/10 | CLI-only, no UI, V2 unreachable via npm |
 | 2026 Relevance | 5/10 | Direct git shell commands instead of API calls |
@@ -395,7 +395,7 @@ if (vault) atob(JSON.parse(vault).encodedKeys);
 // Instantly reveals ALL stored API keys in plaintext
 ```
 
-Session keys are stored in `sessionStorage` as plaintext JSON (line 100).
+Session keys are stored in `sessionStorage` as plaintext JSON (`vault.ts` line 100).
 
 #### Security Rating: 2/10
 
@@ -467,10 +467,11 @@ try {
   // ... cache operation
 } catch {
   // Empty — errors silently swallowed
+  // Should at minimum log: console.warn('[SynthesisCache] Operation failed:', error)
 }
 ```
 
-These empty catch blocks can hide data corruption or quota exhaustion. At minimum, log warnings.
+These empty catch blocks can hide data corruption or IndexedDB quota exhaustion. At minimum, add `console.warn` logging to surface failures without disrupting the user flow.
 
 ---
 

@@ -213,7 +213,7 @@ export const ControlPanel: React.FC = () => {
     <Card className="glass-panel-elevated relative overflow-hidden">
       {/* Execution progress shimmer bar */}
       {(isPhase1Running || isPhase2Running) && (
-        <div className="absolute top-0 left-0 right-0 h-0.5 bg-muted overflow-hidden" role="progressbar" aria-label="Execution in progress">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-muted overflow-hidden" role="progressbar" aria-label="Execution in progress" aria-valuemin={0} aria-valuemax={100}>
           <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-primary to-transparent animate-shimmer" />
         </div>
       )}

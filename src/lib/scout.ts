@@ -12,12 +12,10 @@
  * NOTE: API calls extracted to src/services/github.service.ts
  */
 
-import * as fs from "fs";
-import * as path from "path";
-import * as yaml from 'js-yaml';
 import { GITHUB_OWNER, GITHUB_REPO } from './config';
 import type { GitHubRawRepo, ScoutIssue } from './types';
 import { getGitHubService } from '@/services/github.service';
+import { isNode, getRuntimeRequire } from './env';
 
 /**
  * Consult the Living Knowledge Base (Angle 1)
@@ -148,15 +146,21 @@ function getDateXDaysAgo(days: number): string {
 /**
  * Load niche configuration from YAML
  */
-function loadNicheConfig(): NicheConfig[] {
+async function loadNicheConfig(): Promise<NicheConfig[]> {
+  if (!isNode) return [];
+
   try {
+    const fs = await getRuntimeRequire('fs');
+    const path = await getRuntimeRequire('path');
+    const yaml = await getRuntimeRequire('js-yaml');
+
     const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
     const fileContent = fs.readFileSync(configPath, 'utf8');
     const config = yaml.load(fileContent) as YamlConfig;
     return config.niches.filter((n: NicheConfig) => n.enabled !== false);
   } catch (error) {
     console.error('Failed to load niche config:', error);
-    throw error;
+    return [];
   }
 }
 
@@ -276,12 +280,26 @@ function calculateBlueOceanScore(repo: {
  * Save Blue Ocean report
  */
 async function saveBlueOceanReport(opportunities: Opportunity[], topic: string, nicheId: string = 'default'): Promise<void> {
+  if (!isNode) return;
+
+  const fs = await getRuntimeRequire('fs');
+  const path = await getRuntimeRequire('path');
+
   const today = new Date().toISOString().split("T")[0];
   const filename = `opportunities-${nicheId}-${today}.json`;
   const filepath = path.join(process.cwd(), "data", filename);
+
+  // Ensure data directory exists
+  const dataDir = path.join(process.cwd(), "data");
+  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+
   fs.writeFileSync(filepath, JSON.stringify(opportunities, null, 2));
+
   // Also save markdown summary
-  const mdPath = path.join(process.cwd(), "data", "intelligence", `blue-ocean-${nicheId}-${today}.md`);
+  const intelDir = path.join(process.cwd(), "data", "intelligence");
+  if (!fs.existsSync(intelDir)) fs.mkdirSync(intelDir, { recursive: true });
+
+  const mdPath = path.join(intelDir, `blue-ocean-${nicheId}-${today}.md`);
   fs.writeFileSync(mdPath, generateBlueOceanMarkdown(opportunities, topic));
 }
 
@@ -445,14 +463,18 @@ function getConfig(): ScoutConfig {
  * Find trending repositories in target niche
  */
 async function findTrendingRepos(config: ScoutConfig): Promise<GitHubRawRepo[]> {
-  const cacheFile = path.join(process.cwd(), "data", "cache", "repos.json");
-
-  // Check cache
-  if (await isCacheValid(cacheFile, config.cacheExpiry)) {
-    return JSON.parse(fs.readFileSync(cacheFile, "utf-8"));
-  }
-
   const githubService = getGitHubService();
+
+  if (isNode) {
+    const fs = await getRuntimeRequire('fs');
+    const path = await getRuntimeRequire('path');
+    const cacheFile = path.join(process.cwd(), "data", "cache", "repos.json");
+
+    // Check cache
+    if (await isCacheValid(cacheFile, config.cacheExpiry)) {
+      return JSON.parse(fs.readFileSync(cacheFile, "utf-8"));
+    }
+  }
 
   try {
     // Search GitHub
@@ -465,9 +487,14 @@ async function findTrendingRepos(config: ScoutConfig): Promise<GitHubRawRepo[]> 
 
     const repos = data.items || [];
 
-    // Cache results
-    fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
-    fs.writeFileSync(cacheFile, JSON.stringify(repos, null, 2));
+    // Cache results (Node only)
+    if (isNode) {
+      const fs = await getRuntimeRequire('fs');
+      const path = await getRuntimeRequire('path');
+      const cacheFile = path.join(process.cwd(), "data", "cache", "repos.json");
+      fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
+      fs.writeFileSync(cacheFile, JSON.stringify(repos, null, 2));
+    }
 
     return repos;
   } catch (error) {
@@ -652,28 +679,33 @@ function generateNextActions(opportunities: ProductOpportunity[], trends: string
  * Save intelligence to files
  */
 async function saveIntelligence(report: ScoutReport, nicheId: string = 'default'): Promise<void> {
+  if (!isNode) return;
+
+  const fs = await getRuntimeRequire('fs');
+  const path = await getRuntimeRequire('path');
+
   const dataDir = path.join(process.cwd(), "data");
   const today = new Date().toISOString().split("T")[0];
 
   // Save full report with niche ID
   const reportPath = path.join(dataDir, "reports", `phantom-scout-${nicheId}-${today}.json`);
-  fs.mkdirSync(path.dirname(reportPath), {
-    recursive: true
-  });
+  if (!fs.existsSync(path.dirname(reportPath))) {
+    fs.mkdirSync(path.dirname(reportPath), { recursive: true });
+  }
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
   // Save opportunities with niche ID
   const oppPath = path.join(dataDir, "opportunities", `phantom-scout-${nicheId}-${today}.json`);
-  fs.mkdirSync(path.dirname(oppPath), {
-    recursive: true
-  });
+  if (!fs.existsSync(path.dirname(oppPath))) {
+    fs.mkdirSync(path.dirname(oppPath), { recursive: true });
+  }
   fs.writeFileSync(oppPath, JSON.stringify(report.topOpportunities, null, 2));
 
   // Save markdown summary with niche ID
   const summaryPath = path.join(dataDir, "reports", `phantom-scout-${nicheId}-${today}.md`);
-  fs.mkdirSync(path.dirname(summaryPath), {
-    recursive: true
-  });
+  if (!fs.existsSync(path.dirname(summaryPath))) {
+    fs.mkdirSync(path.dirname(summaryPath), { recursive: true });
+  }
   fs.writeFileSync(summaryPath, generateMarkdownSummary(report));
 }
 
@@ -732,6 +764,8 @@ function buildSearchQuery(niche: string): string {
   return `${niche} stars:>100 pushed:>2024-01-01`;
 }
 async function isCacheValid(file: string, expiryHours: number): Promise<boolean> {
+  if (!isNode) return false;
+  const fs = await getRuntimeRequire('fs');
   if (!fs.existsSync(file)) return false;
   const stats = fs.statSync(file);
   const age = Date.now() - stats.mtimeMs;
@@ -881,7 +915,7 @@ function generateMockPainPoints(): PainPoint[] {
  */
 export async function runPhantomScout(): Promise<void> {
 
-  const niches = loadNicheConfig();
+  const niches = await loadNicheConfig();
 
   const results = [];
   
@@ -954,8 +988,10 @@ export async function runPhantomScout(): Promise<void> {
 
   results.forEach(r => {
     if (r.error) {
-          } else {
-                                  }
+      /* Error handled by caller */
+    } else {
+      /* Success handled by caller */
+    }
   });
   
   }

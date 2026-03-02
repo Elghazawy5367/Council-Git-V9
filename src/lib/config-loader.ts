@@ -8,24 +8,7 @@
 
 import type { NicheConfig, YamlConfig } from './types';
 
-// Dynamic imports for Node.js-only modules
-let yaml: any;
-let fs: any;
-let path: any;
-
-/**
- * Load Node.js-only modules dynamically
- * This prevents build failures in browser environments
- */
-async function loadNodeModules(): Promise<void> {
-  if (typeof window === 'undefined') {
-    yaml = await import('js-yaml');
-    fs = await import('fs');
-    path = await import('path');
-  }
-}
-
-import { isNode, getRuntimeRequire } from './env';
+import { isNode } from './env';
 
 /**
  * Load niche configuration from YAML file (Node.js only)
@@ -38,12 +21,14 @@ export async function loadNicheConfig(): Promise<NicheConfig[]> {
     throw new Error('loadNicheConfig() can only be called in Node.js environment');
   }
 
-  await loadNodeModules();
+  const yaml = await import('js-yaml');
+  const fs = await import('fs');
+  const path = await import('path');
   
   try {
     const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');
     const fileContent = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(fileContent) as YamlConfig;
+    const config = yaml.default.load(fileContent) as YamlConfig;
     return config.niches || [];
   } catch (error: any) {
     const configPath = path.join(process.cwd(), 'config', 'target-niches.yaml');

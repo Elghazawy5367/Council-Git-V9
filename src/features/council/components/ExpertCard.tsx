@@ -1,7 +1,7 @@
 import React, { useState, useCallback, lazy, Suspense } from 'react';
 import { useExpertStore } from '@/features/council/store/expert-store';
 import { useControlPanelStore } from '@/features/council/store/control-panel-store';
-import { KnowledgeFile, Expert } from '@/features/council/lib/types';
+import { KnowledgeFile, Expert } from '@/lib/types';
 import { pluginManager } from '@/lib/plugin-manager';
 import { SafeMarkdown } from '@/components/primitives/SafeMarkdown';
 import { MAGNIFICENT_7_FLEET } from '@/lib/config';
@@ -30,7 +30,10 @@ import {
   Maximize2,
   RotateCcw,
   Sparkles,
-  Globe
+  Globe,
+  Clock,
+  DollarSign,
+  Activity
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ExpertOutputFooter } from './ExpertOutputFooter';
@@ -44,6 +47,17 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Target,
   Heart,
   AlertTriangle,
+};
+
+// Deterministic gradient based on string hash
+const generateGradient = (seed: string) => {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const c1 = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+  const c2 = ((hash >> 1) & 0x00FFFFFF).toString(16).toUpperCase();
+  return `linear-gradient(135deg, #${c1.padStart(6, '0')}, #${c2.padStart(6, '0')})`;
 };
 
 interface ExpertCardProps {
@@ -64,16 +78,13 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
   const [editedPersona, setEditedPersona] = useState<string | undefined>();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-  // Sync editedPersona with expert.basePersona only when expert changes, not on every render
   React.useEffect(() => {
     if (expert?.basePersona !== editedPersona) {
       setEditedPersona(expert?.basePersona);
     }
-  }, [expert?.basePersona, editedPersona]); // Added editedPersona to dependencies
+  }, [expert?.basePersona, editedPersona]);
 
-  // Define all hooks BEFORE any early returns
   const handleRetry = useCallback(() => {
-    // Will be implemented later
     toast.info(`Retrying ${expert?.name}...`);
   }, [expert?.name]);
 
@@ -126,11 +137,13 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
     toast.success('Persona updated');
   };
 
-  // Prevent render if expert is undefined (prevents crashes during state updates)
   if (!expert) {
     return (
-      <Card className="glass-panel h-96 flex items-center justify-center">
-        <div className="text-muted-foreground text-sm">Loading expert...</div>
+      <Card className="glass-panel h-96 flex items-center justify-center bg-bg-raised border-border-subtle">
+        <div className="text-text-tertiary text-sm flex items-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          Loading expert...
+        </div>
       </Card>
     );
   }
@@ -151,104 +164,110 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
   return (
     <>
       <Card
-        className={`glass-panel transition-all duration-300 flex flex-col h-full ${
-          isActive ? 'ring-2 ring-primary/50 animate-pulse-glow' : 'opacity-60'
+        className={`glass-panel transition-all duration-300 flex flex-col h-full bg-bg-raised border-border-default hover:border-border-strong ${
+          isActive ? 'ring-1 ring-primary/40' : 'opacity-60'
         } ${expert.isLoading ? 'animate-shimmer border-primary/40' : ''}`}
         role="article"
         aria-label={`Expert: ${positionName}${loadedPersona ? ` - ${loadedPersona.name}` : ''}`}
       >
-        <CardHeader className="pb-2 flex-shrink-0">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0">
+        <CardHeader className="pb-3 flex-shrink-0">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               <div
-                className={`w-10 h-10 rounded-lg bg-gradient-to-br ${expert.color} flex items-center justify-center shadow-lg flex-shrink-0 relative`}
+                className="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0 relative"
+                style={{ background: generateGradient(positionName) }}
               >
-                <IconComponent className="w-5 h-5 text-primary-foreground" />
+                <IconComponent className="w-6 h-6 text-white" />
                 {expert.hasWebSearch && (
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                    <Globe className="w-2.5 h-2.5 text-white" />
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent-cyan rounded-full flex items-center justify-center border-2 border-bg-raised">
+                    <Globe className="w-2 h-2 text-white" />
                   </div>
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-foreground text-sm truncate">{positionName}</h3>
+                <div className="flex items-center gap-2">
+                   <h3 className="font-bold text-text-primary text-sm truncate">{positionName}</h3>
+                   <Badge
+                     variant={expert.isLoading ? 'default' : 'outline'}
+                     className={`text-[9px] px-1.5 py-0 h-4 border-none flex items-center gap-1 ${
+                       expert.isLoading ? 'bg-primary/20 text-primary-glow animate-pulse' : 'bg-bg-elevated text-text-tertiary'
+                     }`}
+                     aria-live="polite"
+                   >
+                     {expert.isLoading ? (
+                        <>● Active</>
+                     ) : (
+                        <>○ Idle</>
+                     )}
+                   </Badge>
+                </div>
                 {loadedPersona ? (
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-primary text-xs font-medium truncate">
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-primary text-xs font-semibold truncate">
                       {loadedPersona.icon} {loadedPersona.name}
                     </span>
                   </div>
                 ) : (
-                  <p className="text-xs text-muted-foreground truncate">
+                  <p className="text-xs text-text-secondary truncate mt-0.5">
                     {positionInfo.specialty}
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="text-[10px] text-text-tertiary truncate mt-0.5">
                   {selectedModel?.name || 'Unknown Model'}
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
-              <div className="flex items-center gap-0.5">
+            <div className="flex flex-col items-end gap-1 flex-shrink-0">
+              <div className="flex items-center gap-1">
                 {expert.output && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 hover:bg-primary/10"
+                    className="h-8 w-8 hover:bg-bg-elevated text-text-tertiary hover:text-text-primary"
                     onClick={() => setIsExpanded(true)}
                     title="Expand output"
                     aria-label={`Expand ${positionName} output`}
                   >
-                    <Maximize2 className="h-3.5 w-3.5" />
+                    <Maximize2 className="h-4 w-4" />
                   </Button>
                 )}
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 hover:bg-primary/10"
+                  className="h-8 w-8 hover:bg-bg-elevated text-text-tertiary hover:text-text-primary"
                   onClick={() => setIsEditing(!isEditing)}
                   title="Edit persona"
                   aria-label={`Edit ${positionName} persona`}
                 >
-                  <Pencil className="h-3.5 w-3.5" />
+                  <Pencil className="h-4 w-4" />
                 </Button>
               </div>
               {loadedPersona && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-5 px-1.5 text-[9px] text-muted-foreground hover:text-destructive"
+                  className="h-6 px-2 text-[10px] text-text-tertiary hover:text-error"
                   onClick={handleClearPersonaClick}
                   title="Reset to default"
                   aria-label={`Reset ${positionName} persona to default`}
                 >
-                  <RotateCcw className="h-2.5 w-2.5 mr-0.5" />
+                  <RotateCcw className="h-3 w-3 mr-1" />
                   Reset
                 </Button>
               )}
             </div>
           </div>
 
-          {loadedPersona && (
-            <Badge 
-              variant="outline" 
-              className="mt-2 text-[10px] bg-primary/5 border-primary/20 text-primary"
-            >
-              <Sparkles className="h-2.5 w-2.5 mr-1" />
-              Persona: {expert.personaId}
-            </Badge>
-          )}
-
           <Select value={expert.model} onValueChange={handleModelChange}>
-            <SelectTrigger className="mt-2 h-8 bg-muted/50 border-border/50 text-xs" aria-label={`Select AI model for ${positionName}`}>
+            <SelectTrigger className="mt-3 h-9 bg-bg-base border-border-subtle text-xs hover:border-border-default focus:ring-1 focus:ring-primary/40" aria-label={`Select AI model for ${positionName}`}>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-bg-overlay border-border-default">
               {MAGNIFICENT_7_FLEET.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
-                  <div className="flex flex-col items-start">
-                    <span className="font-medium text-xs">{model.name}</span>
-                    <span className="text-[10px] text-muted-foreground">{model.specialty}</span>
+                <SelectItem key={model.id} value={model.id} className="focus:bg-bg-elevated">
+                  <div className="flex flex-col items-start py-1">
+                    <span className="font-semibold text-xs text-text-primary">{model.name}</span>
+                    <span className="text-[10px] text-text-tertiary">{model.specialty}</span>
                   </div>
                 </SelectItem>
               ))}
@@ -256,10 +275,10 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
           </Select>
         </CardHeader>
 
-        <CardContent className="flex-1 flex flex-col space-y-3 overflow-hidden">
-          <div className="space-y-1.5 flex-shrink-0">
+        <CardContent className="flex-1 flex flex-col space-y-4 overflow-hidden pt-0">
+          <div className="space-y-2 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+              <span className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest">
                 Knowledge
               </span>
               <label className="cursor-pointer">
@@ -271,40 +290,42 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                   onChange={handleFileUpload}
                   aria-label={`Upload knowledge files for ${positionName}`}
                 />
-                <Button variant="ghost" size="sm" className="h-6 px-1.5 text-[10px]" asChild>
+                <Button variant="ghost" size="sm" className="h-7 px-2 text-[10px] bg-bg-base hover:bg-bg-elevated border border-border-subtle" asChild>
                   <span>
-                    <Upload className="h-3 w-3 mr-1" />
-                    Add
+                    <Upload className="h-3 w-3 mr-1.5" />
+                    Inject
                   </span>
                 </Button>
               </label>
             </div>
 
             {expert.knowledge.length > 0 ? (
-              <div className="space-y-1 max-h-16 overflow-y-auto">
+              <div className="space-y-1.5 max-h-20 overflow-y-auto pr-1">
                 {expert.knowledge.map((file) => (
                   <div
                     key={file.id}
-                    className="flex items-center justify-between gap-1 px-1.5 py-1 rounded-md bg-muted/30 text-[10px]"
+                    className="flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-bg-base border border-border-subtle text-[10px] group"
                   >
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <FileText className="h-3 w-3 text-muted-foreground shrink-0" />
-                      <span className="truncate">{file.name}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <FileText className="h-3.5 w-3.5 text-accent-cyan shrink-0" />
+                      <span className="truncate text-text-secondary">{file.name}</span>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-4 w-4 hover:bg-destructive/20 hover:text-destructive"
+                      className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-error/20 hover:text-error"
                       onClick={() => removeKnowledge(index, file.id)}
                       aria-label={`Remove ${file.name}`}
                     >
-                      <X className="h-2.5 w-2.5" />
+                      <X className="h-3 w-3" />
                     </Button>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-[10px] text-muted-foreground/70 italic">No knowledge files</p>
+              <div className="h-10 border border-dashed border-border-subtle rounded-lg flex items-center justify-center">
+                 <p className="text-[10px] text-text-disabled italic">No context files provided</p>
+              </div>
             )}
           </div>
 
@@ -313,30 +334,30 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="w-full justify-between h-7 px-2 hover:bg-muted/50"
+                  className="w-full justify-between h-8 px-2 bg-bg-base/50 hover:bg-bg-elevated border border-border-subtle"
                 >
-                  <span className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
-                    <Settings2 className="h-3 w-3" />
-                    Config
+                  <span className="flex items-center gap-2 text-[10px] font-bold text-text-secondary uppercase tracking-wider">
+                    <Settings2 className="h-3.5 w-3.5 text-text-tertiary" />
+                    Parameters
                   </span>
                   {isConfigOpen ? (
-                    <ChevronUp className="h-3 w-3" />
+                    <ChevronUp className="h-3.5 w-3.5 text-text-disabled" />
                   ) : (
-                    <ChevronDown className="h-3 w-3" />
+                    <ChevronDown className="h-3.5 w-3.5 text-text-disabled" />
                   )}
                 </Button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-3 pt-2">
+              <CollapsibleContent className="space-y-4 pt-3 pb-1">
                 {expert.pluginId && pluginManager.getExpertPlugin(expert.pluginId) ? (
                   pluginManager.getExpertPlugin(expert.pluginId)?.renderConfig(expert.pluginConfig || {}, (newCfg) => {
                     updateExpert(index, { ...expert, pluginConfig: newCfg });
                   })
                 ) : (
                   <>
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px]">
-                        <span className="text-muted-foreground">Temp</span>
-                        <span className="font-mono">{expert.config.temperature.toFixed(2)}</span>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-medium">
+                        <span className="text-text-tertiary">Temperature</span>
+                        <span className="text-text-primary font-mono">{expert.config.temperature.toFixed(2)}</span>
                       </div>
                       <Slider
                         value={[expert.config.temperature]}
@@ -344,31 +365,15 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                         min={0}
                         max={2}
                         step={0.1}
-                        className="slider-council"
-                        aria-label={`Temperature: ${expert.config.temperature.toFixed(2)}`}
+                        className="cursor-pointer"
+                        aria-label="Temperature control"
                       />
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px]">
-                        <span className="text-muted-foreground">Top P</span>
-                        <span className="font-mono">{expert.config.topP.toFixed(2)}</span>
-                      </div>
-                      <Slider
-                        value={[expert.config.topP]}
-                        onValueChange={([value]) => handleConfigChange('topP', value)}
-                        min={0}
-                        max={1}
-                        step={0.05}
-                        className="slider-council"
-                        aria-label={`Top P: ${expert.config.topP.toFixed(2)}`}
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="flex justify-between text-[10px]">
-                        <span className="text-muted-foreground">Max Tokens</span>
-                        <span className="font-mono">{expert.config.maxTokens}</span>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-medium">
+                        <span className="text-text-tertiary">Max Tokens</span>
+                        <span className="text-text-primary font-mono">{expert.config.maxTokens}</span>
                       </div>
                       <Slider
                         value={[expert.config.maxTokens]}
@@ -376,8 +381,8 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
                         min={1000}
                         max={8000}
                         step={500}
-                        className="slider-council"
-                        aria-label={`Max tokens: ${expert.config.maxTokens}`}
+                        className="cursor-pointer"
+                        aria-label="Max tokens control"
                       />
                     </div>
                   </>
@@ -386,64 +391,83 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
             </Collapsible>
 
           {isEditing && (
-            <div className="space-y-2 pt-2 border-t border-border/50 flex-shrink-0">
-              <label className="text-[10px] font-medium text-muted-foreground">Base Persona</label>
+            <div className="space-y-3 pt-3 border-t border-border-subtle flex-shrink-0">
+              <label className="text-[10px] font-bold text-text-tertiary uppercase tracking-wider">Base Persona</label>
               <Textarea
                 value={editedPersona}
                 onChange={(e) => setEditedPersona(e.target.value)}
-                className="min-h-[80px] text-xs bg-muted/50 resize-none"
+                className="min-h-[100px] text-xs bg-bg-base border-border-subtle resize-none focus-visible:ring-1 focus-visible:ring-primary/40"
               />
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1 h-7 text-xs" onClick={handleSavePersona}>
-                  Save
+                <Button size="sm" className="flex-1 h-8 text-xs bg-primary hover:bg-primary-glow text-white border-none" onClick={handleSavePersona}>
+                  Update Persona
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 text-xs"
+                  className="h-8 text-xs border-border-subtle hover:bg-bg-elevated"
                   onClick={() => {
                     setEditedPersona(expert.basePersona);
                     setIsEditing(false);
                   }}
                 >
-                  Cancel
+                  Discard
                 </Button>
               </div>
             </div>
           )}
 
-          <div className="flex-1 min-h-0 flex flex-col">
+          <div className="flex-1 min-h-0 flex flex-col pt-3 border-t border-border-subtle">
             {expert.output && (
-              <div className="space-y-1.5 flex-1 flex flex-col border-t border-border/50 pt-2">
+              <div className="flex-1 min-h-0 flex flex-col space-y-2">
                 <div className="flex items-center justify-between flex-shrink-0">
-                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                    Output
+                  <span className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest">
+                    Expert Intelligence
                   </span>
-                  {expert.isLoading && <Loader2 className="h-3 w-3 animate-spin text-primary" />}
+                  {expert.isLoading && <Loader2 className="h-3 w-3 animate-spin text-primary-glow" />}
                 </div>
-                <div className="flex-1 min-h-0 overflow-y-auto rounded-md bg-muted/30 p-2 max-h-[300px]">
-                  <SafeMarkdown content={expert.output} className="text-xs" />
+                <div className="flex-1 min-h-0 overflow-y-auto rounded-xl bg-bg-base/80 border border-border-subtle p-3 hover:border-border-default transition-colors">
+                  <SafeMarkdown content={expert.output} className="text-xs text-text-secondary leading-relaxed" />
+                </div>
+
+                {/* Performance Row */}
+                <div className="flex items-center gap-3 pt-1 text-[9px] text-text-disabled font-medium">
+                    <span className="flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" /> 1.2s
+                    </span>
+                    <span className="flex items-center gap-1">
+                        <DollarSign className="w-2.5 h-2.5" /> $0.0042
+                    </span>
+                    <span className="flex items-center gap-1">
+                        <Activity className="w-2.5 h-2.5" /> 847 tkn
+                    </span>
                 </div>
               </div>
             )}
 
             {expert.isLoading && !expert.output && (
-              <div className="flex items-center justify-center py-4">
-                <div className="flex flex-col items-center gap-1.5">
-                  <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                  <span className="text-[10px] text-muted-foreground">Analyzing...</span>
-                </div>
+              <div className="flex-1 flex flex-col items-center justify-center py-8 space-y-4">
+                 <div className="relative">
+                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary relative z-10" />
+                 </div>
+                 <div className="text-center space-y-1">
+                    <p className="text-xs font-bold text-text-primary uppercase tracking-widest">Generating Insight</p>
+                    <p className="text-[10px] text-text-tertiary">Synthesizing domain knowledge...</p>
+                 </div>
               </div>
             )}
           </div>
 
           {expert.output && (
-            <ExpertOutputFooter
-              expert={{
-                ...expert,
-                content: expert.content || expert.output || 'No content available',
-              }}
-            />
+            <div className="pt-2">
+                <ExpertOutputFooter
+                expert={{
+                    ...expert,
+                    content: expert.content || expert.output || 'No content available',
+                }}
+                />
+            </div>
           )}
         </CardContent>
       </Card>
@@ -460,4 +484,4 @@ export const ExpertCard: React.FC<ExpertCardProps> = ({ index }) => {
   );
 };
 
-export default ExpertExpandedModal;
+export default React.memo(ExpertCard);

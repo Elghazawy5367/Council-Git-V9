@@ -1,477 +1,261 @@
-import React, { useRef } from 'react';
-import { useCouncilStore } from '@/stores/council.store';
-import { useSettingsStore } from '@/features/settings/store/settings-store';
-import { useShallow } from 'zustand/react/shallow';
-import { JUDGE_MODE_DESCRIPTIONS } from '@/lib/config';
-import { SynthesisConfig } from '@/features/council/lib/types';
-import { Card, CardContent } from '@/components/primitives/card';
+import React, { useMemo } from 'react';
+import { useExpertStore } from '@/features/council/store/expert-store';
+import { useControlPanelStore } from '@/features/council/store/control-panel-store';
 import { Button } from '@/components/primitives/button';
+import { ToggleGroup, ToggleGroupItem } from '@/components/primitives/toggle-group';
 import { Textarea } from '@/components/primitives/textarea';
-import { Slider } from '@/components/primitives/slider';
 import { Badge } from '@/components/primitives/badge';
-import { Tabs, TabsList, TabsTrigger } from '@/components/primitives/tabs';
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from '@/components/primitives/dropdown-menu';
-import { useExecuteSynthesis } from '@/features/council/hooks/use-council-queries';
-import {
-  Settings,
-  Upload,
-  FileText,
-  X,
-  Loader2,
   Play,
-  Target,
-  MessageSquare,
-  Gavel,
-  CheckCircle,
-  Plus,
-  FileCode,
-  FileSpreadsheet,
-  Image as ImageIcon,
-  File as FileIcon,
-  Paperclip,
+  Zap,
+  ChevronDown,
+  ChevronUp,
+  Activity,
+  Settings2,
+  Cpu,
+  Layers,
+  ArrowRightLeft,
+  Coins,
+  ShieldCheck,
+  AlertCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { PersonaSelector } from './PersonaSelector';
 
-// File format categories for the dropdown menu
-const FILE_CATEGORIES = [
-  {
-    label: 'Documents',
-    icon: FileText,
-    accept: '.pdf,.doc,.docx,.txt,.rtf',
-    description: 'PDF, Word, TXT, RTF',
-  },
-  {
-    label: 'Code Files',
-    icon: FileCode,
-    accept: '.js,.ts,.tsx,.jsx,.py,.java,.go,.rs,.cpp,.c,.h,.rb,.php,.swift,.kt,.html,.css,.scss',
-    description: 'JS, TS, Python, Java, Go, HTML, CSS...',
-  },
-  {
-    label: 'Data Files',
-    icon: FileSpreadsheet,
-    accept: '.json,.csv,.xml,.yaml,.yml,.xlsx,.xls,.toml,.ini',
-    description: 'JSON, CSV, XML, YAML, Excel...',
-  },
-  {
-    label: 'Text & Notes',
-    icon: FileIcon,
-    accept: '.md,.log,.conf,.env,.sh,.bash,.zsh,.bat,.ps1',
-    description: 'Markdown, Logs, Config, Shell...',
-  },
-  {
-    label: 'Images',
-    icon: ImageIcon,
-    accept: '.png,.jpg,.jpeg,.gif,.webp,.svg,.bmp,.ico',
-    description: 'PNG, JPG, GIF, WebP, SVG...',
-  },
-] as const;
-
-const ALL_ACCEPTED_FORMATS = FILE_CATEGORIES.map(c => c.accept).join(',');
-
-// Judge mode icons
-const JUDGE_MODE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  'ruthless-judge': Gavel,
-  'consensus-judge': CheckCircle,
-  'debate-judge': MessageSquare,
-  'pipeline-judge': Target,
-};
-
-import { FeatureConfigModal } from './FeatureConfigModal';
+// Stable selector outside the component to avoid re-renders
+const storeSelector = (state: any) => ({
+  activeExpertCount: state.activeExpertCount,
+  setActiveExpertCount: state.setActiveExpertCount,
+  executionMode: state.executionMode,
+  setExecutionMode: state.setExecutionMode,
+  taskDescription: state.taskDescription,
+  setTaskDescription: state.setTaskDescription,
+  isExecuting: state.isExecuting,
+  executionPhase: state.executionPhase,
+  startPhase1: state.startPhase1,
+  startPhase2: state.startPhase2,
+});
 
 export const ControlPanel: React.FC = () => {
-  const [isConfigOpen, setIsConfigOpen] = React.useState(false);
-  const [selectedFeatureTab, setSelectedFeatureTab] = React.useState<string | null>(null);
-
-  const handleOpenConfig = (tab?: string) => {
-    setSelectedFeatureTab(tab || null);
-    setIsConfigOpen(true);
-  };
-
   const {
-    task,
-    setTask,
-    judgeMode,
-    setJudgeMode,
     activeExpertCount,
     setActiveExpertCount,
-    fileData,
-    addFileData,
-    removeFileData,
-    setFileData,
+    executionMode,
+    setExecutionMode,
+    taskDescription,
+    setTaskDescription,
+    isExecuting,
     executionPhase,
-    isLoading,
-    isSynthesizing,
-    statusMessage,
-    executePhase1,
-    executePhase2,
-  } = useCouncilStore(useShallow((state) => ({
-    task: state.task,
-    setTask: state.setTask,
-    judgeMode: state.judgeMode,
-    setJudgeMode: state.setJudgeMode,
-    activeExpertCount: state.activeExpertCount,
-    setActiveExpertCount: state.setActiveExpertCount,
-    fileData: state.fileData,
-    addFileData: state.addFileData,
-    removeFileData: state.removeFileData,
-    setFileData: state.setFileData,
-    executionPhase: state.executionPhase,
-    isLoading: state.isLoading,
-    isSynthesizing: state.isSynthesizing,
-    statusMessage: state.statusMessage,
-    executePhase1: state.executePhase1,
-    executePhase2: state.executePhase2,
-  })));
+    startPhase1,
+    startPhase2,
+  } = useControlPanelStore(storeSelector);
 
-  const { vaultStatus, setShowSettings } = useSettingsStore(useShallow((state) => ({ 
-    vaultStatus: state.vaultStatus, 
-    setShowSettings: state.setShowSettings 
-  })));
-  
-  const synthesisMutation = useExecuteSynthesis();
+  const [isExpanded, setIsExpanded] = React.useState(true);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [currentAccept, setCurrentAccept] = React.useState(ALL_ACCEPTED_FORMATS);
-  const [currentLabel, setCurrentLabel] = React.useState('context files');
+  const experts = useExpertStore(state => state.experts);
+  const activeExperts = experts.slice(0, activeExpertCount);
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
+  const canStartPhase2 = useMemo(() => {
+    return executionPhase === 'phase1-complete' || executionPhase === 'complete';
+  }, [executionPhase]);
 
-    let successCount = 0;
-    for (const file of Array.from(files)) {
-      try {
-        const content = await file.text();
-        addFileData({
-          name: file.name,
-          content,
-          size: `${(file.size / 1024).toFixed(2)} KB`,
-        });
-        successCount++;
-      } catch (error) {
-        const reason = error instanceof Error ? error.message : 'unreadable format';
-        toast.error(`Failed to read "${file.name}": ${reason}`);
-      }
+  // Handle auto-resize of textarea
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  React.useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-    if (successCount > 0) {
-      toast.success(`Added ${successCount} file(s)`);
-    }
-    event.target.value = '';
-  };
-
-  const triggerFileInput = (accept: string, label: string) => {
-    if (fileInputRef.current) {
-      fileInputRef.current.accept = accept;
-      setCurrentAccept(accept);
-      setCurrentLabel(label);
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleRemoveAll = () => {
-    setFileData([]);
-    toast.info('All files removed');
-  };
-
-  const handlePhase1Click = () => {
-    if (vaultStatus.isLocked) {
-      setShowSettings(true);
-      toast.error('Please unlock the vault first');
-      return;
-    }
-    if (!task.trim()) {
-      toast.error('Please enter a task');
-      return;
-    }
-
-    executePhase1();
-  };
-
-  const handlePhase2Click = () => {
-    if (executionPhase !== 'phase1-complete') {
-      toast.error('Please run Phase 1 (Run Council) first');
-      return;
-    }
-
-    executePhase2(synthesisMutation);
-  };
-
-  const isPhase1Running = isLoading && executionPhase === 'phase1-experts';
-  const isPhase2Running = isSynthesizing && executionPhase === 'phase2-synthesis';
-  const canRunPhase1 = !isLoading && executionPhase !== 'phase1-experts';
-  const canRunPhase2 = executionPhase === 'phase1-complete' && !isSynthesizing;
+  }, [taskDescription]);
 
   return (
-    <Card className="glass-panel-elevated">
-      <CardContent className="p-6 space-y-6">
-        <PersonaSelector />
-
-        <div className="space-y-2">
-          <label htmlFor="council-task" className="text-sm font-medium text-foreground">Task / Question</label>
-          <Textarea
-            id="council-task"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Describe the task or question you want the Council to analyze..."
-            className="min-h-[120px] bg-muted/50 border-border/50 resize-none focus:ring-primary/50"
-          />
+    <div className="glass-panel border-border-default bg-bg-raised/80 overflow-hidden shadow-lg transition-all duration-300">
+      {/* Animated progress bar */}
+      {isExecuting && (
+        <div className="h-0.5 w-full bg-bg-base overflow-hidden">
+          <div className="h-full bg-primary-glow animate-shimmer" style={{ width: '100%' }} />
         </div>
+      )}
 
-        {/* Phase 1 Section: Expert Configuration */}
-        <div className="space-y-3 border-t pt-4">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">Phase 1: Expert Configuration</label>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="h-8 w-8 hover:bg-primary/10 hover:text-primary"
-              onClick={() => setShowSettings(true)}
-              title="Configure synthesis settings"
-              aria-label="Configure synthesis settings"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground">All experts will analyze in parallel</p>
-          
-          <div className="space-y-5">
-            <div className="flex justify-between items-center gap-4">
-              <label htmlFor="active-experts-slider" className="text-sm font-medium text-foreground">Active Experts</label>
-              <Badge variant="secondary" className="font-mono text-base px-4 py-1" aria-live="polite">{activeExpertCount}</Badge>
-            </div>
-            <div className="px-2">
-              <Slider
-                id="active-experts-slider"
-                value={[activeExpertCount]}
-                onValueChange={([value]) => setActiveExpertCount(value)}
-                min={1}
-                max={5}
-                step={1}
-                className="slider-council"
-                aria-label={`Active experts: ${activeExpertCount}`}
-              />
-            </div>
-            <div className="flex justify-between text-xs text-muted-foreground px-3">
-              <span className="font-medium">1</span>
-              <span className="font-medium">5</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Phase 2 Section: Judge Mode Selection */}
-        {executionPhase === 'phase1-complete' && (
-          <div className="space-y-3 border-t pt-4 border-primary/20 bg-primary/5 -mx-6 px-6 py-4 rounded-lg">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-foreground">Phase 2: Judge Mode Selection</label>
-            </div>
-            <p className="text-xs text-muted-foreground">Select how the judge will synthesize expert insights</p>
-            <Tabs value={judgeMode} onValueChange={setJudgeMode} className="w-full pb-4">
-              <TabsList className="grid grid-cols-2 w-full bg-muted/50 p-3 gap-3">
-                {Object.keys(JUDGE_MODE_DESCRIPTIONS).map((modeKey) => {
-                  const IconComponent = JUDGE_MODE_ICONS[modeKey] || Gavel;
-                  const modeInfo = JUDGE_MODE_DESCRIPTIONS[modeKey];
-                  return (
-                    <TabsTrigger
-                      key={modeKey}
-                      value={modeKey}
-                      className="flex flex-col items-center justify-center gap-1.5 min-w-[80px] px-2 py-4 text-xs font-medium min-h-[60px] data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-primary-foreground"
-                    >
-                      <IconComponent className="h-5 w-5 flex-shrink-0" />
-                      <span className="text-xs leading-snug text-center">{modeInfo.name}</span>
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-            </Tabs>
-            <p className="text-xs text-muted-foreground leading-relaxed">{JUDGE_MODE_DESCRIPTIONS[judgeMode]?.description}</p>
-          </div>
-        )}
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-foreground">File Context (Optional)</label>
-            {fileData.length > 0 && (
-              <button
-                onClick={handleRemoveAll}
-                className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-              >
-                Remove all
-              </button>
-            )}
-          </div>
-          <input ref={fileInputRef} type="file" accept={currentAccept} multiple className="hidden" onChange={handleFileUpload} aria-label={`Upload ${currentLabel}`} />
-          
-          {/* Attached files list */}
-          {fileData.length > 0 && (
+      <div className="p-4 space-y-4">
+        {/* Top Controls Row */}
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-6">
             <div className="space-y-2">
-              {fileData.map((file, index) => (
-                <div key={`${file.name}-${index}`} className="flex items-center justify-between p-2.5 rounded-lg bg-muted/30 border border-border/50">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <FileText className="h-4 w-4 text-primary flex-shrink-0" />
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">{file.name}</p>
-                      <p className="text-xs text-muted-foreground">{file.size}</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 flex-shrink-0" onClick={() => removeFileData(index)} aria-label={`Remove ${file.name}`}><X className="h-3.5 w-3.5" /></Button>
-                </div>
-              ))}
+               <label className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest flex items-center gap-1.5">
+                  <Activity className="w-3 h-3" />
+                  Fleet Mode
+               </label>
+               <ToggleGroup
+                 type="single"
+                 value={executionMode}
+                 onValueChange={(val) => val && setExecutionMode(val as any)}
+                 className="bg-bg-base p-1 rounded-lg border border-border-subtle"
+               >
+                 <ToggleGroupItem value="parallel" className="h-7 text-[10px] px-3 font-semibold data-[state=on]:bg-primary data-[state=on]:text-white">
+                    Parallel
+                 </ToggleGroupItem>
+                 <ToggleGroupItem value="consensus" className="h-7 text-[10px] px-3 font-semibold data-[state=on]:bg-primary data-[state=on]:text-white">
+                    Consensus
+                 </ToggleGroupItem>
+                 <ToggleGroupItem value="adversarial" className="h-7 text-[10px] px-3 font-semibold data-[state=on]:bg-primary data-[state=on]:text-white">
+                    Adversary
+                 </ToggleGroupItem>
+                 <ToggleGroupItem value="sequential" className="h-7 text-[10px] px-3 font-semibold data-[state=on]:bg-primary data-[state=on]:text-white">
+                    Sequential
+                 </ToggleGroupItem>
+               </ToggleGroup>
             </div>
-          )}
 
-          {/* + Add Files dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full h-11 border-dashed border-2 hover:border-primary/50 hover:bg-primary/5 gap-2">
-                <Plus className="h-4 w-4" />
-                {fileData.length === 0 ? 'Add Context Files' : 'Add More Files'}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-[280px]">
-              <DropdownMenuLabel className="flex items-center gap-2">
-                <Paperclip className="h-3.5 w-3.5" />
-                Select File Type
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {FILE_CATEGORIES.map((category) => {
-                const Icon = category.icon;
-                return (
-                  <DropdownMenuItem
-                    key={category.label}
-                    onClick={() => triggerFileInput(category.accept, category.label.toLowerCase())}
-                    className="flex items-center gap-3 py-2.5 cursor-pointer"
-                  >
-                    <Icon className="h-4 w-4 text-primary flex-shrink-0" />
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium">{category.label}</p>
-                      <p className="text-xs text-muted-foreground">{category.description}</p>
-                    </div>
-                  </DropdownMenuItem>
-                );
-              })}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => triggerFileInput(ALL_ACCEPTED_FORMATS, 'files')}
-                className="flex items-center gap-3 py-2.5 cursor-pointer"
-              >
-                <Upload className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <div className="min-w-0">
-                  <p className="text-sm font-medium">All Supported Formats</p>
-                  <p className="text-xs text-muted-foreground">Browse all file types</p>
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+            <div className="space-y-2">
+               <label className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest flex items-center gap-1.5">
+                  <Cpu className="w-3 h-3" />
+                  Expert Count
+               </label>
+               <ToggleGroup
+                 type="single"
+                 value={activeExpertCount.toString()}
+                 onValueChange={(val) => val && setActiveExpertCount(parseInt(val))}
+                 className="bg-bg-base p-1 rounded-lg border border-border-subtle"
+               >
+                 {[1, 3, 5, 7].map(n => (
+                   <ToggleGroupItem key={n} value={n.toString()} className="h-7 w-8 text-[10px] font-bold data-[state=on]:bg-bg-elevated data-[state=on]:text-primary-glow data-[state=on]:border-primary/20">
+                      {n}
+                   </ToggleGroupItem>
+                 ))}
+               </ToggleGroup>
+            </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-2 border-red-500/20 hover:bg-red-500/10 text-xs"
-            onClick={() => handleOpenConfig('reddit-sniper')}
-          >
-            <Target className="h-3.5 w-3.5 text-red-500" />
-            Reddit Sniper
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-2 border-orange-500/20 hover:bg-orange-500/10 text-xs"
-            onClick={() => handleOpenConfig('reddit-pain-points')}
-          >
-            <MessageSquare className="h-3.5 w-3.5 text-orange-500" />
-            Reddit Pain
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-2 border-violet-500/20 hover:bg-violet-500/10 text-xs"
-            onClick={() => handleOpenConfig('scout')}
-          >
-            <span className="text-sm">👻</span>
-            Phantom Scout
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-2 border-cyan-500/20 hover:bg-cyan-500/10 text-xs"
-            onClick={() => handleOpenConfig('viral-radar')}
-          >
-            <span className="text-sm">📡</span>
-            Viral Radar
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full gap-2 border-emerald-500/20 hover:bg-emerald-500/10 text-xs"
-            onClick={() => handleOpenConfig('heist')}
-          >
-            <span className="text-sm">🎭</span>
-            The HEIST
-          </Button>
-        </div>
+            <div className="space-y-2">
+               <label className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest flex items-center gap-1.5">
+                  <Layers className="w-3 h-3" />
+                  Synthesis Tier
+               </label>
+               <Badge variant="outline" className="h-9 px-3 bg-bg-base border-border-subtle text-text-primary text-[10px] font-semibold flex items-center gap-2">
+                  <ShieldCheck className="w-3 h-3 text-accent-emerald" />
+                  Deep Multi-Perspective
+               </Badge>
+            </div>
+          </div>
 
-        {/* Two-Phase Execution Buttons */}
-        <div className="space-y-3">
-          {/* Phase 1 Button */}
-          <Button 
-            className="w-full h-14 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30" 
-            onClick={handlePhase1Click} 
-            disabled={!canRunPhase1 || !task.trim()}
-            aria-label={isPhase1Running ? 'Phase 1 running' : executionPhase === 'phase1-complete' || executionPhase === 'complete' ? 'Phase 1 complete' : 'Run Council Phase 1'}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-text-tertiary hover:text-text-primary"
           >
-            {isPhase1Running ? (
-              <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Phase 1: Running...</>
-            ) : executionPhase === 'phase1-complete' || executionPhase === 'complete' ? (
-              <><CheckCircle className="h-5 w-5 mr-2" />Phase 1 Complete</>
+            {isExpanded ? (
+              <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest">
+                Collapse <ChevronUp className="w-3.5 h-3.5" />
+              </span>
             ) : (
-              <><Play className="h-5 w-5 mr-2" />Run Council (Phase 1)</>
+              <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest">
+                Expand <ChevronDown className="w-3.5 h-3.5" />
+              </span>
             )}
           </Button>
-
-          {/* Phase 2 Button - Only shown after Phase 1 completes */}
-          {(executionPhase === 'phase1-complete' || executionPhase === 'complete') && (
-            <Button 
-              className="w-full h-14 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-primary-foreground font-semibold text-lg shadow-lg shadow-purple-500/25 transition-all hover:shadow-xl hover:shadow-purple-500/30" 
-              onClick={handlePhase2Click} 
-              disabled={!canRunPhase2}
-              aria-label={isPhase2Running ? 'Phase 2 synthesizing' : executionPhase === 'complete' ? 'Phase 2 complete' : 'Run Judge Phase 2'}
-            >
-              {isPhase2Running ? (
-                <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Phase 2: Synthesizing...</>
-              ) : executionPhase === 'complete' ? (
-                <><CheckCircle className="h-5 w-5 mr-2" />Phase 2 Complete</>
-              ) : (
-                <><Gavel className="h-5 w-5 mr-2" />Run Judge (Phase 2)</>
-              )}
-            </Button>
-          )}
         </div>
 
-        <FeatureConfigModal 
-          isOpen={isConfigOpen} 
-          onClose={() => setIsConfigOpen(false)} 
-          initialTab={selectedFeatureTab}
-        />
+        {isExpanded && (
+          <div className="space-y-4 pt-2 animate-fade-in border-t border-border-subtle">
+            <div className="relative group">
+               <label className="absolute left-3 -top-2 px-1.5 bg-bg-raised text-[9px] font-bold text-primary-glow uppercase tracking-widest z-10">
+                  Target Objective
+               </label>
+               <Textarea
+                 ref={textareaRef}
+                 value={taskDescription}
+                 onChange={(e) => setTaskDescription(e.target.value)}
+                 placeholder="Define the problem, research goal, or decision to analyze..."
+                 className="min-h-[80px] bg-bg-base border-border-subtle focus-visible:ring-1 focus-visible:ring-primary/40 text-sm leading-relaxed text-text-secondary pt-4 rounded-xl group-hover:border-border-default transition-colors resize-none overflow-hidden"
+               />
+            </div>
 
-        {(isLoading || isSynthesizing) && statusMessage && (
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground" role="status" aria-live="polite">
-            <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true" />
-            {statusMessage}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+               <div className="flex flex-wrap items-center gap-3">
+                  <Button
+                    onClick={startPhase1}
+                    disabled={isExecuting || !taskDescription.trim()}
+                    className="h-11 px-6 bg-primary hover:bg-primary-glow text-white font-bold rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center gap-2"
+                    aria-label="Start Phase 1: Gather expert intelligence"
+                    aria-busy={isExecuting && executionPhase === 'phase1-experts'}
+                  >
+                    {isExecuting && executionPhase === 'phase1-experts' ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Zap className="w-4 h-4" />
+                    )}
+                    Phase 1: Gather Intelligence
+                  </Button>
+
+                  <div className="flex items-center gap-2">
+                    <ArrowRightLeft className="w-4 h-4 text-text-disabled" />
+                    <Button
+                      onClick={startPhase2}
+                      disabled={isExecuting || !canStartPhase2}
+                      variant="outline"
+                      className={`h-11 px-6 font-bold rounded-xl flex items-center gap-2 border-border-subtle ${
+                        canStartPhase2 ? 'bg-bg-elevated text-primary-glow border-primary/20 hover:bg-bg-overlay' : 'text-text-disabled opacity-50'
+                      }`}
+                      aria-label="Start Phase 2: Synthesize expert outputs"
+                      title={!canStartPhase2 ? "Complete Phase 1 first to unlock synthesis" : ""}
+                    >
+                      {isExecuting && executionPhase === 'phase2-synthesis' ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <ShieldCheck className="w-4 h-4" />
+                      )}
+                      Phase 2: Final Synthesis
+                    </Button>
+                  </div>
+               </div>
+
+               <div className="flex items-center gap-4 bg-bg-base/50 px-4 py-2.5 rounded-xl border border-border-subtle">
+                  <div className="flex flex-col">
+                     <span className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest flex items-center gap-1">
+                        <Coins className="w-3 h-3 text-accent-amber" />
+                        Est. Cost
+                     </span>
+                     <span className="text-sm font-mono text-text-primary font-semibold">
+                        ~$0.003
+                     </span>
+                  </div>
+                  <div className="w-px h-8 bg-border-subtle" />
+                  <div className="flex flex-col">
+                     <span className="text-[10px] font-bold text-text-tertiary uppercase tracking-widest">
+                        Context
+                     </span>
+                     <span className="text-sm font-mono text-text-primary font-semibold">
+                        {activeExperts.length} Experts
+                     </span>
+                  </div>
+                  {executionPhase === 'idle' && (
+                     <Badge variant="outline" className="ml-2 border-accent-rose/20 bg-accent-rose/10 text-accent-rose animate-pulse flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        Ready
+                     </Badge>
+                  )}
+               </div>
+            </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
-export default ControlPanel;
+const Loader2: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </svg>
+);

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Menu, Brain, Settings, History, Lock, Unlock, BookOpen } from 'lucide-react';
+import { Menu, Brain, Settings, History, Lock, Unlock, BookOpen, Wrench } from 'lucide-react';
 import { Button } from '@/components/primitives/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/primitives/sheet';
 import { Badge } from '@/components/primitives/badge';
 import { Separator } from '@/components/primitives/separator';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 interface MobileMenuProps {
   vaultStatus: { isLocked: boolean };
@@ -123,6 +124,12 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                 )}
               </Button>
             ))}
+            <Link to="/dev-tools" onClick={() => setOpen(false)}>
+              <Button variant="ghost" className="w-full justify-start">
+                <Wrench className="h-4 w-4 mr-3" />
+                Dev Tools
+              </Button>
+            </Link>
           </nav>
 
           <Separator />

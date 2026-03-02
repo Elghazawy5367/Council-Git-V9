@@ -16,7 +16,7 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 
 // Re-export original types for backward compatibility
-export {
+export type {
   DeveloperProfile,
   TwinMimicryReport,
   TwinMimicryConfig,
@@ -779,6 +779,8 @@ Target Repositories:
 }
 
 // Run if called directly
-if (require.main === module) {
+import { fileURLToPath } from 'url';
+const isMain = process.argv[1] === fileURLToPath(import.meta.url);
+if (isMain) {
   runMOEAnalysis().catch(console.error);
 }

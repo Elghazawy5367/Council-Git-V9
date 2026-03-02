@@ -36,10 +36,49 @@ export interface DecisionRecord {
   success: boolean;
   outputs?: string; // JSON stringified expert outputs
 }
+
+export interface DevToolsRun {
+  id: string;
+  tool: string;
+  status: 'idle' | 'running' | 'success' | 'error';
+  startedAt: number;
+  completedAt?: number;
+  durationMs?: number;
+  result?: any;
+  error?: string;
+}
+
+export interface HeistPrompt {
+  id: string;
+  name: string;
+  content: string;
+  wordCount: number;
+  category: string;
+  qualityScore: number;
+  useCases: string[];
+  lastUpdated: number;
+}
+
+export interface LearnedPattern {
+  id?: number;
+  repoName: string;
+  analyzedAt: number;
+  architecturePatterns: any[];
+  techChoices: any[];
+  positioningLanguage: string[];
+  innovationSignals: string[];
+  qualityScore: number;
+  architectureTags: string[];
+}
+
 export class CouncilDatabase extends Dexie {
   experts!: Table<Expert>;
   sessions!: Table<Session>;
   decisionRecords!: Table<DecisionRecord>;
+  devToolsRuns!: Table<DevToolsRun>;
+  heistPrompts!: Table<HeistPrompt>;
+  learnedPatterns!: Table<LearnedPattern>;
+
   constructor() {
     super("CouncilDB");
 
@@ -50,7 +89,6 @@ export class CouncilDatabase extends Dexie {
     });
 
     // VERSION 2: Schema Evolution
-    // Adds 'persona' field and populates it based on 'role' for existing records
     this.version(2).stores({
       experts: "++id, name, role, model, persona" // Add persona to index
     }).upgrade(async (tx) => {
@@ -67,6 +105,16 @@ export class CouncilDatabase extends Dexie {
       experts: "++id, name, role, model, persona",
       sessions: "++id, title, createdAt",
       decisionRecords: "++id, timestamp, mode, task, success" // Add analytics table
+    });
+
+    // VERSION 4: Meta-features overhaul tables
+    this.version(4).stores({
+      experts: "++id, name, role, model, persona",
+      sessions: "++id, title, createdAt",
+      decisionRecords: "++id, timestamp, mode, task, success",
+      devToolsRuns: "id, tool, status, startedAt",
+      heistPrompts: "id, name, category",
+      learnedPatterns: "++id, repoName, analyzedAt, *architectureTags"
     });
   }
 }

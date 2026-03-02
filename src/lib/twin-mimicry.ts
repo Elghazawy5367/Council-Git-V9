@@ -476,6 +476,8 @@ export async function runTwinMimicry(): Promise<void> {
 }
 
 // Run if called directly
-if (require.main === module) {
+import { fileURLToPath } from 'url';
+const isMain = process.argv[1] === fileURLToPath(import.meta.url);
+if (isMain) {
   runTwinMimicry().catch(console.error);
 }

@@ -131,6 +131,7 @@ export async function findCachedSynthesis(expertOutputs: Record<string, {
     }
     return null;
   } catch (error) {
+    console.warn('[SynthesisCache] Find failed:', error);
     return null;
   }
 }
@@ -166,8 +167,10 @@ export async function cacheSynthesis(expertOutputs: Record<string, {
     await db.add(STORE_NAME, entry);
     // Cleanup old entries if cache is too large
     await cleanupCache();
-  } catch (error) // eslint-disable-next-line no-empty
-  {}}
+  } catch (error) {
+    console.warn('[SynthesisCache] Cache failed:', error);
+  }
+}
 
 /**
  * Cleanup old or excess cache entries
@@ -195,8 +198,10 @@ async function cleanupCache(): Promise<void> {
     for (const entry of toRemove) {
       await db.delete(STORE_NAME, entry.id);
     }
-  } catch (error) // eslint-disable-next-line no-empty
-  {}}
+  } catch (error) {
+    console.warn('[SynthesisCache] Cleanup failed:', error);
+  }
+}
 
 /**
  * Get cache statistics
@@ -227,6 +232,7 @@ export async function getCacheStats(): Promise<CacheStats> {
       newestEntry: Math.max(...timestamps, 0)
     };
   } catch (error) {
+    console.warn('[SynthesisCache] Stats failed:', error);
     return {
       totalEntries: 0,
       totalHits: 0,
@@ -246,8 +252,10 @@ export async function clearSynthesisCache(): Promise<void> {
   if (!db) return;
   try {
     await db.clear(STORE_NAME);
-  } catch (error) // eslint-disable-next-line no-empty
-  {}}
+  } catch (error) {
+    console.warn('[SynthesisCache] Clear failed:', error);
+  }
+}
 
 /**
  * Remove expired cache entries
@@ -265,7 +273,11 @@ export async function removeExpiredEntries(): Promise<number> {
         removedCount++;
       }
     }
-    if (removedCount > 0) // eslint-disable-next-line no-empty
-      {}} catch (error) // eslint-disable-next-line no-empty
-  {}return removedCount;
+    if (removedCount > 0) {
+      // Log removed count if needed
+    }
+  } catch (error) {
+    console.warn('[SynthesisCache] Remove expired failed:', error);
+  }
+  return removedCount;
 }

@@ -8,6 +8,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import standards from "./mirror-standards.json";
+import { callExpert } from "@/features/council/api/ai-client";
 
 export interface QualityScore {
   overall: number;
@@ -426,6 +427,51 @@ function generateImprovements(gaps: CodeGap[]): string[] {
 /**
  * Analyzes multiple files and generates aggregate report
  */
+export interface SemanticIssue {
+  file: string;
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  category: 'architecture' | 'security' | 'performance' | 'maintainability' | 'ai-patterns';
+  finding: string;
+  evidence: string;      // quoted code snippet
+  suggestion: string;    // specific fix
+  autoFixable: boolean;
+}
+
+export async function analyzeFileSemantics(
+  filePath: string,
+  fileContent: string,
+  apiKey: string
+): Promise<SemanticIssue[]> {
+  if (fileContent.length < 100) return [];
+
+  const response = await callExpert(
+    {
+      name: "Code Auditor",
+      role: "Elite Technical Architect",
+      model: "deepseek/deepseek-chat",
+      basePersona: "You are an elite TypeScript code reviewer. Focus on security, performance, and architecture. Return ONLY a JSON array.",
+      config: { temperature: 0.1, maxTokens: 1000, topP: 1, presencePenalty: 0, frequencyPenalty: 0 },
+      knowledge: [],
+      hasWebSearch: false,
+      modeBehavior: { separated: "", synthesis: "", debate: "", pipeline: "" }
+    },
+    `Analyze this file for semantic issues: ${filePath}\n\nContent:\n${fileContent.slice(0, 3000)}`,
+    "separated",
+    apiKey,
+    undefined,
+    undefined,
+    { type: 'json_object' }
+  );
+
+  try {
+    const parsed = JSON.parse(response.output);
+    return (parsed.issues || []) as SemanticIssue[];
+  } catch (error) {
+    console.error("[CodeMirror] Semantic analysis failed:", error);
+    return [];
+  }
+}
+
 export async function analyzeBatch(filePaths: string[]): Promise<{
   results: AnalysisResult[];
   summary: {

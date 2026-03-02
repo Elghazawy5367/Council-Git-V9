@@ -7,6 +7,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { callExpert } from "@/features/council/api/ai-client";
+
 export interface GitHubRepo {
   name: string;
   fullName: string;
@@ -116,8 +118,10 @@ async function searchSuccessfulRepos(niche: string, minStars: number, maxRepos: 
       try {
         const repo = await fetchRepoDetails(item.full_name, githubToken);
         repos.push(repo);
-      } catch (error) // eslint-disable-next-line no-empty
-      {}}
+      } catch (error) {
+        console.warn(`[SelfImprove] Failed to fetch details for ${item.full_name}:`, error);
+      }
+    }
     return repos;
   } catch (error) {
     console.error("Failed to search GitHub:", error);
@@ -471,6 +475,42 @@ function generateRecommendations(patterns: SuccessPattern[], niche: string): str
     recommendations.push(`Continue researching ${niche} patterns with more repositories`);
   }
   return recommendations;
+}
+
+/**
+ * Analyze repository content using LLM
+ */
+export async function analyzeRepoWithLLM(
+  repoName: string,
+  readmeContent: string,
+  fileList: string[],
+  apiKey: string
+): Promise<any> {
+  const response = await callExpert(
+    {
+      name: "Pattern Analyst",
+      role: "Elite Code Archaeologist",
+      model: "deepseek/deepseek-chat",
+      basePersona: "You are an elite code pattern analyst. Extract structured intelligence from repository content.",
+      config: { temperature: 0.1, maxTokens: 1000, topP: 1, presencePenalty: 0, frequencyPenalty: 0 },
+      knowledge: [],
+      hasWebSearch: false,
+      modeBehavior: { separated: "", synthesis: "", debate: "", pipeline: "" }
+    },
+    `Analyze this repository: ${repoName}\n\nREADME:\n${readmeContent.slice(0, 3000)}\n\nFiles:\n${fileList.slice(0, 50).join('\n')}`,
+    "separated",
+    apiKey,
+    undefined,
+    undefined,
+    { type: 'json_object' }
+  );
+
+  try {
+    return JSON.parse(response.output);
+  } catch (error) {
+    console.error("[SelfImprove] Failed to parse LLM response:", error);
+    return null;
+  }
 }
 
 /**

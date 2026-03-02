@@ -553,7 +553,7 @@ export async function analyzeMOEPatterns(config: {
   const files = findMOEFiles(repoPath, repoType);
 
   // Extract patterns based on repository type
-  let patterns: MOEPatterns = {
+  const patterns: MOEPatterns = {
     communicationPatterns: [],
     rolePatterns: [],
     workflowPatterns: [],

@@ -214,7 +214,7 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
   const sidebarVirtualizer = useVirtualizer({
     count: sessions.length,
     getScrollElement: () => sidebarParentRef.current,
-    estimateSize: () => 100,
+    estimateSize: () => 112,
     overscan: 4,
   });
 

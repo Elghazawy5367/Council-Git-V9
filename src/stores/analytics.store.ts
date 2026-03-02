@@ -87,7 +87,7 @@ const calculateMetrics = (decisions: DecisionRecord[]): DecisionMetrics => {
     averageCost: totalCost / decisions.length,
     totalCost: totalCost,
     successRate: (successCount / decisions.length) * 100,
-    expertConsensusRate: expertConsensusRate || 85, // Fallback to 85 if no consensus data but other data exists
+    expertConsensusRate: expertConsensusRate ?? 85, // Fallback to 85 if no consensus data but other data exists
     modeDistribution,
   };
 };

@@ -3,6 +3,7 @@ import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, Tool
 import { analyzeTwinDNA, TwinProfile } from '../../lib/twin-analyzer';
 import { useDevToolsStore } from '../../store/devtools-store';
 import { GITHUB_OWNER, GITHUB_REPO } from '../../../../lib/config';
+import { CacheBanner, CACHE_TTLS } from '../CacheBanner';
 
 const YOUR_KEY_FILES = [
   'src/features/council/api/ai-client.ts',
@@ -14,10 +15,15 @@ export function TwinPanel() {
   const [targetRepo, setTargetRepo] = useState('microsoft/autogen');
   const [profile, setProfile] = useState<TwinProfile | null>(null);
   const [isRunning, setRunning] = useState(false);
-  const { startRun, completeRun, failRun } = useDevToolsStore();
+  const [runCost, setRunCost]   = useState(0);
+  const { startRun, completeRun, failRun, lastRuns } = useDevToolsStore();
+
+  const lastRun = lastRuns['twin'];
+  const cachedAt = lastRun?.status === 'success' ? lastRun.startedAt : null;
 
   async function runTwin() {
     setRunning(true);
+    setRunCost(0);
     const runId = await startRun('twin');
     try {
       const yourFiles = await Promise.all(
@@ -51,6 +57,8 @@ export function TwinPanel() {
         <p className="text-xs text-muted-foreground">LLM code DNA comparison against elite repos</p>
       </div>
 
+      <CacheBanner cachedAt={cachedAt} ttlMs={CACHE_TTLS.twin} onRunFresh={runTwin} />
+
       <div className="flex gap-3">
         <select value={targetRepo} onChange={e => setTargetRepo(e.target.value)}
           className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-sm">
@@ -64,6 +72,9 @@ export function TwinPanel() {
           {isRunning ? '⟳ Analyzing…' : '▶ Run'}
         </button>
       </div>
+      {isRunning && runCost > 0 && (
+        <span className="text-xs text-muted-foreground font-mono">${runCost.toFixed(4)} spent</span>
+      )}
 
       {profile && (
         <>

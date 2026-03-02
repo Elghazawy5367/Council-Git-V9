@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { db, LearnedPattern } from '../../../../lib/db';
 import { analyzeRepoWithLLM, synthesizePatterns } from '../../../../lib/self-improve';
 import { useDevToolsStore } from '../../store/devtools-store';
+import { CacheBanner, CACHE_TTLS } from '../CacheBanner';
 
 export function LearnPanel() {
   const [repoInput, setRepoInput] = useState('');
   const [patterns, setPatterns]   = useState<LearnedPattern[]>([]);
   const [synthesis, setSynthesis] = useState('');
   const [isRunning, setRunning]   = useState(false);
-  const { startRun, completeRun, failRun } = useDevToolsStore();
+  const [runCost, setRunCost]     = useState(0);
+  const { startRun, completeRun, failRun, lastRuns } = useDevToolsStore();
 
   useEffect(() => {
     db.learnedPatterns.orderBy('analyzedAt').reverse().limit(20).toArray()
@@ -16,10 +18,14 @@ export function LearnPanel() {
       .catch((err) => console.warn('[LearnPanel] Failed to load patterns:', err));
   }, []);
 
+  const lastRun = lastRuns['learn'];
+  const cachedAt = lastRun?.status === 'success' ? lastRun.startedAt : null;
+
   async function runLearn() {
     const repos = repoInput.split('\n').map(r => r.trim()).filter(Boolean);
     if (repos.length === 0) return;
     setRunning(true);
+    setRunCost(0);
     const runId = await startRun('learn');
     try {
       const analyses = [];
@@ -55,6 +61,8 @@ export function LearnPanel() {
         <p className="text-xs text-muted-foreground">LLM-powered pattern extraction from elite repos</p>
       </div>
 
+      <CacheBanner cachedAt={cachedAt} ttlMs={CACHE_TTLS.learn} onRunFresh={runLearn} />
+
       <div className="space-y-2">
         <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
           Target Repositories (one per line, format: owner/repo)
@@ -66,11 +74,16 @@ export function LearnPanel() {
           className="w-full h-28 bg-background border border-border rounded-lg px-3 py-2
             text-sm font-mono resize-none focus:outline-none focus:ring-1 focus:ring-primary"
         />
-        <button onClick={runLearn} disabled={isRunning || !repoInput.trim()}
-          className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground
-            disabled:opacity-50 flex items-center gap-2">
-          {isRunning ? <><span className="animate-spin inline-block">⟳</span> Learning…</> : '▶ Run Learning'}
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={runLearn} disabled={isRunning || !repoInput.trim()}
+            className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground
+              disabled:opacity-50 flex items-center gap-2">
+            {isRunning ? <><span className="animate-spin inline-block">⟳</span> Learning…</> : '▶ Run Learning'}
+          </button>
+          {isRunning && runCost > 0 && (
+            <span className="text-xs text-muted-foreground font-mono">${runCost.toFixed(4)} spent</span>
+          )}
+        </div>
       </div>
 
       {synthesis && (

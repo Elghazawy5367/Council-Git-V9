@@ -3,6 +3,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { useDevToolsStore } from '../../store/devtools-store';
 import { runSemanticAnalysis, SemanticIssue } from '../../../../lib/code-mirror';
 import { GITHUB_OWNER, GITHUB_REPO } from '../../../../lib/config';
+import { CacheBanner, CACHE_TTLS } from '../CacheBanner';
 
 interface MirrorFinding {
   severity: 'critical' | 'high' | 'medium' | 'low';
@@ -22,8 +23,12 @@ export function MirrorPanel() {
   const [findings, setFindings] = useState<MirrorFinding[]>([]);
   const [isRunning, setRunning] = useState(false);
   const [isLLMRunning, setLLMRunning] = useState(false);
-  const { startRun, completeRun, failRun } = useDevToolsStore();
+  const [runCost, setRunCost]   = useState(0);
+  const { startRun, completeRun, failRun, lastRuns } = useDevToolsStore();
   const parentRef = useRef<HTMLDivElement>(null);
+
+  const lastRun = lastRuns['mirror'];
+  const cachedAt = lastRun?.status === 'success' ? lastRun.startedAt : null;
 
   const filtered = filter === 'all' ? findings : findings.filter(f => f.severity === filter);
 
@@ -68,6 +73,7 @@ export function MirrorPanel() {
 
   async function runLLMDeepScan() {
     setLLMRunning(true);
+    setRunCost(0);
     const runId = await startRun('mirror');
     try {
       // Fetch a few key source files from GitHub for semantic analysis
@@ -109,7 +115,10 @@ export function MirrorPanel() {
           <h2 className="font-semibold">🪞 Code Mirror</h2>
           <p className="text-xs text-muted-foreground">Static + semantic analysis against elite standards</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
+          {(isRunning || isLLMRunning) && runCost > 0 && (
+            <span className="text-xs text-muted-foreground font-mono">${runCost.toFixed(4)} spent</span>
+          )}
           <button onClick={runMirror} disabled={isRunning}
             className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground
               disabled:opacity-50 flex items-center gap-2">
@@ -122,6 +131,8 @@ export function MirrorPanel() {
           </button>
         </div>
       </div>
+
+      <CacheBanner cachedAt={cachedAt} ttlMs={CACHE_TTLS.mirror} onRunFresh={runMirror} />
 
       {/* Severity filter */}
       <div className="flex gap-2">

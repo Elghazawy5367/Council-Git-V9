@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { CouncilSession } from '@/features/council/lib/types';
 import { formatRelativeTime, formatSessionPreview } from '@/features/council/lib/session-history';
 import { useSessionHistory } from '@/features/council/hooks/useSessionHistory';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
 import { Button } from '@/components/primitives/button';
-import { ScrollArea } from '@/components/primitives/scroll-area';
 import { Badge } from '@/components/primitives/badge';
 
 import { 
@@ -61,6 +61,14 @@ interface HistoryPanelProps {
 // Standalone History Card Component (for inline display)
 export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefresh }) => {
   const { sessions, handleDelete, handleClearAll } = useSessionHistory(true);
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: sessions.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 84,
+    overscan: 4,
+  });
 
   const handleLoad = (session: CouncilSession) => {
     onLoadSession?.(session);
@@ -141,11 +149,14 @@ export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefr
             </p>
           </div>
         ) : (
-          <ScrollArea className="h-[300px] pr-2">
-            <div className="space-y-2">
-              {sessions.map((session) => (
+          <div ref={parentRef} className="h-[300px] overflow-y-auto pr-2">
+            <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+              {virtualizer.getVirtualItems().map(virtualRow => {
+                const session = sessions[virtualRow.index];
+                return (
                 <div
                   key={session.id}
+                  style={{ position: 'absolute', top: virtualRow.start, width: '100%' }}
                   className="group p-3 rounded-lg bg-muted/30 hover:bg-muted/50 cursor-pointer transition-all border border-transparent hover:border-border/50"
                   onClick={() => handleLoad(session)}
                 >
@@ -185,9 +196,10 @@ export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefr
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
-          </ScrollArea>
+          </div>
         )}
       </CardContent>
     </Card>
@@ -197,6 +209,14 @@ export const HistoryCard: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefr
 // Sidebar History Panel Component
 export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onRefresh, isOpen, onClose }) => {
   const { sessions, loadSessions, handleDelete, handleClearAll } = useSessionHistory(false);
+  const sidebarParentRef = useRef<HTMLDivElement>(null);
+
+  const sidebarVirtualizer = useVirtualizer({
+    count: sessions.length,
+    getScrollElement: () => sidebarParentRef.current,
+    estimateSize: () => 100,
+    overscan: 4,
+  });
 
   React.useEffect(() => {
     // Only load sessions when panel opens, not on every render
@@ -278,7 +298,7 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
           </p>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-100px)]">
+        <div ref={sidebarParentRef} className="h-[calc(100vh-100px)] overflow-y-auto">
           <div className="p-4">
             {sessions.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -291,11 +311,14 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
-                {sessions.map((session) => (
+              <div style={{ height: sidebarVirtualizer.getTotalSize(), position: 'relative' }}>
+                {sidebarVirtualizer.getVirtualItems().map(virtualRow => {
+                  const session = sessions[virtualRow.index];
+                  return (
                   <div
                     key={session.id}
-                    className="group p-4 rounded-xl bg-muted/30 hover:bg-muted/50 cursor-pointer transition-all border border-transparent hover:border-primary/30"
+                    style={{ position: 'absolute', top: virtualRow.start, width: '100%' }}
+                    className="group p-4 rounded-xl bg-muted/30 hover:bg-muted/50 cursor-pointer transition-all border border-transparent hover:border-primary/30 mb-3"
                     onClick={() => handleLoad(session)}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -334,11 +357,12 @@ export const HistorySidebar: React.FC<HistoryPanelProps> = ({ onLoadSession, onR
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );

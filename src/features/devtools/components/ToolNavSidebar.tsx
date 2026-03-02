@@ -2,7 +2,7 @@ import { Wrench, BookOpen, Users, Swords, Telescope } from 'lucide-react';
 import { useDevToolsStore } from '../store/devtools-store';
 import { formatDistanceToNow } from 'date-fns';
 
-const TOOLS = [
+export const TOOLS = [
   { id: 'mirror' as const, label: 'Mirror',  icon: Wrench,    emoji: '🪞' },
   { id: 'learn'  as const, label: 'Learn',   icon: BookOpen,  emoji: '📚' },
   { id: 'twin'   as const, label: 'Twin',    icon: Users,     emoji: '👯' },

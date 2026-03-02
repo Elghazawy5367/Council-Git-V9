@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { useDashboardStore } from '../store/dashboard-store';
 import type { DecisionRecord } from '../store/dashboard-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/primitives/card';
@@ -27,10 +28,20 @@ export const HistoricalView: React.FC = () => {
   const { recentDecisions, exportData } = useDashboardStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDecision, setSelectedDecision] = useState<DecisionRecord | null>(null);
+  const tableParentRef = useRef<HTMLDivElement>(null);
 
   const filteredDecisions = recentDecisions.filter((decision) =>
     decision.task.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const shouldVirtualize = filteredDecisions.length > 50;
+  const tableVirtualizer = useVirtualizer({
+    count: filteredDecisions.length,
+    getScrollElement: () => tableParentRef.current,
+    estimateSize: () => 52,
+    overscan: 5,
+    enabled: shouldVirtualize,
+  });
 
   const handleExport = () => {
     const data = exportData();
@@ -88,10 +99,90 @@ export const HistoricalView: React.FC = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[500px]">
+        <div ref={tableParentRef} className="h-[500px] overflow-y-auto">
           {filteredDecisions.length === 0 ? (
             <div className="flex items-center justify-center h-40 text-muted-foreground">
               No decisions found
+            </div>
+          ) : shouldVirtualize ? (
+            <div style={{ height: tableVirtualizer.getTotalSize(), position: 'relative' }}>
+              {tableVirtualizer.getVirtualItems().map(virtualRow => {
+                const decision = filteredDecisions[virtualRow.index];
+                return (
+                  <div key={decision.id}
+                    style={{ position: 'absolute', top: virtualRow.start, width: '100%' }}
+                    className="p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors mb-3"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge
+                            variant="outline"
+                            className={MODE_COLORS[decision.mode]}
+                          >
+                            {decision.mode}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(decision.timestamp).toLocaleString()}
+                          </span>
+                        </div>
+                        <p className="font-medium text-sm truncate">
+                          {decision.task}
+                        </p>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                          <span>{decision.expertCount} experts</span>
+                          <span>•</span>
+                          <span>{Math.round(decision.duration)}s</span>
+                          <span>•</span>
+                          <span>${decision.cost.toFixed(4)}</span>
+                        </div>
+                      </div>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setSelectedDecision(decision)}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-2xl">
+                          <DialogHeader>
+                            <DialogTitle>Decision Details</DialogTitle>
+                          </DialogHeader>
+                          <ScrollArea className="max-h-[500px]">
+                            <div className="space-y-4">
+                              <div>
+                                <h4 className="font-semibold mb-1">Task</h4>
+                                <p className="text-sm text-muted-foreground">
+                                  {decision.task}
+                                </p>
+                              </div>
+                              {decision.verdict && (
+                                <div>
+                                  <h4 className="font-semibold mb-1">Verdict</h4>
+                                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    {decision.verdict}
+                                  </p>
+                                </div>
+                              )}
+                              {decision.synthesisContent && (
+                                <div>
+                                  <h4 className="font-semibold mb-1">Synthesis</h4>
+                                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                    {decision.synthesisContent}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </ScrollArea>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="space-y-3">
@@ -171,7 +262,7 @@ export const HistoricalView: React.FC = () => {
               ))}
             </div>
           )}
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   );

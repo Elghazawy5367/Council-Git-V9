@@ -5,6 +5,7 @@ import { db, HeistPrompt } from '../../../../lib/db';
 import { fetchFabricPrompts, savePromptsToDb, categorizePrompts } from '../../lib/heist-browser';
 import { useCouncilStore } from '../../../../stores/council.store';
 import { toast } from 'sonner';
+import { CacheBanner, CACHE_TTLS } from '../CacheBanner';
 
 type Status = 'idle' | 'downloading' | 'categorizing';
 type CategoryFilter = HeistPrompt['category'] | 'all';
@@ -19,8 +20,12 @@ export function HeistPanel() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [progress, setProgress] = useState({ done: 0, total: 0 });
-  const { startRun, completeRun, failRun } = useDevToolsStore();
+  const [runCost, setRunCost] = useState(0);
+  const { startRun, completeRun, failRun, lastRuns } = useDevToolsStore();
   const parentRef = useRef<HTMLDivElement>(null);
+
+  const lastRun = lastRuns['heist'];
+  const cachedAt = lastRun?.status === 'success' ? lastRun.startedAt : null;
 
   useEffect(() => {
     db.heistPrompts.orderBy('qualityScore').reverse().toArray()
@@ -51,6 +56,7 @@ export function HeistPanel() {
 
   async function refreshFromFabric() {
     const runId = await startRun('heist');
+    setRunCost(0);
     try {
       setStatus('downloading');
       const raw = await fetchFabricPrompts();
@@ -95,12 +101,19 @@ export function HeistPanel() {
             Curated prompts from fabric · {prompts.length} loaded
           </p>
         </div>
-        <button onClick={refreshFromFabric} disabled={status !== 'idle'}
-          className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground
-            disabled:opacity-50 flex items-center gap-2">
-          {statusLabel ?? '🔄 Refresh from fabric'}
-        </button>
+        <div className="flex items-center gap-2">
+          {status !== 'idle' && runCost > 0 && (
+            <span className="text-xs text-muted-foreground font-mono">${runCost.toFixed(4)} spent</span>
+          )}
+          <button onClick={refreshFromFabric} disabled={status !== 'idle'}
+            className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground
+              disabled:opacity-50 flex items-center gap-2">
+            {statusLabel ?? '🔄 Refresh from fabric'}
+          </button>
+        </div>
       </div>
+
+      <CacheBanner cachedAt={cachedAt} ttlMs={CACHE_TTLS.heist} onRunFresh={refreshFromFabric} />
 
       {/* Search + Category filter */}
       <div className="flex gap-2 items-center">

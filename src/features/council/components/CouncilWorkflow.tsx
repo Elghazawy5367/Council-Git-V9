@@ -9,6 +9,8 @@
  * 5. Show progress during execution
  */
 
+import { useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { useCouncilContext } from '@/contexts/CouncilContext';
 import { InputPanel } from './InputPanel';
 import { LLMResponseCard } from './LLMResponseCard';
@@ -18,6 +20,16 @@ import { Loader2, Sparkles } from 'lucide-react';
 
 export function CouncilWorkflow(): JSX.Element {
   const { execution, llmSelection } = useCouncilContext();
+  const expertParentRef = useRef<HTMLDivElement>(null);
+
+  const shouldVirtualize = execution.llmResponses.length > 5;
+  const expertVirtualizer = useVirtualizer({
+    count: execution.llmResponses.length,
+    getScrollElement: () => expertParentRef.current,
+    estimateSize: () => 320,
+    overscan: 2,
+    enabled: shouldVirtualize,
+  });
 
   // Handler for LLM retry - would need implementation in context
   const handleRetryLLM = (llmId: string): void => {
@@ -85,17 +97,37 @@ export function CouncilWorkflow(): JSX.Element {
             )}
           </div>
 
-          {/* Responsive Grid for LLM Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {execution.llmResponses.map((response) => (
-              <LLMResponseCard
-                key={response.llmId}
-                response={response}
-                onFeedback={(type) => handleProvideFeedback(response.llmId, type)}
-                onRetry={() => handleRetryLLM(response.llmId)}
-              />
-            ))}
-          </div>
+          {/* Responsive Grid / Virtualized list for LLM Cards */}
+          {!shouldVirtualize ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {execution.llmResponses.map((response) => (
+                <LLMResponseCard
+                  key={response.llmId}
+                  response={response}
+                  onFeedback={(type) => handleProvideFeedback(response.llmId, type)}
+                  onRetry={() => handleRetryLLM(response.llmId)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div ref={expertParentRef} className="h-[600px] overflow-y-auto rounded-lg">
+              <div style={{ height: expertVirtualizer.getTotalSize(), position: 'relative' }}>
+                {expertVirtualizer.getVirtualItems().map(virtualRow => {
+                  const response = execution.llmResponses[virtualRow.index];
+                  return (
+                    <div key={virtualRow.key}
+                      style={{ position: 'absolute', top: virtualRow.start, width: '100%', paddingBottom: 16 }}>
+                      <LLMResponseCard
+                        response={response}
+                        onFeedback={(type) => handleProvideFeedback(response.llmId, type)}
+                        onRetry={() => handleRetryLLM(response.llmId)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </section>
       )}
 

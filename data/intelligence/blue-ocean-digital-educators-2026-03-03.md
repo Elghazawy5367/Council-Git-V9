@@ -1,6 +1,6 @@
 # Blue Ocean Opportunities: education
 
-**Generated:** 3/3/2026, 1:09:24 AM
+**Generated:** 3/3/2026, 8:29:26 AM
 **Total Found:** 44
 
 ## 🏆 Top 10 Goldmines
@@ -9,15 +9,15 @@
 
 **An application for the RS School education process**
 
-- ⭐ Stars: 10,346
+- ⭐ Stars: 10,347
 - 🍴 Forks: 219 (2.1% ratio)
 - 🐛 Open Issues: 69
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **70/100**
 - 🔗 [View on GitHub](https://github.com/rolling-scopes/rsschool-app)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (10346+ stars)
+- ✅ Proven demand (10347+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -27,15 +27,15 @@
 
 **FCC China open source codebase and curriculum. Learn to code and help nonprofits.**
 
-- ⭐ Stars: 37,639
+- ⭐ Stars: 37,638
 - 🍴 Forks: 1,411 (3.7% ratio)
 - 🐛 Open Issues: 157
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **69/100**
 - 🔗 [View on GitHub](https://github.com/FreeCodeCampChina/freecodecamp.cn)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (37639+ stars)
+- ✅ Proven demand (37638+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -63,15 +63,15 @@
 
 **Learning operating system development using Linux kernel and Raspberry Pi**
 
-- ⭐ Stars: 13,764
+- ⭐ Stars: 13,763
 - 🍴 Forks: 1,337 (9.7% ratio)
 - 🐛 Open Issues: 65
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **68/100**
 - 🔗 [View on GitHub](https://github.com/s-matyukevich/raspberry-pi-os)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (13764+ stars)
+- ✅ Proven demand (13763+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -81,15 +81,15 @@
 
 **A computer science textbook**
 
-- ⭐ Stars: 4,651
+- ⭐ Stars: 4,652
 - 🍴 Forks: 476 (10.2% ratio)
 - 🐛 Open Issues: 185
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **68/100**
 - 🔗 [View on GitHub](https://github.com/algorithmica-org/algorithmica)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (4651+ stars)
+- ✅ Proven demand (4652+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -139,7 +139,7 @@
 - ⭐ Stars: 1,795
 - 🍴 Forks: 286 (15.9% ratio)
 - 🐛 Open Issues: 53
-- 📅 Last Update: 2/26/2026 (4 days ago)
+- 📅 Last Update: 2/26/2026 (5 days ago)
 - 🌊 Blue Ocean Score: **67/100**
 - 🔗 [View on GitHub](https://github.com/dunnousername/yanderifier)
 
@@ -157,7 +157,7 @@
 - ⭐ Stars: 2,004
 - 🍴 Forks: 116 (5.8% ratio)
 - 🐛 Open Issues: 44
-- 📅 Last Update: 2/15/2026 (15 days ago)
+- 📅 Last Update: 2/15/2026 (16 days ago)
 - 🌊 Blue Ocean Score: **66/100**
 - 🔗 [View on GitHub](https://github.com/Netflix-Skunkworks/stethoscope)
 
@@ -173,15 +173,15 @@
 
 **RARS -- RISC-V Assembler and Runtime Simulator**
 
-- ⭐ Stars: 1,508
-- 🍴 Forks: 303 (20.1% ratio)
+- ⭐ Stars: 1,509
+- 🍴 Forks: 304 (20.1% ratio)
 - 🐛 Open Issues: 72
-- 📅 Last Update: 3/1/2026 (1 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **66/100**
 - 🔗 [View on GitHub](https://github.com/TheThirdOne/rars)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (1508+ stars)
+- ✅ Proven demand (1509+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 

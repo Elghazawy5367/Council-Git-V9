@@ -1,7 +1,7 @@
 # Blue Ocean Opportunities: freelancing
 
-**Generated:** 3/3/2026, 1:08:32 AM
-**Total Found:** 6
+**Generated:** 3/3/2026, 8:28:36 AM
+**Total Found:** 7
 
 ## 🏆 Top 10 Goldmines
 
@@ -27,15 +27,15 @@
 
 **Kimai is the #1 open-source time-tracking application. From freelancers to companies and organisations - everyone can manage timesheets, generate reports, create invoices and so much more... Web-based multi-user application, available as On-Premise or SaaS version: https://www.kimai.org**
 
-- ⭐ Stars: 4,518
-- 🍴 Forks: 743 (16.4% ratio)
+- ⭐ Stars: 4,522
+- 🍴 Forks: 744 (16.5% ratio)
 - 🐛 Open Issues: 312
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **67/100**
 - 🔗 [View on GitHub](https://github.com/kimai/kimai)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (4518+ stars)
+- ✅ Proven demand (4522+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -48,7 +48,7 @@
 - ⭐ Stars: 2,913
 - 🍴 Forks: 718 (24.6% ratio)
 - 🐛 Open Issues: 62
-- 📅 Last Update: 2/28/2026 (2 days ago)
+- 📅 Last Update: 2/28/2026 (3 days ago)
 - 🌊 Blue Ocean Score: **65/100**
 - 🔗 [View on GitHub](https://github.com/gitscrum-core/laravel-gitscrum)
 
@@ -63,15 +63,15 @@
 
 **Dolibarr ERP CRM is a modern software package to manage your company or foundation's activity (contacts, suppliers, invoices, orders, stocks, agenda, accounting, ...). it's an open source Web application (written in PHP) designed for businesses of any sizes, foundations and freelancers.**
 
-- ⭐ Stars: 6,959
-- 🍴 Forks: 3,295 (47.3% ratio)
-- 🐛 Open Issues: 1117
-- 📅 Last Update: 3/2/2026 (0 days ago)
+- ⭐ Stars: 6,961
+- 🍴 Forks: 3,294 (47.3% ratio)
+- 🐛 Open Issues: 1119
+- 📅 Last Update: 3/3/2026 (0 days ago)
 - 🌊 Blue Ocean Score: **61/100**
 - 🔗 [View on GitHub](https://github.com/Dolibarr/dolibarr)
 
 **Why it's a goldmine:**
-- ✅ Proven demand (6959+ stars)
+- ✅ Proven demand (6961+ stars)
 
 **Opportunity:** Build a modern alternative or fork with active maintenance.
 
@@ -95,7 +95,25 @@
 
 ---
 
-### 6. engineerapart/TheRemoteFreelancer (Score: 50)
+### 6. midday-ai/midday (Score: 50)
+
+**Invoicing, Time tracking, File reconciliation, Storage, Financial Overview & your own Assistant made for Freelancers**
+
+- ⭐ Stars: 14,065
+- 🍴 Forks: 1,355 (9.6% ratio)
+- 🐛 Open Issues: 4
+- 📅 Last Update: 3/3/2026 (0 days ago)
+- 🌊 Blue Ocean Score: **50/100**
+- 🔗 [View on GitHub](https://github.com/midday-ai/midday)
+
+**Why it's a goldmine:**
+- ✅ Proven demand (14065+ stars)
+
+**Opportunity:** Build a modern alternative or fork with active maintenance.
+
+---
+
+### 7. engineerapart/TheRemoteFreelancer (Score: 50)
 
 **Listing of community-curated resources to find topical remote freelance & contract work for software developers, web designers, and more!**
 

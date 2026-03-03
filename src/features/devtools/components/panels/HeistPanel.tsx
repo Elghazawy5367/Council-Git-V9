@@ -144,7 +144,7 @@ export function HeistPanel() {
             <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
               {virtualizer.getVirtualItems().map(item => {
                 const p = filtered[item.index];
-                const isSelected = selected?.slug === p.slug;
+                const isSelected = selected?.id === p.id;
                 return (
                   <div key={item.key}
                     style={{ position: 'absolute', top: item.start, width: '100%' }}
